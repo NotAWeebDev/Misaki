@@ -72,7 +72,7 @@ exports.bootOneMessages = [
 ];
 
 exports.bootTwoMessages = [
-  "{{user}}-san, did you miss me? I only took {{value}}"
+  "{{user}}-san, did you miss me? I only took {{ms}}ms."
 ];
 
 exports.reloadMissingArg = [

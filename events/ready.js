@@ -9,8 +9,8 @@ module.exports = class {
       const { id: rebootMsgID , channel: rebootMsgChan, user: rebootMsgUserID} = JSON.parse(fs.readFileSync(`${process.cwd()}/assets/reboot.json`, "utf8"));
       const u = await this.client.fetchUser(rebootMsgUserID);
       const m = await this.client.channels.get(rebootMsgChan).fetchMessage(rebootMsgID);
-      await m.edit(`${u.username}-san, I've rebooted!`);
-      await m.edit(`${u.username}-san, I've rebooted, it took: ${m.editedTimestamp - m.createdTimestamp}ms`);
+      await m.edit(`${this.client.responses.bootOneMessages.random().replaceAll("{{user}}", u.username).trim()}`);
+      await m.edit(`${this.client.responses.bootTwoMessages.random().replaceAll("{{user}}", u.username).replaceAll("{{ms}}",`${m.editedTimestamp - m.createdTimestamp}`).trim()}`);
       fs.unlink("./reboot.json", ()=>{});
     } catch (O_o) {
       this.client.logger.error(O_o);
