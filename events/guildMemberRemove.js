@@ -4,7 +4,11 @@ module.exports = class {
   }
 
   async run(member) {
-    const settings = this.client.getSettings(member.guild.id);
+    const guild = member.guild;
+    if (!member || !member.id || !guild) return;
+    const settings = this.client.getSettings(guild.id);
+
+    if (!member.user.bot) this.client.points.delete(`${guild.id}-${member.id}`);
     if (settings.welcomeEnabled !== "true") return;
 
     member.guild.channels.find("name", settings.welcomeChannel).send(`${this.client.emojis.get("396395362748858368")}  ${this.client.responses.goodbyeMessages.random().replaceAll("{{user}}", member.user.username).trim()}`).catch(console.error);

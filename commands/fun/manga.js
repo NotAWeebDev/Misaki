@@ -14,7 +14,12 @@ class Manga extends Command {
     super(client, {
       name: "manga",
       description: "Search for a manga on Kitsu!",
-      usage: "manga attack on titan"
+      category: "Fun",
+      usage: "manga attack on titan",
+      extended: "",
+      cooldown: 10,
+      guildOnly: true,
+      aliases: []
     });
   }
 

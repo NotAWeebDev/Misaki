@@ -1,38 +1,27 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 
-/*
-  The HELP command is used to display every command's name and description
-  to the user, so that he may see what commands are available. The help
-  command is also filtered by level, so if a user does not have access to
-  a command, it is not shown to them. If a command name is given with the
-  help command, its extended help is shown.
-*/
 class Help extends Command {
   constructor(client) {
     super(client, {
       name: "help",
-      description: "Displays all the available commands for you.",
-      category: "System",
+      description: "Displays the commands for your level.",
       usage: "help [command]",
-      aliases: ["h", "halp"]
+      category: "System",
+      extended: "This command will display all available commands for your permission level, with the additonal option of getting per command information when you run 'help <command name>'.",
+      hidden: true,
+      aliases: ["h", "halp"],
+      botPerms: []
     });
   }
 
   async run(message, args, level) {
-    // If no specific command is called, show all filtered commands.
+    const settings = message.settings;
     if (!args[0]) {
-      // Load guild settings (for prefixes and eventually per-guild tweaks)
-      const settings = message.settings;
-      
-      // Filter all commands by which are available for the user's level, using the <Collection>.filter() method.
-      const myCommands = message.guild ? this.client.commands.filter(cmd => this.client.levelCache[cmd.conf.permLevel] <= level) : this.client.commands.filter(cmd => this.client.levelCache[cmd.conf.permLevel] <= level &&  cmd.conf.guildOnly !== true);
-      
-      // Here we have to get the command names only, and we use that array to get the longest name.
-      // This make the help commands "aligned" in the output.
+      const myCommands = message.guild ? this.client.commands.filter(cmd => this.client.levelCache[cmd.conf.permLevel] <= level && cmd.conf.hidden !== true) : this.client.commands.filter(cmd => this.client.levelCache[cmd.conf.permLevel] <= level && cmd.conf.hidden !== true && cmd.conf.guildOnly !== true);
       const commandNames = myCommands.keyArray();
       const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);
       let currentCategory = "";
-      let output = `= Command List =\n\n[Use ${this.client.config.defaultSettings.prefix}help <commandname> for details]\n`;
+      let output = `= Command List =\n\n[Use ${settings.prefix}help <commandname> for details]\n`;
       const sorted = myCommands.array().sort((p, c) => p.help.category > c.help.category ? 1 :  p.help.name > c.help.name && p.help.category === c.help.category ? 1 : -1 );
       sorted.forEach( c => {
         const cat = c.help.category.toProperCase();
@@ -44,15 +33,15 @@ class Help extends Command {
       });
       message.channel.send(output, {code:"asciidoc", split: { char: "\u200b" }});
     } else {
-      // Show individual command's help.
       let command = args[0];
-      if (this.client.commands.has(command)) {
-        command = this.client.commands.get(command);
-        if (level < this.client.levelCache[command.conf.permLevel]) return;
-        message.channel.send(`= ${command.help.name} = \n${command.help.description}\nusage:: ${command.help.usage}\nalises:: ${command.conf.aliases.join(", ")}`, {code:"asciidoc"});
-      }
-    }
+      
+      if (this.client.commands.has(command)) command = this.client.commands.get(command);
+      else if (this.client.aliases.has(command)) command = this.client.commands.get(this.client.aliases.get(command));
+      else return;
+      
+      if (!message.guild && command.conf.guildOnly === true) return;
+      if (level < this.client.levelCache[command.conf.permLevel]) return;
+      message.channel.send(`= ${command.help.name} = \n${command.help.description}\ncategory     :: ${command.help.category}\ncost         :: ${parseInt(command.help.cost) * parseInt(command.conf.botPerms.length + 1) * Math.floor(parseInt(settings.costMulti))} points (excluding role discounts)\nusage        :: ${command.help.usage}\naliases      :: ${command.conf.aliases.join(", ")}\ndetails      :: ${command.help.extended}\npermissions  :: ${command.conf.botPerms.join(", ")}`, {code:"asciidoc"});    }
   }
 }
-
 module.exports = Help;

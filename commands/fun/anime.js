@@ -13,8 +13,14 @@ class Anime extends Command {
   constructor(client) {
     super(client, {
       name: "anime",
-      description: "Search for an Anime on Kitsu!",
-      usage: "anime attack on titan"
+      description: "Search for an anime on Kitsu!",
+      category: "Fun",
+      usage: "anime attack on titan",
+      extended: "",
+      cooldown: 10,
+      guildOnly: true,
+      aliases: []
+
     });
   }
 

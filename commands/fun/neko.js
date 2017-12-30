@@ -4,10 +4,13 @@ class Neko extends Command {
   constructor(client) {
     super(client, {
       name: "neko",
-      description: "This command will return a Neko, a lewd Neko if used in a NSFW channel.",
+      description: "Shows a picture of a neko.",
+      category: "Fun",
       usage: "neko",
+      extended: "This command will return a Neko, a lewd Neko if used in a NSFW channel",
       cooldown: 10,
-      category: "Fun"
+      guildOnly: true,
+      aliases: []
     });
   }
 

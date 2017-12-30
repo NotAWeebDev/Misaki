@@ -37,10 +37,8 @@ module.exports = class {
     if (!cmd) return;
 
     const rateLimit = await this.client.ratelimit(message, level, cmd.help.name, cmd.conf.cooldown); 
-    //message is passed
-    //The key will be the command name
-    //cooldown would be the cooldown, willl be set per command.
-    if (typeof rateLimit == "string") { //see if the returned is a string
+
+    if (typeof rateLimit == "string") {
       this.client.logger.log(`${this.client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) got ratelimited while running command ${cmd.help.name}`);
       return message.channel.send(`Please wait ${rateLimit.toPlural()} to run this command.`); //return stop command from executing
     }
