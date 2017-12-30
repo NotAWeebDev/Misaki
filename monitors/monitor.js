@@ -27,7 +27,7 @@ module.exports = class {
       const curLevel = Math.floor(0.1 * Math.sqrt(score.points));
       if (score.level < curLevel) {
         if (settings.levelNotice === "true")
-          message.channel.send(`${this.client.responses.levelUpMessages.random().replaceAll("{{name}}", message.member).replaceAll("{{level}}", curLevel).trim()}`);
+          message.channel.send(`${this.client.responses.levelUpMessages.random().replaceAll("{{user}}", message.member).replaceAll("{{level}}", curLevel).trim()}`);
         score.level = curLevel;
       }
       client.points.set(`${message.guild.id}-${message.author.id}`, score);

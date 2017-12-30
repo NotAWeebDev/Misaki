@@ -1,18 +1,18 @@
 exports.welcomeMessages = [
-  "O-ohayou {{name}}-san.",
-  "Hmph, looks like {{name}}, another baka has joined.",
-  "It's not like I like you or anything... but welcome to the server {{name}}.",
-  "O-oh, welcome {{name}}-san. I hope I haven't embarrased you...",
-  "OwO who's this. {{name}} has joined the server.",
-  "{{name}}, looks like you landed on the wrong side of discord!"
+  "O-ohayou {{user}}-san.",
+  "Hmph, looks like {{user}}, another baka has joined.",
+  "It's not like I like you or anything... but welcome to the server {{user}}.",
+  "O-oh, welcome {{user}}-san. I hope I haven't embarrased you...",
+  "OwO who's this. {{user}} has joined the server.",
+  "{{user}}, looks like you landed on the wrong side of discord!"
 ];
 
 exports.goodbyeMessages = [
-  "Awh, I-I have no words for t-this, b-but, I-I'll miss you {{name}}-san!",
-  "Awh, {{name}} has left... n-not that I care! Baka!",
-  "{{name}}-san.... N-no..",
-  "{{name}} left, not like we needed them or anything.",
-  "{{name}} why would you leave me here, alone!?"
+  "Awh, I-I have no words for t-this, b-but, I-I'll miss you {{user}}-san!",
+  "Awh, {{user}} has left... n-not that I care! Baka!",
+  "{{user}}-san.... N-no..",
+  "{{user}} left, not like we needed them or anything.",
+  "{{user}} why would you leave me here, alone!?"
 ];
 
 exports.pingMessages = [
@@ -28,14 +28,14 @@ exports.pingMessages = [
 ];
 
 exports.levelUpMessages = [
-  "E-eh? You levelled up? Well just because you're level {{level}} now, doesn't mean I'll like you more {{name}}... baka.",
-  "Hmph, you leveled up to {{level}} {{name}}-san, w-well it makes no difference to me!",
-  "Hyaa~! You've leveled up {{name}}-san, you're now level {{level}}.",
-  "{{name}} you baka. Don't leave me behind now that you're level {{level}}.",
-  "{{name}}-san, don't forget me now because you're level {{level}}",
-  "Pfft, you've only just become level {{level}}, hurry up {{name}}.",
-  "Absorbed Kami have you {{name}}-san? Now you're level {{level}}",
-  "Ah nuts, {{name}} is getting smart, now with a I.Q of {{level}}",
+  "E-eh? You levelled up? Well just because you're level {{level}} now, doesn't mean I'll like you more {{user}}... baka.",
+  "Hmph, you leveled up to {{level}} {{user}}-san, w-well it makes no difference to me!",
+  "Hyaa~! You've leveled up {{user}}-san, you're now level {{level}}.",
+  "{{user}} you baka. Don't leave me behind now that you're level {{level}}.",
+  "{{user}}-san, don't forget me now because you're level {{level}}",
+  "Pfft, you've only just become level {{level}}, hurry up {{user}}.",
+  "Absorbed Kami have you {{user}}-san? Now you're level {{level}}",
+  "Ah nuts, {{user}} is getting smart, now with a I.Q of {{level}}",
   "N-nani? You've reached level {{level}} so quickly...",
   "Senpai noticed you and wanted to give you level {{level}}",
   "You're only level {{level}}? You disgust me!"
@@ -63,13 +63,34 @@ exports.rebootMessages = [
   "I'm feeling a bit tired, better get some sleep **Goodnight**",
   "S-senpai please wait for me...",
   "B-baka! You need to wait for me...",
-  "W-what, {{user}}, You want to watch me sleep? P-pervert."
+  "W-what, {{user}}, You want to watch me sleep? P-pervert.",
+  "{{user}}-san! I'm restarting, give me a moment.."
 ];
 
 exports.bootOneMessages = [
-
+  "{{user}}-san! I'm back!"
 ];
 
 exports.bootTwoMessages = [
+  "{{user}}-san, did you miss me? I only took {{value}}"
+];
 
+exports.reloadMissingArg = [
+  "N-nani?! I don't know what to do, you didn't give me anything!"
+];
+
+exports.reloadNotFound = [
+  "Eeeh?! {{user}}-san, why would you ask me to find a command that doesn't exist, it wasn't even an alias."
+];  
+
+exports.reloadErrUnload = [
+  "{{user}}-san, I think I broke it... This happened: {{response}}"
+];
+
+exports.reloadErrLoad = [
+  "Ugh, can't you do one thing right? You ended up breaking {{command}}."
+];
+
+exports.reloadSuccess = [
+  "Yatta! {{command}} reloaded, now we can get back to what we were doing, or whatever you want to do..."
 ];

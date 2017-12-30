@@ -4,9 +4,6 @@ module.exports = (client) => {
 
   client.ratelimit = async (message, level, key, duration) => {
     if (level > 1) return false;
-    //need the message var from message event
-    //key: the command run
-    //duration of the ratelimit. IE command with 3 secs cooldown would have 3000 set as the duration
     
     duration = duration * 1000;
     const ratelimits = client.ratelimits.get(message.author.id) || {}; //get the ENMAP first.
@@ -22,7 +19,7 @@ module.exports = (client) => {
   };
 
   client.awaitReply = async (msg, question, limit = 60000) => {
-    const filter = m=>m.author.id = msg.author.id;
+    const filter = m => m.author.id === msg.author.id;
     await msg.channel.send(question);
     try {
       const collected = await msg.channel.awaitMessages(filter, { max: 1, time: limit, errors: ["time"] });

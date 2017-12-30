@@ -34,6 +34,23 @@ class Command {
     };
   }
 
+  makeTitles(data) {
+    const arr = new Array();
+    const { makeTitle } = this;
+    for (let i = 0; i <5; i++) {
+      arr.push(`\n${i + 1}:`);
+      arr.push(makeTitle(i, data));
+    }
+    return arr.join(" ");
+  }
+
+  makeTitle(index, data) {
+    const line1 = data[index].titles.en_jp ? data[index].titles.en_jp : "";
+    const line2 = data[index].titles.en ? `/${data[index].titles.en}` : "";
+    return `${line1}${line2}`;
+  }
+
+  
   async verifyUser(user) {
     try {
       const match = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
