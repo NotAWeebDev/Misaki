@@ -1,0 +1,34 @@
+const fs = require("fs");
+module.exports = class {
+  constructor(client) {
+    this.client = client;
+  }
+
+  async run() {
+    try {
+      const { id: rebootMsgID , channel: rebootMsgChan, user: rebootMsgUserID} = JSON.parse(fs.readFileSync(`${process.cwd()}/assets/reboot.json`, "utf8"));
+      const u = await this.client.fetchUser(rebootMsgUserID);
+      const m = await this.client.channels.get(rebootMsgChan).fetchMessage(rebootMsgID);
+      await m.edit(`${u.username}-san, I've rebooted!`);
+      await m.edit(`${u.username}-san, I've rebooted, it took: ${m.editedTimestamp - m.createdTimestamp}ms`);
+      fs.unlink("./reboot.json", ()=>{});
+    } catch (O_o) {
+      this.client.logger.error(O_o);
+    }
+    await this.client.wait(1000);
+
+    this.client.appInfo = await this.client.fetchApplication();
+    setInterval( async () => {
+      this.client.appInfo = await this.client.fetchApplication();
+    }, 60000);
+
+    if (!this.client.settings.has("default")) {
+      if (!this.client.config.defaultSettings) throw new Error("defaultSettings not preset in config.js or settings database. Bot cannot load.");
+      this.client.settings.set("default", this.client.config.defaultSettings);
+    }
+
+    this.client.user.setPresence({game: {name: `${this.client.settings.get("default").prefix}help | ${this.client.guilds.size} Servers`, type:0}});
+  
+    this.client.logger.log(`${this.client.user.tag}, ready to serve ${this.client.users.size} users in ${this.client.guilds.size} servers.`, "ready");
+  }
+};
