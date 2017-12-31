@@ -14,9 +14,9 @@ class Score extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const user = args.join(" ") || message.author.id;
-    const points = await this.usrBal(message, user);
-    return await message.channel.send(points);
+    const member = args[0] ? await this.verifyMember(message, args[0]) : message.member;
+    const score = member.score;
+    message.channel.send(`${this.client.responses.balanceMessages.random().replaceAll("{{user}}", message.member.displayName).replaceAll("{{amount}}", `${this.emoji(message.guild.id)}${score.points.toLocaleString()}`)}`);
   }
 }
 

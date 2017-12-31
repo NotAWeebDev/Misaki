@@ -1,8 +1,7 @@
+require(`${process.cwd()}/extenders/Guild.js`);
 if (process.version.slice(1).split(".")[0] < 8) throw new Error("Node 8.0.0 or higher is required. Update Node on your system.");
 
 const Discord = require("discord.js");
-const { promisify } = require("util");
-const readdir = promisify(require("fs").readdir);
 const Enmap = require("enmap");
 const EnmapLevel = require("enmap-level");
 const klaw = require("klaw");
@@ -12,20 +11,17 @@ const path = require("path");
 class Okami extends Discord.Client {
   constructor(options) {
     super(options);
-
     this.config = require(`${process.cwd()}/config.js`);
+    this.logger = require(`${process.cwd()}/util/Logger`);
+    this.responses = require(`${process.cwd()}/assets/responses.js`);
 
     this.commands = new Enmap();
     this.aliases = new Enmap();
-
-    this.responses = require(`${process.cwd()}/assets/responses.js`);
-    this.settings = new Enmap({ provider: new EnmapLevel({ name: "settings" }) });
-
-    this.points = new Enmap({provider: new EnmapLevel({name: "points"})});
-    this.CurrencyShop = new Enmap({provider: new EnmapLevel({name: "shop "})});
-
-    this.logger = require(`${process.cwd()}/util/Logger`);
     this.ratelimits = new Enmap();
+
+    this.settings = new Enmap({ provider: new EnmapLevel({ name: "settings" }) });
+    this.points = new Enmap({provider: new EnmapLevel({name: "points"})});
+    this.store = new Enmap({provider: new EnmapLevel({name: "shop"})});
   }
 
   permlevel(message) {
@@ -47,7 +43,7 @@ class Okami extends Discord.Client {
   loadCommand(commandPath, commandName) {
     try {
       const props = new (require(`${commandPath}${path.sep}${commandName}`))(client);
-      client.logger.log(`Loading Command: ${props.help.name}. 👌`, "log");
+      // client.logger.log(`Loading Command: ${props.help.name}. 👌`, "log");
       props.conf.location = commandPath;
       if (props.init) {
         props.init(client);
@@ -104,28 +100,57 @@ class Okami extends Discord.Client {
   }
 }
 
-const client = new Okami();
+const client = new Okami({
+  fetchAllMembers: true,
+  disableEveryone: true,
+  disabledEvents:["TYPING_START"]
+});
 
 require(`${process.cwd()}/modules/functions.js`)(client);
 
 const init = async () => {
 
+  const commandList = [];
   klaw("./commands").on("data", (item) => {
     const cmdFile = path.parse(item.path);
     if (!cmdFile.ext || cmdFile.ext !== ".js") return;
     const response = client.loadCommand(cmdFile.dir, `${cmdFile.name}${cmdFile.ext}`);
+    commandList.push(cmdFile.name);
     if (response) client.logger.error(response);
-  });
-
-  const evtFiles = await readdir("./events/");
-  client.logger.log(`Loading a total of ${evtFiles.length} events.`, "log");
-  evtFiles.forEach(file => {
-    const eventName = file.split(".")[0];
-    const event = new (require(`./events/${file}`))(client);
-    // This line is awesome by the way. Just sayin'.
-    client.on(eventName, (...args) => event.run(...args));
-    delete require.cache[require.resolve(`./events/${file}`)];
-  });
+  }).on("end", () => {
+    client.logger.log(`Loaded a total of ${commandList.length} commands.`);
+  }).on("error", (error) => client.logger.error(error));
+  
+  const extendList = [];
+  klaw("./extenders").on("data", (item) => {
+    const extFile = path.parse(item.path);
+    if (!extFile.ext || extFile.ext !== ".js") return;
+    try {
+      require(`${extFile.dir}${path.sep}${extFile.base}`);
+      extendList.push(extFile.name);
+    } catch (error) {
+      client.logger.error(`Error loading ${extFile.name} extension: ${error}`);
+    }
+  }).on("end", () => {
+    client.logger.log(`Loaded a total of ${extendList.length} extensions.`);
+  }).on("error", (error) => client.logger.error(error));
+  
+  const eventList = [];
+  klaw("./events").on("data", (item) => {  
+    const eventFile = path.parse(item.path);
+    if (!eventFile.ext || eventFile.ext !== ".js") return;
+    const eventName = eventFile.name.split(".")[0];
+    try {
+      const event = new (require(`${eventFile.dir}${path.sep}${eventFile.name}${eventFile.ext}`))(client);    
+      eventList.push(event);      
+      client.on(eventName, (...args) => event.run(...args));
+      delete require.cache[require.resolve(`${eventFile.dir}${path.sep}${eventFile.name}${eventFile.ext}`)];
+    } catch (error) {
+      client.logger.error(`Error loading event ${eventFile.name}: ${error}`);
+    }
+  }).on("end", () => {
+    client.logger.log(`Loaded a total of ${eventList.length} events.`);
+  }).on("error", (error) => client.logger.error(error));
 
   client.levelCache = {};
   for (let i = 0; i < client.config.permLevels.length; i++) {

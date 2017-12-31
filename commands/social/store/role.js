@@ -23,17 +23,12 @@ class Role extends Social {
 
       if (!message.guild.roles.find("name", name)) return message.reply("Please Enter The **Correct** Name Of The Role");
 
-      if (this.client.CurrencyShop.has(name)) return message.reply("This role is already on sale");
+      if (this.client.store.has(name)) return message.reply("This role is already on sale");
 
       if (!price) return message.reply("Please specify a price");
 
-      const role = new Object();
-      role.name = name.toLowerCase();
-      role.id = message.guild.roles.find("name", name).id.toString();
-      role.price = price;
-      role.type = "Roles";
-
-      this.client.CurrencyShop.set(role.id , role);
+      const role = { name: name.toLowerCase(), id: message.guild.roles.find("name", name).id.toString(), price: price, type: "Roles" };
+      this.client.store.set(role.id, role);
       message.reply(`${name} is now on sale `);
     } else
     
@@ -41,12 +36,12 @@ class Role extends Social {
 
       if (!name) return message.reply("Please specify the exact name of the role");
 
-      if (!this.client.CurrencyShop.has(name)) return message.reply("This role is not on sale");
+      if (!this.client.store.has(name)) return message.reply("This role is not on sale");
 
       const response = await this.client.awaitReply(message, `Are you sure you want to remove ${name} from the shop?`);
       if (["y", "yes"].includes(response)) {
 
-        await this.client.CurrencyShop.delete(name);
+        await this.client.store.delete(name);
         message.reply("The role is now off the store.");
       } else
 

@@ -51,11 +51,11 @@ exports.myLevelMessages = [
   "Only a level {{level}} even I'm better than a {{friendly}}"
 ];
 
-exports.purgeMessages = [
-  "A-aaa, AA-aaa, AA-CHOO! {{amount}} messages deleted, oops..",
-  "Now that {{amount}} messages have been deleted we can finally be alone",
-  "Those {{amount}} message's weren't important... I think...",
-  "Whoops... I-I think I deleted {{amount}} messages..."
+exports.balanceMessages = [
+  "Pfft, a measly {{amount}}? My father gives me more as an allowance!",
+  "Only {{amount}}? That's nothing compared to my pocket money!",
+  "{{user}}-san, you have {{amount}}, but you don't need it to make me happy.",
+  "{{user}}, again? Ugh, you have {{amount}}... Jeez, maybe if you kept track of it you'd remember.."
 ];
 
 exports.rebootMessages = [

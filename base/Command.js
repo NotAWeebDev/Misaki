@@ -51,21 +51,24 @@ class Command {
   }
 
   
-  async verifyUser(user) {
+  async verifyUser(message, user) {
     try {
       const match = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
-      if (!match) throw "Invalid user";
+      if (!match) {
+        message.response("❕", "Invalid user id.");
+        return;
+      }
       const id = match[1];
-      const check = await this.client.fetchUser(id);
+      const check = await this.client.users.fetch(id);
       if (check.username !== undefined) return check;
     } catch (error) {
       throw error;
     }
   }
 
-  async verifyMember(guild, member) {
-    const user = await this.verifyUser(member);
-    const target = await guild.fetchMember(user);
+  async verifyMember(message, member) {
+    const user = await this.verifyUser(message, member);
+    const target = await message.guild.members.fetch(user);
     return target;
   }
 
@@ -74,7 +77,7 @@ class Command {
       const match = /([0-9]{17,20})/.exec(msgid);
       if (!match) throw "Invalid message id.";
       const id = match[1];
-      const check = await message.channel.fetchMessage(id);
+      const check = await message.channel.messages.fetch(id);
       if (check.cleanContent !== undefined) return id;
     } catch (error) {
       throw error;
@@ -92,6 +95,7 @@ class Command {
       throw error;
     }
   }
+
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     throw new Error(`Command ${this.constructor.name} doesn't provide a run method.`); 
   }

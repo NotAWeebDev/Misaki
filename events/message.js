@@ -1,4 +1,4 @@
-const monitor = require("../monitors/monitor.js");
+const monitor = require(`${process.cwd()}/monitors/monitor.js`);
 
 module.exports = class {
   constructor(client) {

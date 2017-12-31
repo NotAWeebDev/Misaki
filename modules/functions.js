@@ -18,13 +18,14 @@ module.exports = (client) => {
     }
   };
 
-  client.awaitReply = async (msg, question, limit = 60000) => {
-    const filter = m => m.author.id === msg.author.id;
-    await msg.channel.send(question);
+  client.awaitReply = async (message, question, limit = 60000, embed = {}) => {
+    const filter = m => m.author.id === message.author.id;
+    await message.channel.send(question, { embed });
     try {
-      const collected = await msg.channel.awaitMessages(filter, { max: 1, time: limit, errors: ["time"] });
+      const collected = await message.channel.awaitMessages(filter, { max: 1, time: limit, errors: ["time"] });
       return collected.first().content;
-    } catch (e) {
+    } catch (error) {
+      client.logger.error(error);
       return false;
     }
   };
@@ -51,10 +52,6 @@ module.exports = (client) => {
     return this.replace(/((?:\D|^)1 .+?)s/g, "$1");
   };
 
-  Array.prototype.random = function() {
-    return this[Math.floor(Math.random() * this.length)];
-  };
-
   String.prototype.replaceAll = function(search, replacement) {
     return this.replace(RegExp(search, "gi"), replacement);
   };
@@ -63,15 +60,33 @@ module.exports = (client) => {
     return /^\d+$/.test(this);
   };
 
+  Array.prototype.random = function() {
+    return this[Math.floor(Math.random() * this.length)];
+  };
+
+  Array.prototype.remove = function() {
+    var value, a = arguments,
+      L = a.length,
+      ax;
+    while (L && this.length) {
+      value = a[--L];
+      while ((ax = this.indexOf(value)) !== -1) {
+        this.splice(ax, 1);
+      }
+    }
+    return this;
+  };
+
   client.wait = require("util").promisify(setTimeout);
 
   process.on("uncaughtException", (err) => {
     const errorMsg = err.stack.replace(new RegExp(`${__dirname}/`, "g"), "./");
-    console.error("Uncaught Exception: ", errorMsg);
+    client.logger.error(`Uncaught Exception: ${errorMsg}`);
     process.exit(1);
   });
 
   process.on("unhandledRejection", err => {
-    console.error("Uncaught Promise Error: ", err);
+    console.log(err);
+    // client.logger.error(`Uncaught Promise Error: ${err}`);
   });
 };

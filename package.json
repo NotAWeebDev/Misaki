@@ -1,7 +1,7 @@
 {
-  "name": "guidebot",
+  "name": "okami",
   "version": "5.0.0",
-  "description": "A boilerplate example bot with command handler and reloadable commands. Updated and Maintained by the Idiot's Guide Community",
+  "description": "Okami is all of the fun and entertainment commands taken from GuideBot aka York-Dev and bundled into this tsundere themed bot.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,20 +13,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/An-Idiots-Guide/guidebot-class.git"
+    "url": "git+https://github.com/YorkAARGH/Okami.git"
   },
-  "author": "Evelyne Lachance <eslachance@gmail.com> (http://evie.codes)",
-  "contributors": [
-    "York (http://anidiots.guide)"
-  ],
+  "author": "York (http://anidiots.guide)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/An-Idiots-Guide/guidebot-class/issues"
+    "url": "https://github.com/YorkAARGH/Okami/issues"
   },
-  "homepage": "https://github.com/An-Idiots-Guide/guidebot-class#readme",
+  "homepage": "https://github.com/YorkAARGH/Okami#readme",
   "dependencies": {
     "chalk": "^2.3.0",
-    "discord.js": "^11.2.1",
+    "discord.js": "github:hydrabolt/discord.js",
     "enmap": "^0.4.2",
     "enmap-level": "^1.0.0",
     "inquirer": "^4.0.0",

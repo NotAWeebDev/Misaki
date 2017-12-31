@@ -19,7 +19,7 @@ class Store extends Social {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     try {
 
-      const items = this.client.CurrencyShop.findAll("type", "Roles");
+      const items = this.client.store.findAll("type", "Roles");
 
       message.channel.send(items.map(item => 
         `${titleCase(item.name)}: ${item.price} 💰`).join("\n"), { code: true }

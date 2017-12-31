@@ -7,8 +7,8 @@ module.exports = class {
   async run() {
     try {
       const { id: rebootMsgID , channel: rebootMsgChan, user: rebootMsgUserID} = JSON.parse(fs.readFileSync(`${process.cwd()}/assets/reboot.json`, "utf8"));
-      const u = await this.client.fetchUser(rebootMsgUserID);
-      const m = await this.client.channels.get(rebootMsgChan).fetchMessage(rebootMsgID);
+      const u = await this.client.users.fetch(rebootMsgUserID);
+      const m = await this.client.channels.get(rebootMsgChan).messages.fetch(rebootMsgID);
       await m.edit(`${this.client.responses.bootOneMessages.random().replaceAll("{{user}}", u.username).trim()}`);
       await m.edit(`${this.client.responses.bootTwoMessages.random().replaceAll("{{user}}", u.username).replaceAll("{{ms}}",`${m.editedTimestamp - m.createdTimestamp}`).trim()}`);
       fs.unlink("./reboot.json", ()=>{});
@@ -27,7 +27,7 @@ module.exports = class {
       this.client.settings.set("default", this.client.config.defaultSettings);
     }
 
-    this.client.user.setPresence({game: {name: `${this.client.settings.get("default").prefix}help | ${this.client.guilds.size} Servers`, type:0}});
+    this.client.user.setActivity(`@${this.client.user.username} help | ${this.client.guilds.size} Servers`);
   
     this.client.logger.log(`${this.client.user.tag}, ready to serve ${this.client.users.size} users in ${this.client.guilds.size} servers.`, "ready");
   }
