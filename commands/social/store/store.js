@@ -12,6 +12,7 @@ class Store extends Social {
       name: "store",
       description: "Display All Store Items",
       usage: "store",
+      category: "Social",
       aliases: []
     });
   }

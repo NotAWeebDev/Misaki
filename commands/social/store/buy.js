@@ -6,6 +6,7 @@ class Buy extends Social {
       name: "buy",
       description: "Displays your current score.",
       usage: "buy <role:string>",
+      category: "Social",
       aliases: []
     });
   }

@@ -111,8 +111,8 @@ class Social extends Command {
   async cmdPay(message, user, cost, perms) {
     const amount = parseInt(cost) * parseInt(perms.length) * Math.floor(parseInt(message.settings.costMulti));
     try {
-      const id = await this.verifySocialUser(message, user);
-      const getPayee = message.guild.member(id);
+      const [bot, _user] = await this.verifySocialUser(message, user); // eslint-disable-line no-unused-vars
+      const getPayee = message.guild.member(_user.id);
       const score = getPayee.score;
       if (amount > score.points) {
         message.response(undefined, `Insufficient funds, you need ${amount}${this.emoji(message.guild.id)}. Your current balance: ${score.points}${this.emoji(message.guild.id)}`);

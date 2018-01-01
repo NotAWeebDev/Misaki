@@ -6,7 +6,7 @@ module.exports = class {
 
   async run() {
     try {
-      const { id: rebootMsgID , channel: rebootMsgChan, user: rebootMsgUserID} = JSON.parse(fs.readFileSync(`${process.cwd()}/assets/reboot.json`, "utf8"));
+      const { id: rebootMsgID , channel: rebootMsgChan, user: rebootMsgUserID} = JSON.parse(fs.readFileSync(`${process.cwd()}/assets/json/reboot.json`, "utf8"));
       const u = await this.client.users.fetch(rebootMsgUserID);
       const m = await this.client.channels.get(rebootMsgChan).messages.fetch(rebootMsgID);
       await m.edit(`${this.client.responses.bootOneMessages.random().replaceAll("{{user}}", u.username).trim()}`);

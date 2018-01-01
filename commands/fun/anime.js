@@ -29,7 +29,7 @@ class Anime extends Command {
       if (msg.author.id !== message.author.id) return false;
       return ["1", "2", "3", "4", "5"].includes(msg.content);
     }
-    if (args.length < 1) return message.reply("You must add a manga to search for");
+    if (args.length < 1) return message.reply("You must add an anime to search for");
     let msg = await message.channel.send("*fetching information from kitsu!*");
     try {
       const { data } = await kitsu.fetch("anime", { filter: { text: args.join("-") } });
