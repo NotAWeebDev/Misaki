@@ -140,7 +140,7 @@ class Social extends Command {
   async cmdPun(message, user, amount) {
     try {
       const getPayee = message.guild.member(user);
-      getPayee.givePoints(parseInt(amount));
+      getPayee.takePoints(parseInt(amount));
       await message.channel.send(`Deducted ${this.emoji(message.guild.id)}${parseInt(amount)} points from ${message.guild.member(user).displayName}.`);
       return;
     } catch (error) {
