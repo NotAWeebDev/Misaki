@@ -22,7 +22,7 @@ class Magic8 extends Social {
       const cost = this.cmdDis(this.help.cost, level);
       const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
       if (!payMe) return;  
-      const msg = await message.channel.send("`Thinking...`");
+      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.guild.me.displayName}** is thinking...`);
       setTimeout(
         () => msg.edit(`${answers[Math.floor(Math.random() * answers.length)]}`),
         Math.random() * (1 - 5) + 1 * 2000

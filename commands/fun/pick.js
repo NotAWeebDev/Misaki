@@ -16,14 +16,18 @@ class Pick extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const options = args.join(" ");
-    if (options.length < 2) message.response(undefined, "Invalid command usage, you must supply text.");
+    if (options.length < 2) return message.response(undefined, "Invalid command usage, you must supply text.");
     const list = options.split(",");
-    if (list.length < 2)  message.response(undefined, "Invalid command usage, you must supply at least two items to pick from.");
+    if (list.length < 2) return message.response(undefined, "Invalid command usage, you must supply at least two items to pick from.");
     const cost = this.cmdDis(this.help.cost, level);
     const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
     if (!payMe) return;  
     try {
-      return message.channel.send(`I think you should do \`${list[Math.floor(Math.random()*list.length)].trim()}\``);
+      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.guild.me.displayName}** is thinking...`);
+      setTimeout(
+        () => msg.edit(`I think \`${list[Math.floor(Math.random()*list.length)].trim()}\``),
+        Math.random() * (1 - 5) + 1 * 5000
+      );
     } catch (error) {
       this.client.logger.error(error);
     }

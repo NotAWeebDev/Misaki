@@ -25,22 +25,22 @@ class IsNowIllegal extends Social {
     if (word.length < 1 || word.length > 10) {
       inUse.delete("true");
       message.response(undefined, "Cannot be longer than 10 characters or shorter than 1 character.");
+      return;
     }
     if (!wordMatch) {
       inUse.delete("true");
       message.response(undefined, "oops! Non-standard unicode characters are now illegal.");
+      return;
     }
     try {
       const cost = this.cmdDis(this.help.cost, level);
       const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
       if (!payMe) return;  
-      const msg = await message.channel.send(`Convincing Trump that ${word} should be illegal...`);
-      message.channel.startTyping();
+      const msg = await message.channel.send(`<a:typing:397490442469376001> **President Donald Trump** is making ${word} illegal...`);
       await post("https://is-now-illegal.firebaseio.com/queue/tasks.json").send({ task: "gif", word: word.toUpperCase() });
       await this.client.wait(5000);
       const result = await get(`https://is-now-illegal.firebaseio.com/gifs/${word.toUpperCase()}.json`);
       await message.channel.send({ "files": [result.body.url] });
-      message.channel.stopTyping({force:true});
       await msg.delete();
       inUse.delete("true");
     } catch (error) {

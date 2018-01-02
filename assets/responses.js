@@ -58,6 +58,19 @@ exports.balanceMessages = [
   "{{user}}, again? Ugh, you have {{amount}}... Jeez, maybe if you kept track of it you'd remember.."
 ];
 
+exports.purgeMessages = [
+  "A-aaa, AA-aaa, AA-CHOO! {{amount}} messages deleted, oops..",
+  "Now that {{amount}} messages have been deleted we can finally be alone",
+  "Those {{amount}} message's weren't important... I think...",
+  "Whoops... I-I think I deleted {{amount}} messages..."
+];
+
+exports.aboutMessages = [
+  "You want to know about me? What don't you already know b-baka. I'm the entertainer for An Idiot's Guide, owned by my father York#2400.. I can tell you anything about any Anime or Manga that I have, not that it m-matters to me. Look, I'm also asked to give you a daily allowance and keep a record of what everyone else has. Will you just go with it?",
+
+  "I'm Okami! Your entertainment assistant for An Idiot's Guide, a fantastic place owned by my Father. I have a wide range of Manga and Anime, if you ever have a question or just want to look at it; all you need to do is ask. I also help out with keeping the community up by providing allowances for everyone! I've even kept a track of everyones balance so you can see where you are, even though you're always at the top for me!"
+];
+
 exports.rebootMessages = [
   "I'm just leaving for a bit... W-what are you? O-obsessed?",
   "I'm feeling a bit tired, better get some sleep **Goodnight**",

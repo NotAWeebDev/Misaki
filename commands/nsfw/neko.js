@@ -16,8 +16,11 @@ class Neko extends Command {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     try {
+      if (!message.channel.nsfw) return message.response(undefined, "I cannot be used outside a NSFW channel!");
+      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is looking for a feline...`);
       const { body } = await snek.get(`https://nekos.life/api${message.channel.nsfw === true ? "/lewd" : ""}/neko`);
-      return message.channel.send({ embed: { image: { url: body.neko } } });
+      message.channel.send({ embed: { image: { url: body.neko } } });
+      await msg.delete();
     } catch (e) {
       console.log(e);
     }

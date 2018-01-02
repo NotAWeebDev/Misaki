@@ -37,7 +37,7 @@ class Beautiful extends Social {
       const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
       if (!payMe) return;
 
-      const msg = await message.channel.send("Admiring the painting...");
+      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is admiring the painting...`);
   
       const result = await getBeautiful(beautiful.displayAvatarURL({ format:"png", size:256 }));
       await message.channel.send({ files: [{ attachment: result, name: "beautiful.jpg" }] });

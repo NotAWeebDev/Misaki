@@ -41,7 +41,7 @@ class Blame extends Social {
       const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
       if (!payMe) return;  
       const person = message.mentions.members.first() || message.member;
-      const msg = await message.channel.send(`\`Assigning blame to ${person.displayName}\``);
+      const msg = await message.channel.send(`<a:typing:397490442469376001> **${person.displayName}** is getting the blame...`);
       const result = await blame(person);
       await message.channel.send({files: [{attachment: result, name: "blame.png"}]});
       await msg.delete();

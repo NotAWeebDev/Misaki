@@ -6,14 +6,21 @@ const fs = require("fs");
 let baseConfig = fs.readFileSync("./util/setup_base.txt", "utf8");
 
 const defaultSettings = `{
-  "prefix": "-",
-  "modLogChannel": "mod-log",
+  "prefix": "ok!",
   "modRole": "Moderator",
   "adminRole": "Administrator",
   "systemNotice": "true",
+  "welcomeEnabled": "false",
   "welcomeChannel": "welcome",
-  "welcomeMessage": "Say hello to {{user}}, everyone! We all need a warm welcome sometimes :D",
-  "welcomeEnabled": "false"
+  "scoreTime": "5",
+  "dailyTime": "24",
+  "pointsReward": "250",
+  "minPoints": "1",
+  "maxPoints": "50",
+  "costMulti": "10",
+  "customEmoji": "false",
+  "gEmojiID": "replace-this",
+  "uEmoji": "₲"
 }`;
 
 const settings = new Enmap({provider: new EnmapLevel({name: "settings"})});
@@ -33,7 +40,7 @@ let prompts = [
 ];
 
 (async function() {
-  console.log("Setting Up GuideBot Configuration...");
+  console.log("Setting Up Okami Configuration...");
   await settings.defer;
   if (!settings.has("default")) {
     prompts = prompts.slice(1);

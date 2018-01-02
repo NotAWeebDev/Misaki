@@ -9,17 +9,18 @@ const { Collection } = require("discord.js");
 const Kitsu = require("kitsu");
 const kitsu = new Kitsu();
 
-class Manga extends Command {
+class Anime extends Command {
   constructor(client) {
     super(client, {
-      name: "manga",
-      description: "Search for a manga on Kitsu!",
-      category: "Fun",
-      usage: "manga attack on titan",
+      name: "anime",
+      description: "Search for an anime on Kitsu!",
+      category: "General",
+      usage: "anime attack on titan",
       extended: "",
       cooldown: 10,
       guildOnly: true,
       aliases: []
+
     });
   }
 
@@ -28,11 +29,11 @@ class Manga extends Command {
       if (msg.author.id !== message.author.id) return false;
       return ["1", "2", "3", "4", "5"].includes(msg.content);
     }
-    if (args.length < 1) return message.reply("You must add a manga to search for");
+    if (args.length < 1) return message.reply("You must add an anime to search for");
     let msg = await message.channel.send("*fetching information from kitsu!*");
     try {
-      const { data } = await kitsu.fetch("manga", { filter: { text: args.join("-") } });
-      msg = await msg.edit(`Okay I found 5 possible matches which do you want to see? (just write the first number, it will be canceled after 60 seconds)${this.makeTitles(data)}`);
+      const { data } = await kitsu.fetch("anime", { filter: { text: args.join("-") } });
+      msg = await msg.edit(`Okay i found 5 possible matches which do you want to see? (just write the first number, it will be canceled after 60 seconds)${this.makeTitles(data)}`);
       const collected = await message.channel.awaitMessages(filter, {
         max: 20,
         maxMatches: 1,
@@ -42,12 +43,13 @@ class Manga extends Command {
       const returnMessage = collected.first();
       await returnMessage.delete();
       const index = Number(returnMessage.content) - 1;
-      await msg.edit(`**Title JP:** ${data[index].titles.en_jp}\n**Title English:** ${data[index].titles.en}\n**Type:** ${data[index].subtype}\n**Start Date:** ${data[index].startDate}\n**End Date:** ${data[index].endDate || "in Progress"}\n**PopularityRank:** ${data[index].popularityRank}\n**Link:** <https://kitsu.io/manga/${data[index].id}>\n**Synopsis:** ${data[index].synopsis}`);
+      await msg.edit(`**Title JP:** ${data[index].titles.en_jp}\n**Title English:** ${data[index].titles.en}\n**Type:** ${data[index].subtype}\n**Start Date:** ${data[index].startDate}\n**End Date:** ${data[index].endDate || "in Progress"}\n**PopularityRank:** ${data[index].popularityRank}\n**Link:** <https://kitsu.io/anime/${data[index].id}>\n**Synopsis:** ${data[index].synopsis}`);
     } catch (error) {
       if (error instanceof Collection) return message.reply("command canceled due timer");
-      await msg.edit("I had a error while trying to fetch the data from Kitsu Sorry! did you spell the Manga name right?");
+      await msg.edit("I had a error while trying to fetch the data from Kitsu Sorry! did you spell the Anime name right?");
       await message.react("❓");
-    }  }
+    }
+  }
 }
 
-module.exports = Manga;
+module.exports = Anime;
