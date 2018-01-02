@@ -61,6 +61,18 @@ exports.myLevelMessages = [
   "Only a level {{level}} even I'm better than a {{friendly}}"
 ];
 
+exports.dailySuccessMessages = [
+  "Yatta! You've got {{amount}}.",
+  "Well done, you've redeemed your daily {{amount}} points!",
+  "Finally I thought you were never going to claim your {{amount}} today!",
+  "Your dad gave you {{amount}}? I get more then that every hour!",
+  "You have claimed your daily {{amount}}, Ain't that dandy?"
+];
+
+exports.dailyFailureMessages = [
+  "You cannot claim your daily reward yet, please try again in {{time}}"
+];
+
 exports.balanceMessages = [
   "Pfft, a measly {{amount}}? My father gives me more as an allowance!",
   "Only {{amount}}? That's nothing compared to my pocket money!",

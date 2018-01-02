@@ -39,30 +39,22 @@ class Social extends Command {
     return score.level;
   }
 
-  async usrDay(message, payer, payee) {
-    const id = await this.verifySocialUser(message, payee);
+  async usrDay(message) {
     const settings = this.client.getSettings(message.guild.id);
     const dailyTime = parseInt(settings.dailyTime);
     const pointsReward = parseInt(settings.pointsReward);
-
+    const score = message.member.score;
     try {
       
-      const getPayee = message.guild.member(id);
-      const getPayer = message.guild.member(payer);
-      const payerScore = getPayer.score;
-
-      if (Date.now() > getPayer.score.daily) {
-
-        const msg = await message.channel.send(`You have ${payer === payee ? "claimed" : "donated"} your daily ${pointsReward} ${this.emoji(message.guild.id)} points, Ain't that dandy?`);
-        payerScore.daily = msg.createdTimestamp + (dailyTime * 60 * 60 * 1000);
-        payer === payee ? getPayer.givePoints(pointsReward) : getPayee.givePoints(pointsReward);
+      if (Date.now() > score.daily) {
+        const msg = await message.channel.send(`${this.client.responses.dailySuccessMessages.random().replaceAll("{{user}}", message.member.displayName).replaceAll("{{amount}}", `${this.emoji(message.guild.id)}${pointsReward.toLocaleString()}`)}`);
+        score.daily = msg.createdTimestamp + (dailyTime * 60 * 60 * 1000);
+        message.member.givePoints(pointsReward);
         return msg;
-
       } else {
-        const fromNow = moment(payerScore.daily).fromNow(true);
-        message.channel.send(`You cannot claim your daily reward yet, please try again in ${fromNow}.`);
+        const fromNow = moment(score.daily).fromNow(true);
+        message.channel.send(`${this.client.responses.dailyFailureMessages.random().replaceAll("{{time}}", fromNow)}.`);
       }
-
     } catch (error) {
       this.client.logger.error(error);
     }

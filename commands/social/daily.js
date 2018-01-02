@@ -4,10 +4,10 @@ class Daily extends Social {
   constructor(client) {
     super(client, {
       name: "daily",
-      description: "Claim or give your daily points.",
-      usage: "daily [user]",
+      description: "Claim your daily points.",
+      usage: "daily",
       category: "Social",
-      extended: "You can either claim or donate your daily points.",
+      extended: "This command will redeem your guilds daily bonus.",
       cost: 0,
       aliases: ["claim"],
       botPerms: []
@@ -15,9 +15,8 @@ class Daily extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const payee = args.join(" ") || message.author.id;
     try {
-      await this.usrDay(message, message.author.id, payee);
+      await this.usrDay(message);
     } catch (error) {
       throw error;
     }
