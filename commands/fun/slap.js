@@ -9,15 +9,15 @@ const getSlapped = async (slapper, slapped) => {
     Slapper,
     Slapped,
   ] = await Promise.all([
-    fsn.readFile("./assets/images/image_slap.png"),
+    fsn.readFile("./assets/images/plate_fanslap.jpg"),
     snek.get(slapper),
     snek.get(slapped),
   ]);
-  return new Canvas(950, 475)
-    .addImage(plate, 0, 0, 950, 475)
-    .addImage(Slapper.body, 410, 107, 131, 131, { type: "round", radius: 66 })
+  return new Canvas(640, 480)
+    .addImage(plate, 0, 0, 640, 480)
+    .addImage(Slapper.body, 229, 62, 64, 64, { type: "round", radius: 32 })
     .restore()
-    .addImage(Slapped.body, 159, 180, 169, 169, { type: "round", radius: 85 })
+    .addImage(Slapped.body, 405, 245, 64, 64, { type: "round", radius: 32 })
     .restore()
     .toBuffer();
 };

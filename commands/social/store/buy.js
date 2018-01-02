@@ -26,7 +26,7 @@ class Buy extends Social {
     }
 
     const response = await this.client.awaitReply(message, `Are you sure you want to purchase ${item.name} for ${this.emoji(message.guild.id)}${item.price}?`, undefined, null);
-    if (["y", "yes"].includes(response)) {
+    if (["y", "yes"].includes(response.toLowerCase())) {
 
       message.member.takePoints(item.price);
       await message.member.addRole(item.id);
@@ -34,7 +34,7 @@ class Buy extends Social {
 
     } else
 
-    if (["n", "no", "cancel"].includes(response)) {
+    if (["n", "no", "cancel"].includes(response.toLowerCase())) {
       message.response(undefined, "Transaction cancelled.");
     }
   }

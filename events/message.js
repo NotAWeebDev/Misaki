@@ -21,7 +21,7 @@ module.exports = class {
     let prefix = false;
   
     for (const thisPrefix of prefixes) {
-      if (message.content.indexOf(thisPrefix) == 0) prefix = thisPrefix;
+      if (message.content.toLowerCase().indexOf(thisPrefix) == 0) prefix = thisPrefix;
     }
   
     if (message.content.match(new RegExp(`^<@!?${this.client.user.id}>$`))) {

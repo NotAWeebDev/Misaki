@@ -4,13 +4,15 @@ const snek = require("snekfetch");
 const fsn = require("fs-nextra");
 
 const getStepped = async (person) => {
-  const plate = await fsn.readFile("./assets/images/plate_stepped.jpg");
+  const plate = await fsn.readFile("./assets/images/plate_stepped.png");
   const { body } = await snek.get(person);
   return new Canvas(400, 562)
-    .setColor("#000000")
-    .addRect(0, 0, 400, 562)
-    .addImage(plate, 0, 0, 400, 562)
-    .addImage(body, 100, 350, 128, 128)
+    .setColor("#cccccc")
+    .addRect(0, 0, 400, 566)
+    .rotate(50 * -Math.PI / 180)
+    .addImage(body, -280, 350, 128, 128)
+    .rotate(-50 * Math.PI / -180)
+    .addImage(plate, 0, 0, 400, 566)
     .toBuffer();
 };
 

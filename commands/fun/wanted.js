@@ -4,13 +4,13 @@ const snek = require("snekfetch");
 const fsn = require("fs-nextra");
 
 const getWanted = async (person) => {
-  const plate = await fsn.readFile("./assets/images/plate_wanted.jpg");
+  const plate = await fsn.readFile("./assets/images/plate_wanted.png");
   const { body } = await snek.get(person);
-  return new Canvas(400, 562)
-    .setColor("#000000")
-    .addRect(0, 0, 400, 562)
-    .addImage(plate, 0, 0, 400, 562)
-    .addImage(body, 86, 178, 228, 228)
+  return new Canvas(360, 640)
+    .setColor("#debb80")
+    .addRect(0, 0, 360, 640)
+    .addImage(body, 30, 200, 300, 300)
+    .addImage(plate, 0, 0, 360, 640)
     .toBuffer();
 };
 
