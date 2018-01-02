@@ -20,8 +20,8 @@ class Store extends Social {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     try {
 
-      const items = this.client.store.findAll("type", "Roles");
-
+      const items = message.guild.store;
+      if (items.length === 0) return message.response(undefined, "Baka... nothing is for sale!");
       message.channel.send(items.map(item => 
         `${titleCase(item.name)}: ${item.price} 💰`).join("\n"), { code: true }
       );

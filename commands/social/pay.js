@@ -14,6 +14,7 @@ class Pay extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
+    if (args.length === 0) return message.response(undefined, "B-baka, you need to mention someone to b-be able to pay them.");
     try {
       const [bot, user] = await this.verifySocialUser(message, args[0]);
       if (bot) return message.response("❗", "Bot's cannot accumulate points or levels.");

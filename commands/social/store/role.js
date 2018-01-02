@@ -27,7 +27,7 @@ class Role extends Social {
 
       if (!price) return message.reply("Please specify a price");
 
-      const role = { name: name.toLowerCase(), id: message.guild.roles.find("name", name).id.toString(), price: price, type: "Roles" };
+      const role = { name: name.toLowerCase(), id: message.guild.roles.find("name", name).id.toString(), price: price, guildId: message.guild.id };
       this.client.store.set(role.id, role);
       message.reply(`${name} is now on sale `);
     } else
