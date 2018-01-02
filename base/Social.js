@@ -53,7 +53,7 @@ class Social extends Command {
         return msg;
       } else {
         const fromNow = moment(score.daily).fromNow(true);
-        message.channel.send(`${this.client.responses.dailyFailureMessages.random().replaceAll("{{time}}", fromNow)}.`);
+        message.channel.send(`${this.client.responses.dailyFailureMessages.random().replaceAll("{{user}}", message.member.displayName).replaceAll("{{time}}", fromNow)}.`);
       }
     } catch (error) {
       this.client.logger.error(error);

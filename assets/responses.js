@@ -66,11 +66,19 @@ exports.dailySuccessMessages = [
   "Well done, you've redeemed your daily {{amount}} points!",
   "Finally I thought you were never going to claim your {{amount}} today!",
   "Your dad gave you {{amount}}? I get more then that every hour!",
-  "You have claimed your daily {{amount}}, Ain't that dandy?"
+  "You have claimed your daily {{amount}}, Ain't that dandy?",
+  "N-nani?! You got {{amount}} woah..",
+  "You just got {{amount}}? Maybe buy me dinner some time {{user}}-san? :wink:",
+  "Oh goody, you finally got your {{amount}}. It's about time, now get me some Pocky"
 ];
 
 exports.dailyFailureMessages = [
-  "You cannot claim your daily reward yet, please try again in {{time}}"
+  "You cannot claim your daily reward yet, please try again in {{time}}",
+  "Oh come on now, you know better than to ask ahead of time.. You can get your daily in {{time}}",
+  "{{user}}-san, you already got your allowance today. You can get it in {{time}}",
+  "This again? I told you to wait {{time}}",
+  "Hey! Money is already tight around here. Ask in {{time}}",
+  "You're gonna make S-sensei mad please wait {{time}} to claim again"
 ];
 
 exports.balanceMessages = [
