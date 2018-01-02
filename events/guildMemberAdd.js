@@ -13,6 +13,6 @@ module.exports = class {
     
     if (settings.welcomeEnabled !== "true") return;
 
-    member.guild.channels.find("name", settings.welcomeChannel).send(`${this.client.emojis.get("396391329367588878")}  ${this.client.responses.welcomeMessages.random().replaceAll("{{user}}", member.user.username).trim()}`).catch(console.error);
+    member.guild.channels.find("name", settings.welcomeChannel).send(`${this.client.emojis.get("396391329367588878")}  ${this.client.responses.welcomeMessages.random().replaceAll("{{user}}", member.user.username).replaceAll("{{amout}}", guild.memberCount).replaceAll("{{guild}}", guild.name).trim()}`).catch(console.error);
   }
 };

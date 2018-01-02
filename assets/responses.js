@@ -1,32 +1,29 @@
+// Member Join
 exports.welcomeMessages = [
   "O-ohayou {{user}}-san.",
   "Hmph, looks like {{user}}, another baka has joined.",
   "It's not like I like you or anything... but welcome to the server {{user}}.",
   "O-oh, welcome {{user}}-san. I hope I haven't embarrased you...",
   "OwO who's this. {{user}} has joined the server.",
-  "{{user}}, looks like you landed on the wrong side of discord!"
+  "{{user}}, looks like you landed on the wrong side of discord!",
+  "Hi {{user}}! Welcome to {{guild}}, I hope you enjoy your stay!",
+  "ERGH, why has {{user}} got to come, I already have to handle {{amount}} users !",
+  "Y-yay! more people to deal with! Welcome {{user}}!"
 ];
 
+// Member Leave
 exports.goodbyeMessages = [
   "Awh, I-I have no words for t-this, b-but, I-I'll miss you {{user}}-san!",
   "Awh, {{user}} has left... n-not that I care! Baka!",
   "{{user}}-san.... N-no..",
   "{{user}} left, not like we needed them or anything.",
-  "{{user}} why would you leave me here, alone!?"
+  "{{user}} why would you leave me here, alone!?",
+  "{{user}} discovered the leave button.",
+  "Eep! {{user}} left?! H-hes always leaving me, that baka..",
+  "Finally, I thought {{user}} would never leave!"
 ];
 
-exports.pingMessages = [
-  "Ugh, again? You always ask, and I tell you that I responded in {{ms}}ms.",
-  "B-baka, I responded... just in {{ms}}ms.",
-  "H-here you go, I responded in {{ms}}ms.",
-  "Here you go, not that it was worth my time. It only took me {{ms}}ms.",
-  "Is this right? I've responded in {{ms}}ms.",
-  "{{user}}?, I've responded in {{ms}}ms.",
-  "{{user}}! You wasted {{ms}}ms of my time, ERGH",
-  "D-did I do it right? I responded in {{ms}}ms.",
-  "{{user}}, yes I'm here, and it took me {{ms}}ms to respond!"
-];
-
+// Level Up
 exports.levelUpMessages = [
   "E-eh? You levelled up? Well just because you're level {{level}} now, doesn't mean I'll like you more {{user}}... baka.",
   "Hmph, you leveled up to {{level}} {{user}}-san, w-well it makes no difference to me!",
@@ -39,6 +36,19 @@ exports.levelUpMessages = [
   "N-nani? You've reached level {{level}} so quickly...",
   "Senpai noticed you and wanted to give you level {{level}}",
   "You're only level {{level}}? You disgust me!"
+];
+
+// Commands
+exports.pingMessages = [
+  "Ugh, again? You always ask, and I tell you that I responded in {{ms}}ms.",
+  "B-baka, I responded... just in {{ms}}ms.",
+  "H-here you go, I responded in {{ms}}ms.",
+  "Here you go, not that it was worth my time. It only took me {{ms}}ms.",
+  "Is this right? I've responded in {{ms}}ms.",
+  "{{user}}?, I've responded in {{ms}}ms.",
+  "{{user}}! You wasted {{ms}}ms of my time, ERGH",
+  "D-did I do it right? I responded in {{ms}}ms.",
+  "{{user}}, yes I'm here, and it took me {{ms}}ms to respond!"
 ];
 
 exports.myLevelMessages = [
@@ -80,6 +90,9 @@ exports.rebootMessages = [
   "{{user}}-san! I'm restarting, give me a moment.."
 ];
 
+// System
+
+// Reboot
 exports.bootOneMessages = [
   "{{user}}-san! I'm back!"
 ];
@@ -88,22 +101,39 @@ exports.bootTwoMessages = [
   "{{user}}-san, did you miss me? I only took {{ms}}ms."
 ];
 
+// Reload
 exports.reloadMissingArg = [
-  "N-nani?! I don't know what to do, you didn't give me anything!"
+  "N-nani?! I don't know what to do, you didn't give me anything!",
+  "Baka! You are suppossed to provide a command to reload!"
 ];
 
 exports.reloadNotFound = [
-  "Eeeh?! {{user}}-san, why would you ask me to find a command that doesn't exist, it wasn't even an alias."
+  "Eeeh?! {{user}}-san, why would you ask me to find a command that doesn't exist, it wasn't even an alias.",
+  "What are you doing? {{command}} doesn't exist! Baka!"
 ];  
 
 exports.reloadErrUnload = [
-  "{{user}}-san, I think I broke it... This happened: {{response}}"
+  "{{user}}-san, I think I broke it... This happened: {{response}}",
+  "There was an error, probably your fault! Baka! ({response})"
 ];
 
 exports.reloadErrLoad = [
-  "Ugh, can't you do one thing right? You ended up breaking {{command}}."
+  "Ugh, can't you do one thing right? You ended up breaking {{command}}.",
+  "{{command}} is broken... Not my fault or problem though! ({{response}})"
 ];
 
 exports.reloadSuccess = [
-  "Yatta! {{command}} reloaded, now we can get back to what we were doing, or whatever you want to do..."
+  "Yatta! {{command}} reloaded, now we can get back to what we were doing, or whatever you want to do...",
+  "I've reloaded {{command}}, not that I could see any point in it..."
 ];
+
+// Errors
+
+exports.notNSFWChannel = [
+
+];
+
+exports.guildOnlyCommand = [
+
+];
+
