@@ -23,8 +23,7 @@ class Sell extends Social {
 
     const score = this.client.points.get(`${message.guild.id}-${message.author.id}`);
     const returnPrice = Math.ceil(item.price/2) 
-    score.points += returnPrice;
-    this.client.points.set(`${message.guild.id}-${message.author.id}`, score);
+    message.member.givePoints(returnPrice)
     
     await message.member.removeRole(item.id);
     message.channel.send("You have sold the role :tada: ");
