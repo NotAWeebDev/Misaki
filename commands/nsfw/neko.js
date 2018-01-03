@@ -1,6 +1,6 @@
-const Command = require(`${process.cwd()}/base/Command.js`);
+const Social = require(`${process.cwd()}/base/Social.js`);
 const snek = require("snekfetch");
-class Neko extends Command {
+class Neko extends Social {
   constructor(client) {
     super(client, {
       name: "neko",
@@ -16,9 +16,12 @@ class Neko extends Command {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     try {
-      if (!message.channel.nsfw) return message.response(undefined, "I cannot be used outside a NSFW channel!");
+      if (!message.channel.nsfw) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
+
+      if (!(await this.cmdPay(message, message.author.id, this.cmdDis(this.help.cost, level), this.conf.botPerms))) return;
+
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is looking for a feline...`);
-      const { body } = await snek.get(`https://nekos.life/api${message.channel.nsfw === true ? "/lewd" : ""}/neko`);
+      const { body } = await snek.get(`https://nekos.life/api${Math.random() >= 0.5 ? "/lewd" : ""}/neko`);
       message.channel.send({ embed: { image: { url: body.neko } } });
       await msg.delete();
     } catch (e) {

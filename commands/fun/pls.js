@@ -37,9 +37,7 @@ class Please extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars 
     try {
-      const cost = this.cmdDis(this.help.cost, level);
-      const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
-      if (!payMe) return;  
+      if (!(await this.cmdPay(message, message.author.id, this.cmdDis(this.help.cost, level), this.conf.botPerms))) return;
       const person = message.mentions.members.first() || message.member;
       const result = await pls(person);
       await message.channel.send({files: [{attachment: result, name: "pls.png"}]});

@@ -11,21 +11,32 @@ class Sell extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const name = args.join(" ").toLowerCase();
+    const name = args.join(" ");
 
     if (!name) return this.client.commands.get("store").run(message, args, level);
     
-    // We are taking the Role name given by author and finding it from the Map
-    const item = this.client.store.find("name", name);
-    // This verifies as to if there is a item on sale
+    const item = this.client.store.filter(i => i.name.toLowerCase().includes(name.toLowerCase()));
+      
     if (!item) return message.channel.send("That item doesn't exist, Please make sure it is spelled correctly");
-    if (!message.member.roles.has(item.id)) return message.channel.send("You don't have the role :facepalm: ");
+    if (!message.member.roles.has(item.array()[0].id)) return message.channel.send("You don't have the role :facepalm: ");
 
-    const returnPrice = Math.ceil(item.price/2);
-    message.member.givePoints(returnPrice);
-    
-    await message.member.removeRole(item.id);
-    message.channel.send("You have sold the role :tada: ");
+    const returnPrice = Math.floor(item.array()[0].price/2);
+
+    const response = await this.client.awaitReply(message, `Are you sure you want to sell ${item.array()[0].name} for ${this.emoji(message.guild.id)}${returnPrice}?`, undefined, null);
+    if (["y", "yes"].includes(response.toLowerCase())) {
+
+      message.member.givePoints(returnPrice);
+      await message.member.removeRole(item.array()[0].id);
+      message.channel.send("You have sold the role :tada: ");
+
+    } else
+
+    if (["n", "no", "cancel"].includes(response.toLowerCase())) {
+      message.response(undefined, "Transaction cancelled.");
+    }
+
+
+
   }
 }
 

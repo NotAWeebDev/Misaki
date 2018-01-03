@@ -29,8 +29,7 @@ class Mock extends Social {
       const mockBob = await fsn.readFile("./assets/images/spongebob.png");
       const mock = grabMock.size === 1 ? grabMock.first() : grabMock;
       if (mock.author.bot) message.response(undefined, "You cannot mock bots.");
-      const payMe = await this.cmdPay(message, message.author.id, this.help.cost, this.conf.botPerms);
-      if (!payMe) return;  
+      if (!(await this.cmdPay(message, message.author.id, this.cmdDis(this.help.cost, level), this.conf.botPerms))) return;
       await message.channel.send(alternateCase(mock.cleanContent), {files: [{attachment: mockBob, name: "mock.png"}]});
     } catch (error) {
       this.client.logger.error(error);

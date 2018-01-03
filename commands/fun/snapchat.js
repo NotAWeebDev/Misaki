@@ -39,9 +39,7 @@ class SnapChat extends Social {
     if (text.length < 1) return message.response(undefined, "You must give the snap some text.");
     if (text.length > 28) return message.response(undefined, "I can only handle a maximum of 28 characters");
     try {
-      const cost = this.cmdDis(this.help.cost, level);
-      const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
-      if (!payMe) return;  
+      if (!(await this.cmdPay(message, message.author.id, this.cmdDis(this.help.cost, level), this.conf.botPerms))) return;
       const result = await getSnap(text);
       await message.channel.send({ files: [{ attachment: result, name: `${text.toLowerCase().replace(" ", "-").replace(".", "-")}.png`}]});
     } catch (error) {

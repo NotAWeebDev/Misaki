@@ -25,10 +25,9 @@ class Say extends Social {
       const channel = message.guild.channels.get(channelid);
       if (!message.member.permissionsIn(channel).has(["SEND_MESSAGES", "READ_MESSAGES"])) message.response(undefined, "You do not have permission to `say` in that channel.");
       
+      if (!(await this.cmdPay(message, message.author.id, this.cmdDis(this.help.cost, level), this.conf.botPerms))) return;
+      
       message.delete();
-      const cost = this.cmdDis(this.help.cost, level);
-      const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
-      if (!payMe) return;  
 
       channel.startTyping();
       setTimeout(() => {

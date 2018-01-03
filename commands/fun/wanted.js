@@ -31,9 +31,7 @@ class Wanted extends Social {
     try {
       const wanted = await this.verifyUser(message,args[0] ? args[0] : message.author.id);
       
-      const cost = this.cmdDis(this.help.cost, level);
-      const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
-      if (!payMe) return;
+      if (!(await this.cmdPay(message, message.author.id, this.cmdDis(this.help.cost, level), this.conf.botPerms))) return;
 
       const msg = await message.channel.send("Fetching the Sheriff...");
       const result = await getWanted(wanted.displayAvatarURL({ format:"png", size:256 }));

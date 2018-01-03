@@ -33,9 +33,7 @@ class Stepped extends Social {
     try {
       const stepped = (message.mentions.users.first() || message.author).displayAvatarURL({ format:"png", size:128 });
       
-      const cost = this.cmdDis(this.help.cost, level);
-      const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
-      if (!payMe) return;
+      if (!(await this.cmdPay(message, message.author.id, this.cmdDis(this.help.cost, level), this.conf.botPerms))) return;
 
       const msg = await message.channel.send("Going for a walk...");
       const result = await getStepped(stepped);

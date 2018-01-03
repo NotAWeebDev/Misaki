@@ -16,9 +16,7 @@ class Inspire extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     try {
-      const cost = this.cmdDis(this.help.cost, level);
-      const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
-      if (!payMe) return;
+      if (!(await this.cmdPay(message, message.author.id, this.cmdDis(this.help.cost, level), this.conf.botPerms))) return;
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** wants to be inspired...`);
 
       const xmas = message.flags[0] === "xmas" ? "&season=xmas" : "";

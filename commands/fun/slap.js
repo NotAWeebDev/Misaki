@@ -40,9 +40,9 @@ class Slap extends Social {
     try {
       const slapped = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
       const slapper = message.author;
-      const cost = this.cmdDis(this.help.cost, level);
-      const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
-      if (!payMe) return;  
+
+      if (!(await this.cmdPay(message, message.author.id, this.cmdDis(this.help.cost, level), this.conf.botPerms))) return;
+
       const msg = await message.channel.send(`Finding ${slapped.username}...`);
 
       const result = await getSlapped(slapper.displayAvatarURL({ format:"png", size:128 }), slapped.displayAvatarURL({ format:"png", size:128 }));

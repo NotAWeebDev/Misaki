@@ -20,9 +20,9 @@ class Yoda extends Social {
         message.response(undefined, "Invalid command usage, you must supply text for Yoda. Yes.");
         return;
       }
-      const cost = this.cmdDis(this.help.cost, level);
-      const payMe = await this.cmdPay(message, message.author.id, cost, this.conf.botPerms);
-      if (!payMe) return;  
+
+      if (!(await this.cmdPay(message, message.author.id, this.cmdDis(this.help.cost, level), this.conf.botPerms))) return;
+
       const { text } = await snek.get(`http://yoda-api.appspot.com/api/v1/yodish?text=${encodeURIComponent(speech.toLowerCase())}`);
       message.channel.send(JSON.parse(text).yodish);
     } catch (error) {

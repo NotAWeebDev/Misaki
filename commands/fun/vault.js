@@ -17,9 +17,11 @@ class Valut extends Social {
       botPerms: ["ATTACH_FILES"],
     });
   }
+
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     try {
       const user = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
+      if (!(await this.cmdPay(message, message.author.id, this.cmdDis(this.help.cost, level), this.conf.botPerms))) return;
       const msg = await message.channel.send("Who's giving a thumbs up?...");
       const { getBeautiful } = this;
       const result = await getBeautiful(user.displayAvatarURL({ format:"png", size:128 }));
