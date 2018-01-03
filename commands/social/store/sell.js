@@ -21,9 +21,8 @@ class Sell extends Social {
     if (!item) return message.channel.send("That item doesn't exist, Please make sure it is spelled correctly");
     if (!message.member.roles.has(item.id)) return message.channel.send("You don't have the role :facepalm: ");
 
-    const score = this.client.points.get(`${message.guild.id}-${message.author.id}`);
-    const returnPrice = Math.ceil(item.price/2) 
-    message.member.givePoints(returnPrice)
+    const returnPrice = Math.ceil(item.price/2);
+    message.member.givePoints(returnPrice);
     
     await message.member.removeRole(item.id);
     message.channel.send("You have sold the role :tada: ");
