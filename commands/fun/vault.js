@@ -3,17 +3,6 @@ const { Canvas } = require("canvas-constructor");
 const snek = require("snekfetch");
 const fsn = require("fs-nextra");
 
-const getBeautiful = async (person) => {
-  const plate = await fsn.readFile("./assets/images/plate_vaultboy.png");
-  const { body } = await snek.get(person);
-  return new Canvas(365, 365)
-    .setColor("#000000")
-    .addRect(0, 0, 365, 365)
-    .addImage(body, 153, 62, 100, 100)
-    .addImage(plate, 0, 0, 365, 365)
-    .toBuffer();
-};
-
 class Valut extends Social {
   constructor(client) {
     super(client, {
@@ -32,6 +21,7 @@ class Valut extends Social {
     try {
       const user = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
       const msg = await message.channel.send("Who's giving a thumbs up?...");
+      const { getBeautiful } = this;
       const result = await getBeautiful(user.displayAvatarURL({ format:"png", size:128 }));
 
       await message.channel.send({ files: [{ attachment: result, name: "thumbs.jpg" }] });
@@ -39,6 +29,17 @@ class Valut extends Social {
     } catch (error) {
       throw error;
     }
+  }
+
+  async getBeautiful(person) {
+    const plate = await fsn.readFile("./assets/images/plate_vaultboy.png");
+    const { body } = await snek.get(person);
+    return new Canvas(365, 365)
+      .setColor("#000000")
+      .addRect(0, 0, 365, 365)
+      .addImage(body, 153, 62, 100, 100)
+      .addImage(plate, 0, 0, 365, 365)
+      .toBuffer();
   }
 }
 
