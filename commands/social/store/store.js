@@ -17,7 +17,7 @@ class Store extends Social {
       const items = message.guild.store;
       if (items.length === 0) return message.response(undefined, "Baka... nothing is for sale!");
       message.channel.send(items.map(item => 
-        `${message.guild.roles.find("id", item.id).name}: ${item.price} 💰`).join("\n"), { code: true }
+        `${message.guild.roles.get(item.id.toString()).name}: ${item.price} 💰`).join("\n"), { code: true }
       );
     } catch (e) {
       console.log(e);
