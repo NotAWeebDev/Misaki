@@ -15,9 +15,14 @@ class Score extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const member = args[0] ? await this.verifyMember(message, args[0]) : message.member;
-    const score = member.score;
-    message.channel.send(`${this.client.responses.balanceMessages.random().replaceAll("{{user}}", message.member.displayName).replaceAll("{{amount}}", `${this.emoji(message.guild.id)}${score.points.toLocaleString()}`)}`);
+    if (member != message.member) return resp("other", member, message, this.client, this);
+    resp("self", member, message, this.client, this);
   }
 }
-
+async function resp(type, member, message, client, social) {
+  const score = member.score;
+  if (type === "other") message.channel.send(`${client.responses.otherBalanceMessages.random().replaceAll("{{user}}", member.displayName).replaceAll("{{amount}}", `${social.emoji(message.guild.id)}${score.points.toLocaleString()}`)}`);
+  else
+    message.channel.send(`${client.responses.balanceMessages.random().replaceAll("{{user}}", message.member.displayName).replaceAll("{{amount}}", `${social.emoji(message.guild.id)}${score.points.toLocaleString()}`)}`);
+}
 module.exports = Score;

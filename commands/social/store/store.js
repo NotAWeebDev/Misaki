@@ -1,11 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 
-function titleCase(str) {
-  return str.toLowerCase().split(" ").map(function(word) {
-    return word.replace(word[0], word[0].toUpperCase());
-  }).join(" ");
-}
-
 class Store extends Social {
   constructor(client) {
     super(client, {
