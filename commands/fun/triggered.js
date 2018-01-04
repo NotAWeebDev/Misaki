@@ -69,7 +69,6 @@ class Triggered extends Social {
     });
   }
   
-
   async getTriggered(triggered) {
     
     const imgTitle = new Canvas.Image();

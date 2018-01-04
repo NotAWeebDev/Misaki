@@ -1,9 +1,3 @@
-/*
-
-  This is a modified FML command thanks to Stitch <@257847417183928320>
-  for supplying the updated code.
-
-*/
 const Social = require(`${process.cwd()}/base/Social.js`);
 const request = require("snekfetch");
 const HTMLParser = require("fast-html-parser");

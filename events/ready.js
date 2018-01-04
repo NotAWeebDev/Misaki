@@ -30,5 +30,13 @@ module.exports = class {
     this.client.user.setActivity(`@${this.client.user.username} help | ${this.client.guilds.size} Server${this.client.guilds.size > 1 ? "s" : ""}`);
   
     this.client.logger.log(`${this.client.user.tag}, ready to serve ${this.client.users.size} users in ${this.client.guilds.size} servers.`, "ready");
+
+    setInterval(() => {
+      const toRemind = this.client.reminders.filter(r => r.reminderTimestamp <= Date.now());
+      toRemind.forEach(reminder => {
+        this.client.users.get(reminder.id).send(`You asked me to remind you about: \`${reminder.reminder}\``);
+        this.client.reminders.delete(`${reminder.id}-${reminder.reminderTimestamp}`);
+      }); 
+    }, 60000); 
   }
 };

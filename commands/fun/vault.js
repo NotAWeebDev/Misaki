@@ -23,8 +23,8 @@ class Valut extends Social {
       const user = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
       if (!(await this.cmdPay(message, message.author.id, this.conf.botPerms))) return;
       const msg = await message.channel.send("Who's giving a thumbs up?...");
-      const { getBeautiful } = this;
-      const result = await getBeautiful(user.displayAvatarURL({ format:"png", size:128 }));
+      const { getThumbsUp } = this;
+      const result = await getThumbsUp(user.displayAvatarURL({ format:"png", size:128 }));
 
       await message.channel.send({ files: [{ attachment: result, name: "thumbs.jpg" }] });
       await msg.delete();
@@ -33,7 +33,7 @@ class Valut extends Social {
     }
   }
 
-  async getBeautiful(person) {
+  async getThumbsUp(person) {
     const plate = await fsn.readFile("./assets/images/plate_vaultboy.png");
     const { body } = await snek.get(person);
     return new Canvas(365, 365)

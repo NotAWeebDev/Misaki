@@ -8,6 +8,12 @@ module.exports = Structures.extend("GuildMember", DiscordGuildMember => {
       this.fullId = `${this.guild.id}-${this.id}`;
     }
 
+    get reminders() {
+      const reminderList = this.client.reminders.findAll("id", this.id);
+      if (!reminderList) return false;
+      return reminderList;
+    }
+
     get score() {
       if (!this.client.points.get(this.fullId)) return { points: 0, level: 0, user: this.id, guild: this.guild.id, daily: 1504120109 };
       return this.client.points.get(this.fullId);

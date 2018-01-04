@@ -49,7 +49,7 @@ class Slots extends Social {
       message.buildEmbed()
         .setAuthor("Okami Slots")
         .setColor(0x00F000)
-        .setDescription(`${results.visualize(false)}\n\n${results.winCount === 0 ? "Oh rip, you lost!" : "Whoa... you won!"}\n\n${results.winCount === 0 ? "" : `Points Won: ${winnings.toLocaleString()}`}`)
+        .setDescription(`${results.visualize(false)}\n\n${results.winCount === 0 ? `Oh rip, ${message.member.displayName} lost!` : `Whoa... ${message.member.displayName} won!`}\n\n${results.winCount === 0 ? "" : `${message.member.displayName} won ₲${winnings.toLocaleString()}`}`)
         .setTimestamp()
         .send();
       if (results.winCount > 0) return message.member.givePoints(winnings);

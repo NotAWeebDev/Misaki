@@ -7,18 +7,6 @@ const fsn = require("fs-nextra");
 Canvas.registerFont(resolve(join(__dirname, "../../assets/fonts/Helvetica75-Bold.ttf")), "Snapchat");
 Canvas.registerFont(resolve(join(__dirname, "../../assets/fonts/NotoEmoji-Regular.ttf")), "Snapchat");
 
-const getSnap = async (text) => {
-  const snap = await fsn.readFile("./assets/images/image_snapchat.png");
-  return new Canvas(width, height)
-    .addImage(snap, 0, 0, width, height)
-    .restore()
-    .setTextAlign("center")
-    .setTextFont("18pt Snapchat")
-    .setColor("#FFFFFF")
-    .addText(text, width / 2, 390)
-    .toBuffer();
-};
-
 class SnapChat extends Social {
   constructor(client) {
     super(client, {
@@ -40,12 +28,25 @@ class SnapChat extends Social {
     if (text.length > 28) return message.response(undefined, "I can only handle a maximum of 28 characters");
     try {
       if (!(await this.cmdPay(message, message.author.id, this.conf.botPerms))) return;
+      const { getSnap } = this;
       const result = await getSnap(text);
       await message.channel.send({ files: [{ attachment: result, name: `${text.toLowerCase().replace(" ", "-").replace(".", "-")}.png`}]});
     } catch (error) {
       this.client.logger.error(error);
     }
   }
+
+  async getSnap(text) {
+    const snap = await fsn.readFile("./assets/images/image_snapchat.png");
+    return new Canvas(width, height)
+      .addImage(snap, 0, 0, width, height)
+      .restore()
+      .setTextAlign("center")
+      .setTextFont("18pt Snapchat")
+      .setColor("#FFFFFF")
+      .addText(text, width / 2, 390)
+      .toBuffer();
+  }  
 }
 
 module.exports = SnapChat;

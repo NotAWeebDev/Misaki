@@ -3,19 +3,6 @@ const { Canvas } = require("canvas-constructor");
 const snek = require("snekfetch");
 const fsn = require("fs-nextra");
 
-const getStepped = async (person) => {
-  const plate = await fsn.readFile("./assets/images/plate_stepped.png");
-  const { body } = await snek.get(person);
-  return new Canvas(400, 562)
-    .setColor("#cccccc")
-    .addRect(0, 0, 400, 566)
-    .rotate(50 * -Math.PI / 180)
-    .addImage(body, -280, 350, 128, 128)
-    .rotate(-50 * Math.PI / -180)
-    .addImage(plate, 0, 0, 400, 566)
-    .toBuffer();
-};
-
 class Stepped extends Social {
   constructor(client) {
     super(client, {
@@ -36,6 +23,7 @@ class Stepped extends Social {
       if (!(await this.cmdPay(message, message.author.id, this.conf.botPerms))) return;
 
       const msg = await message.channel.send("Going for a walk...");
+      const { getStepped } = this;
       const result = await getStepped(stepped);
       await message.channel.send({ files: [{ attachment: result, name: "stepped.jpg" }] });
       await msg.delete();
@@ -44,6 +32,19 @@ class Stepped extends Social {
       this.client.logger.error(error);
     }
   }
+  
+  async getStepped(person) {
+    const plate = await fsn.readFile("./assets/images/plate_stepped.png");
+    const { body } = await snek.get(person);
+    return new Canvas(400, 562)
+      .setColor("#cccccc")
+      .addRect(0, 0, 400, 566)
+      .rotate(50 * -Math.PI / 180)
+      .addImage(body, -280, 350, 128, 128)
+      .rotate(-50 * Math.PI / -180)
+      .addImage(plate, 0, 0, 400, 566)
+      .toBuffer();
+  }  
 }
 
 module.exports = Stepped;

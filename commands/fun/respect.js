@@ -3,18 +3,6 @@ const { Canvas } = require("canvas-constructor");
 const snek = require("snekfetch");
 const fsn = require("fs-nextra");
 
-const giveRespect = async (person) => {
-  const plate = await fsn.readFile("./assets/images/image_respects.png");
-  const { body } = await snek.get(person);
-  return new Canvas(720, 405)
-    .addRect(0, 0, 720, 405)
-    .setColor("#000000")
-    .addImage(body, 110, 45, 90, 90)
-    .restore()
-    .addImage(plate, 0, 0, 720, 405)
-    .toBuffer();
-};
-
 class Respect extends Social {
   constructor(client) {
     super(client, {
@@ -30,6 +18,7 @@ class Respect extends Social {
       permLevel: "Patron"
     });
   }
+
   async run(message, args, level) { // eslint-disable-line no-unused-vars 
     try {
       const target = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
@@ -38,6 +27,7 @@ class Respect extends Social {
       
       const msg = await message.channel.send("Paying respects...");
       
+      const { giveRespect } = this;
       const result = await giveRespect(target.displayAvatarURL({ format:"png", size:128 }));
       const m = await message.channel.send("Press 🇫 to pay respects.", { files: [{ attachment: result, name: "paid-respects.png" }] });
       await msg.delete();
@@ -46,6 +36,18 @@ class Respect extends Social {
       this.client.logger.error(error);
     }
   }
+
+  async giveRespect(person) {
+    const plate = await fsn.readFile("./assets/images/image_respects.png");
+    const { body } = await snek.get(person);
+    return new Canvas(720, 405)
+      .addRect(0, 0, 720, 405)
+      .setColor("#000000")
+      .addImage(body, 110, 45, 90, 90)
+      .restore()
+      .addImage(plate, 0, 0, 720, 405)
+      .toBuffer();
+  }  
 }
 
 module.exports = Respect;

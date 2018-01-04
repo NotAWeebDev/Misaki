@@ -21,6 +21,7 @@ class Okami extends Discord.Client {
     this.ratelimits = new Enmap();
 
     this.settings = new Enmap({ provider: new EnmapLevel({ name: "settings" }) });
+    this.reminders = new Enmap({provider: new EnmapLevel({name: "reminders"})});
     this.points = new Enmap({provider: new EnmapLevel({name: "points"})});
     this.store = new Enmap({provider: new EnmapLevel({name: "shop"})});
   }
