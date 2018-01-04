@@ -26,7 +26,7 @@ const money = new SlotSymbol("money", { display: "💰", points: 400, weight: 5 
 
 const diamond = new SlotSymbol("diamond", { display: "💎", points: 500, weight: 4 });
 
-const jackpot = new SlotSymbol("jackpot", {display: "🔅", points: 1000, weight: 1});
+const jackpot = new SlotSymbol("jackpot", { display: "🔅", points: 1000, weight: 1});
 
 const machine = new SlotMachine(3, [cherry, lemon, watermelon, apple, grape, orange, wild, bell, clover, heart, money, diamond, jackpot]);
 

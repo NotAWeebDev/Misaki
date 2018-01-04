@@ -5,7 +5,7 @@ class Butts extends Social {
     super(client, {
       name: "butts",
       description: "Baby got back.",
-      category: "Fun",
+      category: "NSFW",
       usage: "butts",
       extended: "This command will return butts.",
       cooldown: 10,

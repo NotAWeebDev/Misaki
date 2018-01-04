@@ -5,7 +5,7 @@ class Boobs extends Social {
     super(client, {
       name: "boobs",
       description: "Show me boobies!!!",
-      category: "Fun",
+      category: "NSFW",
       usage: "boobs",
       extended: "This command will return boobs.",
       cooldown: 10,
