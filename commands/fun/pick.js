@@ -19,7 +19,7 @@ class Pick extends Social {
     if (options.length < 2) return message.response(undefined, "Invalid command usage, you must supply text.");
     const list = options.split(",");
     if (list.length < 2) return message.response(undefined, "Invalid command usage, you must supply at least two items to pick from.");
-    if (!(await this.cmdPay(message, message.author.id, this.cmdDis(this.help.cost, level), this.conf.botPerms))) return;
+    if (!(await this.cmdPay(message, message.author.id, this.conf.botPerms))) return;
     try {
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.guild.me.displayName}** is thinking...`);
       setTimeout(

@@ -34,12 +34,12 @@ class Achievement extends Social {
     });
   }
 
-  async run(message, args, level) {
+  async run(message, args, level) { // eslint-disable-line no-unused-vars 
     let text = args.join(" ");
     if (text.length < 1) return message.response(undefined, "You must give an achievement description.");
     if (text.length > 22) return message.response(undefined, "I can only handle a maximum of 22 characters");
     try {
-      if (!(await this.cmdPay(message, message.author.id, this.cmdDis(this.help.cost, level), this.conf.botPerms))) return;
+      if (!(await this.cmdPay(message, message.author.id, this.conf.botPerms))) return;
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is getting an achievement...`);
       const person = (message.mentions.users.first() || message.author).displayAvatarURL({ format:"png", size:32 });
       if (message.mentions.users.first()) text = text.replace(/<@!?\d+>/, "").replace(/\n/g, " ").trim();

@@ -21,7 +21,7 @@ class Yoda extends Social {
         return;
       }
 
-      if (!(await this.cmdPay(message, message.author.id, this.cmdDis(this.help.cost, level), this.conf.botPerms))) return;
+      if (!(await this.cmdPay(message, message.author.id, this.conf.botPerms))) return;
 
       const { text } = await snek.get(`http://yoda-api.appspot.com/api/v1/yodish?text=${encodeURIComponent(speech.toLowerCase())}`);
       message.channel.send(JSON.parse(text).yodish);

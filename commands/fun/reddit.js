@@ -30,7 +30,7 @@ class Reddit extends Social {
         message.response("🔞", "Cannot display NSFW content in a SFW channel.");
         return;
       }
-      if (!(await this.cmdPay(message, message.author.id, this.cmdDis(this.help.cost, level), this.conf.botPerms))) return;
+      if (!(await this.cmdPay(message, message.author.id, this.conf.botPerms))) return;
       const msg = await message.channel.send(`'Fetching from ${meme.subreddit_name_prefixed}...'`);
       await message.channel.send(`${meme.title} submitted by ${meme.author} in ${meme.subreddit_name_prefixed}\nUpvote Ratio ${meme.upvote_ratio}\n${meme.url}`);
       msg.delete();

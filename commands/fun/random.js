@@ -48,7 +48,7 @@ class Random extends Social {
     }
     const api = animals[args[0]];
     try {
-      if (!(await this.cmdPay(message, message.author.id, this.cmdDis(this.help.cost, level), this.conf.botPerms))) return;
+      if (!(await this.cmdPay(message, message.author.id, this.conf.botPerms))) return;
       if (!api) {
         const resp = await fetch(`http://loremflickr.com/400/300/${args[0]}`);
         return message.channel.send(new MessageAttachment(resp.body, `random${args[0]}.jpg`));

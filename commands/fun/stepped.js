@@ -29,11 +29,11 @@ class Stepped extends Social {
       botPerms: ["ATTACH_FILES"],
     });
   }
-  async run(message, args, level) {
+  async run(message, args, level) { // eslint-disable-line no-unused-vars 
     try {
       const stepped = (message.mentions.users.first() || message.author).displayAvatarURL({ format:"png", size:128 });
       
-      if (!(await this.cmdPay(message, message.author.id, this.cmdDis(this.help.cost, level), this.conf.botPerms))) return;
+      if (!(await this.cmdPay(message, message.author.id, this.conf.botPerms))) return;
 
       const msg = await message.channel.send("Going for a walk...");
       const result = await getStepped(stepped);

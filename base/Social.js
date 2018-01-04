@@ -90,17 +90,13 @@ class Social extends Command {
 
   }
 
-  cmdDis(cost, level) {
-    if (level >= 2) {
-      cost = cost * 2 / 4;
-    } else if (level === 1) {
-      cost = cost * 2 / 3;
-    }
-    return Math.ceil(cost);
+  cmdCost(message, cost, perms) {
+    const amount = parseInt(cost) * parseInt(perms.length) * Math.floor(parseInt(message.settings.costMulti));
+    return amount;
   }
 
   async cmdPay(message, user, cost, perms) {
-    const amount = parseInt(cost) * parseInt(perms.length) * Math.floor(parseInt(message.settings.costMulti));
+    const amount = this.cmdCost(message, cost, perms);
     try {
       const [bot, _user] = await this.verifySocialUser(message, user); // eslint-disable-line no-unused-vars
       const getPayee = message.guild.member(_user.id);

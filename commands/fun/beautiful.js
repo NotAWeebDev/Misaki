@@ -22,7 +22,7 @@ class Beautiful extends Social {
     try {
       const beautiful = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
       
-      if (!(await this.cmdPay(message, message.author.id, this.cmdDis(this.help.cost, level), this.conf.botPerms))) return;
+      if (!(await this.cmdPay(message, message.author.id, this.conf.botPerms))) return;
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is admiring the painting...`);
   
       const { getBeautiful } = this;

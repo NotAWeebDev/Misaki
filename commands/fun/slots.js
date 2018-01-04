@@ -2,31 +2,30 @@ const Social = require(`${process.cwd()}/base/Social.js`);
 
 const { SlotMachine, SlotSymbol } = require("slot-machine");
 
-const lemon = new SlotSymbol("lemon", { display: "🍋", points: 0, weight: 100 });
+const lemon = new SlotSymbol("lemon", { display: "🍋", points: 2, weight: 15 });
 
-const cherry = new SlotSymbol("cherry", { display: "🍒", points: 5, weight: 100 });
+// const watermelon = new SlotSymbol("watermelon", { display: "🍉", points: 10, weight: 10 });
+// const apple = new SlotSymbol("apple", { display: "🍎", points: 10, weight: 10 });
+// const grape = new SlotSymbol("grape", { display: "🍇", points: 10, weight: 10 });
+// const orange = new SlotSymbol("orange", { display: "🍊", points: 10, weight: 10 });
 
-const watermelon = new SlotSymbol("watermelon", { display: "🍉", points: 10, weight: 80 });
+const cherry = new SlotSymbol("cherry", { display: "🍒", points: 5, weight: 10 });
 
-const bell = new SlotSymbol("bell", { display: "🔔", points: 15, weight: 70 });
+const wild = new SlotSymbol("wild", { display: "❔", points: 2, weight: 10, wildcard: true });
 
-const apple = new SlotSymbol("apple", { display: "🍎", points: 10, weight: 90 });
+const bell = new SlotSymbol("bell", { display: "🔔", points: 15, weight: 10 });
 
-const grape = new SlotSymbol("grape", { display: "🍇", points: 10, weight: 85 });
+const clover = new SlotSymbol("clover", { display: "🍀", points: 100, weight: 7 });
 
-const orange = new SlotSymbol("orange", { display: "🍊", points: 10, weight: 80 });
+const heart = new SlotSymbol("heart", { display: "❤", points: 300, weight: 6 });
 
-const wild = new SlotSymbol("wild", { display: "❔", points: 10, weight: 60, wildcard: true });
+const money = new SlotSymbol("money", { display: "💰", points: 400, weight: 5 });
 
-const clover = new SlotSymbol("clover", { display: "🍀", points: 100, weight: 50 });
+const diamond = new SlotSymbol("diamond", { display: "💎", points: 500, weight: 4 });
 
-const heart = new SlotSymbol("heart", { display: "❤", points: 300, weight: 30 });
+const jackpot = new SlotSymbol("jackpot", {display: "🔅", points: 1000, weight: 1});
 
-const money = new SlotSymbol("money", { display: "💰", points: 400, weight: 20 });
-
-const diamond = new SlotSymbol("diamond", { display: "💎", points: 500, weight: 10 });
-
-const machine = new SlotMachine(3, [cherry, diamond, money, watermelon, bell, clover, lemon, apple, heart, grape, orange, wild]);
+const machine = new SlotMachine(3, [cherry, lemon /*, watermelon, apple, grape, orange*/, wild, bell, clover, heart, money, diamond, jackpot]);
 
 class Slots extends Social {
   constructor(client) {
@@ -36,23 +35,24 @@ class Slots extends Social {
       category: "Fun",
       usage: "slots",
       cost: 5,
-      cooldown: 10,
+      cooldown: 5,
       aliases: [],
       botPerms:["EMBED_LINKS"]
     });
   }
-
+  
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    if (!(await this.cmdPay(message, message.author.id, this.cmdDis(this.help.cost, level), this.conf.botPerms))) return;
+    if (!(await this.cmdPay(message, message.author.id, this.help.cost, this.conf.botPerms))) return;
     try {
       const results = machine.play();
+      const winnings = results.totalPoints + this.help.cost;
       message.buildEmbed()
         .setAuthor("Okami Slots")
         .setColor(0x00F000)
-        .setDescription(`${results.visualize(false)}\n\n${results.winCount === 0 ? "Oh rip, you lost!" : "Whoa... you won!"}\n\n${results.winCount === 0 ? "" : `Points Won: ${results.totalPoints.toLocaleString()}`}`)
+        .setDescription(`${results.visualize(false)}\n\n${results.winCount === 0 ? "Oh rip, you lost!" : "Whoa... you won!"}\n\n${results.winCount === 0 ? "" : `Points Won: ${winnings.toLocaleString()}`}`)
         .setTimestamp()
         .send();
-      if (results.winCount > 0) return message.member.givePoints(results.totalPoints);
+      if (results.winCount > 0) return message.member.givePoints(winnings);
     } catch (e) {
       console.log(e);
     }
