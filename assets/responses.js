@@ -88,6 +88,14 @@ exports.balanceMessages = [
   "{{user}}, again? Ugh, you have {{amount}}... Jeez, maybe if you kept track of it you'd remember.."
 ];
 
+exports.otherBalanceMessages = [
+  "Why do you want to know {{user}}'s Balance? Whatever, it's {{amount}} anyway.",
+  "N-nani? {{user}}-san's Balance? It's {{amount}}..",
+  "Why do you care so much about {{user}}'s Balance? N-not that I care, it's {{amount}}.",
+  "Some particular reason you want to know {{user}}'s balance? it's {{amount}}",
+  "Hm, one second.. It's {{amount}}, but why do you want to know {{user}}'s Balance?"
+];
+
 exports.purgeMessages = [
   "A-aaa, AA-aaa, AA-CHOO! {{amount}} messages deleted, oops..",
   "Now that {{amount}} messages have been deleted we can finally be alone",
