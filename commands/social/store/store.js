@@ -30,6 +30,7 @@ class Store extends Social {
             
         const item = this.client.store.filter(i => i.name.toLowerCase().includes(name.toLowerCase()));
         
+        if (item.size > 1) return message.reply(`B..Baka! Be more specific more than that, there is more than one item on sale with ${name} as their name`);
         if (!item) return message.channel.send("That item doesn't exist, Please make sure it is spelled correctly");
         if (message.member.roles.has(item.array()[0].id)) return message.channel.send("You already have the role :facepalm: ");
         
