@@ -18,15 +18,15 @@ const wild = new SlotSymbol("wild", { display: "❔", points: 2, weight: 10, wil
 
 const bell = new SlotSymbol("bell", { display: "🔔", points: 15, weight: 10 });
 
-const clover = new SlotSymbol("clover", { display: "🍀", points: 20, weight: 7 });
+const clover = new SlotSymbol("clover", { display: "🍀", points: 100, weight: 7 });
 
-const heart = new SlotSymbol("heart", { display: "❤", points: 30, weight: 6 });
+const heart = new SlotSymbol("heart", { display: "❤", points: 300, weight: 6 });
 
-const money = new SlotSymbol("money", { display: "💰", points: 40, weight: 5 });
+const money = new SlotSymbol("money", { display: "💰", points: 400, weight: 5 });
 
-const diamond = new SlotSymbol("diamond", { display: "💎", points: 50, weight: 4 });
+const diamond = new SlotSymbol("diamond", { display: "💎", points: 500, weight: 4 });
 
-const jackpot = new SlotSymbol("jackpot", {display: "🔅", points: 100, weight: 1});
+const jackpot = new SlotSymbol("jackpot", {display: "🔅", points: 1000, weight: 1});
 
 const machine = new SlotMachine(3, [cherry, lemon, watermelon, apple, grape, orange, wild, bell, clover, heart, money, diamond, jackpot]);
 
