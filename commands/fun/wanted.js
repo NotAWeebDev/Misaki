@@ -21,7 +21,7 @@ class Wanted extends Social {
     try {
       const wanted = await this.verifyUser(message,args[0] ? args[0] : message.author.id);
       
-      if (!(await this.cmdPay(message, message.author.id, this.conf.botPerms))) return;
+      if (!(await this.cmdPay(message, message.author.id, this.help.cost, this.conf.botPerms))) return;
 
       const msg = await message.channel.send("Fetching the Sheriff...");
       const { getWanted } = this;
