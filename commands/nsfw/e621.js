@@ -18,7 +18,7 @@ class E621 extends Social {
 
       if (!(await this.cmdPay(message, message.author.id, this.help.cost, this.conf.botPerms))) return;
 
-      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is checking out${args.length === 0 ? " " : `${args.join(" ")} on `}e621.net...`);
+      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is checking out ${args.length === 0 ? " " : `${args.join(" ")} on `}e621.net...`);
 
       const { body } = await snek.get(`https://e621.net/post/index.json?limit=100&tags=${encodeURI(args)}`);
       const result = body.random();

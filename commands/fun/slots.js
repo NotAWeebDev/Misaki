@@ -31,7 +31,7 @@ const jackpot = new SlotSymbol("jackpot", { display: "🔅", points: 1000, weigh
 const machine = new SlotMachine(3, [cherry, lemon, watermelon, apple, grape, orange, wild, bell, clover, heart, money, diamond, jackpot]);
 
 class Slots extends Social {
-  constructor(client) {
+  constructor(client) {!
     super(client, {
       name: "slots",
       description: "Try your luck with the slots.",
@@ -51,8 +51,7 @@ class Slots extends Social {
       const winnings = results.totalPoints + this.help.cost;
       message.buildEmbed()
         .setAuthor("Okami Slots")
-        .setColor(0x00F000)
-        .setDescription(`${results.visualize(false)}\n\n${results.winCount === 0 ? `Oh rip, ${message.member.displayName} lost!` : `Whoa... ${message.member.displayName} won!`}\n\n${results.winCount === 0 ? "" : `${message.member.displayName} won ₲${winnings.toLocaleString()}`}`)
+        .setDescription(`${results.visualize(false)}\n\n${results.winCount === 0 ? `${message.member.displayName} has lost!\nBetter luck next time!` : `Whoa... ${message.member.displayName} won!`}\n\n${results.winCount === 0 ? "" : `You have won ₲${winnings.toLocaleString()}`}`)
         .setTimestamp()
         .send();
       if (results.winCount > 0) return message.member.givePoints(winnings);
