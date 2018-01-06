@@ -16,7 +16,7 @@ class Store extends Social {
     if (!message.flags.length) {
       return message.reply(`|\`❌\`| ${this.help.usage}`);
     }
-
+    console.log(message.guild.store);
     switch (message.flags[0]) {
       case ("buy"): {
         const name = args.join(" ");

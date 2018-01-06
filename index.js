@@ -24,6 +24,7 @@ class Okami extends Discord.Client {
     this.reminders = new Enmap({provider: new EnmapLevel({name: "reminders"})});
     this.points = new Enmap({provider: new EnmapLevel({name: "points"})});
     this.store = new Enmap({provider: new EnmapLevel({name: "shop"})});
+    this.inventory = new Enmap({provider: new EnmapLevel({name: "inventory"})});
   }
 
   permlevel(message) {

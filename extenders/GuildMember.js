@@ -19,6 +19,11 @@ module.exports = Structures.extend("GuildMember", DiscordGuildMember => {
       return this.client.points.get(this.fullId);
     }
 
+    get inventory() {
+      if (!this.client.inventory.get(this.fullId)) return false;
+      return this.client.inventory.get(this.fullId);
+    }
+
     givePoints(points) {
       const score = this.score;
       score.points += points;
