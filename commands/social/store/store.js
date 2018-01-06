@@ -12,6 +12,7 @@ class Store extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
+    if (!args[0] && !message.flags.length) message.flags.push("view");
     if (!message.flags.length) {
       return message.reply(`|\`❌\`| ${this.help.usage}`);
     }
@@ -75,6 +76,7 @@ class Store extends Social {
       }
 
       case ("add"): {
+        if (level < 3) return message.response(undefined, "B...Baka! You are too low level to add items to the shop");
         const price = args.pop();
         const name = args.join(" ");
 
@@ -93,15 +95,16 @@ class Store extends Social {
       }
 
       case ("del"): {
+        if (level < 3) return message.response(undefined, "B...Baka! You are too low level to remove items from the shop");
         const name = args.join(" ");
         if (!name) return message.reply("Please specify the exact name of the role");
+        const role = message.guild.roles.find("name", name);
+        if (!this.client.store.has(role.id)) return message.reply("This role is not on sale");
         
-        if (!this.client.store.has(name)) return message.reply("This role is not on sale");
-        
-        const response = await this.client.awaitReply(message, `Are you sure you want to remove ${name} from the shop?`);
+        const response = await this.client.awaitReply(message, `Are you sure you want to remove ${name} from the shop?`, undefined, null);
         if (["y", "yes"].includes(response)) {
         
-          await this.client.store.delete(name);
+          await this.client.store.delete(role.id);
           message.reply("The role is now off the store.");
         } else
         
