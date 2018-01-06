@@ -77,9 +77,9 @@ class Store extends Social {
       case ("add"): {
         const price = args.pop();
         const name = args.join(" ");
-
+  
         if (!name) return message.reply("Please add the exact name of the role");
-        
+        if (level < 3) return message.reply("B...Baka! You are too Low level to add items to the shop");
         if (!message.guild.roles.find("name", name)) return message.reply("Please Enter The **Correct** Name Of The Role");
         
         if (this.client.store.has(name)) return message.reply("This role is already on sale");
@@ -94,6 +94,8 @@ class Store extends Social {
 
       case ("del"): {
         const name = args.join(" ");
+        const roleID = message.guild.roles.find("name", name);
+        if (level < 3) return message.reply("B...Baka! You are too Low level to remove items to the shop");
         if (!name) return message.reply("Please specify the exact name of the role");
         
         if (!this.client.store.has(name)) return message.reply("This role is not on sale");
@@ -101,7 +103,7 @@ class Store extends Social {
         const response = await this.client.awaitReply(message, `Are you sure you want to remove ${name} from the shop?`);
         if (["y", "yes"].includes(response)) {
         
-          await this.client.store.delete(name);
+          await this.client.store.delete(roleID);
           message.reply("The role is now off the store.");
         } else
         
