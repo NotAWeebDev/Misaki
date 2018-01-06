@@ -12,7 +12,7 @@ class Deduct extends Social {
       hidden: true,
       aliases: ["punish", "take"],
       botPerms: [],
-      permLevel: "Moderator"
+      permLevel: "Administrator"
     });
   }
 

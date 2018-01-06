@@ -12,7 +12,7 @@ class Award extends Social {
       hidden: true,
       aliases: ["reward", "give"],
       botPerms: [],
-      permLevel: "Moderator"
+      permLevel: "Administrator"
     });
   }
 
