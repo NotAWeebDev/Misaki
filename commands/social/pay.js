@@ -24,7 +24,7 @@ class Pay extends Social {
       
       if (args[1] < 0) return message.response(undefined, "You cannot pay less than zero, whatcha trying to do? rob em?");
       else if (args[1] < 1) return message.response(undefined, "You paying 'em with air? boi don't make me slap you 👋");
-      if (message.author.id === user) return message.response(undefined, "You cannot pay yourself, why did you even try it?");
+      if (message.author.id === user.id) return message.response(undefined, "You cannot pay yourself, why did you even try it?");
 
       await this.usrPay(message, message.author.id, user, parseInt(args[1]));
     } catch (error) {
