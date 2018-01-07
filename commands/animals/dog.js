@@ -18,7 +18,7 @@ class Dog extends Social {
     try {
       const url = args[0] ? `https://dog.ceo/api/breed/${args[0]}/images/random` : "https://dog.ceo/api/breeds/image/random";
 
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost, this.conf.botPerms))) return;
+      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
 
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a dog...`);
       const { body } = await snek.get(url);

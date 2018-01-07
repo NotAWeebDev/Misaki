@@ -15,7 +15,7 @@ class Ping extends Command {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     try {
 
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost, this.conf.botPerms))) return;
+      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
 
       const { text } = await snek.get("http://api.yomomma.info/");
       message.channel.send(`_${JSON.parse(text).joke}_`);

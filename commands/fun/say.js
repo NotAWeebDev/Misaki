@@ -25,7 +25,7 @@ class Say extends Social {
       const channel = message.guild.channels.get(channelid);
       if (!message.member.permissionsIn(channel).has(["SEND_MESSAGES", "READ_MESSAGES"])) message.response(undefined, "You do not have permission to `say` in that channel.");
       
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost, this.conf.botPerms))) return;
+      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       
       message.delete();
 

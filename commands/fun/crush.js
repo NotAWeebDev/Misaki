@@ -22,7 +22,7 @@ class Crush extends Social {
     try {
       const crush = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
       const crusher = message.author;
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost, this.conf.botPerms))) return;
+      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${crush.username}** is being gazed at...`);
 
       const { getCrushed } = this;
