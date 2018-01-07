@@ -19,7 +19,7 @@ class Please extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars 
     try {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost, this.conf.botPerms))) return;
+      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       const person = message.mentions.members.first() || message.member;
       const { pls } = this;
       const result = await pls(person);

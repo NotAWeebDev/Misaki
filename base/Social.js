@@ -20,24 +20,6 @@ class Social extends Command {
     }
   }
 
-  emoji(guild) {
-    const settings = this.client.getSettings(guild);
-    if (settings.customEmoji === "true") return this.client.emojis.get(settings.gEmojiID);
-    return settings.uEmoji;
-  }
-
-  ding(guild, score) {
-    const curLevel = Math.floor(0.1 * Math.sqrt(score.points));
-    if (score.level < curLevel) {
-      return curLevel;
-    } else
-
-    if (score.level > curLevel) {
-      return curLevel;
-    }
-    return score.level;
-  }
-
   async usrDay(message) {
     const settings = this.client.getSettings(message.guild.id);
     const dailyTime = parseInt(settings.dailyTime);
@@ -46,7 +28,7 @@ class Social extends Command {
     try {
       
       if (Date.now() > score.daily) {
-        const msg = await message.channel.send(`${this.client.responses.dailySuccessMessages.random().replaceAll("{{user}}", message.member.displayName).replaceAll("{{amount}}", `${this.emoji(message.guild.id)}${pointsReward.toLocaleString()}`)}`);
+        const msg = await message.channel.send(`${this.client.responses.dailySuccessMessages.random().replaceAll("{{user}}", message.member.displayName).replaceAll("{{amount}}", `₲${pointsReward.toLocaleString()}`)}`);
         score.daily = msg.createdTimestamp + (dailyTime * 60 * 60 * 1000);
         message.member.givePoints(pointsReward);
         return msg;
@@ -66,15 +48,15 @@ class Social extends Command {
 
     try {
       if (payerScore.points < parseInt(amount)) {
-        message.response(undefined, `Insufficient funds, you have ${payerScore.points} ${this.emoji(message.guild.id)}`);
+        message.response(undefined, `Insufficient funds, you have ${payerScore.points} ₲`);
         return;
       }
-      const response = await message.client.awaitReply(message, `Are you sure you want to pay ${getPayee.displayName} ${parseInt(amount)} ${this.emoji(message.guild.id)}?\n\n(**y**es | **n**o)\n\nReply with \`cancel\` to cancel the message. The message will timeout after 60 seconds.`, 6000, null);
+      const response = await message.client.awaitReply(message, `Are you sure you want to pay ${getPayee.displayName} ${parseInt(amount)} ₲?\n\n(**y**es | **n**o)\n\nReply with \`cancel\` to cancel the message. The message will timeout after 60 seconds.`, 6000, null);
 
       if (["yes", "y", "confirm"].includes(response.toLowerCase())) {
         getPayer.takePoints(parseInt(amount));
         getPayee.givePoints(parseInt(amount));
-        await message.channel.send(`The payment of ${parseInt(amount)} ${this.emoji(message.guild.id)} has been sent to ${getPayee.displayName}.`);
+        await message.channel.send(`The payment of ${parseInt(amount)} ₲ has been sent to ${getPayee.displayName}.`);
       } else
     
       if (["no", "n", "cancel"].includes(response.toLowerCase())) {
@@ -90,22 +72,17 @@ class Social extends Command {
 
   }
 
-  cmdCost(message, cost, perms) {
-    const amount = parseInt(cost) * parseInt(perms.length) * Math.floor(parseInt(message.settings.costMulti));
-    return amount;
-  }
 
-  async cmdPay(message, user, cost, perms) {
-    const amount = this.cmdCost(message, cost, perms);
+  async cmdPay(message, user, cost) {
     try {
       const [bot, _user] = await this.verifySocialUser(message, user); // eslint-disable-line no-unused-vars
       const getPayee = message.guild.member(_user.id);
       const score = getPayee.score;
-      if (amount > score.points) {
-        message.response(undefined, `Insufficient funds, you need ${amount}${this.emoji(message.guild.id)}. Your current balance: ${score.points}${this.emoji(message.guild.id)}`);
+      if (cost > score.points) {
+        message.response(undefined, `Insufficient funds, you need ₲${cost}. Your current balance: ₲${score.points}`);
         return false;
       }
-      getPayee.takePoints(amount);
+      getPayee.takePoints(cost);
       this.client.points.set(getPayee.fullId, score);
       return true;
     } catch (error) {
@@ -117,7 +94,7 @@ class Social extends Command {
     try {
       const getPayee = message.guild.member(user);
       getPayee.givePoints(parseInt(amount));
-      await message.channel.send(`Awarded ${this.emoji(message.guild.id)}${parseInt(amount)} points to ${message.guild.member(user).displayName}.`);
+      await message.channel.send(`Awarded ₲${parseInt(amount)} to ${message.guild.member(user).displayName}.`);
       return;
     } catch (error) {
       this.client.logger.error(error);
@@ -128,7 +105,7 @@ class Social extends Command {
     try {
       const getPayee = message.guild.member(user);
       getPayee.takePoints(parseInt(amount));
-      await message.channel.send(`Deducted ${this.emoji(message.guild.id)}${parseInt(amount)} points from ${message.guild.member(user).displayName}.`);
+      await message.channel.send(`Deducted ₲${parseInt(amount)} from ${message.guild.member(user).displayName}.`);
       return;
     } catch (error) {
       this.client.logger.error(error);

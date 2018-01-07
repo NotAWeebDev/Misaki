@@ -8,6 +8,8 @@ class Xkdc extends Social {
       category: "Fun",
       usage: "xkdc [r] [f] <num>",
       extended: "Get the daily comic by using the command on its own, to get a random comic add the flag R, to see a selected comic use the flag F with a comic number",
+      usage: "xkdc",
+
       cooldown: 10,
       botPerms: ["EMBED_LINKS"]
     });
@@ -16,7 +18,7 @@ class Xkdc extends Social {
     const inf = await snek.get("https://xkcd.com/info.0.json");
     const ob = await inf.body;
     if (message.flags[0] == "f") {
-      if (args[0] == undefined) return message.reply(`Please make a selection between 1 - ${ob.num}`)
+      if (args[0] == undefined) return message.reply(`Please make a selection between 1 - ${ob.num}`);
       if (args[0].isNumber() !== true) return message.reply("Please make a numerical selection.");
       if (args[0] > ob.num || args[0] <= 0) return message.reply(`Please make a selection between 1 - ${ob.num}`);
       const ef = await snek.get(`https://xkcd.com/${args[0]}/info.0.json`);

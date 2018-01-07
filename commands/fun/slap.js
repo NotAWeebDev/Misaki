@@ -23,7 +23,7 @@ class Slap extends Social {
       const slapped = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
       const slapper = message.author;
 
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost, this.conf.botPerms))) return;
+      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
 
       const msg = await message.channel.send(`Finding ${slapped.username}...`);
 
