@@ -3,7 +3,7 @@ require("moment-duration-format");
 module.exports = (client) => {
 
   client.ratelimit = async (message, level, key, duration) => {
-    if (level > 1) return false;
+    if (level > 2) return false;
     
     duration = duration * 1000;
     const ratelimits = client.ratelimits.get(message.author.id) || {}; //get the ENMAP first.
