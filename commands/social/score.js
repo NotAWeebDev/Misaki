@@ -15,7 +15,7 @@ class Score extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const member = args[0] ? await this.verifyMember(message, args[0]) : message.member;
-    if (member != message.member) return resp("other", member, message, this.client, this);
+    if (member != message.member) return this.resp("other", member, message, this.client, this);
     this.resp("self", member, message, this.client);
   }
 
