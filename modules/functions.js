@@ -3,7 +3,7 @@ require("moment-duration-format");
 module.exports = (client) => {
 
   client.ratelimit = async (message, level, key, duration) => {
-    if (level > 2) return false;
+    if (level > 1) return false;
     
     duration = duration * 1000;
     const ratelimits = client.ratelimits.get(message.author.id) || {}; //get the ENMAP first.
@@ -42,6 +42,12 @@ module.exports = (client) => {
       .replace(client.token, "mfa.VkO_2G4Qv3T--NO--lWetW_tjND--TOKEN--QFTm6YGtzq9PH--4U--tG0");
 
     return text;
+  };
+
+  client.randomNum = async (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
   String.prototype.toProperCase = function() {
