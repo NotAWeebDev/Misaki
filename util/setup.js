@@ -17,10 +17,7 @@ const defaultSettings = `{
   "pointsReward": "250",
   "minPoints": "1",
   "maxPoints": "50",
-  "costMulti": "10",
-  "customEmoji": "false",
-  "gEmojiID": "replace-this",
-  "uEmoji": "₲"
+  "costMulti": "10"
 }`;
 
 const settings = new Enmap({provider: new EnmapLevel({name: "settings"})});
