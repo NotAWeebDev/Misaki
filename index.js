@@ -9,7 +9,7 @@ const klaw = require("klaw");
 const path = require("path");
 
 
-class Okami extends Discord.Client {
+class Misaki extends Discord.Client {
   constructor(options) {
     super(options);
     this.config = require(`${process.cwd()}/config.js`);
@@ -103,7 +103,7 @@ class Okami extends Discord.Client {
   }
 }
 
-const client = new Okami({
+const client = new Misaki({
   fetchAllMembers: true,
   disableEveryone: true,
   disabledEvents:["TYPING_START"]

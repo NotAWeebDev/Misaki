@@ -17,10 +17,7 @@ const defaultSettings = `{
   "pointsReward": "250",
   "minPoints": "1",
   "maxPoints": "50",
-  "costMulti": "10",
-  "customEmoji": "false",
-  "gEmojiID": "replace-this",
-  "uEmoji": "₲"
+  "costMulti": "10"
 }`;
 
 const settings = new Enmap({provider: new EnmapLevel({name: "settings"})});
@@ -40,7 +37,7 @@ let prompts = [
 ];
 
 (async function() {
-  console.log("Setting Up Okami Configuration...");
+  console.log("Setting Up Misaki Configuration...");
   await settings.defer;
   if (!settings.has("default")) {
     prompts = prompts.slice(1);

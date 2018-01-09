@@ -106,7 +106,7 @@ exports.purgeMessages = [
 exports.aboutMessages = [
   "You want to know about me? What don't you already know b-baka. I get my beautiful looks from `@VixtoriaGoober` (Follow her on Twitter) and I'm the entertainer for An Idiot's Guide, owned by my father York#2400... I can tell you anything about any Anime or Manga that I have, not that it m-matters to me. Look, I'm also asked to give you a daily allowance and keep a record of what everyone else has. Will you just go with it?",
 
-  "I'm Okami! Your entertainment assistant for An Idiot's Guide, a fantastic place owned by my Father. I have a wide range of Manga and Anime, if you ever have a question or just want to look at it; all you need to do is ask. I also help out with keeping the community up by providing allowances for everyone! I've even kept a track of everyones balance so you can see where you are, even though you're always at the top for me!\n\np.s. I get my beautiful looks from `@VixtoriaGoober` (Follow her on Twitter)"
+  "I'm Misaki! Your entertainment assistant for An Idiot's Guide, a fantastic place owned by my Father. I have a wide range of Manga and Anime, if you ever have a question or just want to look at it; all you need to do is ask. I also help out with keeping the community up by providing allowances for everyone! I've even kept a track of everyones balance so you can see where you are, even though you're always at the top for me!\n\np.s. I get my beautiful looks from `@VixtoriaGoober` (Follow her on Twitter)"
 ];
 
 exports.rebootMessages = [

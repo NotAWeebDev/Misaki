@@ -6,8 +6,6 @@ class Social extends Command {
     super(client, Object.assign(options, {
       guildOnly: true
     }));
-
-
   } 
 
   async verifySocialUser(message, user) {
@@ -48,15 +46,16 @@ class Social extends Command {
 
     try {
       if (payerScore.points < parseInt(amount)) {
-        message.response(undefined, `Insufficient funds, you have ${payerScore.points} ₲`);
+        message.response(undefined, `Insufficient funds, you have ₲${payerScore.points}`);
         return;
       }
-      const response = await message.client.awaitReply(message, `Are you sure you want to pay ${getPayee.displayName} ${parseInt(amount)} ₲?\n\n(**y**es | **n**o)\n\nReply with \`cancel\` to cancel the message. The message will timeout after 60 seconds.`, 6000, null);
+      
+      const response = await message.client.awaitReply(message, `Are you sure you want to pay ${getPayee.displayName} ₲${parseInt(amount)}?\n\n(**y**es | **n**o)\n\nReply with \`cancel\` to cancel the message. The message will timeout after 60 seconds.`, 6000, null);
 
       if (["yes", "y", "confirm"].includes(response.toLowerCase())) {
         getPayer.takePoints(parseInt(amount));
         getPayee.givePoints(parseInt(amount));
-        await message.channel.send(`The payment of ${parseInt(amount)} ₲ has been sent to ${getPayee.displayName}.`);
+        await message.channel.send(`The payment of ₲${parseInt(amount)} has been sent to ${getPayee.displayName}.`);
       } else
     
       if (["no", "n", "cancel"].includes(response.toLowerCase())) {

@@ -27,10 +27,7 @@ const config = {
     "pointsReward": "250",
     "minPoints": "1",
     "maxPoints": "50",
-    "costMulti": "10",
-    "customEmoji": "false",
-    "gEmojiID": "replace-this",
-    "uEmoji": "₲"
+    "costMulti": "10"
   },
 
   // PERMISSION LEVEL DEFINITIONS.
