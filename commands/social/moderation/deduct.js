@@ -22,7 +22,7 @@ class Deduct extends Social {
       const [bot, user] = await this.verifySocialUser(message, args[0]);
       if (bot) return message.response("❗", "Bot's cannot accumulate points or levels.");
       if (isNaN(args[1])) return message.response(undefined, "Not a valid amount");
-      if (args[1] < 0) return message.response(undefined, "You cannot deduct less than zero, whatcha trying to do? reward em?");
+      if (parseInt(args[1]) < parseInt(message.member.score.points)) return message.response(undefined, "You cannot deduct less than their points, whatcha trying to do? reward em?");
       else if (args[1] < 1) return message.response(undefined, "You trying to deduct their air? boi don't make me slap you 👋");
       if (message.author.id === user.id) return message.response(undefined, "You cannot punish yourself, why did you even try it?");
       await this.cmdPun(message, user, parseInt(args[1]));
