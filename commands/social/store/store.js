@@ -30,10 +30,10 @@ class Store extends Social {
         if (message.member.roles.has(item.array()[0].id)) return message.channel.send("You already have the role :facepalm: ");
         
         if (item.array()[0].price > message.member.score.points) {
-          return message.channel.send(`You currently have ₲${message.member.score.points}, but the role costs ${item.array()[0].price}!`);
+          return message.channel.send(`You currently have ₲${message.member.score.points.toLocaleString()}, but the role costs ${item.array()[0].price.toLocaleString()}!`);
         }
         
-        const response = await this.client.awaitReply(message, `Are you sure you want to purchase ${item.array()[0].name} for ₲${item.array()[0].price}?`, undefined, null);
+        const response = await this.client.awaitReply(message, `Are you sure you want to purchase ${item.array()[0].name} for ₲${item.array()[0].price.toLocaleString()}?`, undefined, null);
         if (["y", "yes"].includes(response.toLowerCase())) {
         
           message.member.takePoints(item.array()[0].price);
@@ -60,7 +60,7 @@ class Store extends Social {
         
         const returnPrice = Math.floor(item.array()[0].price/2);
         
-        const response = await this.client.awaitReply(message, `Are you sure you want to sell ${item.array()[0].name} for ₲${returnPrice}?`, undefined, null);
+        const response = await this.client.awaitReply(message, `Are you sure you want to sell ${item.array()[0].name} for ₲${returnPrice.toLocaleString()}?`, undefined, null);
         if (["y", "yes"].includes(response.toLowerCase())) {
         
           message.member.givePoints(returnPrice);
@@ -118,7 +118,7 @@ class Store extends Social {
         const items = message.guild.store;
         if (items.length === 0) return message.response(undefined, "Baka... nothing is for sale!");
         message.channel.send(`= ${message.guild.name} General Store =\n` + items.map(item => 
-          `${message.guild.roles.get(item.id.toString()).name}${" ".repeat(20 - message.guild.roles.get(item.id.toString()).name.length)}::  ${item.price === "0" ? "FREE" : `₲${item.price}`}`).join("\n"), { code: "asciidoc" }
+          `${message.guild.roles.get(item.id.toString()).name}${" ".repeat(20 - message.guild.roles.get(item.id.toString()).name.length)}::  ${item.price === "0" ? "FREE" : `₲${item.price.toLocaleString()}`}`).join("\n"), { code: "asciidoc" }
         );
       }
     }
