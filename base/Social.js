@@ -6,8 +6,6 @@ class Social extends Command {
     super(client, Object.assign(options, {
       guildOnly: true
     }));
-
-
   } 
 
   async verifySocialUser(message, user) {

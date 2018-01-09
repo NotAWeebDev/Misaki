@@ -20,10 +20,22 @@ module.exports = Structures.extend("GuildMember", DiscordGuildMember => {
     }
 
     get inventory() {
-      if (!this.client.inventory.get(this.fullId)) return false;
+      if (!this.client.inventory.get(this.fullId)) return { keys: 0, crates: 0, tokens: 0 };
       return this.client.inventory.get(this.fullId);
     }
 
+    giveItem(item, amount) {
+      const inv = this.inventory;
+      inv[item] += parseInt(amount);
+      return this.client.inventory.set(this.fullId, inv);
+    }
+    
+    takeItem(item, amount) {
+      const inv = this.inventory;
+      inv[item] -= parseInt(amount);
+      return this.client.inventory.set(this.fullId, inv);
+    }
+    
     givePoints(points) {
       const score = this.score;
       score.points += points;
