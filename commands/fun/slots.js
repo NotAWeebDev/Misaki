@@ -38,7 +38,7 @@ class Slots extends Social {
       const results = machine.play();
       const winnings = this.help.cost * results.totalPoints;
       message.buildEmbed()
-        .setAuthor("Okami Slots")
+        .setAuthor("Misaki Slots")
         .setDescription(`${results.visualize(false)}\n\n${results.winCount === 0 ? `${message.member.displayName} has lost!\nBetter luck next time!` : `Whoa... ${message.member.displayName} won!`}\n\n${results.winCount === 0 ? "" : `You have won ₲${winnings.toLocaleString()}`}`)
         .setTimestamp()
         .send();
