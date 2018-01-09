@@ -1,7 +1,7 @@
 {
-  "name": "misaki",
+  "name": "okami",
   "version": "5.0.0",
-  "description": "Misaki is all of the fun and entertainment commands taken from GuideBot aka York-Dev and bundled into this tsundere themed bot.",
+  "description": "Okami is all of the fun and entertainment commands taken from GuideBot aka York-Dev and bundled into this tsundere themed bot.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YorkAARGH/Misaki.git"
+    "url": "git+https://github.com/YorkAARGH/Okami.git"
   },
   "author": "York (http://anidiots.guide)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/YorkAARGH/Misaki/issues"
+    "url": "https://github.com/YorkAARGH/Okami/issues"
   },
-  "homepage": "https://github.com/YorkAARGH/Misaki#readme",
+  "homepage": "https://github.com/YorkAARGH/Okami#readme",
   "dependencies": {
     "canvas": "github:Automattic/node-canvas",
     "canvas-constructor": "github:kyranet/canvasConstructor",
@@ -38,6 +38,7 @@
     "moment-duration-format": "^1.3.0",
     "ms": "^2.1.1",
     "slot-machine": "^2.1.0",
-    "snekfetch": "^3.6.1"
+    "snekfetch": "^3.6.1",
+    "weather-js": "^2.0.0"
   }
 }
