@@ -12,9 +12,7 @@ class Crush extends Social {
       usage: "crush [@mention|userid]",
       extended: "",
       cost: 1,
-      cooldown: 10,
-      botPerms: ["ATTACH_FILES"],
-      permLevel: "Patron"
+      cooldown: 10
     });
   }
 

@@ -9,8 +9,7 @@ class Daily extends Social {
       category: "Social",
       extended: "This command will redeem your guilds daily bonus.",
       cost: 0,
-      aliases: ["claim"],
-      botPerms: []
+      aliases: ["claim"]
     });
   }
 

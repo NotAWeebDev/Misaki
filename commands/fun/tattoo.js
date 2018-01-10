@@ -13,8 +13,7 @@ class Tattoo extends Social {
       extended: "Mention another user to get them tattooed on your arm.",
       cost: 5,
       cooldown: 10,
-      aliases: ["ink"],
-      botPerms: ["ATTACH_FILES"],
+      aliases: ["ink"]
     });
   }
 

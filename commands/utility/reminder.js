@@ -22,8 +22,7 @@ class Reminder extends Command {
       category: "Utilities",
       usage: "reminder [me] <reminder message>",
       extended: "Need to be reminded to take the trash out? This command can help!",
-      aliases: ["remember", "remind", "reminders"],
-      botPerms: []
+      aliases: ["remember", "remind", "reminders"]
     });
   }
 

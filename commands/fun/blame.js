@@ -13,8 +13,7 @@ class Blame extends Social {
       category: "Fun",
       extended: "Blame someone else via this command.",
       cost: 2,
-      cooldown: 5,
-      botPerms: ["ATTACH_FILES"]
+      cooldown: 5
     });
   }
 

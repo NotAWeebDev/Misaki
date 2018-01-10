@@ -12,8 +12,7 @@ class IsNowIllegal extends Social {
       extended: "Powered by IsNowIllegal.com, get US President Trump to make anything illegal.",
       cost: 5,
       cooldown: 10,
-      aliases:["trump", "sign"],
-      botPerms: ["ATTACH_FILES"]
+      aliases:["trump", "sign"]
     });
   }
 

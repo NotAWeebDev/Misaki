@@ -8,8 +8,7 @@ class Pay extends Social {
       usage: "pay <@mention|userid> <amount>",
       category: "Social",
       cost: 0,
-      aliases: ["loan", "donate"],
-      botPerms: []
+      aliases: ["loan", "donate"]
     });
   }
 

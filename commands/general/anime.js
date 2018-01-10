@@ -20,7 +20,6 @@ class Anime extends Command {
       cooldown: 10,
       guildOnly: true,
       aliases: []
-
     });
   }
 

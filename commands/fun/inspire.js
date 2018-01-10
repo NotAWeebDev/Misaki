@@ -9,8 +9,7 @@ class Inspire extends Social {
       category: "Fun",
       usage: "inspire",
       cost: 2,
-      aliases: [],
-      botPerms: ["ATTACH_FILES"]
+      aliases: []
     });
   }
 

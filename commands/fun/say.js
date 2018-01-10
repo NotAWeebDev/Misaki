@@ -9,9 +9,7 @@ class Say extends Social {
       category: "Fun",
       extended: "You can send a message to another channel via this command.",
       cost: 1,
-      aliases: ["speak"],
-      botPerms: ["MANAGE_MESSAGES"],
-      permLevel: "Patron"
+      aliases: ["speak"]
     });
   }
 

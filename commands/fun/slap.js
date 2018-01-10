@@ -12,9 +12,7 @@ class Slap extends Social {
       usage: "slap <@mention>",
       extended: "Mention another user to slap them.",
       cost: 1,
-      cooldown: 10,
-      botPerms: ["ATTACH_FILES"],
-      permLevel: "Patron"
+      cooldown: 10
     });
   }
 

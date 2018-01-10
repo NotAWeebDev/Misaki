@@ -7,8 +7,7 @@ class Gif extends Social {
       description: "Random gif time",
       category: "Fun",
       usage: "gif",
-      cooldown: 10,
-      botPerms: ["EMBED_LINKS"]
+      cooldown: 10
     });
   }
   async run(message, args, level) { // eslint-disable-line no-unused-vars

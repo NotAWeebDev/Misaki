@@ -12,8 +12,7 @@ class Stepped extends Social {
       usage: "stepped [@mention|user id]",
       extended: "Mention another user to step on them.",
       cost: 5,
-      cooldown: 20,
-      botPerms: ["ATTACH_FILES"],
+      cooldown: 20
     });
   }
   async run(message, args, level) { // eslint-disable-line no-unused-vars 

@@ -27,8 +27,7 @@ class Slots extends Social {
       usage: "slots",
       cost: 5,
       cooldown: 5,
-      aliases: [],
-      botPerms:["EMBED_LINKS"]
+      aliases: []
     });
   }
   

@@ -13,8 +13,7 @@ class Valut extends Social {
       extended: "Mention another user to thumbs up of them.",
       cost: 5,
       cooldown: 10,
-      aliases: ["vault"],
-      botPerms: ["ATTACH_FILES"],
+      aliases: ["vault"]
     });
   }
 

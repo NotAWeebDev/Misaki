@@ -9,8 +9,7 @@ class Reddit extends Social {
       usage: "reddit [-new|-random|-hot|-top] [subreddit]",
       category: "Fun",
       cost: 1,
-      cooldown: 25,
-      botPerms: []
+      cooldown: 25      
     });
   }
 

@@ -9,8 +9,7 @@ class Help extends Command {
       category: "System",
       extended: "This command will display all available commands for your permission level, with the additonal option of getting per command information when you run 'help <command name>'.",
       hidden: true,
-      aliases: ["h", "halp"],
-      botPerms: []
+      aliases: ["h", "halp"]
     });
   }
 
@@ -41,7 +40,7 @@ class Help extends Command {
       
       if (!message.guild && command.conf.guildOnly === true) return;
       if (level < this.client.levelCache[command.conf.permLevel]) return;
-      message.channel.send(`= ${command.help.name} = \n${command.help.description}\ncategory     :: ${command.help.category}\ncost         :: ₲${parseInt(command.help.cost)}\nusage        :: ${command.help.usage}\naliases      :: ${command.conf.aliases.join(", ")}\ndetails      :: ${command.help.extended}\npermissions  :: ${command.conf.botPerms.join(", ")}`, {code:"asciidoc"});    }
+      message.channel.send(`= ${command.help.name} = \n${command.help.description}\ncategory     :: ${command.help.category}\ncost         :: ₲${parseInt(command.help.cost)}\nusage        :: ${command.help.usage}\naliases      :: ${command.conf.aliases.join(", ")}\ndetails      :: ${command.help.extended}`, {code:"asciidoc"});    }
   }
 }
 module.exports = Help;

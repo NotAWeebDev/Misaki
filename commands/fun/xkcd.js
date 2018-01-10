@@ -8,8 +8,7 @@ class Xkdc extends Social {
       category: "Fun",
       usage: "xkcd [r] [f] <num>",
       extended: "Get the daily comic by using the command on its own, to get a random comic add the flag R, to see a selected comic use the flag F with a comic number",
-      cooldown: 10,
-      botPerms: ["EMBED_LINKS"]
+      cooldown: 10
     });
   }
   async run(message, args, level) { // eslint-disable-line no-unused-vars

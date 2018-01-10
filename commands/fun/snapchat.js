@@ -17,8 +17,7 @@ class SnapChat extends Social {
       extended: "This command uses canvas to generate a Snapchat styled image based on the well known statue meme.",
       cost: 4,
       cooldown: 20,
-      aliases: ["sc"],
-      botPerms: ["ATTACH_FILES"]
+      aliases: ["sc"]
     });
   }
 

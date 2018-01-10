@@ -11,7 +11,7 @@ class Magic8 extends Social {
       extended: "This Social will answer any question given to it in the style of a magic 8 ball.",
       cost: 1,
       aliases: ["8", "8ball"],
-      botPerms: []
+      
     });
   }
 

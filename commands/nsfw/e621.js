@@ -7,8 +7,7 @@ class E621 extends Social {
       name: "e621",
       description: "Searches e621.net for your search term.",
       category: "NSFW",
-      usage: "e621 <search term>",
-      botPerms: ["ATTACH_FILES"]
+      usage: "e621 <search term>"
     });
   }
 

@@ -8,8 +8,7 @@ class Yoda extends Social {
       category: "Fun",
       usage: "yoda <message>",
       extended: "This command will turn any supplied text into Yoda speech, results may vary.",
-      cost: 1,
-      botPerms: []
+      cost: 1
     });
   }
 

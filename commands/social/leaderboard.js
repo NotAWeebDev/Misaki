@@ -8,8 +8,7 @@ class Leaderboard extends Social {
       usage: "leaderboard",
       category: "Social",
       cost: 0,
-      aliases: ["top10", "top", "leader", "lb"],
-      botPerms: ["EMBED_LINKS"]
+      aliases: ["top10", "top", "leader", "lb"]
     });
   }
 

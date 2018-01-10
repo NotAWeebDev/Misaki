@@ -13,8 +13,7 @@ class Beautiful extends Social {
       extended: "Mention another user to admire a painting of them.",
       cost: 5,
       cooldown: 10,
-      aliases: ["painting"],
-      botPerms: ["ATTACH_FILES"],
+      aliases: ["painting"]
     });
   }
 

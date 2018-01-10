@@ -10,7 +10,7 @@ class Pick extends Social {
       extended: "This command will help you select out of a list of supplied options.",
       cost: 1,
       aliases: ["choose"],
-      botPerms: []
+      
     });
   }
 

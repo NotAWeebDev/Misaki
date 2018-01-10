@@ -12,8 +12,7 @@ class Wanted extends Social {
       usage: "wanted [@mention|user id]",
       extended: "Mention another user to post a wanted poster of them.",
       cost: 5,
-      cooldown: 20,
-      botPerms: ["ATTACH_FILES"],
+      cooldown: 20
     });
   }
 

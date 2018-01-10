@@ -7,8 +7,7 @@ class Ping extends Command {
       description: "Disrespect someone's mother with this.",
       category: "Fun",
       usage: "yomomma",
-      aliases: ["yomama"],
-      botPerms: []
+      aliases: ["yomama"]
     });
   }
 
