@@ -18,16 +18,12 @@ class Weather extends Social {
     await wthr.find({search: args[0], degreeType: temp}, function(err, result) {
       if (err) console.log(err);
       const current = result[0].current;
-      const location = result[0].location;
-      replace(current, location, message, this.client);
+      const location = result[0].location; 
+      message.reply(this.client.responses.weatherMessages.random().replaceAll("{{observationpoint}}", current.observationpoint).replaceAll("{{degreetype}}", location.degreetype).replaceAll("{{windspeed}}", current.windspeed).replaceAll("{{winddisplay}}", current.winddisplay).replaceAll("{{skytext}}", current.skytext).replaceAll("{{humidity}}", current.humidity).replaceAll("{{temperature}}", current.temperature));
     });
   }
 }
 
-async function replace(current, location, message, client) {
-  const resp = await client.responses.weatherMessages.random().replaceAll("{{observationpoint}}", current.observationpoint).replaceAll("{{degreetype}}", location.degreetype).replaceAll("{{windspeed}}", current.windspeed).replaceAll("{{winddisplay}}", current.winddisplay).replaceAll("{{skytext}}", current.skytext).replaceAll("{{humidity}}", current.humidity).replaceAll("{{temperature}}", current.temperature);
-  message.reply(resp);
-}
 
 module.exports = Weather;
 
