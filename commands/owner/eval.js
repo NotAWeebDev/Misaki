@@ -5,7 +5,7 @@ class Eval extends Owner {
     super(client, {
       name: "eval",
       description: "Evaluates arbitrary Javascript.",
-      category:"System",
+      category: "Owner",
       usage: "eval <expression>",
       aliases: ["ev"],
       permLevel: "Bot Owner"

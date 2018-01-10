@@ -5,7 +5,7 @@ class Conf extends Owner {
     super(client, {
       name: "conf",
       description: "Modify the default configuration for all guilds.",
-      category: "System",
+      category: "Owner",
       usage: "conf <view/get/edit> <key> <value>",
       guildOnly: true,
       aliases: ["defaults"],

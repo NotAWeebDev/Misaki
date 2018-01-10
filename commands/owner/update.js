@@ -9,9 +9,8 @@ class Update extends Owner {
       name: "update",
       description: "This updates the bot from its git repo.",
       usage: "update",
-      category: "System",
+      category: "Owner",
       extended: "This command is designed to update the bot from it's own repository, then reboots the bot for the changes to take effect.",
-      hidden: true,
       aliases: ["git", "pull"],
       permLevel: "Bot Owner"
     });

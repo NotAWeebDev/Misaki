@@ -5,7 +5,7 @@ class Set extends Command {
     super(client, {
       name: "set",
       description: "View or change settings for your server.",
-      category: "System",
+      category: "Utilities",
       usage: "set <view/get/edit> <key> <value>",
       guildOnly: true,
       aliases: ["setting", "settings"],

@@ -5,8 +5,8 @@ class Purge extends Command {
     super(client, {
       name: "purge",
       description: "Allows you to purge a users or channels messages.",
+      category: "Utilities",
       usage: "purge <num> <user>",
-      category: "System",
       guildOnly: true,
       aliases: ["clean", "remove", "delete"],
       permLevel: "Moderator"
