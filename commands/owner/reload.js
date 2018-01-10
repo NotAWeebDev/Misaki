@@ -1,6 +1,6 @@
-const Command = require(`${process.cwd()}/base/Command.js`);
+const Owner = require(`${process.cwd()}/base/Owner.js`);
 
-class Reload extends Command {
+class Reload extends Owner {
   constructor(client) {
     super(client, {
       name: "reload",

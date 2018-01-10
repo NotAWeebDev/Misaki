@@ -1,7 +1,7 @@
-const Command = require(`${process.cwd()}/base/Command.js`);
+const Owner = require(`${process.cwd()}/base/Owner.js`);
 const exec = require("child_process").exec;
 
-class Exec extends Command {
+class Exec extends Owner {
   constructor(client) {
     super(client, {
       name: "exec",

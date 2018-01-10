@@ -1,8 +1,8 @@
-const Command = require(`${process.cwd()}/base/Command.js`);
+const Owner = require(`${process.cwd()}/base/Owner.js`);
 const {promisify} = require("util");
 const write = promisify(require("fs").writeFile);
 
-class Reboot extends Command {
+class Reboot extends Owner {
   constructor(client) {
     super(client, {
       name: "reboot",

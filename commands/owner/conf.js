@@ -1,6 +1,6 @@
-const Command = require(`${process.cwd()}/base/Command.js`);
+const Owner = require(`${process.cwd()}/base/Owner.js`);
 
-class Conf extends Command {
+class Conf extends Owner {
   constructor(client) {
     super(client, {
       name: "conf",
