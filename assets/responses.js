@@ -39,6 +39,12 @@ exports.levelUpMessages = [
 ];
 
 // Commands
+exports.weatherMessages = [
+  "The weather in {{observationpoint}} is {{temperature}}, and a windspeed of {{windspeed}}.", 
+  "At {{observationpoint}} it's currently {{temperature}}, the windspeed is {{winddisplay}}, humidity is at {{humidity}}% at {{windspeed}} the sky is {{skytext}}.",
+  "Look outside the window dummy, it's {{temperature}}, here in {{observationpoint}} the windspeed is {{winddisplay}}, humidity is {{humidity}}% and the sky... {{skytext}}."
+];
+
 exports.pingMessages = [
   "Ugh, again? You always ask, and I tell you that I responded in {{ms}}ms.",
   "B-baka, I responded... just in {{ms}}ms.",
