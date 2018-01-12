@@ -1,5 +1,6 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const snek = require("snekfetch");
+
 class Boobs extends Social {
   constructor(client) {
     super(client, {
@@ -8,9 +9,10 @@ class Boobs extends Social {
       category: "NSFW",
       usage: "boobs",
       extended: "This command will return boobs.",
+      cost: 40,
       cooldown: 10,
       guildOnly: true,
-      aliases: []
+      aliases: ["breasts","jugs","cans","knockers","bongos","bubbies","bumpers","bewbz","tits","tatas","chesticles","gazongas","titties","headlamps","honkburgers","jubblies","mankillers","melons"]
     });
   }
 

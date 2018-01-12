@@ -1,5 +1,6 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const snek = require("snekfetch");
+
 class Butts extends Social {
   constructor(client) {
     super(client, {
@@ -8,9 +9,10 @@ class Butts extends Social {
       category: "NSFW",
       usage: "butts",
       extended: "This command will return butts.",
+      cost: 40,
       cooldown: 10,
       guildOnly: true,
-      aliases: []
+      aliases: ["buttocks","behind","rear","rear-end","backside","posterior","hind-quarters","hinder","heinie","derrière","rump","caboose","tail","tail-end","tail-bone","tail-feather","applebottom","ass","arse","badonkadonk","booty","breeches","britches","tush","tushy","tokus","seat","moon","haunches","hams","fanny","dumper","dump","culo","cheeks","buns","cakes","can","bum","keister","duff","fundament","hunkers","nates","trunk","stern","glutes","pooper","patootie","sit-upon","cushion","wazoo","bop","bumper","dumps","humps","bubbles","back"]
     });
   }
 

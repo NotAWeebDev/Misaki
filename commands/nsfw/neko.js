@@ -1,5 +1,6 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const snek = require("snekfetch");
+
 class Neko extends Social {
   constructor(client) {
     super(client, {
@@ -8,6 +9,7 @@ class Neko extends Social {
       category: "NSFW",
       usage: "neko",
       extended: "This command will return a Neko, a lewd Neko if used in a NSFW channel",
+      cost: 40,
       cooldown: 10,
       guildOnly: true,
       aliases: []
