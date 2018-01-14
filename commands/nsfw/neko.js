@@ -11,7 +11,6 @@ class Neko extends Social {
       extended: "This command will return a Neko, a lewd Neko if used in a NSFW channel",
       cost: 40,
       cooldown: 10,
-      guildOnly: true,
       aliases: []
     });
   }
@@ -20,7 +19,9 @@ class Neko extends Social {
     try {
       if (!message.channel.nsfw) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
 
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      if (message.settings.socialSystem === "true") {
+        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      }
 
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is looking for a feline...`);
       const { body } = await snek.get(`https://nekos.life/api${Math.random() >= 0.5 ? "/lewd" : ""}/neko`);

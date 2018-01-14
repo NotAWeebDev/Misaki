@@ -11,7 +11,7 @@ class Tattoo extends Social {
       category: "Fun",
       usage: "tattoo [@mention|user id]",
       extended: "Mention another user to get them tattooed on your arm.",
-      cost: 5,
+      cost: 10,
       cooldown: 10,
       aliases: ["ink"]
     });
@@ -21,7 +21,9 @@ class Tattoo extends Social {
     try {
       const tattoo = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
       
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      if (message.settings.socialSystem === "true") {
+        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      }
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is getting inked...`);
   
       const { getInked } = this;

@@ -15,8 +15,8 @@ class SnapChat extends Social {
       usage: "snapchat <text>",
       category: "Fun",
       extended: "This command uses canvas to generate a Snapchat styled image based on the well known statue meme.",
-      cost: 4,
-      cooldown: 20,
+      cost: 10,
+      cooldown: 10,
       aliases: ["sc"]
     });
   }
@@ -26,7 +26,9 @@ class SnapChat extends Social {
     if (text.length < 1) return message.response(undefined, "You must give the snap some text.");
     if (text.length > 28) return message.response(undefined, "I can only handle a maximum of 28 characters");
     try {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      if (message.settings.socialSystem === "true") {
+        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      }
       const { getSnap } = this;
       const result = await getSnap(text);
       await message.channel.send({ files: [{ attachment: result, name: `${text.toLowerCase().replace(" ", "-").replace(".", "-")}.png`}]});

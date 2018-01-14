@@ -25,14 +25,16 @@ class Slots extends Social {
       description: "Try your luck with the slots.",
       category: "Fun",
       usage: "slots",
-      cost: 5,
+      cost: 10,
       cooldown: 5,
       aliases: []
     });
   }
   
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+    if (message.settings.socialSystem === "true") {
+      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+    }
     try {
       const results = machine.play();
       const winnings = this.help.cost * results.totalPoints;

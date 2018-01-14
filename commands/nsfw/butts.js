@@ -11,7 +11,6 @@ class Butts extends Social {
       extended: "This command will return butts.",
       cost: 40,
       cooldown: 10,
-      guildOnly: true,
       aliases: ["buttocks","behind","rear","rear-end","backside","posterior","hind-quarters","hinder","heinie","derrière","rump","caboose","tail","tail-end","tail-bone","tail-feather","applebottom","ass","arse","badonkadonk","booty","breeches","britches","tush","tushy","tokus","seat","moon","haunches","hams","fanny","dumper","dump","culo","cheeks","buns","cakes","can","bum","keister","duff","fundament","hunkers","nates","trunk","stern","glutes","pooper","patootie","sit-upon","cushion","wazoo","bop","bumper","dumps","humps","bubbles","back"]
     });
   }
@@ -20,7 +19,9 @@ class Butts extends Social {
     try {
       if (!message.channel.nsfw) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
 
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      if (message.settings.socialSystem === "true") {
+        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      }
 
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is looking for butts...`);
       const { body } = await snek.get("http://api.obutts.ru/butts/0/1/random");

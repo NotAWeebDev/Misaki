@@ -10,6 +10,8 @@ class Item extends Social {
   }
 
   async run(message, [member, amount, name], level) {
+    if (message.settings.socialSystem !== "true") return message.response(undefined, "The social system is disabled.");
+    if (message.settings.socialInventory !== "true") return message.response(undefined, "The inventory system is disabled.");
     if (!message.flags.length) message.flags.push("view");
     try {
       const [bot, user] = await this.verifySocialUser(message, member || message.member);

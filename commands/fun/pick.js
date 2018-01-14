@@ -8,7 +8,7 @@ class Pick extends Social {
       category: "Fun",
       usage: "pick <option1>, <option2>, <option3>, <etc>",
       extended: "This command will help you select out of a list of supplied options.",
-      cost: 1,
+      cost: 5,
       aliases: ["choose"],
       
     });
@@ -19,7 +19,9 @@ class Pick extends Social {
     if (options.length < 2) return message.response(undefined, "Invalid command usage, you must supply text.");
     const list = options.split(",");
     if (list.length < 2 || list[1] === "") return message.response(undefined, "Invalid command usage, you must supply at least two items to pick from.");
-    if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+    if (message.settings.socialSystem === "true") {
+      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+    }
     try {
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.guild.me.displayName}** is thinking...`);
       setTimeout(

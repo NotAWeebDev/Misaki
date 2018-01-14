@@ -11,7 +11,7 @@ class FML extends Social {
       usage: "fml",
       category: "Fun",
       extended: "This command grabs a random \"fuck my life\" story from fmylife.com and displays it in an organised embed.",
-      cost: 5,
+      cost: 10,
       cooldown: 10,
       aliases: ["fuckmylife", "fuckme"]
     });
@@ -19,7 +19,9 @@ class FML extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars 
     try {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      if (message.settings.socialSystem === "true") {
+        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      }
       const reply = await message.channel.send("<a:typing:397490442469376001> **Searching** please wait a few moments.");
       const { text } = await request.get("http://www.fmylife.com/random");
       const root = HTMLParser.parse(text);

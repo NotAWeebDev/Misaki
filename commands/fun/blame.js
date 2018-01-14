@@ -12,14 +12,16 @@ class Blame extends Social {
       usage: "blame [mention]",
       category: "Fun",
       extended: "Blame someone else via this command.",
-      cost: 2,
+      cost: 5,
       cooldown: 5
     });
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars 
     try {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      if (message.settings.socialSystem === "true") {
+        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      }
       const person = message.mentions.members.first() || message.member;
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${person.displayName}** is getting the blame...`);
       const { blame } = this;

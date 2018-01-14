@@ -14,7 +14,7 @@ class Achievement extends Social {
       category: "Fun",
       usage: "achievement",
       extended: "Either mention a user with text to give the achievement their user avatar, or just supply text for your own achievement.",
-      cost: 4,
+      cost: 10,
       cooldown: 10,
       aliases: ["get", "achieveget", "achievementget"]
     });
@@ -26,7 +26,9 @@ class Achievement extends Social {
     if (text.length > 22) return message.response(undefined, "I can only handle a maximum of 22 characters");
     
     try {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      if (message.settings.socialSystem === "true") {
+        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      }
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is getting an achievement...`);
       const person = (message.mentions.users.first() || message.author).displayAvatarURL({ format:"png", size:32 });
       if (message.mentions.users.first()) text = text.replace(/<@!?\d+>/, "").replace(/\n/g, " ").trim();

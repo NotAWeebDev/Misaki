@@ -13,6 +13,8 @@ class Score extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
+    if (message.settings.socialSystem !== "true") return message.response(undefined, "The social system is disabled.");
+    
     const member = args[0] ? await this.verifyMember(message, args[0]) : message.member;
     if (member != message.member) return this.resp("other", member, message, this.client, this);
     this.resp("self", member, message, this.client);

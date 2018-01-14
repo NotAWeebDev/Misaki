@@ -11,7 +11,7 @@ class Valut extends Social {
       category: "Fun",
       usage: "thumbs [@mention|user id]",
       extended: "Mention another user to thumbs up of them.",
-      cost: 5,
+      cost: 10,
       cooldown: 10,
       aliases: ["vault"]
     });
@@ -20,7 +20,9 @@ class Valut extends Social {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     try {
       const user = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      if (message.settings.socialSystem === "true") {
+        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      }
       const msg = await message.channel.send("Who's giving a thumbs up?...");
       const { getThumbsUp } = this;
       const result = await getThumbsUp(user.displayAvatarURL({ format:"png", size:128 }));

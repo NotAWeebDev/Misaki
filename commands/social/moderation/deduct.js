@@ -16,6 +16,8 @@ class Deduct extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
+    if (message.settings.socialSystem !== "true") return message.response(undefined, "The social system is disabled.");
+
     if (args.length === 0) return message.response(undefined, "BAKA! You need to mention someone to punish them!");
     try {
       const [bot, user] = await this.verifySocialUser(message, args[0]);

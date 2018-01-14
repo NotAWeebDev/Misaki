@@ -11,7 +11,6 @@ class Boobs extends Social {
       extended: "This command will return boobs.",
       cost: 40,
       cooldown: 10,
-      guildOnly: true,
       aliases: ["breasts","jugs","cans","knockers","bongos","bubbies","bumpers","bewbz","tits","tatas","chesticles","gazongas","titties","headlamps","honkburgers","jubblies","mankillers","melons"]
     });
   }
@@ -20,7 +19,9 @@ class Boobs extends Social {
     try {
       if (!message.channel.nsfw) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
 
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      if (message.settings.socialSystem === "true") {
+        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      }
 
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is looking for boobies...`);
       const { body } = await snek.get("http://api.oboobs.ru/boobs/0/1/random");

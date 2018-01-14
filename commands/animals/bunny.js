@@ -8,8 +8,8 @@ class Bunny extends Social {
       category: "Animals",
       usage: "bunny",
       extended: "This command will return a beautiful bunny.",
+      cost: 5,
       cooldown: 10,
-      guildOnly: true,
       aliases: []
     });
   }
@@ -17,7 +17,9 @@ class Bunny extends Social {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     try {
 
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      if (message.settings.socialSystem === "true") {
+        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      }
 
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a bunny...`);
       const { body } = await snek.get("https://api.bunnies.io/v2/loop/random/?media=gif,png");

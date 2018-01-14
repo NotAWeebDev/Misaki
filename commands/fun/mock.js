@@ -17,7 +17,7 @@ class Mock extends Social {
       usage: "mock",
       category: "Fun",
       extended: "Based on the popular Spongebob Squarepants mocking meme.",
-      cost: 4,
+      cost: 10,
       cooldown: 10
     });
   }
@@ -28,7 +28,9 @@ class Mock extends Social {
       const mockBob = await fsn.readFile("./assets/images/spongebob.png");
       const mock = grabMock.size === 1 ? grabMock.first() : grabMock;
       if (mock.author.bot) return message.response(undefined, "You cannot mock bots.");
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      if (message.settings.socialSystem === "true") {
+        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      }
       await message.channel.send(alternateCase(mock.cleanContent), {files: [{attachment: mockBob, name: "mock.png"}]});
     } catch (error) {
       this.client.logger.error(error);

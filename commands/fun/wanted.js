@@ -11,8 +11,8 @@ class Wanted extends Social {
       category: "Fun",
       usage: "wanted [@mention|user id]",
       extended: "Mention another user to post a wanted poster of them.",
-      cost: 5,
-      cooldown: 20
+      cost: 10,
+      cooldown: 10
     });
   }
 
@@ -20,7 +20,9 @@ class Wanted extends Social {
     try {
       const wanted = await this.verifyUser(message,args[0] ? args[0] : message.author.id);
       
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      if (message.settings.socialSystem === "true") {
+        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      }
 
       const msg = await message.channel.send("Fetching the Sheriff...");
       const { getWanted } = this;

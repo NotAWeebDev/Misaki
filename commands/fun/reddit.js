@@ -8,7 +8,7 @@ class Reddit extends Social {
       description: "Posts a random subreddit entry.",
       usage: "reddit [-new|-random|-hot|-top] [subreddit]",
       category: "Fun",
-      cost: 1,
+      cost: 10,
       cooldown: 25      
     });
   }
@@ -29,7 +29,9 @@ class Reddit extends Social {
         message.response("🔞", "Cannot display NSFW content in a SFW channel.");
         return;
       }
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      if (message.settings.socialSystem === "true") {
+        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      }
       const msg = await message.channel.send(`'Fetching from ${meme.subreddit_name_prefixed}...'`);
       await message.channel.send(`${meme.title} submitted by ${meme.author} in ${meme.subreddit_name_prefixed}\nUpvote Ratio ${meme.upvote_ratio}\n${meme.url}`);
       msg.delete();

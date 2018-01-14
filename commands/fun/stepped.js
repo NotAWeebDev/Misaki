@@ -11,15 +11,17 @@ class Stepped extends Social {
       category: "Fun",
       usage: "stepped [@mention|user id]",
       extended: "Mention another user to step on them.",
-      cost: 5,
-      cooldown: 20
+      cost: 10,
+      cooldown: 10
     });
   }
   async run(message, args, level) { // eslint-disable-line no-unused-vars 
     try {
       const stepped = (message.mentions.users.first() || message.author).displayAvatarURL({ format:"png", size:128 });
       
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      if (message.settings.socialSystem === "true") {
+        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      }
 
       const msg = await message.channel.send("Going for a walk...");
       const { getStepped } = this;

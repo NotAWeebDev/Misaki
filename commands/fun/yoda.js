@@ -8,7 +8,7 @@ class Yoda extends Social {
       category: "Fun",
       usage: "yoda <message>",
       extended: "This command will turn any supplied text into Yoda speech, results may vary.",
-      cost: 1
+      cost: 5
     });
   }
 
@@ -20,7 +20,9 @@ class Yoda extends Social {
         return;
       }
 
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      if (message.settings.socialSystem === "true") {
+        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      }
 
       const { text } = await snek.get(`http://yoda-api.appspot.com/api/v1/yodish?text=${encodeURIComponent(speech.toLowerCase())}`);
       message.channel.send(JSON.parse(text).yodish);

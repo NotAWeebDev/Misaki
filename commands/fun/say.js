@@ -8,7 +8,7 @@ class Say extends Social {
       usage: "say [#channel] <message>",
       category: "Fun",
       extended: "You can send a message to another channel via this command.",
-      cost: 1,
+      cost: 5,
       aliases: ["speak"]
     });
   }
@@ -23,7 +23,9 @@ class Say extends Social {
       const channel = message.guild.channels.get(channelid);
       if (!message.member.permissionsIn(channel).has(["SEND_MESSAGES", "READ_MESSAGES"])) return message.response(undefined, "You do not have permission to `say` in that channel.");
       
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      if (message.settings.socialSystem === "true") {
+        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      }
       
       message.delete();
 

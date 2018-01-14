@@ -12,13 +12,15 @@ class Please extends Social {
       usage: "pls [mention]",
       category: "Fun",
       extended: "Didn't your mother always tell you to say please? Now you can with a bot!",
-      cost: 2
+      cost: 5
     });
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars 
     try {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      if (message.settings.socialSystem === "true") {
+        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      }
       const person = message.mentions.members.first() || message.member;
       const { pls } = this;
       const result = await pls(person);

@@ -12,8 +12,8 @@ class Triggered extends Social {
       usage: "triggered [@mention|userid]",
       category: "Fun",
       extended: "Ever get so pissed off you explode? You got triggered.",
-      cost: 2,
-      cooldown: 30,
+      cost: 10,
+      cooldown: 20,
       aliases: ["trigger"]
     });
   }
@@ -22,7 +22,9 @@ class Triggered extends Social {
     try {
       const target = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
 
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      if (message.settings.socialSystem === "true") {
+        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      }
 
       const msg = await message.channel.send(`Triggering...${target.tag}`);
 

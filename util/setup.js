@@ -6,17 +6,20 @@ const fs = require("fs");
 let baseConfig = fs.readFileSync("./util/setup_base.txt", "utf8");
 
 const defaultSettings = `{
-  "prefix": "ok!",
+  "prefix": "m.",
   "modRole": "Moderator",
   "adminRole": "Administrator",
   "systemNotice": "true",
   "welcomeEnabled": "false",
   "welcomeChannel": "welcome",
+  "socialNotice": "false",
+  "socialSystem": "true",
+  "socialInventory": "true",
   "scoreTime": "5",
   "dailyTime": "24",
   "pointsReward": "250",
   "minPoints": "1",
-  "maxPoints": "50",
+  "maxPoints": "20",
   "costMulti": "10"
 }`;
 

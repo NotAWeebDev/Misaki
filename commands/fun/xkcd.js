@@ -8,10 +8,14 @@ class Xkdc extends Social {
       category: "Fun",
       usage: "xkcd [r] [f] <num>",
       extended: "Get the daily comic by using the command on its own, to get a random comic add the flag R, to see a selected comic use the flag F with a comic number",
+      cost: 10,
       cooldown: 10
     });
   }
   async run(message, args, level) { // eslint-disable-line no-unused-vars
+    if (message.settings.socialSystem === "true") {
+      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+    }
     const inf = await snek.get("https://xkcd.com/info.0.json");
     const ob = await inf.body;
     if (message.flags[0] == "f") {

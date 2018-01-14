@@ -11,7 +11,7 @@ class Respect extends Social {
       category: "Fun",
       usage: "respect [@mention|user id]",
       extended: "You can pay respects to any user on Discord.",
-      cost: 1,
+      cost: 10,
       cooldown: 30,
       aliases: ["pressf", "f", "rip", "ripme"]
     });
@@ -21,7 +21,9 @@ class Respect extends Social {
     try {
       const target = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
 
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      if (message.settings.socialSystem === "true") {
+        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      }
       
       const msg = await message.channel.send("Paying respects...");
       

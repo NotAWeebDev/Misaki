@@ -11,7 +11,6 @@ class E621 extends Social {
       extended: "This command will return a random result from e621.",
       cost: 40,
       cooldown: 10,
-      guildOnly: true,
       aliases: []
     });
   }
@@ -25,7 +24,10 @@ class E621 extends Social {
       const result = body.random();
       if (result.tags.split(" ").some(t => blacklist.includes(t.toLowerCase()))) return message.response("📛", "Blacklisted word found, aborting...");
       
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      if (message.settings.socialSystem === "true") {
+        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      }
+
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is checking out ${args.length === 0 ? " " : `${args.join(" ")} on `}e621.net...`);
 
 

@@ -12,7 +12,11 @@ module.exports = class {
     message.settings = settings;
     
     const level = this.client.permlevel(message);
-    monitor.run(this.client, message, level);
+
+    if (message.settings.socialSystem === "true") {
+      monitor.run(this.client, message, level);
+    }
+
   
     const mentionPrefix = new RegExp(`^<@!?${this.client.user.id}> `);
     const prefixMention = mentionPrefix.exec(message.content);

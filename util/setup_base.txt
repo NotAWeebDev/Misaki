@@ -16,17 +16,20 @@ const config = {
   // DO NOT REMOVE THIS BEFORE YOUR BOT IS LOADED AND FUNCTIONAL.
   
   "defaultSettings" : {
-    "prefix": "ok!",
+    "prefix": "m.",
     "modRole": "Moderator",
     "adminRole": "Administrator",
     "systemNotice": "true",
     "welcomeEnabled": "false",
     "welcomeChannel": "welcome",
+    "socialNotice": "false",
+    "socialSystem": "true",
+    "socialInventory": "true",
     "scoreTime": "5",
     "dailyTime": "24",
     "pointsReward": "250",
     "minPoints": "1",
-    "maxPoints": "50",
+    "maxPoints": "20",
     "costMulti": "10"
   },
 

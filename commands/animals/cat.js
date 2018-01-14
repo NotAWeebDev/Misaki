@@ -8,8 +8,8 @@ class Cat extends Social {
       category: "Animals",
       usage: "cat",
       extended: "This command will return a beautiful cat.",
+      cost: 5,
       cooldown: 10,
-      guildOnly: true,
       aliases: ["kitten"]
     });
   }
@@ -17,7 +17,9 @@ class Cat extends Social {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     try {
 
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      if (message.settings.socialSystem === "true") {
+        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      }
 
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a cat...`);
       const { body } = await snek.get("http://random.cat/meow");

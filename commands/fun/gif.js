@@ -7,10 +7,15 @@ class Gif extends Social {
       description: "Random gif time",
       category: "Fun",
       usage: "gif",
-      cooldown: 10
+      cost: 5,
+      cooldown: 10,
+      aliases: ["giphy"]
     });
   }
   async run(message, args, level) { // eslint-disable-line no-unused-vars
+    if (message.settings.socialSystem === "true") {
+      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+    }
     const list = await snek.get("http://replygif.net/api/tags?api-key=39YAprx5Yi");
     const tag = list.body.random();
     const giflist = await snek.get(`http://replygif.net/api/gifs?tag=${tag.title}&api-key=39YAprx5Yi`);

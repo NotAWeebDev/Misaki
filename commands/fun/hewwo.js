@@ -8,13 +8,16 @@ class Hewwo extends Social {
       usage: "hewwo is it me your looking for?",
       category: "Fun",
       extended: "Convert your boring English sentences into amazing and exciting Engwish.",
-      cost: 10,
-      aliases: ["hello"]
+      cost: 5,
+      aliases: ["hello", "engwish"]
     });
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     if (args.length < 1) message.response(undefined, "You need to give the bot a message to send.");
+    if (message.settings.socialSystem === "true") {
+      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+    }
     const phrase = args.join(" ");
     try {
       message.channel.send(this.translate(phrase));
