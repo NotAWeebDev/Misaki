@@ -3,10 +3,10 @@ const Social = require(`${process.cwd()}/base/Social.js`);
 const { SlotMachine, SlotSymbol } = require("slot-machine");
 
 const lemon = new SlotSymbol("lemon", { display: "🍋", points: 1, weight: 100 });
-// const watermelon = new SlotSymbol("watermelon", { display: "🍉", points: 1, weight: 100 });
-// const apple = new SlotSymbol("apple", { display: "🍎", points: 1, weight: 100 });
-// const grape = new SlotSymbol("grape", { display: "🍇", points: 1, weight: 100 });
-// const orange = new SlotSymbol("orange", { display: "🍊", points: 1, weight: 100 });
+const watermelon = new SlotSymbol("watermelon", { display: "🍉", points: 1, weight: 100 });
+const apple = new SlotSymbol("apple", { display: "🍎", points: 1, weight: 100 });
+const grape = new SlotSymbol("grape", { display: "🍇", points: 1, weight: 100 });
+const orange = new SlotSymbol("orange", { display: "🍊", points: 1, weight: 100 });
 const cherry = new SlotSymbol("cherry", { display: "🍒", points: 1, weight: 100 });
 const wild = new SlotSymbol("wild", { display: "❔", points: 1, weight: 40, wildcard: true });
 const bell = new SlotSymbol("bell", { display: "🔔", points: 2, weight: 40 });
@@ -16,7 +16,7 @@ const money = new SlotSymbol("money", { display: "💰", points: 5, weight: 25 }
 const diamond = new SlotSymbol("diamond", { display: "💎", points: 10, weight: 3 });
 const jackpot = new SlotSymbol("jackpot", { display: "🔅", points: 50, weight: 5});
 
-const machine = new SlotMachine(3, [cherry, lemon, /*watermelon, apple, grape, orange,*/ wild, bell, clover, heart, money, diamond, jackpot]);
+const machine = new SlotMachine(3, [cherry, lemon, watermelon, apple, grape, orange, wild, bell, clover, heart, money, diamond, jackpot]);
 
 class Slots extends Social {
   constructor(client) {!
