@@ -22,6 +22,7 @@ class Bird extends Social {
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a bird...`);
       const { body } = await snek.get("http://random.birb.pw/tweet/");
       message.buildEmbed()
+        .setColor(message.guild.member(this.client.user.id).highestRole.color || 0)
         .setImage(`https://random.birb.pw/img/${body}`)
         .setTimestamp()
         .send();

@@ -25,6 +25,7 @@ class Dog extends Social {
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a dog...`);
       const { body } = await snek.get(url);
       message.buildEmbed()
+        .setColor(message.guild.member(this.client.user.id).highestRole.color || 0)
         .setImage(body.message)
         .setTimestamp()
         .send();

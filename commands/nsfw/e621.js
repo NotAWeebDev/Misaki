@@ -37,6 +37,7 @@ class E621 extends Social {
       // };
       // result.sources.forEach(getSources);
       message.buildEmbed()
+        .setColor(message.guild.member(this.client.user.id).highestRole.color || 0)
         .setTitle(`Created by ${result.author}`)
         .setURL(`https://e621.net/post/show/${result.id}`)
         .setDescription(`**Description:** ${result.description}`)

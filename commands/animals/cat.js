@@ -24,6 +24,7 @@ class Cat extends Social {
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a cat...`);
       const { body } = await snek.get("http://random.cat/meow");
       message.buildEmbed()
+        .setColor(message.guild.member(this.client.user.id).highestRole.color || 0)
         .setImage(body.file)
         .setTimestamp()
         .send();

@@ -1,5 +1,7 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 const moment = require("moment");
+const snek = require("snekfetch");
+
 class Social extends Command {
 
   constructor(client, options) {
@@ -111,6 +113,11 @@ class Social extends Command {
     }
   }
 
+
+  async cmdMoe(type, nsfw = false) {
+    const { body } = await snek.get(`https://rra.ram.moe/i/r?type=${type}&nsfw=${nsfw}`);
+    return body.path.replace("/i/", "");
+  }
 }
 
 module.exports = Social;

@@ -26,6 +26,7 @@ class Butts extends Social {
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is looking for butts...`);
       const { body } = await snek.get("http://api.obutts.ru/butts/0/1/random");
       message.buildEmbed()
+        .setColor(message.guild.member(this.client.user.id).highestRole.color || 0)
         .setImage(`http://media.obutts.ru/${body[0].preview}`)
         .setTimestamp()
         .send();
