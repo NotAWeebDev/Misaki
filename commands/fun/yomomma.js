@@ -1,6 +1,6 @@
-const Command = require(`${process.cwd()}/base/Command.js`);
+const Social = require(`${process.cwd()}/base/Social.js`);
 const snek = require("snekfetch");
-class Ping extends Command {
+class Ping extends Social {
   constructor(client) {
     super(client, {
       name: "yomomma",

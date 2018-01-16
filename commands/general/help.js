@@ -9,28 +9,36 @@ class Help extends Command {
       category: "System",
       extended: "This command will display all available commands for your permission level, with the additonal option of getting per command information when you run 'help <command name>'.",
       hidden: true,
-      aliases: ["h", "halp"]
+      aliases: ["h", "halp", "help"]
     });
   }
 
   async run(message, args, level) {
     const settings = message.settings;
     if (!args[0]) {
-      const myCommands = message.guild ? this.client.commands.filter(cmd => this.client.levelCache[cmd.conf.permLevel] <= level && cmd.conf.hidden !== true) : this.client.commands.filter(cmd => this.client.levelCache[cmd.conf.permLevel] <= level && cmd.conf.hidden !== true && cmd.conf.guildOnly !== true);
-      const commandNames = myCommands.keyArray();
-      const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);
-      let currentCategory = "";
-      let output = `= Command List =\n\n[Use ${settings.prefix}help <commandname> in a guild channel for details]\n`;
-      const sorted = myCommands.array().sort((p, c) => p.help.category > c.help.category ? 1 :  p.help.name > c.help.name && p.help.category === c.help.category ? 1 : -1 );
-      sorted.forEach( c => {
-        const cat = c.help.category.toProperCase();
-        if (currentCategory !== cat) {
-          output += `\u200b\n== ${cat} ==\n`;
-          currentCategory = cat;
-        }
-        output += `${settings.prefix}${c.help.name}${" ".repeat(longest - c.help.name.length)} :: ${c.help.description}\n`;
-      });
-      message.author.send(output, {code:"asciidoc", split: { char: "\u200b" }});
+      try {
+        const myCommands = message.guild ? this.client.commands.filter(cmd => this.client.levelCache[cmd.conf.permLevel] <= level && cmd.conf.hidden !== true) : this.client.commands.filter(cmd => this.client.levelCache[cmd.conf.permLevel] <= level && cmd.conf.hidden !== true && cmd.conf.guildOnly !== true);
+        const commandNames = myCommands.keyArray();
+        const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);
+        let currentCategory = "";
+        let output = `= Command List =\n\n[Use ${settings.prefix}help <commandname> in a guild channel for details]\n`;
+        const sorted = myCommands.array().sort((p, c) => p.help.category > c.help.category ? 1 :  p.help.name > c.help.name && p.help.category === c.help.category ? 1 : -1 );
+        sorted.forEach( c => {
+          const cat = c.help.category.toProperCase();
+          if (currentCategory !== cat) {
+            output += `\u200b\n== ${cat} ==\n`;
+            currentCategory = cat;
+          }
+          output += `${settings.prefix}${c.help.name}${" ".repeat(longest - c.help.name.length)} :: ${c.help.description}\n`;
+        });
+        await message.author.send(output, {code:"asciidoc", split: { char: "\u200b" }});
+      } catch (error) {
+        if (error.message === "Cannot send messages to this user") {
+          await message.reply("I cannot send you the commands message, as it appears you have **Direct Messages's** disabled.");
+        } else {
+          this.client.logger.error(error);
+        }       
+      }
     } else {
       let command = args[0];
       
