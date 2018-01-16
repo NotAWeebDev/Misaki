@@ -13,6 +13,8 @@ class Cry extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
+    const target = message.mentions.members;
+    if (target.size === 0) return message.response(undefined, "You need to mention someone to cry on their shoulder.");
     try {
       if (message.settings.socialSystem === "true") {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
@@ -20,6 +22,7 @@ class Cry extends Social {
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** wants to cry it all away...`);
       const cry = await this.cmdMoe("cry");
       await message.buildEmbed()
+        .setDescription(`**${target.first().displayName}**, **${message.member.displayName}** just cried on your shoulder.`)
         .setColor(message.guild.member(this.client.user.id).highestRole.color || 0)
         .setImage(`https://cdn.ram.moe/${cry}`)
         .setTimestamp()

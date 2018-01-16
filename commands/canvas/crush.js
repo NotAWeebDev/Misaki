@@ -7,10 +7,9 @@ class Crush extends Social {
   constructor(client) {
     super(client, {
       name: "crush",
-      description: "",
+      description: "Display your affection for another user.",
       category: "Fun",
       usage: "crush [@mention|userid]",
-      extended: "",
       cost: 10,
       cooldown: 10
     });
