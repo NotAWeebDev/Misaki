@@ -51,8 +51,8 @@ class Social extends Command {
         message.response(undefined, `Insufficient funds, you have ₲${payerScore.points}`);
         return;
       }
-      
-      const response = await message.client.awaitReply(message, `Are you sure you want to pay ${getPayee.displayName} ₲${parseInt(amount)}?\n\n(**y**es | **n**o)\n\nReply with \`cancel\` to cancel the message. The message will timeout after 60 seconds.`, 6000, null);
+      const filter = m => m.author.id === message.author.id;
+      const response = await message.client.awaitReply(message, `Are you sure you want to pay ${getPayee.displayName} ₲${parseInt(amount)}?\n\n(**y**es | **n**o)\n\nReply with \`cancel\` to cancel the message. The message will timeout after 60 seconds.`, filter, 6000, null);
 
       if (["yes", "y", "confirm"].includes(response.toLowerCase())) {
         getPayer.takePoints(parseInt(amount));

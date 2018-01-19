@@ -42,8 +42,9 @@ class Conf extends Owner {
     if (action === "del") {
       if (!key) return message.reply("Please specify a key to delete.");
       if (!defaults[key]) return message.reply("This key does not exist in the settings");
-    
-      const response = await this.client.awaitReply(message, `Are you sure you want to permanently delete ${key} from all guilds? This **CANNOT** be undone.`);
+      const filter = m => m.author.id === message.author.id;
+
+      const response = await this.client.awaitReply(message, `Are you sure you want to permanently delete ${key} from all guilds? This **CANNOT** be undone.`, filter, undefined, null);
 
       if (["y", "yes"].includes(response)) {
 

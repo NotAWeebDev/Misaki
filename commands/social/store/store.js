@@ -34,8 +34,9 @@ class Store extends Social {
         if (parseInt(item.array()[0].price) > parseInt(message.member.score.points)) {
           return message.channel.send(`You currently have ₲${parseInt(message.member.score.points).toLocaleString()}, but the role costs ${parseInt(item.array()[0].price).toLocaleString()}!`);
         }
-        
-        const response = await this.client.awaitReply(message, `Are you sure you want to purchase ${item.array()[0].name} for ₲${item.array()[0].price.toLocaleString()}?`, undefined, null);
+
+        const filter = m => m.author.id === message.author.id;
+        const response = await this.client.awaitReply(message, `Are you sure you want to purchase ${item.array()[0].name} for ₲${item.array()[0].price.toLocaleString()}?`, filter, undefined, null);
         if (["y", "yes"].includes(response.toLowerCase())) {
         
           message.member.takePoints(parseInt(item.array()[0].price));
@@ -62,7 +63,8 @@ class Store extends Social {
         
         const returnPrice = Math.floor(item.array()[0].price/2);
         
-        const response = await this.client.awaitReply(message, `Are you sure you want to sell ${item.array()[0].name} for ₲${returnPrice.toLocaleString()}?`, undefined, null);
+        const filter = m => m.author.id === message.author.id;
+        const response = await this.client.awaitReply(message, `Are you sure you want to sell ${item.array()[0].name} for ₲${returnPrice.toLocaleString()}?`, filter, undefined, null);
         if (["y", "yes"].includes(response.toLowerCase())) {
         
           message.member.givePoints(returnPrice);
@@ -103,7 +105,8 @@ class Store extends Social {
         const role = message.guild.roles.find("name", name);
         if (!this.client.store.has(role.id)) return message.reply("This role is not on sale");
         
-        const response = await this.client.awaitReply(message, `Are you sure you want to remove ${name} from the shop?`, undefined, null);
+        const filter = m => m.author.id === message.author.id;
+        const response = await this.client.awaitReply(message, `Are you sure you want to remove ${name} from the shop?`, filter, undefined, null);
         if (["y", "yes"].includes(response)) {
         
           await this.client.store.delete(role.id);

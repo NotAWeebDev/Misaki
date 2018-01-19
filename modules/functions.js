@@ -18,14 +18,14 @@ module.exports = (client) => {
     }
   };
 
-  client.awaitReply = async (message, question, limit = 60000, embed = {}) => {
-    const filter = m => m.author.id === message.author.id;
+  client.awaitReply = async (message, question, filter, limit = 60000, embed = {}) => {
     await message.channel.send(question, { embed });
     try {
       const collected = await message.channel.awaitMessages(filter, { max: 1, time: limit, errors: ["time"] });
       return collected.first().content;
     } catch (error) {
-      client.logger.error(error);
+      console.log(error);
+      // client.logger.error(error);
       return false;
     }
   };
