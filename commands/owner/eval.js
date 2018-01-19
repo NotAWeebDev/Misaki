@@ -15,7 +15,8 @@ class Eval extends Owner {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const code = args.join(" ");
     try {
-      const evaled = await eval(code);
+      const asyncCode = `(async() => ${code} )()`;
+      const evaled = await eval(asyncCode);
       const clean = await this.client.clean(this.client, evaled);
       message.channel.send(`\`\`\`js\n${clean}\n\`\`\``);
     } catch (err) {
