@@ -3,7 +3,7 @@ class Invite extends Command {
   constructor(client) {
     super(client, {
       name: "invite",
-      description: "Latency and API response times.",
+      description: "Invite me to your guild!",
       usage: "invite",
       aliases: []
     });
