@@ -112,7 +112,6 @@ class Social extends Command {
     }
   }
 
-
   async cmdMoe(type, nsfw = false) {
     const { body } = await snek.get(`https://rra.ram.moe/i/r?type=${type}&nsfw=${nsfw}`);
     return body.path.replace("/i/", "");
