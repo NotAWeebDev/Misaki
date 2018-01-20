@@ -73,7 +73,6 @@ class Social extends Command {
 
   }
 
-
   async cmdPay(message, user, cost) {
     try {
       const [bot, _user] = await this.verifySocialUser(message, user); // eslint-disable-line no-unused-vars
