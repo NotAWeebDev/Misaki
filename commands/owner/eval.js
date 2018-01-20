@@ -38,7 +38,7 @@ class Eval extends Owner {
         }
       }
     } catch (error) {
-      message.channel.send(`The following error occourd \`\`\`js\n${error.stack}\`\`\``);
+      message.channel.send(`The following error occurred \`\`\`js\n${error.stack}\`\`\``);
     }
   }
 
