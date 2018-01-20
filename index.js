@@ -8,7 +8,6 @@ const EnmapLevel = require("enmap-level");
 const klaw = require("klaw");
 const path = require("path");
 
-
 class Misaki extends Discord.Client {
   constructor(options) {
     super(options);
