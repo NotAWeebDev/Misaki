@@ -4,7 +4,7 @@ exports.welcomeMessages = [
   "Hmph, looks like {{user}}, another baka has joined.",
   "It's not like I like you or anything... but welcome to the server {{user}}.",
   "O-oh, welcome {{user}}-san. I hope I haven't embarrased you...",
-  "OwO who's this. {{user}} has joined the server.",
+  "OwO who's this? {{user}} has joined the server.",
   "{{user}}, looks like you landed on the wrong side of discord!",
   "Hi {{user}}! Welcome to {{guild}}, I hope you enjoy your stay!",
   "ERGH, why has {{user}} got to come, I already have to handle {{amount}} users !",
@@ -164,4 +164,3 @@ exports.notNSFWChannel = [
 exports.guildOnlyCommand = [
 
 ];
-
