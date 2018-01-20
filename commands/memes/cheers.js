@@ -15,9 +15,9 @@ class Cheers extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    if (args[0].length < 5) message.response(undefined, `Invalid Command usage: \`${this.help.usage}\``);
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** raises their glass...`);
     const meme = args.join(" ");
+    if (meme.length < 5) message.response(undefined, `Invalid Command usage: \`${this.help.usage}\``);
+    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** raises their glass...`);
     let topCheers;
     let bottomCheers;
     if (meme.includes("; ")) {
