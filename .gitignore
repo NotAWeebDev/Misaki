@@ -8,6 +8,12 @@ config.json
 config.js
 data/
 commands/music
+*.txt
+modules/mineMessage.js
+eventsRaw/*
+events/raw.js
+commands/nsfw/r34.js
+commands/fun/coin.js
 
 # Runtime data
 pids
