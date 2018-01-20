@@ -7,7 +7,6 @@ class Owner extends Command {
     }));
   } 
 
-
 }
 
 module.exports = Owner;

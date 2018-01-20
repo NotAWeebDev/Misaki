@@ -48,7 +48,6 @@ class Command {
     return `${line1}${line2}`;
   }
 
-  
   async verifyUser(message, user) {
     try {
       const match = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);

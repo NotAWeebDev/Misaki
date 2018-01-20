@@ -8,7 +8,7 @@ A new entertainment bot by the Idiot Himself!
 - `node` [Version 8.0.0 or higher](https://nodejs.org)
 
 You also need your bot's token. This is obtained by creating an application in
-the Developer section of discordapp.com. Check the [first section of this page](https://anidiots.guide/getting-started/the-long-version.html)
+the Developer section of discordapp.com (https://discordapp.com/developers). Check the [first section of this page](https://anidiots.guide/getting-started/the-long-version.html)
 for more info.
 
 ## Downloading

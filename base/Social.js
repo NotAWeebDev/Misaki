@@ -73,7 +73,6 @@ class Social extends Command {
 
   }
 
-
   async cmdPay(message, user, cost) {
     try {
       const [bot, _user] = await this.verifySocialUser(message, user); // eslint-disable-line no-unused-vars
@@ -112,7 +111,6 @@ class Social extends Command {
       this.client.logger.error(error);
     }
   }
-
 
   async cmdMoe(type, nsfw = false) {
     const { body } = await snek.get(`https://rra.ram.moe/i/r?type=${type}&nsfw=${nsfw}`);
