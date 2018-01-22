@@ -31,7 +31,6 @@ To start the bot, in the command prompt, run the following command:
 
 ## Inviting to a guild
 
-To add the bot to your guild, you have to get an oauth link for it.
+To add Misaki to your guild, just click [here](https://discordapp.com/api/oauth2/authorize?client_id=396323622953680910&permissions=268755008&scope=bot)
 
-You can use this site to help you generate a full OAuth Link, which includes a calculator for the permissions:
-[https://finitereality.github.io/permissions-calculator/?v=0](https://finitereality.github.io/permissions-calculator/?v=0)
+[![Discord Bots](https://discordbots.org/api/widget/396323622953680910.svg)](https://discordbots.org/bot/396323622953680910)

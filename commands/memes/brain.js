@@ -14,7 +14,7 @@ class Brain extends Meme {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const text = args.join(" ");
-    const msg = await message.channel.send(`**${message.member.displayName}** reveals their inner knowledge...`);
+    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** reveals their inner knowledge...`);
 
     await message.buildEmbed()
       .setColor(message.guild.member(this.client.user.id).highestRole.color || 0)
