@@ -18,7 +18,7 @@ class Scroll extends Meme {
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** discovers the scroll of truth...`);
     message.buildEmbed()
       .setColor(message.guild.member(this.client.user.id).highestRole.color || 0)
-      .setImage(await this.makeMeme(123999232, text))
+      .setImage(await this.twoMeme(123999232, text))
       .setFooter(`Requested by ${message.member.displayName}`, message.author.displayAvatarURL())
       .setTimestamp()
       .send();

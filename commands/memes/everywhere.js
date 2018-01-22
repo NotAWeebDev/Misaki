@@ -19,7 +19,7 @@ class Everywhere extends Meme {
     
     await message.buildEmbed()
       .setColor(message.guild.member(this.client.user.id).highestRole.color || 0)
-      .setImage(await this.makeMeme(347390, text))
+      .setImage(await this.twoMeme(347390, text))
       .setFooter(`Requested by ${message.member.displayName}`, message.author.displayAvatarURL())
       .setTimestamp()
       .send();

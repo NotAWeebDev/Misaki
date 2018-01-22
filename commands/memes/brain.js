@@ -1,11 +1,11 @@
 const Meme = require(`${process.cwd()}/base/Meme.js`);
 
-class Cheers extends Meme {
+class Brain extends Meme {
   constructor(client) {
     super(client, {
-      name: "cheers",
-      description: "Say cheers with Leonardo DiCaprio!",
-      usage: "cheers <top text ; bottom text>",
+      name: "brain",
+      description: "Blow your mind",
+      usage: "brain <first text ; second text ; third text ; forth text>",
       category: "meme",
       cost: 5,
       aliases: []
@@ -14,16 +14,16 @@ class Cheers extends Meme {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const text = args.join(" ");
-    if (text.length < 5) return message.response(undefined, `Invalid Command usage: \`${this.help.usage}\``);
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** raises their glass...`);
-    
+    const msg = await message.channel.send(`**${message.member.displayName}** reveals their inner knowledge...`);
+
     await message.buildEmbed()
       .setColor(message.guild.member(this.client.user.id).highestRole.color || 0)
-      .setImage(await this.twoMeme(5496396, text))
+      .setImage(await this.fourMeme(93895088, text))
       .setFooter(`Requested by ${message.member.displayName}`, message.author.displayAvatarURL())
       .setTimestamp()
       .send();
     await msg.delete();
+
   }
 }
-module.exports = Cheers;
+module.exports = Brain;
