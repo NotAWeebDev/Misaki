@@ -31,6 +31,7 @@ class Help extends Command {
           }
           output += `${settings.prefix}${c.help.name}${" ".repeat(longest - c.help.name.length)} :: ${c.help.description}\n`;
         });
+        await message.channel.send("Please check your inbox for a list of my commands.");
         await message.author.send(output, {code:"asciidoc", split: { char: "\u200b" }});
       } catch (error) {
         if (error.message === "Cannot send messages to this user") {
