@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/YorkAARGH/Misaki#readme",
   "dependencies": {
+    "base-64": "^0.1.0",
     "canvas": "github:Automattic/node-canvas",
     "canvas-constructor": "github:kyranet/canvasConstructor",
     "chalk": "^2.3.0",
@@ -39,5 +40,6 @@
     "ms": "^2.1.1",
     "slot-machine": "^2.1.0",
     "snekfetch": "^3.6.1"
-  }
+  },
+  "devDependencies": {}
 }
