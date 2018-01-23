@@ -16,7 +16,6 @@ module.exports = class {
     if (message.content.startsWith(settings.prefix)) return;
     const score = message.member.score;
     const points = giveRandomPoints(parseInt(settings.minPoints), parseInt(settings.maxPoints));
-    console.log(`Awarded ${points} to ${message.author.username}`);
     message.member.givePoints(points);
     const curLevel = Math.floor(0.1 * Math.sqrt(score.points));
     if (score.level < curLevel) {
