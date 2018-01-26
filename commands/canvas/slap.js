@@ -1,13 +1,11 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const { Canvas } = require("canvas-constructor");
 const snek = require("snekfetch");
-const fsn = require("fs-nextra");
-
+// const { MessageAttachment } = require("discord.js");
 class Slap extends Social {
   constructor(client) {
     super(client, {
       name: "slap",
-      description: "Slap another user as Batman.",
+      description: "Slap another user for their idiocy.",
       category: "Fun",
       usage: "slap <@mention>",
       extended: "Mention another user to slap them.",
@@ -25,28 +23,22 @@ class Slap extends Social {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       }
 
-      const msg = await message.channel.send(`Finding ${slapped.username}...`);
+      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** thinks someone needs a smacking...`);
 
-      const { getSlapped } = this;
-      const result = await getSlapped(slapper.displayAvatarURL({ format:"png", size:128 }), slapped.displayAvatarURL({ format:"png", size:128 }));
-      await message.channel.send({ files: [{ attachment: result, name: "slapped.png" }] });
+      const { body } = await snek.get(`http://api.anidiots.guide/api/slap/?slapper=${slapper.displayAvatarURL({ format:"png", size:128 })}&slapped=${slapped.displayAvatarURL({ format:"png", size:128 })}`).set("token", this.client.config.idiotToken);
+
+      // await message.channel.buildEmbed()
+      //   .setColor(0x00adff)
+      //   .attachFiles([new MessageAttachment(body, "image.png")])
+      //   .setImage("attachment://image.png")
+      //   .send()
+      //   .catch(err => message.error(err));
+      await message.channel.send({ files: [{ attachment: body, name: "slapped.png" }] });
       await msg.delete();
     } catch (error) {
       this.client.logger.error(error);
     }
   }
-  
-  async getSlapped(slapper, slapped) {
-    const [ plate, Slapper, Slapped, ] = await Promise.all([ fsn.readFile("./assets/images/plate_fanslap.jpg"), snek.get(slapper), snek.get(slapped), ]);
-    return new Canvas(640, 480)
-      .addImage(plate, 0, 0, 640, 480)
-      .addImage(Slapper.body, 229, 62, 64, 64, { type: "round", radius: 32 })
-      .restore()
-      .addImage(Slapped.body, 405, 245, 64, 64, { type: "round", radius: 32 })
-      .restore()
-      .toBuffer();
-  }
-
 }
 
-module.exports = Slap;
+module.exports = Slap;//
