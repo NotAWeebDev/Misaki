@@ -19,13 +19,16 @@ class Pout extends Social {
       }
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is pouting...`);
       const pout = await this.cmdMoe("pout");
-      await message.buildEmbed()
-        .setColor(message.guild.member(this.client.user.id).highestRole.color || 0)
-        .setImage(`https://cdn.ram.moe/${pout}`)
-        .setTimestamp()
-        .send();
-
-      await msg.delete();
+      await msg.edit({
+        embed: {
+          "title": "Click here if the image failed to load",
+          "url": `https://cdn.ram.moe/${pout}`,
+          "color": message.guild.member(this.client.user.id).highestRole.color || 5198940,
+          "image": {
+            "url": `https://cdn.ram.moe/${pout}`
+          }
+        }
+      });
     } catch (e) {
       console.log(e);
     }

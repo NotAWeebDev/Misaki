@@ -21,14 +21,17 @@ class Stare extends Social {
       }
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** starts staring at **${target.first().displayName}**...`);
       const stare = await this.cmdMoe("stare");
-      await message.buildEmbed()
-        .setDescription(`**${message.member.displayName}** is staring at **${target.first().displayName}**.`)
-        .setColor(message.guild.member(this.client.user.id).highestRole.color || 0)
-        .setImage(`https://cdn.ram.moe/${stare}`)
-        .setTimestamp()
-        .send();
-
-      await msg.delete();
+      await msg.edit({
+        embed: {
+          "title": "Click here if the image failed to load",
+          "url": `https://cdn.ram.moe/${stare}`,
+          "description": `**${message.member.displayName}** is staring at **${target.first().displayName}**.`,
+          "color": message.guild.member(this.client.user.id).highestRole.color || 5198940,
+          "image": {
+            "url": `https://cdn.ram.moe/${stare}`
+          }
+        }
+      });
     } catch (e) {
       console.log(e);
     }

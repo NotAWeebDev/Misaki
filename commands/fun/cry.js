@@ -21,14 +21,18 @@ class Cry extends Social {
       }
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** wants to cry it all away...`);
       const cry = await this.cmdMoe("cry");
-      await message.buildEmbed()
-        .setDescription(`**${target.first().displayName}**, **${message.member.displayName}** just cried on your shoulder.`)
-        .setColor(message.guild.member(this.client.user.id).highestRole.color || 0)
-        .setImage(`https://cdn.ram.moe/${cry}`)
-        .setTimestamp()
-        .send();
+      await msg.edit({
+        embed: {
+          "title": "Click here if the image failed to load",
+          "url": `https://cdn.ram.moe/${cry}`,
+          "description": `**${target.first().displayName}**, **${message.member.displayName}** just cried on your shoulder.`,
+          "color": message.guild.member(this.client.user.id).highestRole.color || 5198940,
+          "image": {
+            "url": `https://cdn.ram.moe/${cry}`
+          }
+        }
+      });
 
-      await msg.delete();
     } catch (e) {
       console.log(e);
     }
