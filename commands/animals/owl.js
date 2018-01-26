@@ -10,7 +10,7 @@ class Owl extends Social {
       extended: "This command will return a beautiful owl.",
       cost: 5,
       cooldown: 10,
-      aliases: []
+      aliases: ["hoot"]
     });
   }
 
@@ -22,13 +22,8 @@ class Owl extends Social {
       }
 
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting an owl...`);
-      const owl = await snek.get("http://pics.floofybot.moe/owl").then(r => r.body.image);// API Provided by Lewdcario
-      await message.buildEmbed()
-        .setImage(owl)
-        .setTimestamp()
-        .send();
-
-      await msg.delete();
+      const owl = await snek.get("http://pics.floofybot.moe/owl").then(r => r.body.image); // API Provided by Lewdcario
+      await msg.edit({ embed: { "title": "Click here if the image failed to load", "url": owl, "color": message.guild.member(this.client.user.id).highestRole.color || 5198940, "image": { "url": owl } } });
     } catch (e) {
       console.log(e);
     }

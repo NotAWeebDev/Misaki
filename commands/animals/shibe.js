@@ -23,13 +23,7 @@ class Shibe extends Social {
 
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a shibe...`);
       const { body } = await snek.get("http://shibe.online/api/shibes");
-      message.buildEmbed()
-        .setColor(message.guild.member(this.client.user.id).highestRole.color || 0)
-        .setImage(body[0])
-        .setTimestamp()
-        .send();
-
-      await msg.delete();
+      await msg.edit({embed:{ "title": "Click here if the image failed to load", "url": body[0], "color":message.guild.member(this.client.user.id).highestRole.color || 5198940, "image": {"url": body[0]}}});
     } catch (e) {
       console.log(e);
     }
