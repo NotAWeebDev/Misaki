@@ -8,7 +8,7 @@ class Wanted extends Social {
     super(client, {
       name: "wanted",
       description: "Post a wanted picture of a user.",
-      category: "Fun",
+      category: "Canvas",
       usage: "wanted [@mention|user id]",
       extended: "Mention another user to post a wanted poster of them.",
       cost: 10,
@@ -47,4 +47,4 @@ class Wanted extends Social {
   }  
 }
 
-module.exports = Wanted;
+module.exports = Wanted;//

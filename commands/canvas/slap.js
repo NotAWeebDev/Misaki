@@ -6,7 +6,7 @@ class Slap extends Social {
     super(client, {
       name: "slap",
       description: "Slap another user for their idiocy.",
-      category: "Fun",
+      category: "Canvas",
       usage: "slap <@mention>",
       extended: "Mention another user to slap them.",
       cost: 10,

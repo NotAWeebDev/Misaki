@@ -10,7 +10,7 @@ class Triggered extends Social {
       name: "triggered",
       description: "Trigger someone...",
       usage: "triggered [@mention|userid]",
-      category: "Fun",
+      category: "Canvas",
       extended: "Ever get so pissed off you explode? You got triggered.",
       cost: 10,
       cooldown: 20,

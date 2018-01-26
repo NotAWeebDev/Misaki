@@ -10,7 +10,7 @@ class Please extends Social {
       name: "pls",
       description: "Ask nicely!",
       usage: "pls [mention]",
-      category: "Fun",
+      category: "Canvas",
       extended: "Didn't your mother always tell you to say please? Now you can with a bot!",
       cost: 5
     });
@@ -31,20 +31,21 @@ class Please extends Social {
   }
 
   async pls(person) {
-    const size = new Canvas(130, 84)
+    let newWidth;
+    return new Canvas(130, 84)
       .setTextFont("700 32px Roboto")
-      .measureText(person.displayName);
-    const newSize = size.width < 130 ? 130 : size.width + 20;
-    return new Canvas(newSize, 84)
-      .setTextFont("700 32px Roboto")
+      .measureText(person.displayName, ({ width }, self) => {
+        newWidth = width < 130 ? 130 : width + 20;
+        self.changeCanvasWidth(newWidth);
+      })
       .setColor("#B93F2C")
       .setTextBaseline("top")
       .setTextAlign("center")
-      .addText("pls", newSize/2, 45)
+      .addText("pls", newWidth/2, 45)
       .setColor("#F01111")
       .setTextBaseline("top")
       .setTextAlign("center")
-      .addText(person.displayName, newSize/2, 5)
+      .addText(person.displayName, newWidth/2, 5)
       .toBuffer();
   }  
 }

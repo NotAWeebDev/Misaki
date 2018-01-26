@@ -6,7 +6,7 @@ class Batslap extends Social {
     super(client, {
       name: "batslap",
       description: "Slap another user as Batman.",
-      category: "Fun",
+      category: "Canvas",
       usage: "batslap <@mention>",
       extended: "Mention another user to slap them as batman.",
       cost: 10,

@@ -13,7 +13,7 @@ class SnapChat extends Social {
       name: "snapchat",
       description: "Creates a snapchat based meme.",
       usage: "snapchat <text>",
-      category: "Fun",
+      category: "Canvas",
       extended: "This command uses canvas to generate a Snapchat styled image based on the well known statue meme.",
       cost: 10,
       cooldown: 10,
@@ -50,4 +50,4 @@ class SnapChat extends Social {
   }  
 }
 
-module.exports = SnapChat;
+module.exports = SnapChat;//

@@ -1,6 +1,6 @@
-const Command = require(`${process.cwd()}/base/Command.js`);
+const Owner = require(`${process.cwd()}/base/Owner.js`);
 const snekfetch = require("snekfetch");
-class DBL extends Command {
+class DBL extends Owner {
   constructor(client) {
     super(client, {
       name: "dbl",

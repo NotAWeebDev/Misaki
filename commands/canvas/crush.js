@@ -8,7 +8,7 @@ class Crush extends Social {
     super(client, {
       name: "crush",
       description: "Display your affection for another user.",
-      category: "Fun",
+      category: "Canvas",
       usage: "crush [@mention|userid]",
       cost: 10,
       cooldown: 10
@@ -50,4 +50,4 @@ class Crush extends Social {
   }  
 }
 
-module.exports = Crush;
+module.exports = Crush;//

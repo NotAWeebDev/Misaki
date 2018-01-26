@@ -8,6 +8,7 @@ class Purge extends Command {
       category: "Utilities",
       usage: "purge <num> <user>",
       guildOnly: true,
+      hidden: true,
       aliases: ["clean", "remove", "delete"],
       permLevel: "Moderator"
     });

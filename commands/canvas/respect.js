@@ -8,7 +8,7 @@ class Respect extends Social {
     super(client, {
       name: "respect",
       description: "Pay respects to someone.",
-      category: "Fun",
+      category: "Canvas",
       usage: "respect [@mention|user id]",
       extended: "You can pay respects to any user on Discord.",
       cost: 10,
@@ -50,4 +50,4 @@ class Respect extends Social {
   }  
 }
 
-module.exports = Respect;
+module.exports = Respect;//

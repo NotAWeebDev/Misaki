@@ -11,7 +11,7 @@ class Achievement extends Social {
     super(client, {
       name: "achievement",
       description: "Creates an Achievement.",
-      category: "Fun",
+      category: "Canvas",
       usage: "achievement",
       extended: "Either mention a user with text to give the achievement their user avatar, or just supply text for your own achievement.",
       cost: 10,
@@ -57,4 +57,4 @@ class Achievement extends Social {
   
 }
 
-module.exports = Achievement;
+module.exports = Achievement;//

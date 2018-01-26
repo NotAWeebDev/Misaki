@@ -8,7 +8,7 @@ class Beautiful extends Social {
     super(client, {
       name: "beautiful",
       description: "Admire the beauty of another user.",
-      category: "Fun",
+      category: "Canvas",
       usage: "beautiful [@mention|user id]",
       extended: "Mention another user to admire a painting of them.",
       cost: 10,
@@ -49,4 +49,4 @@ class Beautiful extends Social {
   }
 }
 
-module.exports = Beautiful;
+module.exports = Beautiful;//

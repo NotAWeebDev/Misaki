@@ -8,7 +8,7 @@ class Stepped extends Social {
     super(client, {
       name: "stepped",
       description: "Post a stepped picture of a user.",
-      category: "Fun",
+      category: "Canvas",
       usage: "stepped [@mention|user id]",
       extended: "Mention another user to step on them.",
       cost: 10,
@@ -48,4 +48,4 @@ class Stepped extends Social {
   }  
 }
 
-module.exports = Stepped;
+module.exports = Stepped;//

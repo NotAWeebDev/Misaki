@@ -8,7 +8,7 @@ class Valut extends Social {
     super(client, {
       name: "thumbs",
       description: "Give a thumbs up as another user.",
-      category: "Fun",
+      category: "Canvas",
       usage: "thumbs [@mention|user id]",
       extended: "Mention another user to thumbs up of them.",
       cost: 10,
@@ -46,4 +46,4 @@ class Valut extends Social {
   }
 }
 
-module.exports = Valut;
+module.exports = Valut;//

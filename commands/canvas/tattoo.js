@@ -8,7 +8,7 @@ class Tattoo extends Social {
     super(client, {
       name: "tattoo",
       description: "Get inked.",
-      category: "Fun",
+      category: "Canvas",
       usage: "tattoo [@mention|user id]",
       extended: "Mention another user to get them tattooed on your arm.",
       cost: 10,
@@ -48,4 +48,4 @@ class Tattoo extends Social {
   }
 }
 
-module.exports = Tattoo;
+module.exports = Tattoo;//
