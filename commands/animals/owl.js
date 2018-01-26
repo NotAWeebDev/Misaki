@@ -22,9 +22,9 @@ class Owl extends Social {
       }
 
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting an owl...`);
-      const { body } = await snek.get("http://pics.floofybot.moe/owl");// API Provided by Lewdcario
+      const owl = await snek.get("http://pics.floofybot.moe/owl").then(r => r.body.image);// API Provided by Lewdcario
       await message.buildEmbed()
-        .setImage(body.image)
+        .setImage(owl)
         .setTimestamp()
         .send();
 
