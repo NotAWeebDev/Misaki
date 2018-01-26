@@ -27,7 +27,7 @@ class Boobs extends Social {
       const { body } = await snek.get("http://api.oboobs.ru/boobs/0/1/random");
       await msg.edit({
         embed: {
-          "title": "Click here if the image failed to load",
+          "title": "Click here if the image failed to load.",
           "url": `http://media.oboobs.ru/${body[0].preview}`,
           "color": message.guild.member(this.client.user.id).highestRole.color || 5198940,
           "image": {

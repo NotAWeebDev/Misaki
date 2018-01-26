@@ -21,7 +21,7 @@ class Bird extends Social {
       }
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a bird...`);
       const { body } = await snek.get("http://random.birb.pw/tweet/");
-      await msg.edit({embed:{ "title": "Click here if the image failed to load", "url": `https://random.birb.pw/img/${body}`, "color":message.guild.member(this.client.user.id).highestRole.color || 5198940, "image": {"url": `https://random.birb.pw/img/${body}`}}});
+      await msg.edit({embed:{ "title": "Click here if the image failed to load.", "url": `https://random.birb.pw/img/${body}`, "color":message.guild.member(this.client.user.id).highestRole.color || 5198940, "image": {"url": `https://random.birb.pw/img/${body}`}}});
     } catch (e) {
       console.log(e);
     }

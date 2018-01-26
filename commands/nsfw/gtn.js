@@ -23,7 +23,7 @@ class Gtn extends Social {
       const gtn = await this.cmdMoe("nsfw-gtn", true);
       await msg.edit({
         embed: {
-          "title": "Click here if the image failed to load",
+          "title": "Click here if the image failed to load.",
           "url": `https://cdn.ram.moe/${gtn}`,
           "color": message.guild.member(this.client.user.id).highestRole.color || 5198940,
           "image": {

@@ -23,7 +23,7 @@ class Cry extends Social {
       const cry = await this.cmdMoe("cry");
       await msg.edit({
         embed: {
-          "title": "Click here if the image failed to load",
+          "title": "Click here if the image failed to load.",
           "url": `https://cdn.ram.moe/${cry}`,
           "description": `**${target.first().displayName}**, **${message.member.displayName}** just cried on your shoulder.`,
           "color": message.guild.member(this.client.user.id).highestRole.color || 5198940,

@@ -32,7 +32,7 @@ class E621 extends Social {
 
       await msg.edit({
         embed: {
-          "title": "Click here if the image failed to load",
+          "title": "Click here if the image failed to load.",
           "url": `https://e621.net/post/show/${result.id}`,
           "description": `Created by ${result.artist[0]}\n**Description:** ${result.description}`,
           "color": message.guild.member(this.client.user.id).highestRole.color || 5198940,

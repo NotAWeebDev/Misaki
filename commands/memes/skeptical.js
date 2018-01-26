@@ -23,7 +23,7 @@ class Notsure extends Meme {
       const meme = await this.twoMeme(61520, text);
       await msg.edit({
         embed: {
-          "title": "Click here if the image failed to load",
+          "title": "Click here if the image failed to load.",
           "url": meme,
           "color": message.guild.member(this.client.user.id).highestRole.color || 5198940,
           "image": {

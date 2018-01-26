@@ -23,7 +23,7 @@ class Pat extends Social {
       const pat = await this.cmdMoe("pat");
       await msg.edit({
         embed: {
-          "title": "Click here if the image failed to load",
+          "title": "Click here if the image failed to load.",
           "url": `https://cdn.ram.moe/${pat}`,
           "description": `**${target.first().displayName}**, you got pats from **${message.member.displayName}**`,
           "color": message.guild.member(this.client.user.id).highestRole.color || 5198940,

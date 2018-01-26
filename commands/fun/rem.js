@@ -21,7 +21,7 @@ class Rem extends Social {
       const rem = await this.cmdMoe("rem");
       await msg.edit({
         embed: {
-          "title": "Click here if the image failed to load",
+          "title": "Click here if the image failed to load.",
           "url": `https://cdn.ram.moe/${rem}`,
           "color": message.guild.member(this.client.user.id).highestRole.color || 5198940,
           "image": {

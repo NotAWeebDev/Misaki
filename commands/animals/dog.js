@@ -24,7 +24,7 @@ class Dog extends Social {
 
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a dog...`);
       const { body } = await snek.get(url);
-      await msg.edit({embed:{ "title": "Click here if the image failed to load", "url": body.message, "color":message.guild.member(this.client.user.id).highestRole.color || 5198940, "image": {"url": body.message}}});
+      await msg.edit({embed:{ "title": "Click here if the image failed to load.", "url": body.message, "color":message.guild.member(this.client.user.id).highestRole.color || 5198940, "image": {"url": body.message}}});
     } catch (e) {
       console.log(e);
     }

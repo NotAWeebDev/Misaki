@@ -24,7 +24,7 @@ class Tickle extends Social {
       const tickle = await this.cmdMoe("tickle");
       await msg.edit({
         embed: {
-          "title": "Click here if the image failed to load",
+          "title": "Click here if the image failed to load.",
           "url": `https://cdn.ram.moe/${tickle}`,
           "description": `**${target.first().displayName}**, you just got tickled by **${message.member.displayName}**`,
           "color": message.guild.member(this.client.user.id).highestRole.color || 5198940,

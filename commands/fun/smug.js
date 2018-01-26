@@ -22,7 +22,7 @@ class Smug extends Social {
       const smug = await this.cmdMoe("smug");
       await msg.edit({
         embed: {
-          "title": "Click here if the image failed to load",
+          "title": "Click here if the image failed to load.",
           "url": `https://cdn.ram.moe/${smug}`,
           "color": message.guild.member(this.client.user.id).highestRole.color || 5198940,
           "image": {

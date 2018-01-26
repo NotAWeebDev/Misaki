@@ -27,7 +27,7 @@ class Butts extends Social {
       const { body } = await snek.get("http://api.obutts.ru/butts/0/1/random");
       await msg.edit({
         embed: {
-          "title": "Click here if the image failed to load",
+          "title": "Click here if the image failed to load.",
           "url": `http://media.obutts.ru/${body[0].preview}`,
           "color": message.guild.member(this.client.user.id).highestRole.color || 5198940,
           "image": {
