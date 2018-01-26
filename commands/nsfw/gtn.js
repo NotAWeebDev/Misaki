@@ -21,13 +21,16 @@ class Gtn extends Social {
       }
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** wants to read a comic...`);
       const gtn = await this.cmdMoe("nsfw-gtn", true);
-      await message.buildEmbed()
-        .setColor(message.guild.member(this.client.user.id).highestRole.color || 0)
-        .setImage(`https://cdn.ram.moe/${gtn}`)
-        .setTimestamp()
-        .send();
-
-      await msg.delete();
+      await msg.edit({
+        embed: {
+          "title": "Click here if the image failed to load",
+          "url": `https://cdn.ram.moe/${gtn}`,
+          "color": message.guild.member(this.client.user.id).highestRole.color || 5198940,
+          "image": {
+            "url": `https://cdn.ram.moe/${gtn}`
+          }
+        }
+      });
     } catch (e) {
       console.log(e);
     }
