@@ -7,6 +7,7 @@ const Enmap = require("enmap");
 const EnmapLevel = require("enmap-level");
 const klaw = require("klaw");
 const path = require("path");
+const Idiot = require("idiotic-api");
 
 class Misaki extends Discord.Client {
   constructor(options) {
@@ -24,6 +25,7 @@ class Misaki extends Discord.Client {
     this.points = new Enmap({provider: new EnmapLevel({name: "points"})});
     this.store = new Enmap({provider: new EnmapLevel({name: "shop"})});
     this.inventory = new Enmap({provider: new EnmapLevel({name: "inventory"})});
+    this.idiotAPI = new Idiot.Client(this.config.idiotToken);
   }
 
   permlevel(message) {

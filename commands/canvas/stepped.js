@@ -1,7 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const { Canvas } = require("canvas-constructor");
-const snek = require("snekfetch");
-const fsn = require("fs-nextra");
+const { MessageAttachment } = require("discord.js");
 
 class Stepped extends Social {
   constructor(client) {
@@ -15,37 +13,24 @@ class Stepped extends Social {
       cooldown: 10
     });
   }
-  async run(message, args, level) { // eslint-disable-line no-unused-vars 
+  async run(message, args, level) { // eslint-disable-line no-unused-vars
+    let msg;
     try {
-      const stepped = (message.mentions.users.first() || message.author).displayAvatarURL({ format:"png", size:128 });
+      const stepped = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
       
       if (message.settings.socialSystem === "true") {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       }
 
-      const msg = await message.channel.send("Going for a walk...");
-      const { getStepped } = this;
-      const result = await getStepped(stepped);
-      await message.channel.send({ files: [{ attachment: result, name: "stepped.jpg" }] });
+      msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is out for a walk when suddenly...`);
+      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.stepped(stepped.displayAvatarURL({ format: "png", size: 128})), "stepped.png"));
       await msg.delete();
 
     } catch (error) {
+      msg.edit("Something went wrong, please try again later");
       this.client.logger.error(error);
     }
   }
-  
-  async getStepped(person) {
-    const plate = await fsn.readFile("./assets/images/plate_stepped.png");
-    const { body } = await snek.get(person);
-    return new Canvas(400, 562)
-      .setColor("#cccccc")
-      .addRect(0, 0, 400, 566)
-      .rotate(50 * -Math.PI / 180)
-      .addImage(body, -280, 350, 128, 128)
-      .rotate(-50 * Math.PI / -180)
-      .addImage(plate, 0, 0, 400, 566)
-      .toBuffer();
-  }  
 }
 
 module.exports = Stepped;//

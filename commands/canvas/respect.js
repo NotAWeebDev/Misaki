@@ -1,7 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const { Canvas } = require("canvas-constructor");
-const snek = require("snekfetch");
-const fsn = require("fs-nextra");
+const { MessageAttachment } = require("discord.js");
 
 class Respect extends Social {
   constructor(client) {
@@ -17,7 +15,8 @@ class Respect extends Social {
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars 
+  async run(message, args, level) { // eslint-disable-line no-unused-vars
+    let msg;
     try {
       const target = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
 
@@ -25,29 +24,16 @@ class Respect extends Social {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       }
       
-      const msg = await message.channel.send("Paying respects...");
-      
-      const { giveRespect } = this;
-      const result = await giveRespect(target.displayAvatarURL({ format:"png", size:128 }));
-      const m = await message.channel.send("Press 🇫 to pay respects.", { files: [{ attachment: result, name: "paid-respects.png" }] });
+      msg = await message.channel.send("Paying respects...");
+      const m = await message.channel.send("Press 🇫 to pay respects.", new MessageAttachment(await this.client.idiotAPI.respect(target.displayAvatarURL({format:"png", size:128})), "respect.png"));
       await msg.delete();
       m.react("🇫");
     } catch (error) {
+      msg.edit("Something went wrong, please try again later");
       this.client.logger.error(error);
     }
   }
 
-  async giveRespect(person) {
-    const plate = await fsn.readFile("./assets/images/image_respects.png");
-    const { body } = await snek.get(person);
-    return new Canvas(720, 405)
-      .addRect(0, 0, 720, 405)
-      .setColor("#000000")
-      .addImage(body, 110, 45, 90, 90)
-      .restore()
-      .addImage(plate, 0, 0, 720, 405)
-      .toBuffer();
-  }  
 }
 
 module.exports = Respect;//

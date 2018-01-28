@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const snek = require("snekfetch");
+const { MessageAttachment } = require("discord.js");
 
 class Batslap extends Social {
   constructor(client) {
@@ -15,6 +15,7 @@ class Batslap extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars 
+    let msg;
     try {
       const slapped = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
       const slapper = message.author;
@@ -23,12 +24,12 @@ class Batslap extends Social {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       }
 
-      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is stalking his prey...`);
+      msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is stalking his prey...`);
 
-      const { body } = await snek.get(`http://api.anidiots.guide/api/batslap/?slapper=${slapper.displayAvatarURL({ format:"png", size:128 })}&slapped=${slapped.displayAvatarURL({ format:"png", size:128 })}`).set("token", this.client.config.idiotToken);
-      await message.channel.send({ files: [{ attachment: body, name: "bat-slapped.png" }] });
+      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.batSlap(slapper.displayAvatarURL({format:"png", size:128}), slapped.displayAvatarURL({format:"png", size:256})), "batslap.png"));
       await msg.delete();
     } catch (error) {
+      msg.edit("Something went wrong, please try again later");
       this.client.logger.error(error);
     }
   }

@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const snek = require("snekfetch");
+const { MessageAttachment } = require("discord.js");
 
 class Facepalm extends Social {
   constructor(client) {
@@ -14,17 +14,18 @@ class Facepalm extends Social {
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars 
+  async run(message, args, level) { // eslint-disable-line no-unused-vars
+    let msg;
     try {
       if (message.settings.socialSystem === "true") {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       }
 
-      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is just lost for words...`);
-      const { body } = await snek.get(`http://api.anidiots.guide/api/facepalm/?avatar=${message.author.displayAvatarURL({ format:"png", size:128 })}`).set("token", this.client.config.idiotToken);
-      await message.channel.send({ files: [{ attachment: body, name: "facepalm.png" }] });
+      msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is just lost for words...`);
+      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.facepalm(message.author.displayAvatarURL({format:"png", size:256})), "facepalm.png"));
       await msg.delete();
     } catch (error) {
+      msg.edit("Something went wrong, please try again later");
       this.client.logger.error(error);
     }
   }
