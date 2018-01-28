@@ -23,7 +23,7 @@ class Trivia extends Social {
     const choices = quiz.incorrect_answers.map(answ => h.decode(answ)); // Insert all the incorrect answers to the choices array.
     choices.push(h.decode(quiz.correct_answer)); // Push the correct answer to the array as well.
 
-    const randomChoices = Array(4);
+    const randomChoices = new Array(4);
     for (let i = 0; i < 4; i++) {
       randomChoices[i] = choices.random(); // Select a random answer,
       choices.splice(choices.indexOf(randomChoices[i]), 1); // Remove it from the array.
