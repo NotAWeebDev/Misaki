@@ -46,7 +46,7 @@ class Trivia extends Social {
 
     if (choice === h.decode(quiz.correct_answer)) { 
       message.member.givePoints(10); 
-      return message.reply("that is correct! You won 10₲"); 
+      return message.reply("that is correct! You won ₲10"); 
     }
     return message.reply("that is incorrect!"); // Throw if choice !== correct answer
   }
