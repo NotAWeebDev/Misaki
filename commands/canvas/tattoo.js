@@ -1,14 +1,12 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const { Canvas } = require("canvas-constructor");
-const snek = require("snekfetch");
-const fsn = require("fs-nextra");
+const { MessageAttachment } = require("discord.js");
 
 class Tattoo extends Social {
   constructor(client) {
     super(client, {
       name: "tattoo",
       description: "Get inked.",
-      category: "Fun",
+      category: "Canvas",
       usage: "tattoo [@mention|user id]",
       extended: "Mention another user to get them tattooed on your arm.",
       cost: 10,
@@ -18,34 +16,20 @@ class Tattoo extends Social {
   }
 
   async run(message, args, level) {// eslint-disable-line no-unused-vars
+    let msg;
     try {
-      const tattoo = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
-      
+      const customer = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
       if (message.settings.socialSystem === "true") {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       }
-      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is getting inked...`);
-  
-      const { getInked } = this;
-      const result = await getInked(tattoo.displayAvatarURL({ format:"png", size:512 }));
-      await message.channel.send({ files: [{ attachment: result, name: "tattoo.jpg" }] });
-     
+      msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is getting some ink done...`);
+      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.tattoo(customer.displayAvatarURL({ format:"png", size:512 })), "tattoo.png"));
       await msg.delete();
     } catch (error) {
+      msg.edit("Something went wrong, please try again later");
       this.client.logger.error(error);
     }
   }
-
-  async getInked(person) {
-    const plate = await fsn.readFile("./assets/images/plate_tattoo.png");
-    const { body } = await snek.get(person);
-    return new Canvas(750, 1089)
-      .setColor("#000000")
-      .addRect(0, 0, 750, 1089)
-      .addImage(plate, 0, 0, 750, 1089)
-      .addImage(body, 145, 575, 400, 400, { type: "round", radius: 200 })
-      .toBuffer();
-  }
 }
 
-module.exports = Tattoo;
+module.exports = Tattoo;//

@@ -19,13 +19,16 @@ class Owo extends Social {
       }
       const msg = await message.channel.send(`<a:typing:397490442469376001> OwO whats this? **${message.member.displayName}**...`);
       const owo = await this.cmdMoe("owo");
-      message.buildEmbed()
-        .setColor(message.guild.member(this.client.user.id).highestRole.color || 0)
-        .setImage(`https://cdn.ram.moe/${owo}`)
-        .setTimestamp()
-        .send();
-
-      await msg.delete();
+      await msg.edit({
+        embed: {
+          "title": "Click here if the image failed to load.",
+          "url": `https://cdn.ram.moe/${owo}`,
+          "color": message.guild.me.roles.highest.color || 5198940,
+          "image": {
+            "url": `https://cdn.ram.moe/${owo}`
+          }
+        }
+      });
     } catch (e) {
       console.log(e);
     }

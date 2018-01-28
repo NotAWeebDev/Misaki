@@ -7,6 +7,7 @@ module.exports = class {
 
   async run(message) {
     if (message.author.bot) return;
+    if (!message.channel.permissionsFor(this.client.user).has("SEND_MESSAGES")) return;
     const defaults = this.client.settings.get("default");
     const settings = message.guild ? this.client.getSettings(message.guild.id) : defaults;
     message.settings = settings;

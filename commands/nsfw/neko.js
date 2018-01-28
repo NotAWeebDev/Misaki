@@ -25,8 +25,16 @@ class Neko extends Social {
 
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is looking for a feline...`);
       const { body } = await snek.get(`https://nekos.life/api${Math.random() >= 0.5 ? "/lewd" : ""}/neko`);
-      message.channel.send({ embed: { image: { url: body.neko } } });
-      await msg.delete();
+      await msg.edit({
+        embed: {
+          "title": "Click here if the image failed to load.",
+          "url": body.neko,
+          "color": message.guild.me.roles.highest.color || 5198940,
+          "image": {
+            "url": body.neko
+          }
+        }
+      });
     } catch (e) {
       console.log(e);
     }

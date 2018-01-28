@@ -1,14 +1,14 @@
 const Meme = require(`${process.cwd()}/base/Meme.js`);
 
-class Scroll extends Meme {
+class Notsure extends Meme {
   constructor(client) {
     super(client, {
-      name: "scroll",
-      description: "Discover the scroll of truth!",
-      usage: "scroll <text>",
+      name: "skeptical",
+      description: "Express your skepticism with Philip J Fry!",
+      usage: "skeptical <top text ; bottom text>",
       category: "meme",
       cost: 5,
-      aliases: []
+      aliases: ["fry", "notsure"]
     });
   }
 
@@ -19,8 +19,8 @@ class Scroll extends Meme {
       if (message.settings.socialSystem === "true") {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       }
-      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** discovers the scroll of truth...`);
-      const meme = await this.twoMeme(123999232, text);
+      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** isn't sure...`);
+      const meme = await this.twoMeme(61520, text);
       await msg.edit({
         embed: {
           "title": "Click here if the image failed to load.",
@@ -40,4 +40,4 @@ class Scroll extends Meme {
     }
   }
 }
-module.exports = Scroll;
+module.exports = Notsure;

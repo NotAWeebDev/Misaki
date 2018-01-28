@@ -21,14 +21,17 @@ class Hug extends Social {
       }
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** wants to give **${target.first().displayName}** a big hug...`);
       const hug = await this.cmdMoe("hug");
-      await message.buildEmbed()
-        .setDescription(`**${target.first().displayName}**, you just got hugged by **${message.member.displayName}**`)
-        .setColor(message.guild.member(this.client.user.id).highestRole.color || 0)
-        .setImage(`https://cdn.ram.moe/${hug}`)
-        .setTimestamp()
-        .send();
-
-      await msg.delete();
+      await msg.edit({
+        embed: {
+          "title": "Click here if the image failed to load.",
+          "url": `https://cdn.ram.moe/${hug}`,
+          "description": `**${target.first().displayName}**, you just got hugged by **${message.member.displayName}**`,
+          "color": message.guild.me.roles.highest.color || 5198940,
+          "image": {
+            "url": `https://cdn.ram.moe/${hug}`
+          }
+        }
+      });
     } catch (e) {
       console.log(e);
     }

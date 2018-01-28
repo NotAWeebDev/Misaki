@@ -22,14 +22,17 @@ class Tickle extends Social {
       }
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** goes to tickle **${target.first().displayName}**...`);
       const tickle = await this.cmdMoe("tickle");
-      await message.buildEmbed()
-        .setDescription(`**${target.first().displayName}**, you just got tickled by **${message.member.displayName}**`)
-        .setColor(message.guild.member(this.client.user.id).highestRole.color || 0)
-        .setImage(`https://cdn.ram.moe/${tickle}`)
-        .setTimestamp()
-        .send();
-
-      await msg.delete();
+      await msg.edit({
+        embed: {
+          "title": "Click here if the image failed to load.",
+          "url": `https://cdn.ram.moe/${tickle}`,
+          "description": `**${target.first().displayName}**, you just got tickled by **${message.member.displayName}**`,
+          "color": message.guild.me.roles.highest.color || 5198940,
+          "image": {
+            "url": `https://cdn.ram.moe/${tickle}`
+          }
+        }
+      });
     } catch (e) {
       console.log(e);
     }

@@ -1,14 +1,12 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const { Canvas } = require("canvas-constructor");
-const snek = require("snekfetch");
-const fsn = require("fs-nextra");
+const { MessageAttachment } = require("discord.js");
 
 class Wanted extends Social {
   constructor(client) {
     super(client, {
       name: "wanted",
       description: "Post a wanted picture of a user.",
-      category: "Fun",
+      category: "Canvas",
       usage: "wanted [@mention|user id]",
       extended: "Mention another user to post a wanted poster of them.",
       cost: 10,
@@ -17,34 +15,20 @@ class Wanted extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars 
+    let msg;
     try {
-      const wanted = await this.verifyUser(message,args[0] ? args[0] : message.author.id);
-      
+      const vaultDweller = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
       if (message.settings.socialSystem === "true") {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       }
-
-      const msg = await message.channel.send("Fetching the Sheriff...");
-      const { getWanted } = this;
-      const result = await getWanted(wanted.displayAvatarURL({ format:"png", size:256 }));
-      await message.channel.send({ files: [{ attachment: result, name: "wanted.jpg" }] });
+      msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is putting up wanted posters...`);
+      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.vaultBoy(vaultDweller.displayAvatarURL({ format:"png", size:512 })), "vaultboy.png"));
       await msg.delete();
-
     } catch (error) {
+      msg.edit("Something went wrong, please try again later");
       this.client.logger.error(error);
     }
   }
-
-  async getWanted(person) {
-    const plate = await fsn.readFile("./assets/images/plate_wanted.png");
-    const { body } = await snek.get(person);
-    return new Canvas(360, 640)
-      .setColor("#debb80")
-      .addRect(0, 0, 360, 640)
-      .addImage(body, 30, 200, 300, 300)
-      .addImage(plate, 0, 0, 360, 640)
-      .toBuffer();
-  }  
 }
 
-module.exports = Wanted;
+module.exports = Wanted;//

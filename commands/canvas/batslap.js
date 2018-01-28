@@ -1,14 +1,14 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const { MessageAttachment } = require("discord.js");
 
-class Slap extends Social {
+class Batslap extends Social {
   constructor(client) {
     super(client, {
-      name: "slap",
-      description: "Slap another user for their idiocy.",
+      name: "batslap",
+      description: "Slap another user as Batman.",
       category: "Canvas",
-      usage: "slap <@mention>",
-      extended: "Mention another user to slap them.",
+      usage: "batslap <@mention>",
+      extended: "Mention another user to slap them as batman.",
       cost: 10,
       cooldown: 10
     });
@@ -24,8 +24,9 @@ class Slap extends Social {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       }
 
-      msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** thinks someone needs a smacking...`);
-      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.fanSlap(slapper.displayAvatarURL({format:"png", size:64}), slapped.displayAvatarURL({format:"png", size:64})), "fanslap.png"));
+      msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is stalking his prey...`);
+
+      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.batSlap(slapper.displayAvatarURL({format:"png", size:128}), slapped.displayAvatarURL({format:"png", size:256})), "batslap.png"));
       await msg.delete();
     } catch (error) {
       msg.edit("Something went wrong, please try again later");
@@ -34,4 +35,4 @@ class Slap extends Social {
   }
 }
 
-module.exports = Slap;//
+module.exports = Batslap;

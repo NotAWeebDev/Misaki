@@ -40,7 +40,7 @@ class Slots extends Social {
       const results = machine.play();
       const winnings = this.help.cost * results.totalPoints;
       message.buildEmbed()
-        .setColor(message.guild.member(this.client.user.id).highestRole.color || 0)
+        .setColor(message.guild.me.roles.highest.color || 5198940)
         .setAuthor("Misaki Slots")
         .setDescription(`${results.visualize(false)}\n\n${results.winCount === 0 ? `${message.member.displayName} has lost!\nBetter luck next time!` : `Whoa... ${message.member.displayName} won!`}\n\n${results.winCount === 0 ? "" : `You have won ₲${winnings.toLocaleString()}`}`)
         .setTimestamp()

@@ -5,7 +5,8 @@ class Item extends Social {
       name: "inventory",
       description: "Displays, adds, and removes from inventories.",
       usage: "inventory [-<give|take> <mention|userid> <amount> <name>]",
-      aliases: ["inv"]
+      aliases: ["inv"],
+      hidden: true
     });
   }
 
