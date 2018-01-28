@@ -31,7 +31,7 @@ class Trivia extends Social {
 
     const emb = new Discord.MessageEmbed() // Embed it
       .setAuthor("Misaki Trivia", this.client.user.displayAvatarURL())
-      .setColor(message.settings.embedColor)
+      .setColor("#FC963B")
       .setDescription(h.decode(quiz.question))
       .addField("A", randomChoices[0])
       .addField("B", randomChoices[1])
@@ -46,7 +46,7 @@ class Trivia extends Social {
 
     if (choice === h.decode(quiz.correct_answer)) { 
       message.member.givePoints(10); 
-      return message.reply(`that is correct! You won 10${message.settings.uEmoji}`); 
+      return message.reply("that is correct! You won 10₲"); 
     }
     return message.reply("that is incorrect!"); // Throw if choice !== correct answer
   }
