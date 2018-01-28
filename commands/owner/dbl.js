@@ -23,7 +23,7 @@ class DBL extends Owner {
       .addField("Username", body.username, true)
       .addField("Discriminator", body.discriminator, true)
       .addField("Short Description", body.shortdesc, true)
-      .addField("Libray", body.lib, true)
+      .addField("Library", body.lib, true)
       .addField("Prefix", body.prefix, true)
       .addField("Upvotes", body.points, true)
       .addField("Server Count", body.server_count, true)
