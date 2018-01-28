@@ -31,7 +31,7 @@ class Trivia extends Social {
 
     const emb = new Discord.MessageEmbed() // Embed it
       .setAuthor("Misaki Trivia", this.client.user.displayAvatarURL())
-      .setColor("#FC963B")
+      .setColor(message.guild.me.roles.highest.color || 5198940)
       .setDescription(h.decode(quiz.question))
       .addField("A", randomChoices[0])
       .addField("B", randomChoices[1])
