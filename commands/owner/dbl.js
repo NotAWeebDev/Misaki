@@ -16,7 +16,7 @@ class DBL extends Owner {
     const { body } = await snekfetch.get(`https://discordbots.org/api/bots/${this.client.user.id}/`);
     
     await message.buildEmbed()
-      .setColor(message.guild.member(this.client.user.id).highestRole.color || 0)
+      .setColor(message.guild.me.roles.highest.color || 5198940)
       .setThumbnail(`https://cdn.discordapp.com/avatars/${body.clientid}/${body.avatar}.png`)
       .setTitle("Discord Bot List Information")
       .addField("ID", body.clientid, true)

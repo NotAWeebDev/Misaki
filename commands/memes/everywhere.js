@@ -25,7 +25,7 @@ class Everywhere extends Meme {
         embed: {
           "title": "Click here if the image failed to load.",
           "url": meme,
-          "color": message.guild.member(this.client.user.id).highestRole.color || 5198940,
+          "color": message.guild.me.roles.highest.color || 5198940,
           "image": {
             "url": meme
           },

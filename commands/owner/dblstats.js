@@ -18,7 +18,7 @@ class DBLStats extends Owner {
       voters.push(user.id);
     }
     await message.buildEmbed()
-      .setColor(message.guild.member(this.client.user.id).highestRole.color || 0)
+      .setColor(message.guild.me.roles.highest.color || 5198940)
       .setThumbnail(this.client.user.displayAvatarURL({format: "png"}))
       .setTitle("Discord Bot List Upvoters")
       .addField("Voter(s)", `<@${voters.join(">, <@")}>`, true)

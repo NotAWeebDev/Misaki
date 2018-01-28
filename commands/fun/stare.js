@@ -26,7 +26,7 @@ class Stare extends Social {
           "title": "Click here if the image failed to load.",
           "url": `https://cdn.ram.moe/${stare}`,
           "description": `**${message.member.displayName}** is staring at **${target.first().displayName}**.`,
-          "color": message.guild.member(this.client.user.id).highestRole.color || 5198940,
+          "color": message.guild.me.roles.highest.color || 5198940,
           "image": {
             "url": `https://cdn.ram.moe/${stare}`
           }

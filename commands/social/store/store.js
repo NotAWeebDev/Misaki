@@ -40,7 +40,7 @@ class Store extends Social {
         if (["y", "yes"].includes(response.toLowerCase())) {
         
           message.member.takePoints(parseInt(item.array()[0].price));
-          await message.member.addRole(item.array()[0].id);
+          await message.member.roles.add(item.array()[0].id);
           message.channel.send("You have bought the role :tada: ");
         
         } else
@@ -68,7 +68,7 @@ class Store extends Social {
         if (["y", "yes"].includes(response.toLowerCase())) {
         
           message.member.givePoints(returnPrice);
-          await message.member.removeRole(item.array()[0].id);
+          await message.member.roles.remove(item.array()[0].id);
           message.channel.send("You have sold the role :tada: ");
         
         } else
