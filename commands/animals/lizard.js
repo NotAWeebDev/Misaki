@@ -6,7 +6,7 @@ class Lizard extends Social {
     super(client, {
       name: "lizard",
       description: "Post a randomly selected image of a bird.",
-      category: "NSFW",
+      category: "Animals",
       usage: "lizard",
       extended: "This command will return a beautiful lizard.",
       cost: 5,
