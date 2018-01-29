@@ -28,6 +28,7 @@
     "enmap-level": "^1.0.0",
     "fast-html-parser": "^1.0.1",
     "fs-nextra": "^0.3.2",
+    "html-entities": "^1.2.1",
     "idiotic-api": "0.0.3",
     "inquirer": "^4.0.0",
     "kitsu": "^3.1.4",
@@ -37,5 +38,6 @@
     "ms": "^2.1.1",
     "slot-machine": "^2.1.0",
     "snekfetch": "^3.6.1"
-  }
+  },
+  "devDependencies": {}
 }
