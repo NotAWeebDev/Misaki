@@ -5,7 +5,7 @@ class Lizard extends Social {
   constructor(client) {
     super(client, {
       name: "lizard",
-      description: "Post a randomly selected image of a bird.",
+      description: "Post a randomly selected image of a lizard.",
       category: "Animals",
       usage: "lizard",
       extended: "This command will return a beautiful lizard.",
