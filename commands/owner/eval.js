@@ -23,7 +23,7 @@ class Eval extends Owner {
     const filter = new RegExp(`${token}|${rev}`, "g");
     try {
       let output = eval(code);
-      if (output instanceof Promise) output = await output;
+      if (output instanceof Promise || (Boolean(output) && typeof output.then === "function" && typeof output.catch === "function")) output = await output;
       output = inspect(output, { depth: 0, maxArrayLength: null });
       output = output.replace(filter, "[TOKEN]");
       output = clean(output);
