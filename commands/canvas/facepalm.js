@@ -7,7 +7,7 @@ class Facepalm extends Social {
       name: "facepalm",
       description: "Slap another user as Batman.",
       category: "Canvas",
-      usage: "facepalm <@mention>",
+      usage: "facepalm",
       extended: "Mention another user to slap them as batman.",
       cost: 10,
       cooldown: 10

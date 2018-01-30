@@ -7,7 +7,7 @@ class Batslap extends Social {
       name: "batslap",
       description: "Slap another user as Batman.",
       category: "Canvas",
-      usage: "batslap <@mention>",
+      usage: "batslap <@mention | userid>",
       extended: "Mention another user to slap them as batman.",
       cost: 10,
       cooldown: 10
