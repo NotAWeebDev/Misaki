@@ -155,6 +155,14 @@ exports.reloadSuccess = [
   "I've reloaded {{command}}, not that I could see any point in it..."
 ];
 
+// Go Messages
+exports.goMessages = [
+  "Ehhhhh! {{user}}-san invites everyone to play {{game}}!",
+  "Play {{game}} with {{user}}-san because {{user}}-san is so lonely!",
+  "{{user}} is too scared to ask people to play {{game}} with them",
+  "Goooooo! Play {{game}} with {{user}}-san please"
+];
+
 // Errors
 
 exports.notNSFWChannel = [
