@@ -6,7 +6,7 @@ class Go extends Social {
     super(client, {
       name: "go",
       description: "Gets other users to join you in games.",
-      category: "7. Games",
+      category: "Games",
       usage: "go <csgo/dota/pubg/gmod/rocketleague> [steamuser]",
       extended: "Mentions a game title to ask for lobby.",
       cooldown: 10
