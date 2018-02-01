@@ -11,13 +11,8 @@ class Social extends Command {
   } 
 
   async verifySocialUser(message, user) {
-    try {
-      const check = await this.verifyUser(message, user);
-      return [check.bot ? true : false, check];
-    } catch (error) {
-      console.log(error);
-      // this.client.logger.error(error);
-    }
+    const check = await this.verifyUser(message, user);
+    return [check.bot ? true : false, check];
   }
 
   async usrDay(message) {
