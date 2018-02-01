@@ -54,8 +54,7 @@ class Command {
     const match = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
     if (!match) throw new ParseError("Invalid Mention or ID", msgtoedit);
     const id = match[1];
-    const fetchedUser = await this.client.users.fetch(id);
-    return fetchedUser;
+    return this.client.users.fetch(id);
   }
 
   async verifyMember(message, member, msgtoedit) {
