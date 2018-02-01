@@ -10,8 +10,8 @@ class Social extends Command {
     }));
   } 
 
-  async verifySocialUser(message, user) {
-    const check = await this.verifyUser(message, user);
+  async verifySocialUser(message, user, options = {}) {
+    const check = await this.verifyUser(message, user, options);
     return [check.bot ? true : false, check];
   }
 

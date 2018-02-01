@@ -15,8 +15,8 @@ class Batslap extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars 
-    const sentmsg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is stalking his prey...`);
-    const slapped = await this.verifyUser(message, args[0] || message.author.id, sentmsg);
+    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is stalking his prey...`);
+    const slapped = await this.verifyUser(message, args[0] || message.author.id, { msg });
     const slapper = message.author;
 
     if (message.settings.socialSystem === "true") {
@@ -25,7 +25,7 @@ class Batslap extends Social {
 
 
     await message.channel.send(new MessageAttachment(await this.client.idiotAPI.batSlap(slapper.displayAvatarURL({format:"png", size:128}), slapped.displayAvatarURL({format:"png", size:256})), "batslap.png"));
-    await sentmsg.delete();
+    await msg.delete();
   }
 }
 

@@ -20,7 +20,7 @@ class Blame extends Social {
       if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
     }
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${person.displayName}** is getting the blame...`);
-    const person = await this.verifyMember(message, args[0] || message.author.id, msg);
+    const person = await this.verifyMember(message, args[0] || message.author.id, { msg });
     await message.channel.send(new MessageAttachment(await this.client.idiotAPI.blame((message.mentions.members.first() || message.member).displayName),"blame.png"));
     await msg.delete();
   }

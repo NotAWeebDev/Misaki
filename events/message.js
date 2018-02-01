@@ -71,7 +71,11 @@ module.exports = class {
     try {
       await cmd.run(message, args, level);
     } catch (error) {
-      if (error instanceof ParseError) return error.msg.edit(error.message);
+      if (error instanceof ParseError) {
+        if (error.msg) error.msg.edit(error.message)
+        else message.channel.send(error.message);
+        return;
+      }
       message.edit("Something went wrong, please try again later");
       this.client.logger.error(error);
     }

@@ -50,15 +50,15 @@ class Command {
     return `${line1}${line2}`;
   }
 
-  async verifyUser(message, user, msgtoedit) {
+  async verifyUser(message, user, options = {}) {
     const match = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
-    if (!match) throw new ParseError("Invalid Mention or ID", msgtoedit);
+    if (!match) throw new ParseError("Invalid Mention or ID", options.msg);
     const id = match[1];
     return this.client.users.fetch(id);
   }
 
-  async verifyMember(message, member, msgtoedit) {
-    const user = await this.verifyUser(message, member, msgtoedit);
+  async verifyMember(message, member, options = {}) {
+    const user = await this.verifyUser(message, member, options.msg);
     const target = await message.guild.members.fetch(user);
     return target;
   }
@@ -71,12 +71,12 @@ class Command {
     return fetchedMessage.id;
   }
 
-  async verifyChannel(message, chanid) {
+  async verifyChannel(message, chanid, options = {}) {
     const match = /([0-9]{17,20})/.exec(chanid);
     if (!match) return message.channel.id;
     const id = match[1];
-    const check = await message.guild.channels.get(id);
-    if (!check || check.type !== "text") throw new ParseError("No Channel found or wrong type");
+    const check = message.guild.channels.get(id);
+    if (!check || check.type !== "text") throw new ParseError("No Channel found or wrong type", options.msg);
     return check.id;
   }
 
