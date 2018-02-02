@@ -11,7 +11,7 @@ class Danbooru extends Social {
       extended: "This command will return a random result from danbooru.",
       cost: 40,
       cooldown: 10,
-      aliases: ["dan"]
+      aliases: ["dan", "db"]
     });
   }
 

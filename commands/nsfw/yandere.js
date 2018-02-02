@@ -11,7 +11,7 @@ class Yandere extends Social {
       extended: "This command will return a random result from yandere.",
       cost: 40,
       cooldown: 10,
-      aliases: ["yan"]
+      aliases: ["yan", "yand", "yd"]
     });
   }
 
