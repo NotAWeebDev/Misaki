@@ -107,13 +107,13 @@ class Store extends Social {
         
         const filter = m => m.author.id === message.author.id;
         const response = await this.client.awaitReply(message, `Are you sure you want to remove ${name} from the shop?`, filter, undefined, null);
-        if (["y", "yes"].includes(response)) {
+        if (["y", "yes"].includes(response.toLowerCase())) {
         
           await this.client.store.delete(role.id);
           message.reply("The role is now off the store.");
         } else
         
-        if (["n","no","cancel"].includes(response)) {
+        if (["n","no","cancel"].includes(response.toLowerCase())) {
           message.reply("Action cancelled.");
         }
         break;
