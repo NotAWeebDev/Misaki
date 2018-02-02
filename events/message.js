@@ -1,5 +1,4 @@
 const monitor = require(`${process.cwd()}/monitors/monitor.js`);
-const { ParseError } = require("../util/CustomError.js");
 
 module.exports = class {
   constructor(client) {
@@ -71,13 +70,7 @@ module.exports = class {
     try {
       await cmd.run(message, args, level);
     } catch (error) {
-      if (error instanceof ParseError) {
-        if (error.msg) error.msg.edit(error.message)
-        else message.channel.send(error.message);
-        return;
-      }
-      message.edit("Something went wrong, please try again later");
-      this.client.logger.error(error);
+      this.client.emit("commandError", message, error);
     }
   }
 };

@@ -1,7 +1,6 @@
-class CommandError extends Error {
-  constructor(message, messageToEdit) {
+class SocialError extends Error {
+  constructor(message) {
     super(message);
-    this.msg = messageToEdit;
     this.name = this.constructor.name;
   }
 }
@@ -14,4 +13,4 @@ class ParseError extends Error {
   }
 }
 
-module.exports = { CommandError, ParseError };
+module.exports = { SocialError, ParseError };
