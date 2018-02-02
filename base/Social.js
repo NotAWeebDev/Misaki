@@ -57,8 +57,8 @@ class Social extends Command {
     }
   }
 
-  async cmdPay(message, user, cost) {
-    const [bot, _user] = await this.verifySocialUser(message, user); // eslint-disable-line no-unused-vars
+  async cmdPay(message, user, cost, options = {}) {
+    const [bot, _user] = await this.verifySocialUser(message, user, options); // eslint-disable-line no-unused-vars
     const getPayee = message.guild.member(_user.id);
     const score = getPayee.score;
     if (cost > score.points) {

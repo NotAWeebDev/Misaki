@@ -16,23 +16,19 @@ class Tiger extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    try {
 
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
-
-      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a tiger...`);
-      const { body } = await snek.get("https://dashboard.typicalbot.com/api/tiger").set("Authentication", this.client.config.tbToken);
-      await message.channel.buildEmbed()
-        .setColor(message.guild.me.roles.highest.color || 5198940)
-        .attachFiles([new MessageAttachment(new Buffer(body.data), "image.png")])
-        .setImage("attachment://image.png")
-        .send();
-      await msg.delete();
-    } catch (e) {
-      console.log(e);
+    if (message.settings.socialSystem === "true") {
+      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
     }
+
+    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a tiger...`);
+    const { body } = await snek.get("https://dashboard.typicalbot.com/api/tiger").set("Authentication", this.client.config.tbToken);
+    await message.channel.buildEmbed()
+      .setColor(message.guild.me.roles.highest.color || 5198940)
+      .attachFiles([new MessageAttachment(new Buffer(body.data), "image.png")])
+      .setImage("attachment://image.png")
+      .send();
+    await msg.delete();
   }
 }
 
