@@ -123,7 +123,7 @@ class Store extends Social {
         const items = message.guild.store;
         if (items.length === 0) return message.response(undefined, "Baka... nothing is for sale!");
         message.channel.send(`= ${message.guild.name} General Store =\n` + items.map(item => 
-          `${message.guild.roles.get(item.id.toString()).name}${" ".repeat(20 - message.guild.roles.get(item.id.toString()).name.length)}::  ${parseInt(item.price) === 0 ? "FREE" : `₲${parseInt(item.price).toLocaleString()}`} :: ${message.member.roles.has(item.id) ? "✓" : ""}`).join("\n"), { code: "asciidoc" }
+          `${message.guild.roles.get(item.id.toString()).name}${" ".repeat(40 - message.guild.roles.get(item.id.toString()).name.length)}::  ${parseInt(item.price) === 0 ? "FREE" : `₲${parseInt(item.price).toLocaleString()}`} :: ${message.member.roles.has(item.id) ? "✓" : ""}`).join("\n"), { code: "asciidoc" }
         );
       }
     }
