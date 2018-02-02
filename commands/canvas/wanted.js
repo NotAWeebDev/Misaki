@@ -17,12 +17,12 @@ class Wanted extends Social {
   async run(message, args, level) { // eslint-disable-line no-unused-vars 
     let msg;
     try {
-      const vaultDweller = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
+      const wanted = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
       if (message.settings.socialSystem === "true") {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       }
       msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is putting up wanted posters...`);
-      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.vaultBoy(vaultDweller.displayAvatarURL({ format:"png", size:512 })), "vaultboy.png"));
+      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.wanted(wanted.displayAvatarURL({ format:"png", size:512 })), "vaultboy.png"));
       await msg.delete();
     } catch (error) {
       msg.edit("Something went wrong, please try again later");
