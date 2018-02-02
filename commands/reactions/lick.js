@@ -4,9 +4,9 @@ class Lick extends Social {
   constructor(client) {
     super(client, {
       name: "lick",
-      description: "Someone needs a lick",
-      usage: "lick",
-      category: "Fun",
+      description: "When someone's good enough to eat.",
+      usage: "lick <@mention>",
+      category: "Reactions",
       cost: 5,
       aliases: []
     });

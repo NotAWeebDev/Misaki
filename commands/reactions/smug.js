@@ -1,14 +1,15 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 
-class Pout extends Social {
+class Smug extends Social {
   constructor(client) {
     super(client, {
-      name: "pout",
-      description: "Someone needs a pout",
-      usage: "pout",
-      category: "Fun",
+      name: "smug",
+      description: "Someone feels a bit smug.",
+      usage: "smug",
+      category: "Reactions",
+      extended: "",
       cost: 5,
-      aliases: []
+      aliases: ["glomp"]
     });
   }
 
@@ -17,15 +18,15 @@ class Pout extends Social {
       if (message.settings.socialSystem === "true") {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       }
-      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is pouting...`);
-      const pout = await this.cmdMoe("pout");
+      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is feeling smug...`);
+      const smug = await this.cmdMoe("smug");
       await msg.edit({
         embed: {
           "title": "Click here if the image failed to load.",
-          "url": `https://cdn.ram.moe/${pout}`,
+          "url": `https://cdn.ram.moe/${smug}`,
           "color": message.guild.me.roles.highest.color || 5198940,
           "image": {
-            "url": `https://cdn.ram.moe/${pout}`
+            "url": `https://cdn.ram.moe/${smug}`
           }
         }
       });
@@ -36,4 +37,4 @@ class Pout extends Social {
   }
 }
 
-module.exports = Pout;
+module.exports = Smug;

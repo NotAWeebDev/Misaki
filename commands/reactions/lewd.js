@@ -4,9 +4,9 @@ class Lewd extends Social {
   constructor(client) {
     super(client, {
       name: "lewd",
-      description: "Someone needs a lewd",
-      usage: "lewd",
-      category: "Fun",
+      description: "Someone or something needs a lewd.",
+      usage: "lewd [@mention]",
+      category: "Reactions",
       cost: 5,
       aliases: []
     });

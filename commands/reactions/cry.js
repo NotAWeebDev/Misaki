@@ -5,8 +5,8 @@ class Cry extends Social {
     super(client, {
       name: "cry",
       description: "For when you just can't keep it in.",
-      usage: "cry",
-      category: "Fun",
+      usage: "cry <@mention>",
+      category: "Reactions",
       cost: 5,
       aliases: []
     });

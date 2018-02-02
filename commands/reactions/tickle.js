@@ -4,9 +4,9 @@ class Tickle extends Social {
   constructor(client) {
     super(client, {
       name: "tickle",
-      description: "Someone needs a tickle",
-      usage: "tickle",
-      category: "Fun",
+      description: "Someone needs a good tickle",
+      usage: "tickle <@mention>",
+      category: "Reactions",
       extended: "",
       cost: 5,
       aliases: ["glomp"]

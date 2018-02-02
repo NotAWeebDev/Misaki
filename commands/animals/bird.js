@@ -20,6 +20,16 @@ class Bird extends Social {
       if (!(await this.cmdPay(message, message.author.id, this.help.cost, { msg }))) return;
     }
     const { body } = await snek.get("http://random.birb.pw/tweet/");
+    await msg.edit({
+      embed: {
+        "title": "Click here if the image failed to load.",
+        "url": `https://random.birb.pw/img/${body}`,
+        "color": message.guild.me.roles.highest.color || 5198940,
+        "image": {
+          "url": `https://random.birb.pw/img/${body}`
+        }
+      }
+    });
     await msg.edit({embed:{ "title": "Click here if the image failed to load.", "url": `https://random.birb.pw/img/${body}`, "color":message.guild.me.roles.highest.color || 5198940, "image": {"url": `https://random.birb.pw/img/${body}`}}});
   }
 }
