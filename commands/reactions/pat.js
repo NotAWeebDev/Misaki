@@ -5,8 +5,8 @@ class Pat extends Social {
     super(client, {
       name: "pat",
       description: "Someone needs a pat",
-      usage: "pat",
-      category: "Fun",
+      usage: "pat <@mention>",
+      category: "Reactions",
       cost: 5,
       aliases: []
     });

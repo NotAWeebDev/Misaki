@@ -4,9 +4,9 @@ class Hug extends Social {
   constructor(client) {
     super(client, {
       name: "hug",
-      description: "Someone needs a hug",
-      usage: "hug",
-      category: "Fun",
+      description: "Give someone a hug.",
+      usage: "hug <@mention>",
+      category: "Reactions",
       cost: 5,
       aliases: ["glomp"]
     });

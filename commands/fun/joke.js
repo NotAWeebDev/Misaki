@@ -4,12 +4,12 @@ const snek = require("snekfetch");
 class Oneliner extends Social {
   constructor(client) {
     super(client, {
-      name: "oneline",
+      name: "joke",
       description: "Thie command will give you a one liner joke.",
-      usage: "oneline",
+      usage: "joke",
       category: "Fun",
       cost: 5,
-      aliases: ["1l", "joke"]
+      aliases: ["1l", "oneliner"]
     });
   }
 
@@ -18,7 +18,7 @@ class Oneliner extends Social {
       if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
     }
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is thinking of something funny...`);
-    const { body } = await snek.get("https://dashboard.typicalbot.com/api/jokes").set("Authentication", this.client.config.tbToken);
+    const { body } = await snek.get("https://dashboard.typicalbot.com/api/v1/jokes").set("Authentication", this.client.config.tbToken);
     msg.edit(body.data);
   }
 

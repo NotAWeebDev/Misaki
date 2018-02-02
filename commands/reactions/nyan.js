@@ -6,7 +6,7 @@ class Nyan extends Social {
       name: "nyan",
       description: "Someone needs a nyan in their life.",
       usage: "nyan",
-      category: "Fun",
+      category: "Reactions",
       extended: "",
       cost: 5,
       aliases: ["glomp"]

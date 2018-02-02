@@ -5,8 +5,8 @@ class Cuddle extends Social {
     super(client, {
       name: "cuddle",
       description: "Just want to cuddle",
-      usage: "cuddle",
-      category: "Fun",
+      usage: "cuddle <@mention>",
+      category: "Reactions",
       cost: 5,
       aliases: []
     });

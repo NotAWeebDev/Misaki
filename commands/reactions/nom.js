@@ -5,8 +5,8 @@ class Nom extends Social {
     super(client, {
       name: "nom",
       description: "Someone needs a nom",
-      usage: "nom",
-      category: "Fun",
+      usage: "nom <@mention>",
+      category: "Reactions",
       cost: 5,
       aliases: []
     });

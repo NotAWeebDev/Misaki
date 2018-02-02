@@ -4,9 +4,9 @@ class Stare extends Social {
   constructor(client) {
     super(client, {
       name: "stare",
-      description: "Someone needs a stare",
-      usage: "stare",
-      category: "Fun",
+      description: "Just stare at them...",
+      usage: "stare <@mention>",
+      category: "Reactions",
       cost: 5,
       aliases: ["glomp"]
     });

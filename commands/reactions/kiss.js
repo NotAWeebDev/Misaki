@@ -5,8 +5,8 @@ class Kiss extends Social {
     super(client, {
       name: "kiss",
       description: "Someone needs a kiss",
-      usage: "kiss",
-      category: "Fun",
+      usage: "kiss <@mention>",
+      category: "Reactions",
       cost: 5,
       aliases: []
     });
