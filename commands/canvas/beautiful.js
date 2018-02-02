@@ -20,7 +20,7 @@ class Beautiful extends Social {
     const beautiful = await this.verifyUser(message, args[0] || message.author.id, { msg });
       
     if (message.settings.socialSystem === "true") {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      await this.cmdPay(message, message.author.id, this.help.cost, { msg });
     }
 
     await message.channel.send(new MessageAttachment(await this.client.idiotAPI.beautiful(beautiful.displayAvatarURL({format:"png", size:256})), "beautiful.png"));

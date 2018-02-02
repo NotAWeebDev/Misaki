@@ -16,11 +16,12 @@ class Bunny extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
 
+    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a bunny...`);
+
     if (message.settings.socialSystem === "true") {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      await this.cmdPay(message, message.author.id, this.help.cost, { msg });
     }
 
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a bunny...`);
     const { body } = await snek.get("https://api.bunnies.io/v2/loop/random/?media=gif,png");
     await msg.edit({embed:{ "title": "Click here if the image failed to load.", "url": body.media.gif, "color":message.guild.me.roles.highest.color || 5198940, "image": {"url": body.media.gif}}});
   }

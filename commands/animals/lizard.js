@@ -17,11 +17,12 @@ class Lizard extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
 
+    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is looking for a lizard...`);
+
     if (message.settings.socialSystem === "true") {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      await this.cmdPay(message, message.author.id, this.help.cost);
     }
 
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is looking for a lizard...`);
     const { body } = await snek.get("https://nekos.life/api/lizard");
     await msg.edit({
       embed: {

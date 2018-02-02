@@ -1,6 +1,7 @@
 class SocialError extends Error {
-  constructor(message) {
+  constructor(message, messageToEdit) {
     super(message);
+    this.msg = messageToEdit;
     this.name = this.constructor.name;
   }
 }

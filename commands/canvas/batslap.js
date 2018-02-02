@@ -20,7 +20,7 @@ class Batslap extends Social {
     const slapper = message.author;
 
     if (message.settings.socialSystem === "true") {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      await this.cmdPay(message, message.author.id, this.help.cost ,{ msg });
     }
 
 

@@ -11,7 +11,7 @@ module.exports = class {
       else message.channel.send(error.message);
       return;
     }
-    if (error instanceof SocialError) return message.channel.send(error.message);
+    if (error instanceof SocialError) return error.msg.edit(error.message);
     message.edit("Something went wrong, please try again later");
     this.client.logger.error(error);
   }

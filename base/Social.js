@@ -1,6 +1,7 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 const moment = require("moment");
-const snek = require("snekfetch");
+const { get } = require("snekfetch");
+const { SocialError } = require("../util/CustomError.js");
 
 class Social extends Command {
 
@@ -61,13 +62,9 @@ class Social extends Command {
     const [bot, _user] = await this.verifySocialUser(message, user, options); // eslint-disable-line no-unused-vars
     const getPayee = message.guild.member(_user.id);
     const score = getPayee.score;
-    if (cost > score.points) {
-      message.response(undefined, `Insufficient funds, you need ₲${cost}. Your current balance: ₲${score.points}`);
-      return false;
-    }
+    if (cost > score.points) throw new SocialError(`Insufficient funds, you need ₲${cost}. Your current balance: ₲${score.points}`, options.msg);
     getPayee.takePoints(cost);
     this.client.points.set(getPayee.fullId, score);
-    return true;
   }
 
   async cmdRew(message, user, amount) {
@@ -85,7 +82,7 @@ class Social extends Command {
   }
 
   async cmdMoe(type, nsfw = false) {
-    const { body } = await snek.get(`https://rra.ram.moe/i/r?type=${type}&nsfw=${nsfw}`);
+    const { body } = await get(`https://rra.ram.moe/i/r?type=${type}&nsfw=${nsfw}`);
     return body.path.replace("/i/", "");
   }
 }
