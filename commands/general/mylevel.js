@@ -5,6 +5,7 @@ class MyLevel extends Command {
       name: "mylevel",
       description: "Displays your permission level for your location.",
       usage: "mylevel",
+      cooldown: 10,
       guildOnly: true
     });
   }
