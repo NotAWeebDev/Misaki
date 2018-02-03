@@ -4,11 +4,11 @@ class Score extends Social {
   constructor(client) {
     super(client, {
       name: "score",
-      description: "Displays your current level and points.",
+      description: "Displays your current points.",
       usage: "score",
       category: "Social",
       cost: 0,
-      aliases: ["points", "level", "bal", "balance"]
+      aliases: ["points", "bal", "balance"]
     });
   }
 
