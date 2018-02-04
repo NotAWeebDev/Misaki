@@ -30,7 +30,7 @@ class Reminder extends Command {
     if (args.length === 0) {
       const reminders = message.member.reminders;
       if (reminders.length === 0) return message.response(undefined, "You do not have any reminders set.");
-      else return message.channel.send("**Your Reminders:**\n" + reminders.map(r => `${r.reminder} - ${moment(r.reminderTimestamp).fromNow()}`));
+      else return message.channel.send("**Your Reminders:**\n" + reminders.map(r => `${r.reminder} - ${moment(r.reminderTimestamp).fromNow()}`).join('\n'));
     }
     const blah = await regCheck(args.join(" "));
     if (!blah) return message.respond(undefined, "Invalid Command usage, you must supply a reminder message and duration e.g; `Do the laundry in 20 minutes`.");
