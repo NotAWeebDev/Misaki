@@ -18,6 +18,7 @@ class Reddit extends Social {
     const subRedCat = message.flags[0] || "random";
     let msg;
     try {
+      msg = await message.channel.send("Fetching from reddit...");
       const { body } = await snek.get(`https://www.reddit.com/r/${subreddit}/${subRedCat}.json`);
       let meme;
       if (body[0]) {
@@ -25,7 +26,7 @@ class Reddit extends Social {
       } else {
         meme = body.data.children[Math.floor(Math.random() * body.data.children.length)].data;
       }
-
+      
       if (!message.channel.nsfw && meme.over_18) {
         message.response("🔞", "Cannot display NSFW content in a SFW channel.");
         return;
@@ -33,7 +34,6 @@ class Reddit extends Social {
       if (message.settings.socialSystem === "true") {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       }
-      msg = await message.channel.send(`'Fetching from ${meme.subreddit_name_prefixed}...'`);
       await message.channel.send(`${meme.title} submitted by ${meme.author} in ${meme.subreddit_name_prefixed}\nUpvote Ratio ${meme.upvote_ratio}\n${meme.url}`);
       msg.delete();
     } catch (error) {
