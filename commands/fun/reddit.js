@@ -16,6 +16,7 @@ class Reddit extends Social {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const subreddit = args.join(" ") || "random";
     const subRedCat = message.flags[0] || "random";
+    let msg;
     try {
       const { body } = await snek.get(`https://www.reddit.com/r/${subreddit}/${subRedCat}.json`);
       let meme;
@@ -32,10 +33,11 @@ class Reddit extends Social {
       if (message.settings.socialSystem === "true") {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       }
-      const msg = await message.channel.send(`'Fetching from ${meme.subreddit_name_prefixed}...'`);
+      msg = await message.channel.send(`'Fetching from ${meme.subreddit_name_prefixed}...'`);
       await message.channel.send(`${meme.title} submitted by ${meme.author} in ${meme.subreddit_name_prefixed}\nUpvote Ratio ${meme.upvote_ratio}\n${meme.url}`);
       msg.delete();
     } catch (error) {
+      msg.edit(`Something went wrong, incorrect usage prehaps? \`${this.help.usage}\``);
       console.log(error);
       this.client.logger.error(error);
     }

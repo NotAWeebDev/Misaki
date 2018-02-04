@@ -52,14 +52,13 @@ class Command {
     try {
       const match = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
       if (!match) {
-        message.response("❕", "Invalid user id.");
-        return;
+        return message.response("❕", "Invalid user id.");
       }
       const id = match[1];
       const check = await this.client.users.fetch(id);
       if (check.username !== undefined) return check;
     } catch (error) {
-      throw error;
+      message.channel.send(error);
     }
   }
 
@@ -77,7 +76,7 @@ class Command {
       const check = await message.channel.messages.fetch(id);
       if (check.cleanContent !== undefined) return id;
     } catch (error) {
-      throw error;
+      message.channel.send(error);
     }
   }
 
@@ -89,7 +88,7 @@ class Command {
       const check = await message.guild.channels.get(id);
       if (check.name !== undefined && check.type === "text") return id;
     } catch (error) {
-      throw error;
+      message.channel.send(error);
     }
   }
 
