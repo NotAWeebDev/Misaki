@@ -16,24 +16,19 @@ class SnapChat extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars 
-    let msg;
+    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is applying filters...`);
     let text = args.join(" ");
+
     if (text.length < 1) return message.response(undefined, "You must give the snap some text.");
     if (text.length > 28) return message.response(undefined, "I can only handle a maximum of 28 characters.");
     
-    try {
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
-      msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is applying filters...`);
-      if (message.mentions.users.first()) text = text.replace(/<@!?\d+>/, "").replace(/\n/g, " ").trim();
-      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.snapchat(text), "achievement.png"));
-      await msg.delete();
-    } catch (error) {
-      msg.edit("Something went wrong, please try again later");
-      this.client.logger.error(error);
+    if (message.settings.socialSystem === "true") {
+      await this.cmdPay(message, message.author.id, this.help.cost, { msg });
     }
+    if (message.mentions.users.first()) text = text.replace(/<@!?\d+>/, "").replace(/\n/g, " ").trim();
+    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.snapchat(text), "achievement.png"));
+    await msg.delete();
   }
 }
 
-module.exports = SnapChat;//
+module.exports = SnapChat;

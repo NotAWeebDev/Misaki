@@ -15,23 +15,17 @@ class Slap extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars 
-    let msg;
-    try {
-      const slapped = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
-      const slapper = message.author;
+    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** thinks someone needs a smacking...`);
+    const slapped = await this.verifyUser(message, args[0] || message.author.id, { msg });
+    const slapper = message.author;
 
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
-
-      msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** thinks someone needs a smacking...`);
-      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.fanSlap(slapper.displayAvatarURL({format:"png", size:64}), slapped.displayAvatarURL({format:"png", size:64})), "fanslap.png"));
-      await msg.delete();
-    } catch (error) {
-      msg.edit("Something went wrong, please try again later");
-      this.client.logger.error(error);
+    if (message.settings.socialSystem === "true") {
+      await this.cmdPay(message, message.author.id, this.help.cost, { msg });
     }
+
+    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.fanSlap(slapper.displayAvatarURL({format:"png", size:64}), slapped.displayAvatarURL({format:"png", size:64})), "fanslap.png"));
+    await msg.delete();
   }
 }
 
-module.exports = Slap;//
+module.exports = Slap;

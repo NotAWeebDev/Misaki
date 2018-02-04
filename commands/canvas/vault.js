@@ -16,20 +16,16 @@ class Valut extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    let msg;
-    try {
-      const vaultDweller = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
-      msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is wandering the wastelands...`);
-      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.vaultBoy(vaultDweller.displayAvatarURL({ format:"png", size:512 })), "vaultboy.png"));
-      await msg.delete();
-    } catch (error) {
-      msg.edit("Something went wrong, please try again later");
-      this.client.logger.error(error);
+    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is wandering the wastelands...`);
+    const vaultDweller = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
+
+    if (message.settings.socialSystem === "true") {
+      await this.cmdPay(message, message.author.id, this.help.cost, { msg });
     }
+
+    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.vaultBoy(vaultDweller.displayAvatarURL({ format:"png", size:512 })), "vaultboy.png"));
+    await msg.delete();
   }
 }
 
-module.exports = Valut;//
+module.exports = Valut;
