@@ -13,22 +13,18 @@ class Yoda extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    try {
-      const speech = args.join(" ");
-      if (speech.length < 2) {
-        message.response(undefined, "Invalid command usage, you must supply text for Yoda. Yes.");
-        return;
-      }
-
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
-
-      const { text } = await snek.get(`http://yoda-api.appspot.com/api/v1/yodish?text=${encodeURIComponent(speech.toLowerCase())}`);
-      message.channel.send(JSON.parse(text).yodish);
-    } catch (error) {
-      this.client.logger.error(error);
+    const speech = args.join(" ");
+    if (speech.length < 2) {
+      message.response(undefined, "Invalid command usage, you must supply text for Yoda. Yes.");
+      return;
     }
+
+    if (message.settings.socialSystem === "true") {
+      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+    }
+
+    const { text } = await snek.get(`http://yoda-api.appspot.com/api/v1/yodish?text=${encodeURIComponent(speech.toLowerCase())}`);
+    message.channel.send(JSON.parse(text).yodish);
   }
 }
 

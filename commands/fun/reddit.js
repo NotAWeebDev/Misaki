@@ -16,29 +16,24 @@ class Reddit extends Social {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const subreddit = args.join(" ") || "random";
     const subRedCat = message.flags[0] || "random";
-    try {
-      const { body } = await snek.get(`https://www.reddit.com/r/${subreddit}/${subRedCat}.json`);
-      let meme;
-      if (body[0]) {
-        meme = body[0].data.children[Math.floor(Math.random() * body[0].data.children.length)].data;
-      } else {
-        meme = body.data.children[Math.floor(Math.random() * body.data.children.length)].data;
-      }
-
-      if (!message.channel.nsfw && meme.over_18) {
-        message.response("🔞", "Cannot display NSFW content in a SFW channel.");
-        return;
-      }
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
-      const msg = await message.channel.send(`'Fetching from ${meme.subreddit_name_prefixed}...'`);
-      await message.channel.send(`${meme.title} submitted by ${meme.author} in ${meme.subreddit_name_prefixed}\nUpvote Ratio ${meme.upvote_ratio}\n${meme.url}`);
-      msg.delete();
-    } catch (error) {
-      console.log(error);
-      this.client.logger.error(error);
+    const { body } = await snek.get(`https://www.reddit.com/r/${subreddit}/${subRedCat}.json`);
+    let meme;
+    if (body[0]) {
+      meme = body[0].data.children[Math.floor(Math.random() * body[0].data.children.length)].data;
+    } else {
+      meme = body.data.children[Math.floor(Math.random() * body.data.children.length)].data;
     }
+
+    if (!message.channel.nsfw && meme.over_18) {
+      message.response("🔞", "Cannot display NSFW content in a SFW channel.");
+      return;
+    }
+    if (message.settings.socialSystem === "true") {
+      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+    }
+    const msg = await message.channel.send(`'Fetching from ${meme.subreddit_name_prefixed}...'`);
+    await message.channel.send(`${meme.title} submitted by ${meme.author} in ${meme.subreddit_name_prefixed}\nUpvote Ratio ${meme.upvote_ratio}\n${meme.url}`);
+    msg.delete();
   }
 }
 

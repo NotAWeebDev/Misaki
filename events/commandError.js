@@ -1,4 +1,4 @@
-const { ParseError, SocialError } = require("../util/CustomError.js");
+const { ParseError, SocialError, AnimeError } = require("../util/CustomError.js");
 
 module.exports = class {
   constructor(client) {
@@ -12,6 +12,7 @@ module.exports = class {
       return;
     }
     if (error instanceof SocialError) return error.msg.edit(error.message);
+    if (error instanceof AnimeError) return error.msg.edit(error.message);
     message.edit("Something went wrong, please try again later");
     this.client.logger.error(error);
   }

@@ -14,23 +14,17 @@ class Stepped extends Social {
     });
   }
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    let msg;
-    try {
-      const stepped = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
+    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is out for a walk when suddenly...`);
+    const stepped = await this.verifyUser(message, args[0] || message.author.id);
       
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
-
-      msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is out for a walk when suddenly...`);
-      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.stepped(stepped.displayAvatarURL({ format: "png", size: 128})), "stepped.png"));
-      await msg.delete();
-
-    } catch (error) {
-      msg.edit("Something went wrong, please try again later");
-      this.client.logger.error(error);
+    if (message.settings.socialSystem === "true") {
+      await this.cmdPay(message, message.author.id, this.help.cost, { msg });
     }
+
+    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.stepped(stepped.displayAvatarURL({ format: "png", size: 128})), "stepped.png"));
+    await msg.delete();
+
   }
 }
 
-module.exports = Stepped;//
+module.exports = Stepped;

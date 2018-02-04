@@ -15,15 +15,12 @@ class Hewwo extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     if (args.length < 1) message.response(undefined, "You need to give the bot a message to send.");
+    
     if (message.settings.socialSystem === "true") {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      await this.cmdPay(message, message.author.id, this.help.cost);
     }
     const phrase = args.join(" ");
-    try {
-      message.channel.send(this.translate(phrase));
-    } catch (error) {
-      this.client.logger.error(error);
-    }
+    await message.channel.send(this.translate(phrase));
   }
 
   translate(phrase) {

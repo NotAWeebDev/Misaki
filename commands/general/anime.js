@@ -6,6 +6,7 @@
 */
 const Command = require(`${process.cwd()}/base/Command.js`);
 const { Collection } = require("discord.js");
+const { AnimeError } = require("../../util/CustomError.js");
 const Kitsu = require("kitsu");
 const kitsu = new Kitsu();
 
@@ -32,6 +33,7 @@ class Anime extends Command {
     let msg = await message.channel.send("*fetching information from kitsu!*");
     try {
       const { data } = await kitsu.fetch("anime", { filter: { text: args.join("-") } });
+      if (data.length < 1) throw new AnimeError("No result found");
       msg = await msg.edit(`Okay i found 5 possible matches which do you want to see? (just write the first number, it will be canceled after 60 seconds)${this.makeTitles(data)}`);
       const collected = await message.channel.awaitMessages(filter, { max: 20, maxProcessed: 1, time: 60000, errors: ["time"] });
       const returnMessage = collected.first();
@@ -40,8 +42,7 @@ class Anime extends Command {
       await msg.edit(`**Title JP:** ${data[index].titles.en_jp}\n**Title English:** ${data[index].titles.en}\n**Type:** ${data[index].subtype}\n**Start Date:** ${data[index].startDate}\n**End Date:** ${data[index].endDate || "in Progress"}\n**PopularityRank:** ${data[index].popularityRank}\n**Link:** <https://kitsu.io/anime/${data[index].id}>\n**Synopsis:** ${data[index].synopsis}`);
     } catch (error) {
       if (error instanceof Collection) return message.reply("command canceled due timer");
-      await msg.edit("I had a error while trying to fetch the data from Kitsu Sorry! did you spell the Anime name right?");
-      await message.react("❓");
+      throw error;
     }
   }
 }

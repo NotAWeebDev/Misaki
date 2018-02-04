@@ -14,4 +14,11 @@ class ParseError extends Error {
   }
 }
 
-module.exports = { SocialError, ParseError };
+class AnimeError extends Error {
+  constructor(message, messageToEdit) {
+    super(message);
+    this.msg = messageToEdit;
+    this.name = this.constructor.name;
+  }
+}
+module.exports = { SocialError, ParseError, AnimeError };

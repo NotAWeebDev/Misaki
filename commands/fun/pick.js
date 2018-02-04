@@ -22,15 +22,11 @@ class Pick extends Social {
     if (message.settings.socialSystem === "true") {
       if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
     }
-    try {
-      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.guild.me.displayName}** is thinking...`);
-      setTimeout(
-        () => msg.edit(`I think \`${list[Math.floor(Math.random()*list.length)].trim()}\``),
-        Math.random() * (1 - 5) + 1 * 5000
-      );
-    } catch (error) {
-      this.client.logger.error(error);
-    }
+    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.guild.me.displayName}** is thinking...`);
+    setTimeout(
+      () => msg.edit(`I think \`${list[Math.floor(Math.random()*list.length)].trim()}\``),
+      Math.random() * (1 - 5) + 1 * 5000
+    );
   }
 }
 

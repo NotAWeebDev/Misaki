@@ -14,7 +14,7 @@ class Gif extends Social {
   }
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     if (message.settings.socialSystem === "true") {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+      await this.cmdPay(message, message.author.id, this.help.cost);
     }
     const list = await snek.get("http://replygif.net/api/tags?api-key=39YAprx5Yi");
     const tag = list.body.random();

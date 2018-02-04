@@ -19,8 +19,8 @@ class SnapChat extends Social {
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is applying filters...`);
     let text = args.join(" ");
 
-    if (text.length < 1) return message.response(undefined, "You must give the snap some text.");
-    if (text.length > 28) return message.response(undefined, "I can only handle a maximum of 28 characters.");
+    if (text.length < 1) return msg.edit("You must give the snap some text.");
+    if (text.length > 28) return msg.edit("I can only handle a maximum of 28 characters.");
     
     if (message.settings.socialSystem === "true") {
       await this.cmdPay(message, message.author.id, this.help.cost, { msg });

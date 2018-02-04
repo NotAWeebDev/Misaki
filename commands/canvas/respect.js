@@ -17,7 +17,7 @@ class Respect extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const msg = await message.channel.send("Paying respects...");
-    const target = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
+    const target = await this.verifyUser(message, args[0] || message.author.id);
 
     if (message.settings.socialSystem === "true") {
       await this.cmdPay(message, message.author.id, this.help.cost, { msg });

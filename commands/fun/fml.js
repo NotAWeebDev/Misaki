@@ -18,34 +18,27 @@ class FML extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars 
-    try {
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
-      const reply = await message.channel.send("<a:typing:397490442469376001> **Searching** please wait a few moments.");
-      const { text } = await request.get("http://www.fmylife.com/random");
-      const root = HTMLParser.parse(text);
-      const article = root.querySelector(".block a");
-      const downdoot = root.querySelector(".vote-down");
-      const updoot = root.querySelector(".vote-up");
-      const embed = new MessageEmbed()
-        .setTitle("Fuck my Life, Random Edition!")
-        .setColor(165868)
-        .setThumbnail("http://i.imgur.com/5cMj0fw.png")
-        .setFooter(`Requested by: ${message.member.displayName}`)
-        .setDescription(`_${article.childNodes[0].text}\n\n_`)
-        .addField("I agree, your life sucks", updoot.childNodes[0].text, true)
-        .addField("You deserved it:", downdoot.childNodes[0].text, true);
-      if (article.childNodes[0].text.length < 5 ) {
-        return message.response(undefined, "Today, something went wrong, so you'll have to try again in a few moments. FML");
-      }
-      reply.edit({embed});
-    } catch (error) {
-      if (error.message === "Cannot send an empty message") {
-        message.response(undefined, "Today, something went wrong, so you'll have to try again in a few moments. FML");
-      }
-      this.client.logger.error(error);
+    const reply = await message.channel.send("<a:typing:397490442469376001> **Searching** please wait a few moments.");
+    if (message.settings.socialSystem === "true") {
+      await this.cmdPay(message, message.author.id, this.help.cost, { msg: reply });
     }
+    const { text } = await request.get("http://www.fmylife.com/random");
+    const root = HTMLParser.parse(text);
+    const article = root.querySelector(".block a");
+    const downdoot = root.querySelector(".vote-down");
+    const updoot = root.querySelector(".vote-up");
+    const embed = new MessageEmbed()
+      .setTitle("Fuck my Life, Random Edition!")
+      .setColor(165868)
+      .setThumbnail("http://i.imgur.com/5cMj0fw.png")
+      .setFooter(`Requested by: ${message.member.displayName}`)
+      .setDescription(`_${article.childNodes[0].text}\n\n_`)
+      .addField("I agree, your life sucks", updoot.childNodes[0].text, true)
+      .addField("You deserved it:", downdoot.childNodes[0].text, true);
+    if (article.childNodes[0].text.length < 5 ) {
+      return reply.edit("Today, something went wrong, so you'll have to try again in a few moments. FML");
+    }
+    reply.edit({embed});
   }
 }
 
