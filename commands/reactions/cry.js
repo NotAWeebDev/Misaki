@@ -19,6 +19,7 @@ class Cry extends Social {
       if (message.settings.socialSystem === "true") {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       }
+      if (message.member == target.first()) return message.reponse(undefined, "You cannot cry on yourself !");
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** wants to cry it all away...`);
       const cry = await this.cmdMoe("cry");
       await msg.edit({
