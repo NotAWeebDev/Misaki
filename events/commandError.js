@@ -13,7 +13,7 @@ module.exports = class {
     }
     if (error instanceof SocialError) return error.msg.edit(error.message);
     if (error instanceof AnimeError) return error.msg.edit(error.message);
-    message.edit("Something went wrong, please try again later");
+    message.channel.send("Something went wrong, please try again later");
     this.client.logger.error(error);
   }
 };
