@@ -14,22 +14,17 @@ class Crush extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    let msg;
-    try {
-      const crush = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
-      const crusher = message.author;
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
-      msg = await message.channel.send(`<a:typing:397490442469376001> **${crush.username}** is being gazed at...`);
+    const msg = await message.channel.send(`<a:typing:397490442469376001> **${crush.username}** is being gazed at...`);
+    const crush = await this.verifyUser(message, args[0] || message.author.id, { msg });
+    const crusher = message.author;
 
-      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.crush(crusher.displayAvatarURL({format:"png", size:128}), crush.displayAvatarURL({format:"png", size:512})), "crush.png"));
-      await msg.delete();
-    } catch (error) {
-      msg.edit("Something went wrong, please try again later");
-      this.client.logger.error(error);
+    if (message.settings.socialSystem === "true") {
+      await this.cmdPay(message, message.author.id, this.help.cost, { msg });
     }
+
+    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.crush(crusher.displayAvatarURL({format:"png", size:128}), crush.displayAvatarURL({format:"png", size:512})), "crush.png"));
+    await msg.delete();
   }
 }
 
-module.exports = Crush;//
+module.exports = Crush;
