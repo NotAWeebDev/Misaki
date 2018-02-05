@@ -1,6 +1,6 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 const moment = require("moment");
-const snek = require("snekfetch");
+const snekfetch = require("snekfetch");
 
 class Social extends Command {
 
@@ -113,8 +113,8 @@ class Social extends Command {
   }
 
   async cmdMoe(type, nsfw = false) {
-    const { body } = await snek.get(`https://rra.ram.moe/i/r?type=${type}&nsfw=${nsfw}`);
-    return body.path.replace("/i/", "");
+    const { body } = await snekfetch.get(`https://api.weeb.sh/images/random?type=${type}&filetype=gif&nsfw=${nsfw}`).set("Authorization", this.client.config.Wolken);
+    return body.url;
   }
 }
 

@@ -8,7 +8,6 @@ class Cheers extends Meme {
       usage: "cheers <top text ; bottom text>",
       category: "meme",
       cost: 5,
-      aliases: []
     });
   }
 

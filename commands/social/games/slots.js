@@ -27,7 +27,6 @@ class Slots extends Social {
       usage: "slots",
       cost: 10,
       cooldown: 5,
-      aliases: []
     });
   }
   

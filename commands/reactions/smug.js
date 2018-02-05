@@ -7,9 +7,7 @@ class Smug extends Social {
       description: "Someone feels a bit smug.",
       usage: "smug",
       category: "Reactions",
-      extended: "",
       cost: 5,
-      aliases: ["glomp"]
     });
   }
 
@@ -23,10 +21,10 @@ class Smug extends Social {
       await msg.edit({
         embed: {
           "title": "Click here if the image failed to load.",
-          "url": `https://cdn.ram.moe/${smug}`,
+          "url": smug,
           "color": message.guild.me.roles.highest.color || 5198940,
           "image": {
-            "url": `https://cdn.ram.moe/${smug}`
+            "url": smug
           }
         }
       });

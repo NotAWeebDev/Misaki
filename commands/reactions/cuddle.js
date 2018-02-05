@@ -8,7 +8,6 @@ class Cuddle extends Social {
       usage: "cuddle <@mention>",
       category: "Reactions",
       cost: 5,
-      aliases: []
     });
   }
 
@@ -24,11 +23,11 @@ class Cuddle extends Social {
       await msg.edit({
         embed: {
           "title": "Click here if the image failed to load.",
-          "url": `https://cdn.ram.moe/${cuddle}`,
+          "url": cuddle,
           "description": `**${target.first().displayName}**, you just got cuddled by **${message.member.displayName}**`,
           "color": message.guild.me.roles.highest.color || 5198940,
           "image": {
-            "url": `https://cdn.ram.moe/${cuddle}`
+            "url": cuddle
           }
         }
       });

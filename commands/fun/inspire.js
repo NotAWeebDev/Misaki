@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const snek = require("snekfetch");
+const snekfetch = require("snekfetch");
 
 class Inspire extends Social {
   constructor(client) {
@@ -9,7 +9,6 @@ class Inspire extends Social {
       category: "Fun",
       usage: "inspire",
       cost: 10,
-      aliases: []
     });
   }
 
@@ -21,7 +20,7 @@ class Inspire extends Social {
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** wants to be inspired...`);
 
       const xmas = message.flags[0] === "xmas" ? "&season=xmas" : "";
-      const { text } = await snek.get(`http://inspirobot.me/api?generate=true${xmas}`);
+      const { text } = await snekfetch.get(`http://inspirobot.me/api?generate=true${xmas}`);
       await message.channel.send({ files: [{ attachment: text, name: "inspire.jpg" }] });
       await msg.delete();
     } catch (error) {

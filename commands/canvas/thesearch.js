@@ -10,7 +10,6 @@ class TheSearch extends Social {
       usage: "thesearch <text>",
       cost: 10,
       cooldown: 10,
-      aliases: []
     });
   }
 

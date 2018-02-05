@@ -8,7 +8,6 @@ class Lewd extends Social {
       usage: "lewd [@mention]",
       category: "Reactions",
       cost: 5,
-      aliases: []
     });
   }
 
@@ -25,11 +24,11 @@ class Lewd extends Social {
       await msg.edit({
         embed: {
           "title": "Click here if the image failed to load.",
-          "url": `https://cdn.ram.moe/${lewd}`,
+          "url": lewd,
           "description": `**${message.member.displayName}** thinks ${response} is a bit lewd.`,
           "color": message.guild.me.roles.highest.color || 5198940,
           "image": {
-            "url": `https://cdn.ram.moe/${lewd}`
+            "url": lewd
           }
         }
       });

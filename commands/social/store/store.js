@@ -7,7 +7,6 @@ class Store extends Social {
       description: "Display All Store Items",
       usage: "store <-buy|-sell|-add|-del|-view>",
       category: "Social",
-      aliases: []
     });
   }
 

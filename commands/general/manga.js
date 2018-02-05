@@ -16,10 +16,8 @@ class Manga extends Command {
       description: "Search for a manga on Kitsu!",
       category: "General",
       usage: "manga attack on titan",
-      extended: "",
       cooldown: 10,
       guildOnly: true,
-      aliases: []
     });
   }
 

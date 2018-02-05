@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const snek = require("snekfetch");
+const snekfetch = require("snekfetch");
 class Yoda extends Social {
   constructor(client) {
     super(client, {
@@ -24,7 +24,7 @@ class Yoda extends Social {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       }
 
-      const { text } = await snek.get(`http://yoda-api.appspot.com/api/v1/yodish?text=${encodeURIComponent(speech.toLowerCase())}`);
+      const { text } = await snekfetch.get(`http://yoda-api.appspot.com/api/v1/yodish?text=${encodeURIComponent(speech.toLowerCase())}`);
       message.channel.send(JSON.parse(text).yodish);
     } catch (error) {
       this.client.logger.error(error);

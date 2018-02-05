@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const snek = require("snekfetch");
+const snekfetch = require("snekfetch");
 
 class Lizard extends Social {
   constructor(client) {
@@ -11,7 +11,6 @@ class Lizard extends Social {
       extended: "This command will return a beautiful lizard.",
       cost: 5,
       cooldown: 10,
-      aliases: []
     });
   }
 
@@ -23,7 +22,7 @@ class Lizard extends Social {
       }
 
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is looking for a lizard...`);
-      const { body } = await snek.get("https://nekos.life/api/lizard");
+      const { body } = await snekfetch.get("https://nekos.life/api/lizard");
       await msg.edit({
         embed: {
           "title": "Click here if the image failed to load.",

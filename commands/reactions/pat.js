@@ -8,7 +8,6 @@ class Pat extends Social {
       usage: "pat <@mention>",
       category: "Reactions",
       cost: 5,
-      aliases: []
     });
   }
 
@@ -24,11 +23,11 @@ class Pat extends Social {
       await msg.edit({
         embed: {
           "title": "Click here if the image failed to load.",
-          "url": `https://cdn.ram.moe/${pat}`,
+          "url": pat,
           "description": `**${target.first().displayName}**, you got pats from **${message.member.displayName}**`,
           "color": message.guild.me.roles.highest.color || 5198940,
           "image": {
-            "url": `https://cdn.ram.moe/${pat}`
+            "url": pat
           }
         }
       });

@@ -8,7 +8,6 @@ class Brain extends Meme {
       usage: "brain <first text ; second text ; third text ; forth text>",
       category: "meme",
       cost: 5,
-      aliases: []
     });
   }
 

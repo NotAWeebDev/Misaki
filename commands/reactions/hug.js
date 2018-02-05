@@ -8,7 +8,6 @@ class Hug extends Social {
       usage: "hug <@mention>",
       category: "Reactions",
       cost: 5,
-      aliases: ["glomp"]
     });
   }
 
@@ -24,11 +23,11 @@ class Hug extends Social {
       await msg.edit({
         embed: {
           "title": "Click here if the image failed to load.",
-          "url": `https://cdn.ram.moe/${hug}`,
+          "url": hug,
           "description": `**${target.first().displayName}**, you just got hugged by **${message.member.displayName}**`,
           "color": message.guild.me.roles.highest.color || 5198940,
           "image": {
-            "url": `https://cdn.ram.moe/${hug}`
+            "url": hug
           }
         }
       });

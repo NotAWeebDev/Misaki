@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const snek = require("snekfetch");
+const snekfetch = require("snekfetch");
 class Ping extends Social {
   constructor(client) {
     super(client, {
@@ -20,7 +20,7 @@ class Ping extends Social {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       }
 
-      const { text } = await snek.get("http://api.yomomma.info/");
+      const { text } = await snekfetch.get("http://api.yomomma.info/");
       message.channel.send(`_${JSON.parse(text).joke}_`);
     } catch (error) {
       this.client.logger.error(error);

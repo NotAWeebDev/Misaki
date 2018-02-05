@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const snek = require("snekfetch");
+const snekfetch = require("snekfetch");
 
 class Reddit extends Social {
   constructor(client) {
@@ -19,7 +19,7 @@ class Reddit extends Social {
     let msg;
     try {
       msg = await message.channel.send("Fetching from reddit...");
-      const { body } = await snek.get(`https://www.reddit.com/r/${subreddit}/${subRedCat}.json`);
+      const { body } = await snekfetch.get(`https://www.reddit.com/r/${subreddit}/${subRedCat}.json`);
       let meme;
       if (body[0]) {
         meme = body[0].data.children[Math.floor(Math.random() * body[0].data.children.length)].data;

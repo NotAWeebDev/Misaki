@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const snek = require("snekfetch");
+const snekfetch = require("snekfetch");
 
 class Neko extends Social {
   constructor(client) {
@@ -11,7 +11,6 @@ class Neko extends Social {
       extended: "This command will return a Neko, a lewd Neko if used in a NSFW channel",
       cost: 40,
       cooldown: 10,
-      aliases: []
     });
   }
 
@@ -24,7 +23,7 @@ class Neko extends Social {
       }
 
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is looking for a feline...`);
-      const { body } = await snek.get(`https://nekos.life/api${Math.random() >= 0.5 ? "/lewd" : ""}/neko`);
+      const { body } = await snekfetch.get(`https://nekos.life/api${Math.random() >= 0.5 ? "/lewd" : ""}/neko`);
       await msg.edit({
         embed: {
           "title": "Click here if the image failed to load.",

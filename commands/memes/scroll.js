@@ -8,7 +8,6 @@ class Scroll extends Meme {
       usage: "scroll <text>",
       category: "meme",
       cost: 5,
-      aliases: []
     });
   }
 

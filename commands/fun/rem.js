@@ -8,7 +8,6 @@ class Rem extends Social {
       usage: "rem",
       category: "Fun",
       cost: 5,
-      aliases: []
     });
   }
 

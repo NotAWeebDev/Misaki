@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const snek = require("snekfetch");
+const snekfetch = require("snekfetch");
 const { MessageAttachment } = require("discord.js");
 class Tiger extends Social {
   constructor(client) {
@@ -23,7 +23,7 @@ class Tiger extends Social {
       }
 
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a tiger...`);
-      const { body } = await snek.get("https://dashboard.typicalbot.com/api/v1/tiger").set("Authentication", this.client.config.tbToken);
+      const { body } = await snekfetch.get("https://dashboard.typicalbot.com/api/v1/tiger").set("Authentication", this.client.config.tbToken);
       await message.channel.buildEmbed()
         .setColor(message.guild.me.roles.highest.color || 5198940)
         .attachFiles([new MessageAttachment(new Buffer(body.data), "image.png")])
