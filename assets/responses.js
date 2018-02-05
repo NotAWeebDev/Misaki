@@ -8,7 +8,8 @@ exports.welcomeMessages = [
   "{{user}}, looks like you landed on the wrong side of discord!",
   "Hi {{user}}! Welcome to {{guild}}, I hope you enjoy your stay!",
   "ERGH, why has {{user}} got to come, I already have to handle {{amount}} users !",
-  "Y-yay! more people to deal with! Welcome {{user}}!"
+  "Y-yay! more people to deal with! Welcome {{user}}!",
+  "Hi! Waifu {{user}} has join the Academy!"
 ];
 
 // Member Leave
@@ -20,7 +21,8 @@ exports.goodbyeMessages = [
   "{{user}} why would you leave me here, alone!?",
   "{{user}} discovered the leave button.",
   "Eep! {{user}} left?! H-hes always leaving me, that baka..",
-  "Finally, I thought {{user}} would never leave!"
+  "Finally, I thought {{user}} would never leave!",
+  "Woah! {{user}} left the Academy! b-baka, Why did they join?"
 ];
 
 // Level Up
@@ -35,7 +37,10 @@ exports.levelUpMessages = [
   "Ah nuts, {{user}} is getting smart, now with a I.Q of {{level}}",
   "N-nani? You've reached level {{level}} so quickly...",
   "Senpai noticed you and wanted to give you level {{level}}",
-  "You're only level {{level}}? You disgust me!"
+  "You're only level {{level}}? You disgust me!",
+  "How can you be {{level}} you-u baka!",
+  "B-baka! You're at level {{level}}, now go be free! d-dummy...",
+  "Your definitely level {{level}} you baka!",
 ];
 
 // Commands
@@ -48,7 +53,13 @@ exports.pingMessages = [
   "{{user}}?, I've responded in {{ms}}ms.",
   "{{user}}! You wasted {{ms}}ms of my time, ERGH",
   "D-did I do it right? I responded in {{ms}}ms.",
-  "{{user}}, yes I'm here, and it took me {{ms}}ms to respond!"
+  "{{user}}, yes I'm here, and it took me {{ms}}ms to respond!",
+  "{{user}} Why you ping’ing me man! You wasted {{ms}}ms of my time!!",
+  "{{user}} Hey, it took me {{ms}}ms to send this message",
+  "You've made me {{ms}}ms older - just from asking.",
+  "{{user}} ive seen your message and it took me this long {{ms}}ms to not care",
+  "Do you know how long it took to me to read that message? You pretty much wasted {{ms}}ms of my day!",
+  "B-baka! My ping is {{ms}}ms! Are you happy now?"
 ];
 
 exports.myLevelMessages = [
@@ -58,14 +69,17 @@ exports.myLevelMessages = [
   "{{user}}, again with this? Whatever, it's level {{level}}, {{friendly}}",
   "{{user}}-san here you go, it's {{friendly}}, level {{level}}",
   "You're a {{level}}, maybe if you were a wee bit higher than a {{friendly}} you'd stop forgetting",
-  "Only a level {{level}} even I'm better than a {{friendly}}"
+  "Only a level {{level}} even I'm better than a {{friendly}}",
+  "Level {{level}}? What, where you hoping to be higher than {{friendly}?",
+  "smh, a level {{level}}? I thought you weren't gonna be a {{friendly}}!",
+  "Only level {{level}}? Pfft! I've seen much better than a {{friendly}}."
 ];
 
 exports.dailySuccessMessages = [
   "Yatta! You've got {{amount}}.",
   "Well done, you've redeemed your daily {{amount}} points!",
   "Finally I thought you were never going to claim your {{amount}} today!",
-  "Your dad gave you {{amount}}? I get more then that every hour!",
+  "Your dad gave you {{amount}}? I get more than that every hour!",
   "You have claimed your daily {{amount}}, Ain't that dandy?",
   "N-nani?! You got {{amount}} woah..",
   "You just got {{amount}}? Maybe buy me dinner some time {{user}}-san? :wink:",
@@ -85,7 +99,7 @@ exports.balanceMessages = [
   "Pfft, a measly {{amount}}? My father gives me more as an allowance!",
   "Only {{amount}}? That's nothing compared to my pocket money!",
   "{{user}}-san, you have {{amount}}, but you don't need it to make me happy.",
-  "{{user}}, again? Ugh, you have {{amount}}... Jeez, maybe if you kept track of it you'd remember.."
+  "{{user}}, again? Ugh, you have {{amount}}... Jeez, maybe if you kept track of it you'd remember..."
 ];
 
 exports.otherBalanceMessages = [
@@ -94,6 +108,14 @@ exports.otherBalanceMessages = [
   "Why do you care so much about {{user}}'s Balance? N-not that I care, it's {{amount}}.",
   "Some particular reason you want to know {{user}}'s balance? it's {{amount}}",
   "Hm, one second.. It's {{amount}}, but why do you want to know {{user}}'s Balance?"
+];
+
+exports.levelMessages = [
+
+];
+
+exports.otherLevelMessages = [
+
 ];
 
 exports.purgeMessages = [
@@ -116,6 +138,14 @@ exports.rebootMessages = [
   "B-baka! You need to wait for me...",
   "W-what, {{user}}, You want to watch me sleep? P-pervert.",
   "{{user}}-san! I'm restarting, give me a moment.."
+];
+
+// Go Messages
+exports.goMessages = [
+  "Ehhhhh! {{user}}-san invites everyone to play {{game}}!",
+  "Play {{game}} with {{user}}-san because {{user}}-san is so lonely!",
+  "{{user}} is too scared to ask people to play {{game}} with them",
+  "Goooooo! Play {{game}} with {{user}}-san please"
 ];
 
 // System
@@ -153,14 +183,6 @@ exports.reloadErrLoad = [
 exports.reloadSuccess = [
   "Yatta! {{command}} reloaded, now we can get back to what we were doing, or whatever you want to do...",
   "I've reloaded {{command}}, not that I could see any point in it..."
-];
-
-// Go Messages
-exports.goMessages = [
-  "Ehhhhh! {{user}}-san invites everyone to play {{game}}!",
-  "Play {{game}} with {{user}}-san because {{user}}-san is so lonely!",
-  "{{user}} is too scared to ask people to play {{game}} with them",
-  "Goooooo! Play {{game}} with {{user}}-san please"
 ];
 
 // Errors

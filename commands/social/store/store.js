@@ -7,7 +7,6 @@ class Store extends Social {
       description: "Display All Store Items",
       usage: "store <-buy|-sell|-add|-del|-view>",
       category: "Social",
-      aliases: []
     });
   }
 
@@ -107,13 +106,13 @@ class Store extends Social {
         
         const filter = m => m.author.id === message.author.id;
         const response = await this.client.awaitReply(message, `Are you sure you want to remove ${name} from the shop?`, filter, undefined, null);
-        if (["y", "yes"].includes(response)) {
+        if (["y", "yes"].includes(response.toLowerCase())) {
         
           await this.client.store.delete(role.id);
           message.reply("The role is now off the store.");
         } else
         
-        if (["n","no","cancel"].includes(response)) {
+        if (["n","no","cancel"].includes(response.toLowerCase())) {
           message.reply("Action cancelled.");
         }
         break;
@@ -123,7 +122,7 @@ class Store extends Social {
         const items = message.guild.store;
         if (items.length === 0) return message.response(undefined, "Baka... nothing is for sale!");
         message.channel.send(`= ${message.guild.name} General Store =\n` + items.map(item => 
-          `${message.guild.roles.get(item.id.toString()).name}${" ".repeat(20 - message.guild.roles.get(item.id.toString()).name.length)}::  ${parseInt(item.price) === 0 ? "FREE" : `₲${parseInt(item.price).toLocaleString()}`} :: ${message.member.roles.has(item.id) ? "✓" : ""}`).join("\n"), { code: "asciidoc" }
+          `${message.guild.roles.get(item.id.toString()).name}${" ".repeat(40 - message.guild.roles.get(item.id.toString()).name.length)}::  ${parseInt(item.price) === 0 ? "FREE" : `₲${parseInt(item.price).toLocaleString()}`} :: ${message.member.roles.has(item.id) ? "✓" : ""}`).join("\n"), { code: "asciidoc" }
         );
       }
     }

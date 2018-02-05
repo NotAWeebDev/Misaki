@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const snek = require("snekfetch");
+const { get } = require("snekfetch");
 class Dog extends Social {
   constructor(client) {
     super(client, {
@@ -21,7 +21,7 @@ class Dog extends Social {
       await this.cmdPay(message, message.author.id, this.help.cost, { msg });
     }
 
-    const { body } = await snek.get(args[0] ? `https://dog.ceo/api/breed/${args[0]}/images/random` : "https://dog.ceo/api/breeds/image/random");
+    const { body } = await get(args[0] ? `https://dog.ceo/api/breed/${args[0]}/images/random` : "https://dog.ceo/api/breeds/image/random");
     await msg.edit({embed:{ "title": "Click here if the image failed to load.", "url": body.message, "color":message.guild.me.roles.highest.color || 5198940, "image": {"url": body.message}}});
 
   }

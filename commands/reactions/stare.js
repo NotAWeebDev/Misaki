@@ -8,7 +8,6 @@ class Stare extends Social {
       usage: "stare <@mention>",
       category: "Reactions",
       cost: 5,
-      aliases: ["glomp"]
     });
   }
 
@@ -24,11 +23,11 @@ class Stare extends Social {
       await msg.edit({
         embed: {
           "title": "Click here if the image failed to load.",
-          "url": `https://cdn.ram.moe/${stare}`,
+          "url": stare,
           "description": `**${message.member.displayName}** is staring at **${target.first().displayName}**.`,
           "color": message.guild.me.roles.highest.color || 5198940,
           "image": {
-            "url": `https://cdn.ram.moe/${stare}`
+            "url": stare
           }
         }
       });

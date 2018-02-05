@@ -67,8 +67,7 @@ class Command {
     const match = /([0-9]{17,20})/.exec(msgid);
     if (!match) throw new ParseError("Invalid Message ID.", options.msg);
     const id = match[1];
-    const fetchedMessage = await message.channel.messages.fetch(id);
-    return fetchedMessage.id;
+    return message.channel.messages.fetch(id).then(m => m.id);
   }
 
   async verifyChannel(message, chanid, options = {}) {

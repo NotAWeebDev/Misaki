@@ -8,7 +8,6 @@ class Cry extends Social {
       usage: "cry <@mention>",
       category: "Reactions",
       cost: 5,
-      aliases: []
     });
   }
 
@@ -24,11 +23,11 @@ class Cry extends Social {
       await msg.edit({
         embed: {
           "title": "Click here if the image failed to load.",
-          "url": `https://cdn.ram.moe/${cry}`,
+          "url": cry,
           "description": `**${target.first().displayName}**, **${message.member.displayName}** just cried on your shoulder.`,
           "color": message.guild.me.roles.highest.color || 5198940,
           "image": {
-            "url": `https://cdn.ram.moe/${cry}`
+            "url": cry
           }
         }
       });

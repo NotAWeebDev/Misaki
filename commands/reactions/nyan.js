@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-
+const snekfetch = require("snekfetch");
 class Nyan extends Social {
   constructor(client) {
     super(client, {
@@ -7,9 +7,7 @@ class Nyan extends Social {
       description: "Someone needs a nyan in their life.",
       usage: "nyan",
       category: "Reactions",
-      extended: "",
       cost: 5,
-      aliases: ["glomp"]
     });
   }
 
@@ -19,14 +17,14 @@ class Nyan extends Social {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       }
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** wants a nyan...`);
-      const nyan = await this.cmdMoe("nyan");
+      const { body } = await snekfetch.get("https://rra.ram.moe/i/r?type=nyan");
       await msg.edit({
         embed: {
           "title": "Click here if the image failed to load.",
-          "url": `https://cdn.ram.moe/${nyan}`,
+          "url": `https://cdn.ram.moe/${body.path.replace("/i/", "")}`,
           "color": message.guild.me.roles.highest.color || 5198940,
           "image": {
-            "url": `https://cdn.ram.moe/${nyan}`
+            "url": `https://cdn.ram.moe/${body.path.replace("/i/", "")}`
           }
         }
       });

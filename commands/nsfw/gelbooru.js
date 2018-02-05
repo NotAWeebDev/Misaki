@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const snek = require("snekfetch");
+const snekfetch = require("snekfetch");
 
 class Gelbooru extends Social {
   constructor(client) {
@@ -29,7 +29,7 @@ class Gelbooru extends Social {
     try {
       if (!message.channel.nsfw) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
       msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is checking out ${tags.length === 0 ? "something" : tags}...`);
-      const { body } = await snek.get(`http://gelbooru.com/index.php?page=dapi&s=post&q=index&limit=100&tags=${encodeURI(`${tags}+rating:explicit`)}&json=1`);
+      const { body } = await snekfetch.get(`https://gelbooru.com/index.php?page=dapi&s=post&q=index&limit=100&tags=${encodeURI(`${tags}+rating:explicit`)}&json=1`);
       const result = body.random();
       if (!result) return msg.edit(`Cannot find results for \`${tags}\`.`);
       const tagString = result.tags.split(" ");

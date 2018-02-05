@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const snek = require("snekfetch");
+const snekfetch = require("snekfetch");
 
 class Butts extends Social {
   constructor(client) {
@@ -24,7 +24,7 @@ class Butts extends Social {
       }
 
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is looking for butts...`);
-      const { body } = await snek.get("http://api.obutts.ru/butts/0/1/random");
+      const { body } = await snekfetch.get("http://api.obutts.ru/butts/0/1/random");
       await msg.edit({
         embed: {
           "title": "Click here if the image failed to load.",

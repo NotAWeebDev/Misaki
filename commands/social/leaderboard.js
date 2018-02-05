@@ -8,6 +8,7 @@ class Leaderboard extends Social {
       usage: "leaderboard",
       category: "Social",
       cost: 0,
+      cooldown: 10,
       aliases: ["top10", "top", "leader", "lb"]
     });
   }

@@ -14,8 +14,7 @@ class Hewwo extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    if (args.length < 1) message.response(undefined, "You need to give the bot a message to send.");
-    
+    if (args.length < 1) return message.response(undefined, "You need to give the bot a message to send.");
     if (message.settings.socialSystem === "true") {
       await this.cmdPay(message, message.author.id, this.help.cost);
     }

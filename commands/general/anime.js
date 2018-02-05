@@ -17,10 +17,8 @@ class Anime extends Command {
       description: "Search for an anime on Kitsu!",
       category: "General",
       usage: "anime attack on titan",
-      extended: "",
       cooldown: 10,
       guildOnly: true,
-      aliases: []
     });
   }
 

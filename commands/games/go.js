@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const {MessageEmbed} = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 
 class Go extends Social {
   constructor(client) {
@@ -51,7 +51,6 @@ class Go extends Social {
             run: "steam://run/578080"
           };
           break;
-
         case "rocketleague":
           game = {
             title: "Rocket League",

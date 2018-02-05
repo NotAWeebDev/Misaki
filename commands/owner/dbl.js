@@ -8,7 +8,6 @@ class DBL extends Owner {
       usage: "dbl",
       category: "General",
       extended: "Pulls up to date information from the Discord Bot List hosted at discordbots.org.",
-      aliases: []
     });
   }
 

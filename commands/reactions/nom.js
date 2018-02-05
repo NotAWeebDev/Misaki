@@ -8,7 +8,6 @@ class Nom extends Social {
       usage: "nom <@mention>",
       category: "Reactions",
       cost: 5,
-      aliases: []
     });
   }
 
@@ -24,11 +23,11 @@ class Nom extends Social {
       await msg.edit({
         embed: {
           "title": "Click here if the image failed to load.",
-          "url": `https://cdn.ram.moe/${nom}`,
+          "url": nom,
           "description": `**${target.first().displayName}**, you just got nom'ed by **${message.member.displayName}**`,
           "color": message.guild.me.roles.highest.color || 5198940,
           "image": {
-            "url": `https://cdn.ram.moe/${nom}`
+            "url": nom
           }
         }
       });

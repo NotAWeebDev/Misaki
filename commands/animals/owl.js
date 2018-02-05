@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const snek = require("snekfetch");
+const { get } = require("snekfetch");
 class Owl extends Social {
   constructor(client) {
     super(client, {
@@ -21,7 +21,7 @@ class Owl extends Social {
       await this.cmdPay(message, message.author.id, this.help.cost, { msg });
     }
 
-    const owl = await snek.get("http://pics.floofybot.moe/owl").then(r => r.body.image); // API Provided by Lewdcario
+    const owl = await get("http://pics.floofybot.moe/owl").then(r => r.body.image); // API Provided by Lewdcario
     await msg.edit({ embed: { "title": "Click here if the image failed to load.", "url": owl, "color": message.guild.me.roles.highest.color || 5198940, "image": { "url": owl } } });
   }
 }

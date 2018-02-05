@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const snek = require("snekfetch");
+const { get } = require("snekfetch");
 class Bird extends Social {
   constructor(client) {
     super(client, {
@@ -20,7 +20,7 @@ class Bird extends Social {
     if (message.settings.socialSystem === "true") {
       await this.cmdPay(message, message.author.id, this.help.cost, { msg });
     }
-    const { body } = await snek.get("http://random.birb.pw/tweet/");
+    const { body } = await get("http://random.birb.pw/tweet/");
     await msg.edit({
       embed: {
         "title": "Click here if the image failed to load.",

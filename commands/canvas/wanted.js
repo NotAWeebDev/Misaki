@@ -20,7 +20,7 @@ class Wanted extends Social {
     if (message.settings.socialSystem === "true") {
       await this.cmdPay(message, message.author.id, this.help.cost, { msg });
     }
-    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.vaultBoy(vaultDweller.displayAvatarURL({ format:"png", size:512 })), "vaultboy.png"));
+    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.wanted(vaultDweller.displayAvatarURL({ format:"png", size:512 })), "wanted.png"));
     await msg.delete();
   }
 }

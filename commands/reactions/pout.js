@@ -8,7 +8,6 @@ class Pout extends Social {
       usage: "pout",
       category: "Reactions",
       cost: 5,
-      aliases: []
     });
   }
 
@@ -22,10 +21,10 @@ class Pout extends Social {
       await msg.edit({
         embed: {
           "title": "Click here if the image failed to load.",
-          "url": `https://cdn.ram.moe/${pout}`,
+          "url": pout,
           "color": message.guild.me.roles.highest.color || 5198940,
           "image": {
-            "url": `https://cdn.ram.moe/${pout}`
+            "url": pout
           }
         }
       });

@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const snek = require("snekfetch");
+const { get } = require("snekfetch");
 class Bunny extends Social {
   constructor(client) {
     super(client, {
@@ -10,7 +10,6 @@ class Bunny extends Social {
       extended: "This command will return a beautiful bunny.",
       cost: 5,
       cooldown: 10,
-      aliases: []
     });
   }
 
@@ -22,7 +21,7 @@ class Bunny extends Social {
       await this.cmdPay(message, message.author.id, this.help.cost, { msg });
     }
 
-    const { body } = await snek.get("https://api.bunnies.io/v2/loop/random/?media=gif,png");
+    const { body } = await get("https://api.bunnies.io/v2/loop/random/?media=gif,png");
     await msg.edit({embed:{ "title": "Click here if the image failed to load.", "url": body.media.gif, "color":message.guild.me.roles.highest.color || 5198940, "image": {"url": body.media.gif}}});
   }
 }
