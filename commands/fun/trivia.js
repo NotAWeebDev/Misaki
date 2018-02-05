@@ -37,7 +37,7 @@ class Trivia extends Social {
       .addField("B", randomChoices[1])
       .addField("C", randomChoices[2])
       .addField("D", randomChoices[3])
-      .setFooter(message.author.tag, message.author.displayAvatarURL());
+      .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL());
 
     const question = await this.client.awaitReply(message, null, m => m.author.id === message.author.id, 60000, {embed:emb}); // Ask the question.
 
