@@ -1,14 +1,14 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const { MessageAttachment } = require("discord.js");
 
-class Slap extends Social {
+class FanSlap extends Social {
   constructor(client) {
     super(client, {
-      name: "slap",
-      description: "Slap another user for their idiocy.",
+      name: "fanslap",
+      description: "Slap another user for their idiocy with a paper fan.",
       category: "Canvas",
-      usage: "slap <@mention | userid>",
-      extended: "Mention another user to slap them.",
+      usage: "fanslap <@mention | userid>",
+      extended: "Mention another user to slap them with a paper fan.",
       cost: 10,
       cooldown: 10
     });
@@ -28,4 +28,4 @@ class Slap extends Social {
   }
 }
 
-module.exports = Slap;//
+module.exports = FanSlap;//

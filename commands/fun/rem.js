@@ -16,7 +16,7 @@ class Rem extends Social {
       if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
     }
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** wants rem...`);
-    const rem = await this.cmdMoe("rem");
+    const rem = await this.cmdWeeb("rem");
     await msg.edit({
       embed: {
         "title": "Click here if the image failed to load.",

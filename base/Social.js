@@ -81,8 +81,8 @@ class Social extends Command {
     return;
   }
 
-  async cmdMoe(type, nsfw = false) {
-    const { body } = await get(`https://api.weeb.sh/images/random?type=${type}&filetype=gif&nsfw=${nsfw}`).set("Authorization", this.client.config.Wolken);
+  async cmdWeeb(type, imgType, nsfw = false) {
+    const { body } = await get(`https://api.weeb.sh/images/random?type=${type}&filetype=${imgType}&nsfw=${nsfw}`).set("Authorization", this.client.config.Wolken);
     return body.url;
   }
 }

@@ -19,7 +19,7 @@ class Kiss extends Social {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       }
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** wants to give **${target.first().displayName}** a kiss...`);
-      const kiss = await this.cmdMoe("kiss");
+      const kiss = await this.cmdWeeb("kiss", "gif", message.channel.nsfw);
       await msg.edit({
         embed: {
           "title": "Click here if the image failed to load.",

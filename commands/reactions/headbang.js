@@ -1,11 +1,11 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 
-class Smug extends Social {
+class Banghead extends Social {
   constructor(client) {
     super(client, {
-      name: "smug",
-      description: "Someone feels a bit smug.",
-      usage: "smug",
+      name: "banghead",
+      description: "AAARGHHH!",
+      usage: "banghead",
       category: "Reactions",
       cost: 5,
     });
@@ -16,15 +16,15 @@ class Smug extends Social {
       if (message.settings.socialSystem === "true") {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       }
-      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is feeling smug...`);
-      const smug = await this.cmdWeeb("smug", "gif", message.channel.nsfw);
+      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** thinks a palm isn't enough.`);
+      const banghead = await this.cmdWeeb("banghead", "gif", message.channel.nsfw);
       await msg.edit({
         embed: {
           "title": "Click here if the image failed to load.",
-          "url": smug,
+          "url": banghead,
           "color": message.guild.me.roles.highest.color || 5198940,
           "image": {
-            "url": smug
+            "url": banghead
           }
         }
       });
@@ -35,4 +35,4 @@ class Smug extends Social {
   }
 }
 
-module.exports = Smug;
+module.exports = Banghead;
