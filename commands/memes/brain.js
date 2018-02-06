@@ -13,6 +13,7 @@ class Brain extends Meme {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const text = args.join(" ");
+    if (text.length === 0) return message.response("❗", "You must supply test to think about!");
     if (message.settings.socialSystem === "true") {
       if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
     }
