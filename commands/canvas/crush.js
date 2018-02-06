@@ -15,7 +15,7 @@ class Crush extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${crush.username}** is being gazed at...`);
-    const crush = await this.verifyUser(message, args[0] || message.author.id, { msg });
+    const crush = await this.verifyUser(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id, { msg });
     const crusher = message.author;
 
     if (message.settings.socialSystem === "true") {

@@ -16,7 +16,7 @@ class Superpunch extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars 
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is taking a swing...`);
-    const punched = await this.verifyUser(message, args[0] || message.author.id);
+    const punched = await this.verifyUser(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id);
     const puncher = message.author;
 
     if (message.settings.socialSystem === "true") {
