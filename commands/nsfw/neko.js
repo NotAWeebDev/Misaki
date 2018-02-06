@@ -15,28 +15,24 @@ class Neko extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    try {
-      if (!message.channel.nsfw) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
+    if (!message.channel.nsfw) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
 
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
-
-      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is looking for a feline...`);
-      const { body } = await snekfetch.get(`https://nekos.life/api${Math.random() >= 0.5 ? "/lewd" : ""}/neko`);
-      await msg.edit({
-        embed: {
-          "title": "Click here if the image failed to load.",
-          "url": body.neko,
-          "color": message.guild.me.roles.highest.color || 5198940,
-          "image": {
-            "url": body.neko
-          }
-        }
-      });
-    } catch (e) {
-      console.log(e);
+    if (message.settings.socialSystem === "true") {
+      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
     }
+
+    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is looking for a feline...`);
+    const { body } = await snekfetch.get(`https://nekos.life/api${Math.random() >= 0.5 ? "/lewd" : ""}/neko`);
+    await msg.edit({
+      embed: {
+        "title": "Click here if the image failed to load.",
+        "url": body.neko,
+        "color": message.guild.me.roles.highest.color || 5198940,
+        "image": {
+          "url": body.neko
+        }
+      }
+    });
   }
 }
 
