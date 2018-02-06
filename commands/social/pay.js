@@ -18,6 +18,7 @@ class Pay extends Social {
     if (args.length === 0) return message.response(undefined, "B-baka, you need to mention someone to b-be able to pay them.");
     try {
       const [bot, user] = await this.verifySocialUser(message, args[0]);
+      if (!user) return;
       if (bot) return message.response("❗", "Bot's cannot accumulate points or levels.");
       if (isNaN(args[1])) return message.response(undefined, "Not a valid amount");
 
