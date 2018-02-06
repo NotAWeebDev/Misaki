@@ -1,6 +1,6 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const Discord = require("discord.js");
-const snekfetch = require("snekfetch");
+const { get } = require("snekfetch");
 const h = new (require("html-entities").AllHtmlEntities)(); // HTML encoding decoder
 
 class Trivia extends Social {
@@ -18,7 +18,7 @@ class Trivia extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const { body } = await snekfetch.get("https://opentdb.com/api.php?amount=50&difficulty=medium&type=multiple"); // Grab the questions.
+    const { body } = await get("https://opentdb.com/api.php?amount=50&difficulty=medium&type=multiple"); // Grab the questions.
     const quiz = body.results.random(); // Get a random trivia question from a larger selection.
     const choices = quiz.incorrect_answers.map(answ => h.decode(answ)); // Insert all the incorrect answers to the choices array.
     choices.push(h.decode(quiz.correct_answer)); // Push the correct answer to the array as well.

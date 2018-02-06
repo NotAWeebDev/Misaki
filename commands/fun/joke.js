@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const snekfetch = require("snekfetch");
+const { get } = require("snekfetch");
 
 class Oneliner extends Social {
   constructor(client) {
@@ -18,7 +18,7 @@ class Oneliner extends Social {
       if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
     }
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is thinking of something funny...`);
-    const { body } = await snekfetch.get("https://dashboard.typicalbot.com/api/v1/joke").set("Authentication", this.client.config.tbToken);
+    const { body } = await get("https://dashboard.typicalbot.com/api/v1/joke").set("Authentication", this.client.config.tbToken);
     msg.edit(body.data);
   }
 

@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const snekfetch = require("snekfetch");
+const { get } = require("snekfetch");
 
 class Yandere extends Social {
   constructor(client) {
@@ -28,7 +28,7 @@ class Yandere extends Social {
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is checking out ${tags.length === 0 ? "something" : tags}...`);
     if (!message.channel.nsfw) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
 
-    const { body } = await snekfetch.get(`http://yande.re/post.json?limit=100&tags=${encodeURI(`${tags}+rating:e`)}`);
+    const { body } = await get(`http://yande.re/post.json?limit=100&tags=${encodeURI(`${tags}+rating:e`)}`);
     const result = body.random();
     if (!result) return msg.edit(`Cannot find results for \`${tags}\`.`);
     if (result.tags.length !== 0) {

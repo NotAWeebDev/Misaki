@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const snekfetch = require("snekfetch");
+const { get } = require("snekfetch");
 
 class E621 extends Social {
   constructor(client) {
@@ -20,7 +20,7 @@ class E621 extends Social {
     if (!message.channel.nsfw) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is checking out ${args.length === 0 ? " " : `${args.join(" ")} on `}e621.net...`);
 
-    const { body } = await snekfetch.get(`https://e621.net/post/index.json?limit=100&tags=${encodeURI(args)}`);
+    const { body } = await get(`https://e621.net/post/index.json?limit=100&tags=${encodeURI(args)}`);
     const result = body.random();
     if (result.tags.split(" ").some(t => blacklist.includes(t.toLowerCase()))) return message.response("📛", "Blacklisted word found, aborting...");
       

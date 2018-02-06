@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const snekfetch = require("snekfetch");
+const { get } = require("snekfetch");
 class Nyan extends Social {
   constructor(client) {
     super(client, {
@@ -16,7 +16,7 @@ class Nyan extends Social {
       if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
     }
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** wants a nyan...`);
-    const { body } = await snekfetch.get("https://rra.ram.moe/i/r?type=nyan");
+    const { body } = await get("https://rra.ram.moe/i/r?type=nyan");
     await msg.edit({
       embed: {
         "title": "Click here if the image failed to load.",

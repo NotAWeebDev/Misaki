@@ -1,5 +1,5 @@
 const Owner = require(`${process.cwd()}/base/Owner.js`);
-const snekfetch = require("snekfetch");
+const { get } = require("snekfetch");
 class DBLStats extends Owner {
   constructor(client) {
     super(client, {
@@ -12,7 +12,7 @@ class DBLStats extends Owner {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const { body } = await snekfetch.get(`https://discordbots.org/api/bots/${this.client.user.id}/votes`).set("Authorization", this.client.config.dblToken);
+    const { body } = await get(`https://discordbots.org/api/bots/${this.client.user.id}/votes`).set("Authorization", this.client.config.dblToken);
     const voters = [];
     for (const user of body) {
       voters.push(user.id);

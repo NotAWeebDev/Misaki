@@ -1,5 +1,5 @@
 const Owner = require(`${process.cwd()}/base/Owner.js`);
-const snekfetch = require("snekfetch");
+const { get } = require("snekfetch");
 class DBL extends Owner {
   constructor(client) {
     super(client, {
@@ -12,7 +12,7 @@ class DBL extends Owner {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const { body } = await snekfetch.get(`https://discordbots.org/api/bots/${this.client.user.id}/`);
+    const { body } = await get(`https://discordbots.org/api/bots/${this.client.user.id}/`);
     
     await message.buildEmbed()
       .setColor(message.guild.me.roles.highest.color || 5198940)
