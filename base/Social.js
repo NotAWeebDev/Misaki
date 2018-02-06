@@ -13,12 +13,14 @@ class Social extends Command {
   async verifySocialUser(message, user) {
     try {
       const check = await this.verifyUser(message, user);
+      if (!check) return;
       return [check.bot ? true : false, check];
     } catch (error) {
       console.log(error);
       // this.client.logger.error(error);
     }
   }
+
 
   async usrDay(message) {
     const settings = this.client.getSettings(message.guild.id);
