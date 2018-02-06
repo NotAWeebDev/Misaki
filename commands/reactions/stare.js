@@ -14,6 +14,7 @@ class Stare extends Social {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const target = message.mentions.members;
     if (target.size === 0) return message.response(undefined, "You need to mention someone to stare at them.");
+    if (message.member == target.first()) return message.reponse(undefined, "You want to stare at yourself ?");
     try {
       if (message.settings.socialSystem === "true") {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
