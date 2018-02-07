@@ -17,11 +17,6 @@ class Tiger extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a tiger...`);
-
-    if (message.settings.socialSystem === "true") {
-      await this.cmdPay(message, message.author.id, this.help.cost, { msg });
-    }
-
     const { body } = await get("https://dashboard.typicalbot.com/api/v1/tiger").set("Authentication", this.client.config.tbToken);
     await message.channel.buildEmbed()
       .setColor(message.guild.me.roles.highest.color || 5198940)

@@ -34,11 +34,6 @@ class Konachan extends Social {
     if (result.tags.length !== 0) {
       if (result.tags.split(" ").some(t => blacklist.includes(t.toLowerCase()))) return msg.edit(`${message.author} \`|📛|\` Blacklisted word found, aborting...`);
     }
-      
-    if (message.settings.socialSystem === "true") {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-    }
-
 
     await msg.edit({
       embed: {

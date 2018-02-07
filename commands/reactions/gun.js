@@ -12,9 +12,6 @@ class Gun extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    if (message.settings.socialSystem === "true") {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-    }
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** needs a bigger gun.`);
     const bang = await this.cmdWeeb("bang", "gif", message.channel.nsfw);
     await msg.edit({

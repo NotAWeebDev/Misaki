@@ -19,10 +19,6 @@ class Superpunch extends Social {
     const punched = await this.verifyUser(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id);
     const puncher = message.author;
 
-    if (message.settings.socialSystem === "true") {
-      await this.cmdPay(message, message.author.id, this.help.cost, { msg });
-    }
-
     await message.channel.send(new MessageAttachment(await this.client.idiotAPI.superPunch(puncher.displayAvatarURL({format:"png", size:128}), punched.displayAvatarURL({format:"png", size:256})), "superpunch.png"));
     await msg.delete();
   }

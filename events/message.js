@@ -1,4 +1,5 @@
 const monitor = require(`${process.cwd()}/monitors/monitor.js`);
+const Social = require("../base/Social.js");
 
 module.exports = class {
   constructor(client) {
@@ -62,12 +63,18 @@ module.exports = class {
     message.author.permLevel = level;
 
     message.flags = [];
-    while (args[0] &&args[0][0] === "-") {
+    while (args[0] && args[0][0] === "-") {
       message.flags.push(args.shift().slice(1));
     }
     
     this.client.logger.log(`${this.client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) ran command ${cmd.help.name}`, "cmd");
+    
     try {
+      if (cmd instanceof Social) {
+        let msg;
+        if (cmd.loadingText) msg = await message.channel.send(cmd.loadingText);
+        await cmd.cmdPay(message, message.author.id, cmd.help.cost, { msg });
+      }
       await cmd.run(message, args, level);
     } catch (error) {
       this.client.emit("commandError", message, error);

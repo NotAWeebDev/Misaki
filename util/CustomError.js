@@ -1,24 +1,28 @@
-class SocialError extends Error {
+class CustomError extends Error {
   constructor(message, messageToEdit) {
     super(message);
     this.msg = messageToEdit;
+  }
+}
+
+class SocialError extends CustomError {
+  constructor(...args) {
+    super(...args);
     this.name = this.constructor.name;
   }
 }
 
-class ParseError extends Error {
-  constructor(message, messageToEdit) {
-    super(message);
-    this.msg = messageToEdit;
+class ParseError extends CustomError {
+  constructor(...args) {
+    super(...args);
     this.name = this.constructor.name;
   }
 }
 
-class AnimeError extends Error {
-  constructor(message, messageToEdit) {
-    super(message);
-    this.msg = messageToEdit;
+class AnimeError extends CustomError {
+  constructor(...args) {
+    super(...args);
     this.name = this.constructor.name;
   }
 }
-module.exports = { SocialError, ParseError, AnimeError };
+module.exports = { SocialError, ParseError, AnimeError, CustomError };

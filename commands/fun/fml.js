@@ -19,9 +19,6 @@ class FML extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars 
     const reply = await message.channel.send("<a:typing:397490442469376001> **Searching** please wait a few moments.");
-    if (message.settings.socialSystem === "true") {
-      await this.cmdPay(message, message.author.id, this.help.cost, { msg: reply });
-    }
     const { text } = await request.get("http://www.fmylife.com/random");
     const root = HTMLParser.parse(text);
     const article = root.querySelector(".block a");

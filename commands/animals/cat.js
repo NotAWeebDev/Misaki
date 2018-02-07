@@ -17,11 +17,6 @@ class Cat extends Social {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
 
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a cat...`);
-
-    if (message.settings.socialSystem === "true") {
-      await this.cmdPay(message, message.author.id, this.help.cost, { msg });
-    }
-
     const { body } = await get("http://random.cat/meow");
     await msg.edit({embed:{ "title": "Click here if the image failed to load.", "url": body.file, "color":message.guild.me.roles.highest.color || 5198940, "image": {"url": body.file}}});
   }

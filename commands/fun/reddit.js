@@ -29,9 +29,6 @@ class Reddit extends Social {
       message.response("🔞", "Cannot display NSFW content in a SFW channel.");
       return;
     }
-    if (message.settings.socialSystem === "true") {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-    }
     await message.channel.send(`${meme.title} submitted by ${meme.author} in ${meme.subreddit_name_prefixed}\nUpvote Ratio ${meme.upvote_ratio}\n${meme.url}`);
     msg.delete();
   }

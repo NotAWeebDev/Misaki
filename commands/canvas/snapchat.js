@@ -21,10 +21,6 @@ class SnapChat extends Social {
 
     if (text.length < 1) return msg.edit("You must give the snap some text.");
     if (text.length > 28) return msg.edit("I can only handle a maximum of 28 characters.");
-    
-    if (message.settings.socialSystem === "true") {
-      await this.cmdPay(message, message.author.id, this.help.cost, { msg });
-    }
     if (message.mentions.users.first()) text = text.replace(/<@!?\d+>/, "").replace(/\n/g, " ").trim();
     await message.channel.send(new MessageAttachment(await this.client.idiotAPI.snapchat(text), "achievement.png"));
     await msg.delete();

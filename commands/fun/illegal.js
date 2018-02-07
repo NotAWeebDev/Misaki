@@ -31,9 +31,6 @@ class IsNowIllegal extends Social {
       message.response(undefined, "oops! Non-standard unicode characters are now illegal.");
       return;
     }
-    if (message.settings.socialSystem === "true") {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-    }
     const msg = await message.channel.send(`<a:typing:397490442469376001> **President Donald Trump** is making ${word} illegal...`);
     await post("https://is-now-illegal.firebaseio.com/queue/tasks.json").send({ task: "gif", word: word.toUpperCase() });
     await this.client.wait(5000);

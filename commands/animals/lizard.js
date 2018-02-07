@@ -18,9 +18,6 @@ class Lizard extends Social {
 
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is looking for a lizard...`);
 
-    if (message.settings.socialSystem === "true") {
-      await this.cmdPay(message, message.author.id, this.help.cost);
-    }
 
     const { body } = await get("https://nekos.life/api/lizard");
     await msg.edit({

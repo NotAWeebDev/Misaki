@@ -19,10 +19,6 @@ class Yoda extends Social {
       return;
     }
 
-    if (message.settings.socialSystem === "true") {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-    }
-
     const { text } = await get(`http://yoda-api.appspot.com/api/v1/yodish?text=${encodeURIComponent(speech.toLowerCase())}`);
     message.channel.send(JSON.parse(text).yodish);
   }

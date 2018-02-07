@@ -32,8 +32,6 @@ class Slots extends Social {
   
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     if (message.settings.socialSystem !== "true") return message.response(undefined, "The social system has been disabled.");
-  
-    if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
 
     const results = machine.play();
     const winnings = this.help.cost * results.totalPoints;

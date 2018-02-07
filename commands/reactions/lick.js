@@ -15,9 +15,6 @@ class Lick extends Social {
     const target = message.mentions.members;
     if (target.size === 0) return message.response(undefined, "You need to mention someone to lick them.");
     if (message.member == target.first()) return message.reponse(undefined, "You cannot lick yourself !");
-    if (message.settings.socialSystem === "true") {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-    }
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** wants to lick **${target.first().displayName}**...`);
     const lick = await this.cmdWeeb("lick", "gif", message.channel.nsfw);
     await msg.edit({

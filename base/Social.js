@@ -9,6 +9,7 @@ class Social extends Command {
     super(client, Object.assign(options, {
       guildOnly: true
     }));
+    this.loadingText = options.loadingText;
   } 
 
   async verifySocialUser(message, user, options = {}) {

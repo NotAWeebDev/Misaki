@@ -22,10 +22,6 @@ class Achievement extends Social {
     
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is getting an achievement...`);
 
-    if (message.settings.socialSystem === "true") {
-      await this.cmdPay(message, message.author.id, this.help.cost, { msg });
-    }
-
     if (message.mentions.users.first()) text = text.replace(/<@!?\d+>/, "").replace(/\n/g, " ").trim();
     await message.channel.send(new MessageAttachment(await this.client.idiotAPI.achievement((message.mentions.users.first() || message.author).displayAvatarURL({ format:"png", size:32 }), text), "achievement.png"));
     await msg.delete();

@@ -23,11 +23,6 @@ class E621 extends Social {
     const { body } = await get(`https://e621.net/post/index.json?limit=100&tags=${encodeURI(args)}`);
     const result = body.random();
     if (result.tags.split(" ").some(t => blacklist.includes(t.toLowerCase()))) return message.response("📛", "Blacklisted word found, aborting...");
-      
-    if (message.settings.socialSystem === "true") {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-    }
-
 
     await msg.edit({
       embed: {

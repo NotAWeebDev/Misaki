@@ -12,9 +12,6 @@ class Rem extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    if (message.settings.socialSystem === "true") {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-    }
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** wants rem...`);
     const rem = await this.cmdWeeb("rem");
     await msg.edit({

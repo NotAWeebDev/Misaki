@@ -14,9 +14,6 @@ class Oneliner extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    if (message.settings.socialSystem === "true") {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-    }
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is thinking of something funny...`);
     const { body } = await get("https://dashboard.typicalbot.com/api/v1/joke").set("Authentication", this.client.config.tbToken);
     msg.edit(body.data);

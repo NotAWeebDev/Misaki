@@ -17,11 +17,6 @@ class Boobs extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     if (!message.channel.nsfw) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
-
-    if (message.settings.socialSystem === "true") {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-    }
-
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is looking for boobies...`);
     const { body } = await get("http://api.oboobs.ru/boobs/0/1/random");
     await msg.edit({

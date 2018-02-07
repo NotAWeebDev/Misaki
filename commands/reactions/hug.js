@@ -15,9 +15,6 @@ class Hug extends Social {
     const target = message.mentions.members;
     if (target.size === 0) return message.response(undefined, "You need to mention someone to send them a hug.");
     if (message.member == target.first()) return message.reponse(undefined, "You cannot hug yourself !");
-    if (message.settings.socialSystem === "true") {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-    }
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** wants to give **${target.first().displayName}** a big hug...`);
     const hug = await this.cmdWeeb("hug", "gif", message.channel.nsfw);
     await msg.edit({
