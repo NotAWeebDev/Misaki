@@ -10,17 +10,21 @@ class Batslap extends Social {
       usage: "batslap <@mention | userid>",
       extended: "Mention another user to slap them as batman.",
       cost: 10,
-      cooldown: 10
+      cooldown: 10,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is stalking his prey..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars 
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is stalking his prey...`);
-    const slapped = await this.verifyUser(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id, { msg });
+  cmdVerify(message, args, loadingMessage) {
+    return this.verifyUser(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id, { msg: loadingMessage });
+  }
+
+  async run(message, args, level, loadingMessage) { 
+    const slapped = await this.verifyUser(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id, { msg: loadingMessage });
     const slapper = message.author;
 
     await message.channel.send(new MessageAttachment(await this.client.idiotAPI.batSlap(slapper.displayAvatarURL({format:"png", size:128}), slapped.displayAvatarURL({format:"png", size:256})), "batslap.png"));
-    await msg.delete();
+    await loadingMessage.delete();
   }
 }
 

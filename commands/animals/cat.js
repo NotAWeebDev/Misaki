@@ -10,15 +10,14 @@ class Cat extends Social {
       extended: "This command will return a beautiful cat.",
       cost: 5,
       cooldown: 10,
-      aliases: ["kitten"]
+      aliases: ["kitten"],
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting a cat..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a cat...`);
+  async run(message, args, level, loadingMessage) {
     const { body } = await get("http://random.cat/meow");
-    await msg.edit({embed:{ "title": "Click here if the image failed to load.", "url": body.file, "color":message.guild.me.roles.highest.color || 5198940, "image": {"url": body.file}}});
+    await loadingMessage.edit({embed:{ "title": "Click here if the image failed to load.", "url": body.file, "color":message.guild.me.roles.highest.color || 5198940, "image": {"url": body.file}}});
   }
 }
 

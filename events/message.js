@@ -70,14 +70,17 @@ module.exports = class {
     this.client.logger.log(`${this.client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) ran command ${cmd.help.name}`, "cmd");
     
     try {
+      let msg;
       if (cmd instanceof Social) {
-        let msg;
-        if (cmd.loadingText) msg = await message.channel.send(cmd.loadingText);
-        await cmd.cmdPay(message, message.author.id, cmd.help.cost, { msg });
+        if (cmd.loadingString) msg = await message.channel.send(cmd.loadingString.repalceAll("{{displayName}}", msg.member.displayName));
+        await cmd.cmdVerify(message, args, { msg });
+        if (message.settings.socialSystem === "true") {
+          await cmd.cmdPay(message, message.author.id, cmd.help.cost, { msg });
+        }
       }
-      await cmd.run(message, args, level);
+      await cmd.run(message, args, level, msg);
     } catch (error) {
-      this.client.emit("commandError", message, error);
+      this.client.emit("commandError", error, message);
     }
   }
 };

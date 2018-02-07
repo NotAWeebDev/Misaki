@@ -9,8 +9,8 @@ class Social extends Command {
     super(client, Object.assign(options, {
       guildOnly: true
     }));
-    this.loadingText = options.loadingText;
-  } 
+    this.loadingString = options.loadingString;
+  }
 
   async verifySocialUser(message, user, options = {}) {
     const check = await this.verifyUser(message, user, options);
@@ -87,6 +87,10 @@ class Social extends Command {
   async cmdWeeb(type, imgType, nsfw = false) {
     const { body } = await get(`https://api.weeb.sh/images/random?type=${type}&filetype=${imgType}&nsfw=${nsfw}`).set("Authorization", this.client.config.Wolken);
     return body.url;
+  }
+
+  cmdVerify() {
+    return Promise.resolve();
   }
 }
 

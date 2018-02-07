@@ -10,14 +10,14 @@ class Dog extends Social {
       extended: "This command will return a beautiful dog.",
       cost: 5,
       cooldown: 10,
-      aliases: ["doggo", "pupper"]
+      aliases: ["doggo", "pupper"],
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting a dog..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a dog...`);
+  async run(message, args, level, loadingMessage) {
     const { body } = await get(args[0] ? `https://dog.ceo/api/breed/${args[0]}/images/random` : "https://dog.ceo/api/breeds/image/random");
-    await msg.edit({embed:{ "title": "Click here if the image failed to load.", "url": body.message, "color":message.guild.me.roles.highest.color || 5198940, "image": {"url": body.message}}});
+    await loadingMessage.edit({embed:{ "title": "Click here if the image failed to load.", "url": body.message, "color":message.guild.me.roles.highest.color || 5198940, "image": {"url": body.message}}});
 
   }
 }

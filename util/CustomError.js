@@ -25,4 +25,11 @@ class AnimeError extends CustomError {
     this.name = this.constructor.name;
   }
 }
-module.exports = { SocialError, ParseError, AnimeError, CustomError };
+
+class UsageError extends CustomError {
+  constructor(...args) {
+    super(...args);
+    this.name = this.constructor.name;
+  }
+}
+module.exports = { SocialError, ParseError, AnimeError, CustomError, UsageError };

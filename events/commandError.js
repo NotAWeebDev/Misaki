@@ -5,7 +5,7 @@ module.exports = class {
     this.client = client;
   }
 
-  async run(message, error) {
+  async run(error, message) {
     if (error instanceof CustomError) {
       if (error.msg) {
         return error.msg.edit(error.message);

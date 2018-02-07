@@ -11,16 +11,13 @@ class Lizard extends Social {
       extended: "This command will return a beautiful lizard.",
       cost: 5,
       cooldown: 10,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is looking for a lizard..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is looking for a lizard...`);
-
-
+  async run(message, args, level, loadingMessage) {
     const { body } = await get("https://nekos.life/api/lizard");
-    await msg.edit({
+    await loadingMessage.edit({
       embed: {
         "title": "Click here if the image failed to load.",
         "url": body.url,

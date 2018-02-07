@@ -11,19 +11,19 @@ class Tiger extends Social {
       extended: "This command will return a beautiful tiger.",
       cost: 5,
       cooldown: 10,
-      aliases: ["tigger"]
+      aliases: ["tigger"],
+      loadingString: "<a:typing:397490442469376001> **${message.member.displayName}** is petting a tiger..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a tiger...`);
+  async run(message, args, level, loadingMessage) {
     const { body } = await get("https://dashboard.typicalbot.com/api/v1/tiger").set("Authentication", this.client.config.tbToken);
     await message.channel.buildEmbed()
       .setColor(message.guild.me.roles.highest.color || 5198940)
       .attachFiles([new MessageAttachment(new Buffer(body.data), "image.png")])
       .setImage("attachment://image.png")
       .send();
-    await msg.delete();
+    await loadingMessage.delete();
   }
 }
 
