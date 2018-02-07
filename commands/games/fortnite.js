@@ -39,7 +39,7 @@ class Go extends Social {
                     .setColor(message.guild.member(client.user.id).roles.highest.color || 0x00AE86);
             });
                 } catch (error) {
-                    message.channel.send(`Player Not Found or invalid form type, for correct usage do: \`${message.settings.prefix}${exports.help.usage}\`.`)
+                    message.channel.send(`Player Not Found or invalid form type, for correct usage do: \`${this.help.usage}\`.`)
                 }   
             message.channel.send(embed)
     }
