@@ -20,9 +20,8 @@ class Batslap extends Social {
   }
 
   async run(message, args, level, loadingMessage) { 
-    const slapped = await this.verifyUser(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id, { msg: loadingMessage });
+    const slapped = await this.cmdVerify(message, args, loadingMessage);
     const slapper = message.author;
-
     await message.channel.send(new MessageAttachment(await this.client.idiotAPI.batSlap(slapper.displayAvatarURL({format:"png", size:128}), slapped.displayAvatarURL({format:"png", size:256})), "batslap.png"));
     await loadingMessage.delete();
   }

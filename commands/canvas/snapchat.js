@@ -1,5 +1,6 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const { MessageAttachment } = require("discord.js");
+const { UsageError } = require("../../util/CustomError.js");
 
 class SnapChat extends Social {
   constructor(client) {
@@ -11,19 +12,23 @@ class SnapChat extends Social {
       extended: "This command uses canvas to generate a Snapchat styled image based on the well known statue meme.",
       cost: 10,
       cooldown: 10,
-      aliases: ["sc"]
+      aliases: ["sc"],
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is applying filters..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars 
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is applying filters...`);
-    let text = args.join(" ");
+  cmdVerify(message, args, loadingMessage) {
+    const text = args.join(" ");
+    if (text.length < 1) return Promise.reject(new UsageError("You must give the snap some text.", { msg: loadingMessage}));
+    if (text.length > 28) return Promise.reject(new UsageError("I can only handle a maximum of 28 characters.", { msg: loadingMessage}));
+    return Promise.resolve(text);
+  }
 
-    if (text.length < 1) return msg.edit("You must give the snap some text.");
-    if (text.length > 28) return msg.edit("I can only handle a maximum of 28 characters.");
+  async run(message, args, level, loadingMessage) { // eslint-disable-line no-unused-vars 
+    let text = await this.cmdVerify(message, args, loadingMessage);
     if (message.mentions.users.first()) text = text.replace(/<@!?\d+>/, "").replace(/\n/g, " ").trim();
     await message.channel.send(new MessageAttachment(await this.client.idiotAPI.snapchat(text), "achievement.png"));
-    await msg.delete();
+    await loadingMessage.delete();
   }
 }
 

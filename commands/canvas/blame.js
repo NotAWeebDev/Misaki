@@ -10,15 +10,19 @@ class Blame extends Social {
       category: "Canvas",
       extended: "Blame someone else via this command.",
       cost: 5,
-      cooldown: 5
+      cooldown: 5,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is getting the blame..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${person.displayName}** is getting the blame...`);
-    const person = await this.verifyMember(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id, { msg });
-    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.blame((message.mentions.members.first() || message.member).displayName),"blame.png"));
-    await msg.delete();
+  cmdVerify(message, args, loadingMessage) {
+    return this.verifyMember(message, message.mentions.member.size === 1 ? message.mentions.member.first().id : message.member.id, { msg: loadingMessage });
+  }
+
+  async run(message, args, level, loadingMessage) {
+    const person = await this.cmdVerify(message, args, loadingMessage);
+    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.blame(person.displayName),"blame.png"));
+    await loadingMessage.delete();
   }
 
 }

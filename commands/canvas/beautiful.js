@@ -12,7 +12,7 @@ class Beautiful extends Social {
       cost: 10,
       cooldown: 10,
       aliases: ["painting"],
-      loadingString: "<a:typing:397490442469376001> **${{displayName}}}** is admiring the painting..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is admiring the painting..."
     });
   }
 
@@ -21,8 +21,7 @@ class Beautiful extends Social {
   }
 
   async run(message, args, level, loadingMessage) {// eslint-disable-line no-unused-vars
-    const beautiful = await this.verifyUser(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id, { msg: loadingMessage });
-
+    const beautiful = await this.cmdVerify(message, args, loadingMessage);
     await message.channel.send(new MessageAttachment(await this.client.idiotAPI.beautiful(beautiful.displayAvatarURL({format:"png", size:256})), "beautiful.png"));
     await loadingMessage.delete();
   }

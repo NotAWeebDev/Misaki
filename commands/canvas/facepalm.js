@@ -10,14 +10,14 @@ class Facepalm extends Social {
       usage: "facepalm",
       extended: "Mention another user to slap them as batman.",
       cost: 10,
-      cooldown: 10
+      cooldown: 10,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is just lost for words..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is just lost for words...`);
+  async run(message, args, level, loadingMessage) {
     await message.channel.send(new MessageAttachment(await this.client.idiotAPI.facepalm(message.author.displayAvatarURL({format:"png", size:256})), "facepalm.png"));
-    await msg.delete();
+    await loadingMessage.delete();
   }
 }
 

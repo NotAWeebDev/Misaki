@@ -10,17 +10,21 @@ class FanSlap extends Social {
       usage: "fanslap <@mention | userid>",
       extended: "Mention another user to slap them with a paper fan.",
       cost: 10,
-      cooldown: 10
+      cooldown: 10,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** thinks someone needs a smacking..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars 
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** thinks someone needs a smacking...`);
-    const slapped = await this.verifyUser(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id, { msg });
+  cmdVerify(message, args, loadingMessage) {
+    return this.verifyMember(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id, { msg: loadingMessage });
+  }
+
+  async run(message, args, level, loadingMessage) {
+    const slapped = await this.cmdVerify(message, args, loadingMessage);
     const slapper = message.author;
 
     await message.channel.send(new MessageAttachment(await this.client.idiotAPI.fanSlap(slapper.displayAvatarURL({format:"png", size:64}), slapped.displayAvatarURL({format:"png", size:64})), "fanslap.png"));
-    await msg.delete();
+    await loadingMessage.delete();
   }
 }
 
