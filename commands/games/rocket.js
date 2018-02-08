@@ -35,7 +35,7 @@ class RocketLeague extends Command {
                 embed.addField("Shots", player.stats.shots, true)
                 embed.addField("Assists", player.stats.assists, true)
                 embed.addBlankField()
-                embed.setColor(message.guild.member(client.user.id).highestRole.color || 0x00AE86);
+                embed.setColor(message.guild.member(client.user.id).roles.highest.color || 0x00AE86);
                 message.channel.send(embed)
             });
         } catch (error) {
