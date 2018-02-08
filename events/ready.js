@@ -1,10 +1,12 @@
 const fs = require("fs");
+const { get } = require("snekfetch");
 module.exports = class {
   constructor(client) {
     this.client = client;
   }
 
   async run() {
+    const supportGuild = this.client.guilds.get("396331425621868554");
     try {
       const { id: rebootMsgID , channel: rebootMsgChan, user: rebootMsgUserID} = JSON.parse(fs.readFileSync(`${process.cwd()}/assets/json/reboot.json`, "utf8"));
       const u = await this.client.users.fetch(rebootMsgUserID);
@@ -38,5 +40,18 @@ module.exports = class {
         this.client.reminders.delete(`${reminder.id}-${reminder.reminderTimestamp}`);
       }); 
     }, 60000); 
+
+    // Upvote Reward Stuff
+    setInterval(async () => {
+      const { body } = await get("https://discordbots.org/api/bots/396323622953680910/votes?onlyids=true").set("Authorization", this.client.config.dblToken);
+      this.client.upvoters.set(body);
+      for (const id of body) {
+        if (supportGuild.members.has(id) && !supportGuild.members.get(id).roles.has("410531245504593920")) {
+          supportGuild.members.get(id).roles.add("410531245504593920");
+          console.log(`Added role to ${supportGuild.members.get(id).user.username}`);
+        }
+      }
+    }, 60000);
+
   }
 };
