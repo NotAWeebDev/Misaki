@@ -115,7 +115,7 @@ class Social extends Command {
   }
 
   async cmdWeeb(type, imgType, nsfw = false) {
-    const { body } = await snekfetch.get(`https://api.weeb.sh/images/random?type=${type}&filetype=${imgType}&nsfw=${nsfw}`).set("Authorization", this.client.config.Wolken);
+    const { body } = await snekfetch.get(`https://api.weeb.sh/images/random?type=${type}&filetype=${imgType}&nsfw=${nsfw}`).set("Authorization", this.client.config.apiTokens.Wolken);
     return body.url;
   }
 }

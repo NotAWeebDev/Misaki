@@ -12,8 +12,7 @@ class Trivia extends Social {
       usage: "trivia",
       extended: "Ready to wrack your brain?",
       cooldown: 10,
-      aliases: ["quiz"],
-      botPerms: ["EMBED_LINKS"]
+      aliases: ["quiz"]
     });
   }
 

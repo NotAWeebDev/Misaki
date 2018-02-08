@@ -43,7 +43,7 @@ module.exports = class {
 
     // Upvote Reward Stuff
     setInterval(async () => {
-      const { body } = await get("https://discordbots.org/api/bots/396323622953680910/votes?onlyids=true").set("Authorization", this.client.config.dblToken);
+      const { body } = await get("https://discordbots.org/api/bots/396323622953680910/votes?onlyids=true").set("Authorization", this.client.config.apiTokens.dblToken);
       this.client.upvoters.set(body);
       for (const id of body) {
         if (supportGuild.members.has(id) && !supportGuild.members.get(id).roles.has("410531245504593920")) {
