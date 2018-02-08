@@ -48,7 +48,7 @@ class Trivia extends Social {
       message.member.givePoints(10); 
       return message.reply("that is correct! You won ₲10"); 
     }
-    return message.reply("that is incorrect!"); // Throw if choice !== correct answer
+    return message.reply(`That is Incorrect ! You Chose **${choice}** but The Correct Answer is, **${h.decode(quiz.correct_answer)}**`); // Throw if choice !== correct answer
   }
 }
 
