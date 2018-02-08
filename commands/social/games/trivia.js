@@ -11,6 +11,7 @@ class Trivia extends Social {
       category: "Fun",
       usage: "trivia",
       extended: "Ready to wrack your brain?",
+      cost: 5,
       cooldown: 10,
       aliases: ["quiz"]
     });
@@ -40,15 +41,15 @@ class Trivia extends Social {
 
     const question = await this.client.awaitReply(message, null, m => m.author.id === message.author.id, 60000, {embed:emb}); // Ask the question.
 
-    if (!question) return message.reply("you took too long to respond."); // Check against time it took. 1 Minute by default.
+    if (!question) return message.reply("I'm sorry but you took too long to respond."); // Check against time it took. 1 Minute by default.
     const choice = randomChoices[["a", "b", "c", "d"].indexOf(question.toLowerCase())]; // Assign correct value to "choice" from randomChoices.
-    if (!choice) return message.reply("that isn't a valid choice.."); // Check against incorrect values, correct is A, B, C and D.
+    if (!choice) return message.reply("That's not even on the list..."); // Check against incorrect values, correct is A, B, C and D.
 
     if (choice === h.decode(quiz.correct_answer)) { 
-      message.member.givePoints(10); 
-      return message.reply("that is correct! You won ₲10"); 
+      message.member.givePoints(this.help.cost * 3); 
+      return message.reply(`That is correct! You won ₲${this.help.cost * 3}`); 
     }
-    return message.reply("that is incorrect!"); // Throw if choice !== correct answer
+    return message.reply(`The correct answer was: **${h.decode(quiz.correct_answer)}**, but you selected **${choice}**.`); // Throw if choice !== correct answer
   }
 }
 

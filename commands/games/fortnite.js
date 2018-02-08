@@ -10,7 +10,8 @@ class Fortnite extends Command {
       description: "Get's a user's fortnite profile.",
       category: "Games",
       usage: "fortnite <pc | xbl | psn> <username>",
-      cooldown: 10
+      cooldown: 10,
+      aliases: ["fort", "nite", "fn"]
     });
   }
 
