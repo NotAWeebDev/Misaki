@@ -39,7 +39,7 @@
     "ms": "^2.1.1",
     "slot-machine": "^2.1.0",
     "snekfetch": "^3.6.1", 
-    "game-data": "^2.1.1"
+    "rocketleague": "^1.0.2"
   },
   "devDependencies": {}
 }
