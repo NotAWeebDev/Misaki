@@ -1,46 +1,48 @@
+const rl = require("rocketleague");
+const rocket = new rl.Client("API FROM WEBSITE ->"); //https://developers.rocketleaguestats.com
+const { MessageEmbed } = require("discord.js")
 const Command = require(`${process.cwd()}/base/Command.js`);
-const { MessageEmbed } = require("discord.js");
-const core = require("game-data");
-const rocket = new core.Client({
-    steam: "STEAM-API-KEY", // https://steamcommunity.com/dev/apikey
-    rocket: "ROCKET-API-KEY" // https://developers.rocketleaguestats.com
-});
 
-class RocketLeage extends Command {
+class RocketLeague extends Command {
     constructor(client) {
-      super(client, {
-        name: "rocket",
-        description: "Get's a user's rocket leage profile.",
-        category: "Games",
-        usage: "rocket [pc/xbl/psn] [username]",
-        extended: "None.",
-        cooldown: 10
-      });
-    }
-  
+        super(client, {
+            name: "rocket",
+            description: "Get's a user's rocket league profile.",
+            category: "Games",
+            usage: "rocket [pc/xbl/psn] [username]",
+            extended: "None.",
+            cooldown: 10
+        });
+    };
+
     async run(message, args, level) {
-    let gametype;
-    let embed;
+        if (!args[0] || !args[1]) return message.response("❗", `Invalid Usage, please do:\`${this.help.usage}\``);
+        if (args[0] === "pc" || args[0] === "steam") platform = "steam";
+        if (args[0] === "ps4" || args[0] === "psn") platform = "psn";
+        if (args[0] === "xbl" || args[0] === "xbox") platform = "xbl";
 
-    if (!args[0] || !args[1]) return message.response("❗", `Invalid Usage, please do:\`${this.help.usage}\``);
-    if (args[0] === "pc" || args[0] === "steam") gametype = "1";
-    if (args[0] === "ps4" || args[0] === "psn") gametype = "2";
-    if (args[0] === "xbl" || args[0] === "xbox") gametype = "3";
+        try {
+            rocket.getPlayer(args.splice(1).join(" "), platform).then(player => {
+                const embed = new MessageEmbed()
+                .setImage(player.signatureUrl)
+                if(player.avatar) embed.setThumbnail(player.avatar)
+                embed.setTitle(`${player.displayName}, on ${player.platform.name}`)
+                embed.setURL(player.profileUrl)
+                embed.addField("Wins", player.stats.wins, true)
+                embed.addField("Goals", player.stats.goals, true)
+                embed.addField("MVPs", player.stats.mvps, true)
+                embed.addField("Saves", player.stats.saves, true)
+                embed.addField("Shots", player.stats.shots, true)
+                embed.addField("Assists", player.stats.assists, true)
+                embed.addBlankField()
+                embed.setColor(message.guild.member(client.user.id).highestRole.color || 0x00AE86);
+                message.channel.send(embed)
+            });
+        } catch (error) {
+            message.response("❗", `Player not found or Invalid Usage, please do:\`${this.help.usage}\``);
+        };
+    };
+};
 
-    if (args[0] !== "pc" || args[0] !== "ps4" || args[0] !== "xbl") return message.response("❗", `Invalid Usage, please do:\`${this.help.usage}\``); 
+module.exports = RocketLeague;
 
-        rocket.getRocketLeagueProfile(args.splice(1).join(" "), gametype).then(async data => {
-            if (!data.name.length) return message.response("❗", `Invalid Usage, please do:\`${this.help.usage}\``); 
-            const embed = new MessageEmbed()
-            .setTitle(`${data.name}, on ${data.platform}`)
-            .addField("Wins", data.wins, true)
-            .addField("Goals", data.goals, true)
-            .addField("MVPs", data.mvps, true)
-            .addField("Saves", data.saves, true)
-            .addField("Shots", data.shots, true)
-            .addField("Assists", data.assists, true)
-            .setColor(message.guild.member(client.user.id).highestRole.color || 0x00AE86);
-            await message.channel.send(embed)
-            });    
-    }
-}
