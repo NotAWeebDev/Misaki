@@ -7,7 +7,6 @@
     "test": "eslint .",
     "lint": "eslint --fix .",
     "start": "node index.js",
-    "prepublish": "node util/setup.js"
   },
   "engines": {
     "node": ">=8"
