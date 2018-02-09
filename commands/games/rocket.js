@@ -9,7 +9,7 @@ class RocketLeague extends Command {
             name: "rocket",
             description: "Get's a user's rocket league profile.",
             category: "Games",
-            usage: "rocket [pc/xbl/psn] [username]",
+            usage: "rocket [pc|xbl|psn] [username]",
             extended: "None.",
             cooldown: 10
         });
