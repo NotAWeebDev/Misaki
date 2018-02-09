@@ -22,7 +22,7 @@ class RocketLeague extends Command {
         if (args[0] === "xbl" || args[0] === "xbox") platform = "xbl";
 
         try {
-            await rocket.getPlayer(args.splice(1).join(" "), platform).then((player) => {
+            let player = await rocket.getPlayer(args.splice(1).join(" "), platform)
                 const embed = new MessageEmbed()
                 .setImage(player.signatureUrl)
                 .setTitle(`${player.displayName}, on ${player.platform.name}`)
@@ -36,7 +36,6 @@ class RocketLeague extends Command {
                 .setColor(message.guild.me.roles.highest.color || 0x00AE86)
                 if(player.avatar) embed.setThumbnail(player.avatar);
                 message.channel.send(embed);
-            });
         } catch (error) {
             message.response("❗", `Player not found or Invalid Usage, please do:\`${this.help.usage}\``);
         };
