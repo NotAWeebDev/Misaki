@@ -16,7 +16,7 @@ class RocketLeague extends Command {
     };
 
     async run(message, args, level) {
-        if (!args[0].length || !args[1].length) return message.response("❗", `Invalid Usage, please do:\`${this.help.usage}\``);
+        if (!args.length || !args[1].length) return message.response("❗", `Invalid Usage, please do:\`${this.help.usage}\``);
         if (args[0] === "pc" || args[0] === "steam") platform = "steam";
         if (args[0] === "ps4" || args[0] === "psn") platform = "psn";
         if (args[0] === "xbl" || args[0] === "xbox") platform = "xbl";
