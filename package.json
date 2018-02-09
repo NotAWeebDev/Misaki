@@ -6,7 +6,7 @@
   "scripts": {
     "test": "eslint .",
     "lint": "eslint --fix .",
-    "start": "node index.js",
+    "start": "node index.js"
   },
   "engines": {
     "node": ">=8"
