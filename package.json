@@ -41,5 +41,7 @@
     "slot-machine": "^2.1.0",
     "snekfetch": "^3.6.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^4.17.0"
+  }
 }
