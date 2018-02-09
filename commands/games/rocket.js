@@ -16,27 +16,26 @@ class RocketLeague extends Command {
     };
 
     async run(message, args, level) {
-        if (!args[0] || !args[1]) return message.response("❗", `Invalid Usage, please do:\`${this.help.usage}\``);
+        if (!args[0].length || !args[1].length) return message.response("❗", `Invalid Usage, please do:\`${this.help.usage}\``);
         if (args[0] === "pc" || args[0] === "steam") platform = "steam";
         if (args[0] === "ps4" || args[0] === "psn") platform = "psn";
         if (args[0] === "xbl" || args[0] === "xbox") platform = "xbl";
 
         try {
-            rocket.getPlayer(args.splice(1).join(" "), platform).then(player => {
+            await rocket.getPlayer(args.splice(1).join(" "), platform).then((player) => {
                 const embed = new MessageEmbed()
                 .setImage(player.signatureUrl)
-                if(player.avatar) embed.setThumbnail(player.avatar)
-                embed.setTitle(`${player.displayName}, on ${player.platform.name}`)
-                embed.setURL(player.profileUrl)
-                embed.addField("Wins", player.stats.wins, true)
-                embed.addField("Goals", player.stats.goals, true)
-                embed.addField("MVPs", player.stats.mvps, true)
-                embed.addField("Saves", player.stats.saves, true)
-                embed.addField("Shots", player.stats.shots, true)
-                embed.addField("Assists", player.stats.assists, true)
-                embed.addBlankField()
-                embed.setColor(message.guild.member(client.user.id).roles.highest.color || 0x00AE86);
-                message.channel.send(embed)
+                .setTitle(`${player.displayName}, on ${player.platform.name}`)
+                .setURL(player.profileUrl)
+                .addField("Wins", player.stats.wins, true)
+                .addField("Goals", player.stats.goals, true)
+                .addField("MVPs", player.stats.mvps, true)
+                .addField("Saves", player.stats.saves, true)
+                .addField("Shots", player.stats.shots, true)
+                .addField("Assists", player.stats.assists, true)
+                .setColor(message.guild.me.roles.highest.color || 0x00AE86)
+                if(player.avatar) embed.setThumbnail(player.avatar);
+                message.channel.send(embed);
             });
         } catch (error) {
             message.response("❗", `Player not found or Invalid Usage, please do:\`${this.help.usage}\``);
