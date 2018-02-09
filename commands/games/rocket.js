@@ -22,7 +22,7 @@ class RocketLeague extends Command {
         if (args[0] === "xbl" || args[0] === "xbox") platform = "xbl";
 
         try {
-            let player = await rocket.getPlayer(args.splice(1).join(" "), platform)
+            const player = await rocket.getPlayer(args.splice(1).join(" "), platform)
                 const embed = new MessageEmbed()
                 .setImage(player.signatureUrl)
                 .setTitle(`${player.displayName}, on ${player.platform.name}`)
