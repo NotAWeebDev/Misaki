@@ -21,8 +21,9 @@ class Overwatch extends Command {
     if (!platformArray.includes(platform)) return message.response(undefined, "Ba....Baka! Invalid Platform. Valid Platforms are pc, xbl or psn");
     if (platform === "xbox") platform = "xbl";
     player = player.replace(/#/g , "-");
-    const data = await owjs.getAll(platform, location, player).catch(() => {
-      return message.response("❗", "Sorry, But Something Went Wrong, please try again later.")
+    const data = await owjs.getAll(platform, location, player).catch(e => {
+      console.log(e.stack);
+      return message.response("❗", "Sorry, But Something Went Wrong, please try again later.");
     });
     const embed = new MessageEmbed()
       .setTitle(`${data.profile.nick} Lvl ${data.profile.level} on ${platform}`)
