@@ -13,7 +13,7 @@ class Overwatch extends Command {
   }
 
   async run(message, [platform, location, player], level) { // eslint-disable-line no-unused-vars
-    if (!player || !location || !platform ) return message.resonse(undefined, `Ba....Baka! Invalid Usage, please do:\`${this.help.usage}\``);
+    if (!player || !location || !platform) return message.resonse(undefined, `Ba....Baka! Invalid Usage, please do:\`${this.help.usage}\``);
     player = player.replace(/#/g , "-");
     const data = await owjs.getAll(platform, location, player);
     const embed = new MessageEmbed()
