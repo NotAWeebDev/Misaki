@@ -1,6 +1,7 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 const owjs = require("overwatch-js");
 const { MessageEmbed } = require("discord.js");
+
 class Overwatch extends Command {
   constructor(client) {
     super(client, {
@@ -29,7 +30,6 @@ class Overwatch extends Command {
       .addField("Quickplay Wins ", data.quickplay.global.games_won, true)
       .addField("Quickplay Deaths", data.quickplay.global.deaths, true)
       .setColor(message.member.roles.highest.color || 0x00AE86);
-
     return message.channel.send({ embed });
   }
 }
