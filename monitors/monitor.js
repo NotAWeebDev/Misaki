@@ -11,7 +11,7 @@ module.exports = class {
   }
 
   static givePoints(client, message, level) { // eslint-disable-line no-unused-vars
-    if (message.channel.type !== "text") return;
+    if (!message.guild || !message.member) return;
     const settings = message.settings;
     if (message.content.startsWith(settings.prefix)) return;
     const score = message.member.score;
