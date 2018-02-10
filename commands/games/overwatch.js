@@ -10,7 +10,8 @@ class Overwatch extends Command {
       name: "overwatch",
       description: "Find Your Ow Player Stats",
       usage: "overwatch <pc|xbl|psn> [us|eu|kr|cn|global] <full-battle-tag|gamertag>",
-      aliases: ["ow"]
+      aliases: ["ow"],
+      cooldown: 10
     });
   }
 
