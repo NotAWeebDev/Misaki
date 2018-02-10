@@ -1,17 +1,18 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
-var owjs = require("overwatch-js");
+const Command = require(`${process.cwd()}/base/Command.js`);
+const owjs = require("overwatch-js");
 const { MessageEmbed } = require("discord.js");
-class Overwatch extends Social {
+class Overwatch extends Command {
   constructor(client) {
     super(client, {
       name: "overwatch",
       description: "Find Your Ow Player Stats",
-      usage: "OW <pc|xbl|psn> [us|eu|kr|cn|global] <full-battle-tag|gamertag>",
+      usage: "overwatch <pc|xbl|psn> [us|eu|kr|cn|global] <full-battle-tag|gamertag>",
       aliases: ["ow"]
     });
   }
 
   async run(message, [platform, location, player], level) { // eslint-disable-line no-unused-vars
+    if (!player || !location || !platform ) return message.resonse(undefined, `Ba....Baka! Invalid Usage, please do:\`${this.help.usage}\``);
     player = player.replace(/#/g , "-");
     const data = await owjs.getAll(platform, location, player);
     const embed = new MessageEmbed()
@@ -29,7 +30,7 @@ class Overwatch extends Social {
       .addField("Quickplay Deaths", data.quickplay.global.deaths, true)
       .setColor(message.member.roles.highest.color || 0x00AE86);
 
-    message.channel.send({ embed });
+    return message.channel.send({ embed });
   }
 }
 
