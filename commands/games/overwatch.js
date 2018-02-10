@@ -12,8 +12,8 @@ class Overwatch extends Social {
   }
 
   async run(message, [platform, location, player], level) { // eslint-disable-line no-unused-vars
-    const playerTag = player.replace(/#/g , "-");
-    const data = await owjs.getAll(platform, location, playerTag);
+    player = player.replace(/#/g , "-");
+    const data = await owjs.getAll(platform, location, player);
     const embed = new MessageEmbed()
       .setTitle(`${data.profile.nick} Lvl ${data.profile.level} on ${platform}`)
       .setURL(data.profile.url)
@@ -29,7 +29,7 @@ class Overwatch extends Social {
       .addField("Quickplay Deaths", data.quickplay.global.deaths, true)
       .setColor(message.member.roles.highest.color || 0x00AE86);
 
-    message.channel.send( { embed } );
+    message.channel.send({ embed });
   }
 }
 
