@@ -1,4 +1,5 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
+const { version} = require(`${process.cwd()}/package.json`);
 const moment = require("moment");
 const snekfetch = require("snekfetch");
 
@@ -116,7 +117,9 @@ class Social extends Command {
   }
 
   async cmdWeeb(type, imgType, nsfw = false) {
-    const { body } = await snekfetch.get(`https://api.weeb.sh/images/random?type=${type}&filetype=${imgType}&nsfw=${nsfw}`).set("Authorization", this.client.config.apiTokens.Wolken);
+    const { body } = await snekfetch.get(`https://api.weeb.sh/images/random?type=${type}&filetype=${imgType}&nsfw=${nsfw}`)
+      .set("Authorization", this.client.config.apiTokens.Wolken)
+      .set("User-Agent", `Misaki/${version}/${this.client.user.id === "396323622953680910" ? "Production" : "Development"}`);
     return body.url;
   }
 }
