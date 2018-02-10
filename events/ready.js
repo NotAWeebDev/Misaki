@@ -1,27 +1,3 @@
-function arr_diff(a1, a2) {
-
-  const a = [], diff = [];
-
-  for (let i = 0; i < a1.length; i++) {
-    a[a1[i]] = true;
-  }
-
-  for (let i = 0; i < a2.length; i++) {
-    if (a[a2[i]]) {
-      delete a[a2[i]];
-    } else {
-      a[a2[i]] = true;
-    }
-  }
-
-  for (const k in a) {
-    diff.push(k);
-  }
-
-  return diff;
-}
-
-
 const fs = require("fs");
 const { get } = require("snekfetch");
 module.exports = class {
@@ -73,7 +49,7 @@ module.exports = class {
         }
       }
       if (oldUpvoters.length === 0) return;
-      for (const id of arr_diff(oldUpvoters, this.client.upvoters)) {
+      for (const id of this.client.arrDiff(oldUpvoters, this.client.upvoters)) {
         if (supportGuild.members.has(id) && supportGuild.members.get(id).roles.has("410531245504593920")) {
           supportGuild.members.get(id).roles.remove("410531245504593920");
           console.log(`Removed the upvoter role from ${supportGuild.members.get(id).user.tag}`);
