@@ -19,11 +19,6 @@ module.exports = class {
     }
     await this.client.wait(1000);
 
-    this.client.appInfo = await this.client.fetchApplication();
-    setInterval( async () => {
-      this.client.appInfo = await this.client.fetchApplication();
-    }, 60000);
-
     if (!this.client.settings.has("default")) {
       if (!this.client.config.defaultSettings) throw new Error("defaultSettings not preset in config.js or settings database. Bot cannot load.");
       this.client.settings.set("default", this.client.config.defaultSettings);
