@@ -29,7 +29,8 @@ class Pokemon extends Command {
       const embed = new MessageEmbed()
         .setTitle("You have 15 seconds to guess ! Who's that Pokémon !")
         .setAuthor(message.member.displayName, message.author.displayAvatarURL())
-        .setImage(Image);
+        .setImage(Image)
+        .setColor(message.guild.me.roles.highest.color || 0x00AE86);
       
       const msg = await message.channel.send({ embed });
       const filter = m => m.author.id === message.author.id;
