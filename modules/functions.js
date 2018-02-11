@@ -2,6 +2,17 @@ const moment = require("moment");
 require("moment-duration-format");
 module.exports = (client) => {
 
+  client.arrDiff = function(a, b) {
+    if (a === b) return [];
+  
+    for (const item of a) {
+      const ind = b.indexOf(item);
+      if (ind !== -1) b.splice(ind, 1);
+    }
+  
+    return b;
+  };
+
   client.ratelimit = async (message, level, key, duration) => {
     if (level > 2) return false;
     

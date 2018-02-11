@@ -52,7 +52,8 @@ class Command {
     try {
       const match = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
       if (!match) {
-        return message.response("❗", "Invalid user id.");
+        message.response("❗", "Invalid user id.");
+        return false;
       }
       const id = match[1];
       const check = await this.client.users.fetch(id);
