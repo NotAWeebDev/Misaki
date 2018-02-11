@@ -1,7 +1,8 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const request = require("snekfetch");
 const HTMLParser = require("fast-html-parser");
-const {MessageEmbed} = require("discord.js");
+const { MessageEmbed } = require("discord.js");
+const { APIError } = require("../../util/CustomError.js");
 
 class FML extends Social {
   constructor(client) {
@@ -13,12 +14,12 @@ class FML extends Social {
       extended: "This command grabs a random \"fuck my life\" story from fmylife.com and displays it in an organised embed.",
       cost: 10,
       cooldown: 10,
-      aliases: ["fuckmylife", "fuckme"]
+      aliases: ["fuckmylife", "fuckme"],
+      loadingString: "<a:typing:397490442469376001> **Searching** please wait a few moments."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars 
-    const reply = await message.channel.send("<a:typing:397490442469376001> **Searching** please wait a few moments.");
+  async run(message, args, level, loadingMassage) {
     const { text } = await request.get("http://www.fmylife.com/random");
     const root = HTMLParser.parse(text);
     const article = root.querySelector(".block a");
@@ -32,10 +33,8 @@ class FML extends Social {
       .setDescription(`_${article.childNodes[0].text}\n\n_`)
       .addField("I agree, your life sucks", updoot.childNodes[0].text, true)
       .addField("You deserved it:", downdoot.childNodes[0].text, true);
-    if (article.childNodes[0].text.length < 5 ) {
-      return reply.edit("Today, something went wrong, so you'll have to try again in a few moments. FML");
-    }
-    reply.edit({embed});
+    if (article.childNodes[0].text.length < 5 ) throw new APIError("Today, something went wrong, so you'll have to try again in a few moments. FML", loadingMassage);
+    loadingMassage.edit({embed});
   }
 }
 

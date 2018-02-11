@@ -8,14 +8,14 @@ class Potato extends Social {
       usage: "potato",
       category: "Fun",
       cost: 5,
-      aliases: ["spud"]
+      aliases: ["spud"],
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is a potato...`"
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is a potato...`);
+  async run(message, args, level, loadingMessage) { // eslint-disable-line no-unused-vars
     const potato = await this.cmdWeeb("potato");
-    await msg.edit({
+    await loadingMessage.edit({
       embed: {
         "title": "Click here if the image failed to load.",
         "url": `https://cdn.ram.moe/${potato}`,

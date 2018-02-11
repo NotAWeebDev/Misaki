@@ -9,16 +9,15 @@ class Oneliner extends Social {
       usage: "joke",
       category: "Fun",
       cost: 5,
-      aliases: ["1l", "oneliner"]
+      aliases: ["1l", "oneliner"],
+      loadingString: "<a:typing:397490442469376001> **${{displayName}}** is thinking of something funny..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is thinking of something funny...`);
+  async run(message, args, level, loadingMessage) {
     const { body } = await get("https://dashboard.typicalbot.com/api/v1/joke").set("Authentication", this.client.config.tbToken);
-    msg.edit(body.data);
+    loadingMessage.edit(body.data);
   }
-
 }
 
 module.exports = Oneliner;

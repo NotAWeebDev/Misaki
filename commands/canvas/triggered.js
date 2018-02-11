@@ -11,16 +11,19 @@ class Triggered extends Social {
       extended: "Ever get so pissed off you explode? You got triggered.",
       cost: 10,
       cooldown: 20,
-      aliases: ["trigger"]
+      aliases: ["trigger"],
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is getting triggered..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars 
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is getting triggered...`);
-    const target = await this.verifyUser(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id);
-    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.triggered(target.displayAvatarURL({ format:"png", size:512 })), "triggered.gif"));
-    await msg.delete();
+  cmdVerify(message, args, loadingMessage) {
+    return this.verifyUser(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id, { msg: loadingMessage });
+  }
 
+  async run(message, args, level, loadingMessage) { 
+    const target = await this.cmdVerify(message, args, loadingMessage);
+    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.triggered(target.displayAvatarURL({ format:"png", size:512 })), "triggered.gif"));
+    await loadingMessage.delete();
   }
 }
 module.exports = Triggered;

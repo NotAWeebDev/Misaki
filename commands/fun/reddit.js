@@ -9,14 +9,14 @@ class Reddit extends Social {
       usage: "reddit [-new|-random|-hot|-top] [subreddit]",
       category: "Fun",
       cost: 10,
-      cooldown: 25      
+      cooldown: 25,
+      loadingString: "Fetching from reddit..."  
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
+  async run(message, args, level, loadingMessage) { // eslint-disable-line no-unused-vars
     const subreddit = args.join(" ") || "random";
     const subRedCat = message.flags[0] || "random";
-    const msg = await message.channel.send("Fetching from reddit...");
     const { body } = await get(`https://www.reddit.com/r/${subreddit}/${subRedCat}.json`);
     let meme;
     if (body[0]) {
@@ -25,12 +25,9 @@ class Reddit extends Social {
       meme = body.data.children[Math.floor(Math.random() * body.data.children.length)].data;
     }
 
-    if (!message.channel.nsfw && meme.over_18) {
-      message.response("🔞", "Cannot display NSFW content in a SFW channel.");
-      return;
-    }
+    if (!message.channel.nsfw && meme.over_18) return loadingMessage.edit("🔞 Cannot display NSFW content in a SFW channel.");
     await message.channel.send(`${meme.title} submitted by ${meme.author} in ${meme.subreddit_name_prefixed}\nUpvote Ratio ${meme.upvote_ratio}\n${meme.url}`);
-    msg.delete();
+    loadingMessage.delete();
   }
 }
 

@@ -1,5 +1,6 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const { MessageAttachment } = require("discord.js");
+const { UsageError } = require("../../util/CustomError.js");
 
 class TheSearch extends Social {
   constructor(client) {
@@ -10,16 +11,21 @@ class TheSearch extends Social {
       usage: "thesearch <text>",
       cost: 10,
       cooldown: 10,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is searching..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is searching...`); 
-    let text = args.join(" ");
-    if (text.length < 1) return msg.edit("You must give some text.");
+  cmdVerify(message, args, loadingMessage) {
+    const text = args.join(" ");
+    if (text.length < 1) return Promise.reject(new UsageError("You must give some text.", { msg: loadingMessage}));
+    return Promise.resolve(text);
+  }
+
+  async run(message, args, level, loadingMessage) { // eslint-disable-line no-unused-vars
+    let text = await this.cmdVerify(message, args, loadingMessage);
     if (message.mentions.users.first()) text = text.replace(/<@!?\d+>/, "").replace(/\n/g, " ").trim();
     await message.channel.send(new MessageAttachment(await this.client.idiotAPI.theSearch((message.mentions.users.first() || message.author).displayAvatarURL({ format:"png", size:128 }), text), "thesearch.png"));
-    await msg.delete();
+    await loadingMessage.delete();
   }
 }
 

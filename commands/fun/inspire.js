@@ -9,15 +9,15 @@ class Inspire extends Social {
       category: "Fun",
       usage: "inspire",
       cost: 10,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to be inspired..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** wants to be inspired...`);
+  async run(message, args, level, loadingMessage) {
     const xmas = message.flags[0] === "xmas" ? "&season=xmas" : "";
     const { text } = await get(`http://inspirobot.me/api?generate=true${xmas}`);
     await message.channel.send({ files: [{ attachment: text, name: "inspire.jpg" }] });
-    await msg.delete();
+    await loadingMessage.delete();
   }
 }
 

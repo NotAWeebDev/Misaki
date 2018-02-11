@@ -8,14 +8,14 @@ class Owo extends Social {
       usage: "owo",
       category: "Fun",
       cost: 5,
-      aliases: ["uwu", "UwU", "OwO"]
+      aliases: ["uwu", "UwU", "OwO"],
+      loadingString: "<a:typing:397490442469376001> OwO whats this? **${{displayName}}**..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const msg = await message.channel.send(`<a:typing:397490442469376001> OwO whats this? **${message.member.displayName}**...`);
+  async run(message, args, level, loadingMessage) {
     const owo = await this.cmdWeeb("owo");
-    await msg.edit({
+    await loadingMessage.edit({
       embed: {
         "title": "Click here if the image failed to load.",
         "url": `https://cdn.ram.moe/${owo}`,

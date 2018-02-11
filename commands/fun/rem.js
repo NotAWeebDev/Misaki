@@ -8,13 +8,13 @@ class Rem extends Social {
       usage: "rem",
       category: "Fun",
       cost: 5,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants rem..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** wants rem...`);
+  async run(message, args, level, loadingMessage) { // eslint-disable-line no-unused-vars
     const rem = await this.cmdWeeb("rem");
-    await msg.edit({
+    await loadingMessage.edit({
       embed: {
         "title": "Click here if the image failed to load.",
         "url": `https://cdn.ram.moe/${rem}`,

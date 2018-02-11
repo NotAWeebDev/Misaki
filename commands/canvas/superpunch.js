@@ -10,17 +10,22 @@ class Superpunch extends Social {
       usage: "superpunch <@mention | userid>",
       extended: "Mention another user to punch them as Superman.",
       cost: 10,
-      cooldown: 10
+      cooldown: 10,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is taking a swing..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars 
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is taking a swing...`);
-    const punched = await this.verifyUser(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id);
+
+  cmdVerify(message, args, loadingMessage) {
+    return this.verifyUser(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id, { msg: loadingMessage });
+  }
+
+  async run(message, args, level, loadingMessage) {
+    const punched = await this.cmdVerify(message, args, loadingMessage);
     const puncher = message.author;
 
     await message.channel.send(new MessageAttachment(await this.client.idiotAPI.superPunch(puncher.displayAvatarURL({format:"png", size:128}), punched.displayAvatarURL({format:"png", size:256})), "superpunch.png"));
-    await msg.delete();
+    await loadingMessage.delete();
   }
 }
 

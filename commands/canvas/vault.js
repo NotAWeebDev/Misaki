@@ -11,15 +11,19 @@ class Valut extends Social {
       extended: "Mention another user to thumbs up of them.",
       cost: 10,
       cooldown: 10,
-      aliases: ["vault"]
+      aliases: ["vault"],
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is wandering the wastelands..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is wandering the wastelands...`);
-    const vaultDweller = await this.verifyUser(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id);
+  cmdVerify(message, args, loadingMessage) {
+    return this.verifyUser(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id, { msg: loadingMessage });
+  }
+
+  async run(message, args, level, loadingMessage) {
+    const vaultDweller = await this.cmdVerify(message, args, loadingMessage);
     await message.channel.send(new MessageAttachment(await this.client.idiotAPI.vaultBoy(vaultDweller.displayAvatarURL({ format:"png", size:512 })), "vaultboy.png"));
-    await msg.delete();
+    await loadingMessage.delete();
   }
 }
 
