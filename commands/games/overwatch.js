@@ -23,13 +23,14 @@ class Overwatch extends Command {
     player = player.replace(/#/g , "-");
     const data = await owjs.getAll(platform, location, player).catch(e => {
       console.log(e.stack);
-      return message.response("❗", "Sorry, But Something Went Wrong, please try again later.");
+      return null;
     });
+    if (!data) message.response("❗", "Sorry, But Something Went Wrong, please try again later.");
     const embed = new MessageEmbed()
       .setTitle(`${data.profile.nick} Lvl ${data.profile.level} on ${platform}`)
       .setURL(data.profile.url)
       .setThumbnail(data.profile.avatar)
-      .addField("Competitive Rank ", isNaN(data.profile.rank) ? "Unranked" : data.profile.rank, true)
+      .addField("Competitive Rank ", data.profile.rank ? "Unranked" : data.profile.rank, true)
       .addField("Competitive Deaths", data.competitive.global.deaths, true)
       .addField("Competitve Record (Current) ", data.competitive.global.games_won, true)
       .addField("Competitive Win Percent ", (data.competitive.global.games_won / data.competitive.global.games_played * 100).toFixed(2), true)
