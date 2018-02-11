@@ -126,7 +126,7 @@ exports.levelMessages = [
 ];
 
 exports.otherLevelMessages = [
-  "Look just ask **{{user}}** next time, but I will forgive you, Here this is his level **{{level}}**.",
+  "Look just ask **{{user}}** next time, but I will forgive you, here this is his level **{{level}}**.",
   "Why do you want to view **{{user}}**'s level? Anyway they are level **{{level}}**."
 ];
 
