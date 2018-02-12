@@ -1,5 +1,6 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const { get } = require("snekfetch");
+const { UsageError } = require("../../util/CustomError.js");
 class Yoda extends Social {
   constructor(client) {
     super(client, {
@@ -12,14 +13,12 @@ class Yoda extends Social {
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const speech = args.join(" ");
-    if (speech.length < 2) {
-      message.response(undefined, "Invalid command usage, you must supply text for Yoda. Yes.");
-      return;
-    }
+  cmdVerify(message, args) {
+    if (args.length < 2) return Promise.reject(new UsageError("Invalid command usage, you must supply text for Yoda. Yes."));
+  }
 
-    const { text } = await get(`http://yoda-api.appspot.com/api/v1/yodish?text=${encodeURIComponent(speech.toLowerCase())}`);
+  async run(message, args, level) { // eslint-disable-line no-unused-vars
+    const { text } = await get(`http://yoda-api.appspot.com/api/v1/yodish?text=${encodeURIComponent(args.join(" ").toLowerCase())}`);
     message.channel.send(JSON.parse(text).yodish);
   }
 }
