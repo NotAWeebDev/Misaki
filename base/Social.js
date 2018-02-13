@@ -1,4 +1,5 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
+const { version} = require(`${process.cwd()}/package.json`);
 const moment = require("moment");
 const { get } = require("snekfetch");
 const { SocialError } = require("../util/CustomError.js");
@@ -22,9 +23,10 @@ class Social extends Command {
   async usrDay(message) {
     const settings = this.client.getSettings(message.guild.id);
     const dailyTime = parseInt(settings.dailyTime);
-    const pointsReward = parseInt(settings.pointsReward);
+    let pointsReward = parseInt(settings.pointsReward);
     const score = message.member.score;
-      
+    const upvoter = this.client.upvoters;
+    if (upvoter.includes(message.author.id)) pointsReward += 750;
     if (Date.now() > score.daily) {
       const msg = await message.channel.send(`${this.client.responses.dailySuccessMessages.random().replaceAll("{{user}}", message.member.displayName).replaceAll("{{amount}}", `₲${pointsReward.toLocaleString()}`)}`);
       score.daily = msg.createdTimestamp + (dailyTime * 60 * 60 * 1000);
@@ -85,7 +87,9 @@ class Social extends Command {
   }
 
   async cmdWeeb(type, imgType, nsfw = false) {
-    const { body } = await get(`https://api.weeb.sh/images/random?type=${type}&filetype=${imgType}&nsfw=${nsfw}`).set("Authorization", this.client.config.Wolken);
+    const { body } = await get(`https://api.weeb.sh/images/random?type=${type}&filetype=${imgType}&nsfw=${nsfw}`)
+      .set("Authorization", this.client.config.apiTokens.Wolken)
+      .set("User-Agent", `Misaki/${version}/${this.client.user.id === "396323622953680910" ? "Production" : "Development"}`);
     return body.url;
   }
 

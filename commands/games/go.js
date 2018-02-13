@@ -1,7 +1,7 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
-const { MessageEmbed } = require("discord.js");
+const Command = require(`${process.cwd()}/base/Command.js`);
+const {MessageEmbed} = require("discord.js");
 
-class Go extends Social {
+class Go extends Command {
   constructor(client) {
     super(client, {
       name: "go",

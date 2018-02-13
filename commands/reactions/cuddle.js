@@ -1,4 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
+const { UsageError } = require("../../util/CustomError.js"); 
 
 class Cuddle extends Social {
   constructor(client) {
@@ -9,6 +10,13 @@ class Cuddle extends Social {
       category: "Reactions",
       cost: 5,
     });
+  }
+
+  cmdVerify(message, args, loadingMessage) {
+    const target = message.mentions.members;
+    if (target.size === 0) return Promise.reject(new UsageError("You need to mention someone to cry on their shoulder.", loadingMessage));
+    if (message.member == target.first()) return Promise.reject(new UsageError("You cannot cry on yourself!", loadingMessage));
+    return Promise.resolve(target);
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars

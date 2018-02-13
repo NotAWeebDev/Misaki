@@ -4,9 +4,9 @@
   "description": "Misaki is all of the fun and entertainment commands taken from GuideBot aka York-Dev and bundled into this tsundere themed bot.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "prepublish": "node util/setup.js"
+    "test": "eslint .",
+    "lint": "eslint --fix .",
+    "start": "node index.js"
   },
   "engines": {
     "node": ">=8"
@@ -40,5 +40,7 @@
     "slot-machine": "^2.1.0",
     "snekfetch": "^3.6.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^4.17.0"
+  }
 }

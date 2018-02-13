@@ -8,13 +8,13 @@ class Pout extends Social {
       usage: "pout",
       category: "Reactions",
       cost: 5,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is pouting..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is pouting...`);
+  async run(message, args, level, loadingMessage) { // eslint-disable-line no-unused-vars
     const pout = await this.cmdWeeb("pout", "gif", message.channel.nsfw);
-    await msg.edit({
+    await loadingMessage.edit({
       embed: {
         "title": "Click here if the image failed to load.",
         "url": pout,

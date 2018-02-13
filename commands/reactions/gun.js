@@ -8,13 +8,13 @@ class Gun extends Social {
       usage: "gun",
       category: "Reactions",
       cost: 5,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** needs a bigger gun."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** needs a bigger gun.`);
+  async run(message, args, level, loadingMessage) { // eslint-disable-line no-unused-vars
     const bang = await this.cmdWeeb("bang", "gif", message.channel.nsfw);
-    await msg.edit({
+    await loadingMessage.edit({
       embed: {
         "title": "Click here if the image failed to load.",
         "url": bang,

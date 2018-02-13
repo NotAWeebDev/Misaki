@@ -15,7 +15,7 @@ class Oneliner extends Social {
   }
 
   async run(message, args, level, loadingMessage) {
-    const { body } = await get("https://dashboard.typicalbot.com/api/v1/joke").set("Authentication", this.client.config.tbToken);
+    const { body } = await get("https://dashboard.typicalbot.com/api/v1/joke").set("Authentication", this.client.config.apiTokens.tbToken);
     loadingMessage.edit(body.data);
   }
 }

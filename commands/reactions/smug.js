@@ -8,13 +8,13 @@ class Smug extends Social {
       usage: "smug",
       category: "Reactions",
       cost: 5,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is feeling smug..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is feeling smug...`);
+  async run(message, args, level, loadingMessage) {
     const smug = await this.cmdWeeb("smug", "gif", message.channel.nsfw);
-    await msg.edit({
+    await loadingMessage.edit({
       embed: {
         "title": "Click here if the image failed to load.",
         "url": smug,

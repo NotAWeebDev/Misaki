@@ -1,4 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
+const { UsageError } = require("../../util/CustomError.js");
 
 class Nom extends Social {
   constructor(client) {
@@ -8,16 +9,21 @@ class Nom extends Social {
       usage: "nom <@mention>",
       category: "Reactions",
       cost: 5,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to nom on someone..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
+  cmdVerify(message, args, loadingMessage) {
     const target = message.mentions.members;
-    if (target.size === 0) return message.response(undefined, "You need to mention someone to nom on them.");
-    if (message.member == target.first()) return message.reponse(undefined, "You cannot nom yourself !");
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** wants to nom on **${target.first().displayName}**...`);
+    if (target.size === 0) return Promise.reject(new UsageError("You need to mention someone to nom on them.", loadingMessage));
+    if (message.member == target.first()) return Promise.reject(new UsageError("You cannot nom yourself!", loadingMessage));
+    return Promise.resolve(target);
+  }
+
+  async run(message, args, level, loadingMessage) {
+    const target = await this.cmdVerify(message, args, loadingMessage);
     const nom = await this.cmdWeeb("nom", "gif", message.channel.nsfw);
-    await msg.edit({
+    await loadingMessage.edit({
       embed: {
         "title": "Click here if the image failed to load.",
         "url": nom,

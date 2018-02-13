@@ -8,16 +8,16 @@ class Lewd extends Social {
       usage: "lewd [@mention]",
       category: "Reactions",
       cost: 5,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** think about something lewd..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
+  async run(message, args, level, loadingMessage) {
     const target = message.mentions.members;
     let response = "this";
     if (target.size !== 0) response = `**${target.first().displayName}**`;
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** thinks ${response} is a bit lewd...`);
     const lewd = await this.cmdWeeb("lewd", "gif", message.channel.nsfw);
-    await msg.edit({
+    await loadingMessage.edit({
       embed: {
         "title": "Click here if the image failed to load.",
         "url": lewd,

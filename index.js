@@ -2,30 +2,33 @@ require(`${process.cwd()}/extenders/Guild.js`);
 require(`${process.cwd()}/modules/Prototypes.js`);
 if (process.version.slice(1).split(".")[0] < 8) throw new Error("Node 8.0.0 or higher is required. Update Node on your system.");
 
-const Discord = require("discord.js");
+const { Client, Collection } = require("discord.js");
 const Enmap = require("enmap");
 const EnmapLevel = require("enmap-level");
 const klaw = require("klaw");
 const path = require("path");
 const Idiot = require("idiotic-api");
 
-class Misaki extends Discord.Client {
+class Misaki extends Client {
   constructor(options) {
     super(options);
     this.config = require(`${process.cwd()}/config.js`);
     this.logger = require(`${process.cwd()}/util/Logger`);
     this.responses = require(`${process.cwd()}/assets/responses.js`);
+    this.idiotAPI = new Idiot.Client(this.config.apiTokens.idiotToken);
 
-    this.commands = new Enmap();
-    this.aliases = new Enmap();
-    this.ratelimits = new Enmap();
+    this.aliases = new Collection();
+    this.commands = new Collection();
+    this.upvoters = [];
+    this.ratelimits = new Collection();
 
     this.settings = new Enmap({ provider: new EnmapLevel({ name: "settings" }) });
-    this.reminders = new Enmap({provider: new EnmapLevel({name: "reminders"})});
-    this.points = new Enmap({provider: new EnmapLevel({name: "points"})});
-    this.store = new Enmap({provider: new EnmapLevel({name: "shop"})});
-    this.inventory = new Enmap({provider: new EnmapLevel({name: "inventory"})});
-    this.idiotAPI = new Idiot.Client(this.config.idiotToken);
+    
+    this.reminders = new Enmap({provider: new EnmapLevel({ name: "reminders" }) });
+
+    this.points = new Enmap({provider: new EnmapLevel({ name: "points" }) });
+    this.store = new Enmap({provider: new EnmapLevel({ name: "shop" }) });
+    this.inventory = new Enmap({provider: new EnmapLevel({ name: "inventory" }) });
   }
 
   permlevel(message) {
@@ -105,9 +108,9 @@ class Misaki extends Discord.Client {
 }
 
 const client = new Misaki({
-  fetchAllMembers: true,
+  fetchAllMembers: false,
   disableEveryone: true,
-  disabledEvents:["TYPING_START"]
+  disabledEvents:["CHANNEL_PINS_UPDATE", "GUILD_BAN_ADD", "GUILD_BAN_REMOVE", "GUILD_SYNC", "RELATIONSHIP_ADD", "RELATIONSHIP_REMOVE", "TYPING_START", "USER_NOTE_UPDATE", "USER_SETTINGS_UPDATE", "VOICE_SERVER_UPDATE", "VOICE_STATE_UPDATE"]
 });
 
 require(`${process.cwd()}/modules/functions.js`)(client);
