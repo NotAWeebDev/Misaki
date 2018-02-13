@@ -1,5 +1,5 @@
 const rl = require("rocketleague");
-const rocket = new rl.Client("API FROM WEBSITE ->"); //https://developers.rocketleaguestats.com
+const rocket = new rl.Client("API KEY FROM WEBSITE ->"); //https://developers.rocketleaguestats.com
 const { MessageEmbed } = require("discord.js")
 const Command = require(`${process.cwd()}/base/Command.js`);
 
@@ -9,7 +9,7 @@ class RocketLeague extends Command {
             name: "rocket",
             description: "Get's a user's rocket league profile.",
             category: "Games",
-            usage: "rocket [pc|xbl|psn] [username]",
+            usage: "rocket <pc|xb1|psn> <username>",
             extended: "None.",
             cooldown: 10
         });
@@ -37,6 +37,7 @@ class RocketLeague extends Command {
                 if(player.avatar) embed.setThumbnail(player.avatar);
                 message.channel.send(embed);
         } catch (error) {
+            this.client.logger.error(error)
             message.response("❗", `Player not found or Invalid Usage, please do:\`${this.help.usage}\``);
         };
     };
