@@ -1,8 +1,6 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 const owjs = require("overwatch-js");
 const { MessageEmbed } = require("discord.js");
-const locationArray = ["us", "eu", "kr", "cn", "global"];
-const platformArray = ["pc", "xbl", "psn", "xbox"];
 
 class Overwatch extends Command {
   constructor(client) {
@@ -17,15 +15,15 @@ class Overwatch extends Command {
 
   async run(message, [platform, location, player], level) { // eslint-disable-line no-unused-vars
     if (!player.length || !location.length || !platform.length) return message.response(undefined, `Ba....Baka! Invalid Usage, please do:\`${this.help.usage}\``);
-    if (!locationArray.includes(location)) return message.response(undefined, "Ba....Baka! Invalid Location. Valid Locations are us eu, kr, cn or global");
-    if (!platformArray.includes(platform)) return message.response(undefined, "Ba....Baka! Invalid Platform. Valid Platforms are pc, xbl or psn");
+    if (!/(us|eu|kr|cn|global)$/i.test(location)) return message.response(undefined, "Ba....Baka! Invalid Location. Valid Locations are us eu, kr, cn or global");
+    if (!/(xbl|psn|pc|xbox)$/i.test(platform)) return message.response(undefined, "Ba....Baka! Invalid Platform. Valid Platforms are pc, xbl or psn");
     if (platform === "xbox") platform = "xbl";
     player = player.replace(/#/g , "-");
     const data = await owjs.getAll(platform, location, player).catch(e => {
       console.log(e.stack);
       return null;
     });
-    if (!data) message.response("❗", "Sorry, But Something Went Wrong, please try again later.");
+    if (!data) message.response("❗", "Sorry, but something went wrong. Please try again later.");
     const embed = new MessageEmbed()
       .setTitle(`${data.profile.nick} Lvl ${data.profile.level} on ${platform}`)
       .setURL(data.profile.url)
