@@ -33,7 +33,7 @@ class Slots extends Social {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     if (message.settings.socialSystem !== "true") return message.response(undefined, "The social system has been disabled.");
   
-    if (!message.member.inventory["tokens"]) return message.response(undefined, "Ba...Baka You don't have any tokens to play Slots, buy some with the Store command");
+    if (!message.member.inventory.tokens) return message.response(undefined, "Ba...Baka You don't have any tokens to play Slots, buy some with the Store command");
     
   
     try {
