@@ -1,6 +1,6 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 const { MessageEmbed } = require("discord.js");
-const pokemon = require("../../assets/json/pokemon.json");
+const pokemon = require("../../assets/json/pok.json");
 
 class Pokemon extends Command {
   constructor(client) {
@@ -16,6 +16,7 @@ class Pokemon extends Command {
     const rand = Math.floor(Math.random() * 802);
     const poke = rand > 0 ? rand : Math.floor(Math.random() * 802);
     const pokem = pokemon[poke];
+
     const embed = new MessageEmbed()
       .setTitle("You have 15 seconds to guess ! Who's that Pokémon !")
       .setAuthor(message.member.displayName, message.author.displayAvatarURL())
@@ -34,10 +35,10 @@ class Pokemon extends Command {
     const answer = attempts.first().content.toLowerCase();  
       
     if (answer === pokem.name.toLowerCase()) {
-      await msg.delete();
+      await msg.edit({embed: null});
       return msg.channel.send(`Yatta! Well done, ${pokem.name} was correct.`);
     }
-    await msg.delete();
+    await msg.edit({embed: null});
     return msg.channel.send(`Ba-Baka! You answered incorrectly, It was **${pokem.name}.**`);
   } 
 }
