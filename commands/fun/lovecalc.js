@@ -6,7 +6,7 @@ class LoveMeter extends Social {
   constructor(client) {
     super(client, {
       name: "lovecalc",
-      description: "Find out how much you love anoyher user",
+      description: "Find out how much you love another user",
       category: "Fun",
       usage: "lovecalc @<user>",
       cost: 10,
@@ -14,7 +14,7 @@ class LoveMeter extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    if (!message.mentions.members.first()) return message.response(undefined, "K then, die forever alone") //Response Can Be Refined 😂
+    if (!message.mentions.members.first()) return message.response(undefined, "Ba-Baka! How will I tell you, how much you love someone. If I don't know who!"); //Response Can Be Refined 😂
     const data = await get(`https://love-calculator.p.mashape.com/getPercentage?fname=${message.member.displayName}&sname=${message.mentions.members.first().displayName}`).set("X-Mashape-Key", "MASHAPE API KEY HERE");
     const embed = new MessageEmbed()
       .setAuthor(this.client.user.username, this.client.user.displayAvatarURL())
