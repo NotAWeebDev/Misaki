@@ -14,6 +14,7 @@ class LoveMeter extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
+    if (!message.mentions.members.first()) return message.response(undefined, "K then, die forever alone") //Response Can Be Refined 😂
     const data = await get(`https://love-calculator.p.mashape.com/getPercentage?fname=${message.member.displayName}&sname=${message.mentions.members.first().displayName}`).set("X-Mashape-Key", "MASHAPE API KEY HERE");
     const embed = new MessageEmbed()
       .setAuthor(this.client.user.username, this.client.user.displayAvatarURL())
@@ -22,9 +23,9 @@ class LoveMeter extends Social {
       .addField("Crush", data.body.sname)
       .addField("Love Percent", data.body.percentage)
       .setFooter(data.body.result)
-      .setColor(0xFF0000)
+      .setColor(0xFF0000);
       
-    message.channel.send({embed})
+    message.channel.send({embed});
   }
 }
 
