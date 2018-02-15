@@ -8,6 +8,7 @@ class Pokemon extends Command {
       name: "pokemon",
       description: "Guess That Pokemon",
       usage: "pokemon",
+      category: "Fun",
       aliases: ["guessthatpokemon"]
     });
   }
