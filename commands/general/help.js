@@ -15,7 +15,8 @@ class Help extends Command {
       description: "Get help on a command, command category, or a setting",
       extended: "This command will display all available commands for your permission level, with the additonal option of getting per command information when you run 'help <command name>'.",
       category: "System",
-      usage: "help <category/command/setting> [page-num]"
+      usage: "help <category/command/setting> [page-num]",
+      aliases: ["h", "halp", "commands"]
     });
   }
 
@@ -74,14 +75,13 @@ class Help extends Command {
       }
     }
     // Show individual command's help.
-    let command = type;
-    if (this.client.commands.has(command) || this.client.commands.some(command => command.conf.aliases.includes(command))) {
-      command = this.client.commands.get(command);
-      if (level < this.client.levelCache[command.conf.permLevel]) return;
+    if (this.client.commands.has(type) || this.client.commands.some(command => command.conf.aliases.includes(type))) {
+      const cm = this.client.commands.get(type) || this.client.commands.get(this.client.aliases.get(type));
+      if (level < this.client.levelCache[cm.conf.permLevel]) return;
       embed.setTitle(`${type} help`)
-        .addField("Command description", command.help.description)
-        .addField("Command usage", `\`${command.help.usage}\``)
-        .addField("Command aliases", command.conf.aliases.length == 0 ? "None" : command.conf.aliases.join(", ") );
+        .addField("Command description", cm.help.description)
+        .addField("Command usage", `\`${cm.help.usage}\``)
+        .addField("Command aliases", cm.conf.aliases.length == 0 ? "None" : cm.conf.aliases.join(", ") );
     }
 
     return message.channel.send(embed);
