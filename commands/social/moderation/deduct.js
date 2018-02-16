@@ -6,7 +6,7 @@ class Deduct extends Social {
       name: "deduct",
       description: "Takes points away from the nominated user.",
       usage: "deduct <@mention|userid> <amount>",
-      category: "Moderation",
+      category: "Social",
       extended: "This will take points away from a nominated user.",
       cost: 5,
       hidden: true,
