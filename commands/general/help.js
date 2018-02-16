@@ -14,19 +14,16 @@ class Help extends Command {
       name: "help",
       description: "Get help on a command, command category, or a setting",
       category: "System",
-      usage: "help <category/command/setting> [page-num]",
-      aliases: ["halp","h"]
+      usage: "help <category/command/setting> [page-num]"
     });
   }
 
   async run(message, args, level) {
 
     const embed = new MessageEmbed()
-      .setAuthor(message.author.tag, message.author.avatarURL())
-      .setAuthor(message.author.tag, message.author.avatarURL())
       .setTimestamp()
       .setColor(message.guild.me.roles.highest.color || 0x00AE86)
-      .setFooter("Misaki", this.client.user.avatarURL()); 
+      .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL()); 
     // Preload MessageEmbed.
   
     // Here we sort out categories in case the user did not provide an argument.
@@ -37,20 +34,20 @@ class Help extends Command {
       const description = `Command category list\n\nUse \`${message.settings.prefix}help <category>\` to find commands for a specific category`;
       let output = "";
       sorted.forEach( c => {
+        if (level < 10 && c.help.category == "Owner") return;
+        if (c.help.category === "NSFW" && !message.channel.nsfw) return;
+
         const cat = c.help.category.toProperCase();
-    
         if (currentCategory !== cat && !args[0]) {
           output += `\`${message.settings.prefix}help ${cat.toLowerCase()}\` | Shows ${cat} commands\n`;
           currentCategory = cat;
         }
       });
 
-      embed.setTitle("Misaki Help")
-        .setDescription(description)
+      embed.setDescription(description)
         .addField("Categories", output);
 
       message.channel.send({embed});
-
     } else {
       let lol = 0;
       sorted.forEach(c => {
@@ -64,26 +61,25 @@ class Help extends Command {
       const page = parseInt(args[1]) > 0 && parseInt(args[1]) <= Math.ceil(lol / perpage) ? parseInt(args[1]) : 1;
       sorted.forEach(c => {
         if (c.help.category.toLowerCase() == args[0]) {
-    
+          if (c.help.category === "Owner" && level < 10 ) return;
+          if (c.help.category === "NSFW" && !message.channel.nsfw) return;
           if (num < perpage * page && num > perpage * page - (perpage + 1)) {
+            if (level < this.client.levelCache[c.conf.permLevel]) return;
             output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 50 ? c.help.description.slice(0,50) +"...": c.help.description}`;
           }
           num = num + 1;
         }
       });
     
-    
       if (num != 0) {
         //message.channel.send(`${title}\n\n${description}\n${output}`, {code:"asciidoc"});
         embed.setTitle("Command category help")
-          .setDescription(`A list of commands in the ${args[0]} category.  (Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${message.settings.prefix}help <command>\``)
+          .setDescription(`A list of commands in the ${args[0]} category.  (Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${message.settings.prefix}help <command>\`\n\n${num > 10 && page === 1 ? `To view more commands do\` ${message.settings.prefix}help <category> 2\`` : "" }`)
           .addField("Commands", output);
 
         message.channel.send({embed});
-    
       }
     }
-
     // Show individual command's help.
     let command = args[0];
     if (this.client.commands.has(command) || this.client.commands.forEach(command => {if (command.conf.aliases.includes(command)) return true;})) {
@@ -95,7 +91,6 @@ class Help extends Command {
         .addField("Command aliases", command.conf.aliases.length == 0 ? "None" : command.conf.aliases.join(", ") );
     
       message.channel.send({embed});
-
     }
   }
 }
