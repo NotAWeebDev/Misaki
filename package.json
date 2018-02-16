@@ -39,7 +39,8 @@
     "ms": "^2.1.1",
     "overwatch-js": "^1.6.1",
     "slot-machine": "^2.1.0",
-    "snekfetch": "^3.6.1"
+    "snekfetch": "^3.6.1", 
+    "rocketleague": "^1.0.2"
   },
   "devDependencies": {
     "eslint": "^4.17.0"
