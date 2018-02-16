@@ -1,13 +1,7 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 const { MessageEmbed } = require("discord.js");
 const perpage = 10;
-/*
-  The HELP command is used to display every command's name and description
-  to the user, so that he may see what commands are available. The help
-  command is also filtered by level, so if a user does not have access to
-  a command, it is not shown to them. If a command name is given with the
-  help command, its extended help is shown.
-*/
+
 class Help extends Command {
   constructor(client) {
     super(client, {
@@ -24,11 +18,9 @@ class Help extends Command {
 
     const embed = new MessageEmbed()
       .setTimestamp()
-      .setColor(message.guild.me.roles.highest.color || 0x00AE86)
+      .setColor(message.guild.me.roles.highest.color || 5198940)
       .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL()); 
-    // Preload MessageEmbed.
-  
-    // Here we sort out categories in case the user did not provide an argument.    
+
     let currentCategory = "";
     const sorted = this.client.commands.sort((p, c) => p.help.category > c.help.category ? 1 :  p.help.name > c.help.name && p.help.category === c.help.category ? 1 : -1 );
     if (!type) {
@@ -72,7 +64,7 @@ class Help extends Command {
           .addField("Commands", output);
       }
     }
-    // Show individual command's help.
+
     if (this.client.commands.has(type) || this.client.commands.some(command => command.conf.aliases.includes(type))) {
       const cm = this.client.commands.get(type) || this.client.commands.get(this.client.aliases.get(type));
       if (level < this.client.levelCache[cm.conf.permLevel]) return;
