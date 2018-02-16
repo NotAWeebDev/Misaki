@@ -15,8 +15,7 @@ class Eval extends Owner {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const { client } = message;
-    const { clean } = this;
+    const { clean, client } = this;
     const code = args.join(" ");
     const token = client.token.split("").join("[^]{0,2}");
     const rev = client.token.split("").reverse().join("[^]{0,2}");
