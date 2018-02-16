@@ -15,14 +15,14 @@ class Crush extends Social {
   }
 
   cmdVerify(message, args, loadingMessage) {
-    return this.verifyMember(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id, { msg: loadingMessage });
+    return this.verifyUser(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id, { msg: loadingMessage });
   }
 
   async run(message, args, level, loadingMessage) {
     const crush = await this.cmdVerify(message, args, loadingMessage);
     const crusher = message.author;
 
-    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.crush(crusher.displayAvatarURL({format:"png", size:128}), crush.displayAvatarURL({format:"png", size:512})), "crush.png"));
+    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.crush(crush.displayAvatarURL({format:"png", size:512}), crusher.displayAvatarURL({format:"png", size:128})), "crush.png"));
     await loadingMessage.delete();
   }
 }

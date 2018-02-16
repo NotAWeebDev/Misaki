@@ -16,7 +16,7 @@ class FanSlap extends Social {
   }
 
   cmdVerify(message, args, loadingMessage) {
-    return this.verifyMember(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id, { msg: loadingMessage });
+    return this.verifyUser(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id, { msg: loadingMessage });
   }
 
   async run(message, args, level, loadingMessage) {
