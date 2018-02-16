@@ -76,11 +76,13 @@ class Help extends Command {
     if (this.client.commands.has(type) || this.client.commands.some(command => command.conf.aliases.includes(type))) {
       const cm = this.client.commands.get(type) || this.client.commands.get(this.client.aliases.get(type));
       if (level < this.client.levelCache[cm.conf.permLevel]) return;
-      embed.setTitle(`${type} help`)
+      embed.setTitle(cm.help.name.toProperCase())
         .addField("Command description", cm.help.description)
         .addField("Command usage", `\`${cm.help.usage}\``)
         .addField("Command aliases", cm.conf.aliases.length == 0 ? "None" : cm.conf.aliases.join(", ") );
     }
+    
+    if (!embed.fields[0]) return;
 
     return message.channel.send(embed);
   }
