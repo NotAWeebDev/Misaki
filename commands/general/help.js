@@ -24,41 +24,35 @@ class Help extends Command {
   }
 
   async run(message, args, level) {
-  // If no specific command is called, show all filtered commands.
-    const client = this.client;
-    const embed = new MessageEmbed();
-    // Load guild settings (for prefixes and eventually per-guild tweaks)
-    const settings = message.guild ? await this.client.settings.get(message.guild.id) : this.client.config.defaultSettings;
-    // Filter all commands by which are available for the user's level, using the <Collection>.filter() method.
-    
-    const myCommands = this.client.commands.filter(function(cmd) {return cmd.help.category != "Staff";});
-    
-    //myCommands = message.guild ? client.commands.filter(cmd => client.levelCache[cmd.conf.permLevel] <= level) : client.commands.filter(cmd => client.levelCache[cmd.conf.permLevel] <= level &&  cmd.conf.guildOnly !== true);
-    
-    // Here we have to get the command names only, and we use that array to get the longest name.
-    // This make the help commands "aligned" in the output.
+
+    const embed = new MessageEmbed()
+      .setAuthor(message.author.tag, message.author.avatarURL())
+      .setAuthor(message.author.tag, message.author.avatarURL())
+      .setTimestamp()
+      .setColor(message.guild.me.roles.highest.color || 0x00AE86)
+      .setFooter("Misaki", this.client.user.avatarURL()); 
+    // Preload MessageEmbed.
+  
+    // Here we sort out categories in case the user did not provide an argument.
     
     let currentCategory = "";
-    const sorted = myCommands.array().sort((p, c) => p.help.category > c.help.category ? 1 :  p.help.name > c.help.name && p.help.category === c.help.category ? 1 : -1 );
+    const sorted = this.client.commands.array().sort((p, c) => p.help.category > c.help.category ? 1 :  p.help.name > c.help.name && p.help.category === c.help.category ? 1 : -1 );
     if (!args[0]) {
-      const description = `Command category list\n\nUse \`${settings.prefix}help <category>\` to find commands for a specific category`;
+      const description = `Command category list\n\nUse \`${message.settings.prefix}help <category>\` to find commands for a specific category`;
       let output = "";
       sorted.forEach( c => {
         const cat = c.help.category.toProperCase();
     
         if (currentCategory !== cat && !args[0]) {
-          output += `\`${settings.prefix}help ${cat.toLowerCase()}\` | Shows ${cat} commands\n`;
+          output += `\`${message.settings.prefix}help ${cat.toLowerCase()}\` | Shows ${cat} commands\n`;
           currentCategory = cat;
         }
-        //output += `${settings.prefix.value}${c.help.name}${" ".repeat(longest - c.help.name.length)} :: ${c.help.description}\n`;
       });
+
       embed.setTitle("Misaki Help")
         .setDescription(description)
-        .setAuthor(message.author.tag, message.author.avatarURL())
-        .addField("Categories", output)
-        .setTimestamp()
-        .setColor(message.guild.me.roles.highest.color || 0x00AE86)
-        .setFooter("Misaki", this.client.user.avatarURL()); 
+        .addField("Categories", output);
+
       message.channel.send({embed});
 
     } else {
@@ -76,7 +70,7 @@ class Help extends Command {
         if (c.help.category.toLowerCase() == args[0]) {
     
           if (num < perpage * page && num > perpage * page - (perpage + 1)) {
-            output += `\n\`${settings.prefix + c.help.name}\` | ${c.help.description.length > 50 ? c.help.description.slice(0,50) +"...": c.help.description}`;
+            output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 50 ? c.help.description.slice(0,50) +"...": c.help.description}`;
           }
           num = num + 1;
         }
@@ -86,12 +80,9 @@ class Help extends Command {
       if (num != 0) {
         //message.channel.send(`${title}\n\n${description}\n${output}`, {code:"asciidoc"});
         embed.setTitle("Command category help")
-          .setDescription(`A list of commands in the ${args[0]} category.  (Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${settings.prefix}help <command>\``)
-          .addField("Commands", output)
-          .setAuthor(message.author.tag, message.author.avatarURL())
-          .setTimestamp()
-          .setColor(message.guild.me.roles.highest.color || 0x00AE86)
-          .setFooter("Misaki", this.client.user.avatarURL());
+          .setDescription(`A list of commands in the ${args[0]} category.  (Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${message.settings.prefix}help <command>\``)
+          .addField("Commands", output);
+
         message.channel.send({embed});
     
       }
@@ -99,17 +90,13 @@ class Help extends Command {
 
     // Show individual command's help.
     let command = args[0];
-    if (client.commands.has(command) || client.commands.forEach(command => {if (command.conf.aliases.includes(command)) return true;})) {
-      command = client.commands.get(command);
-      if (level < client.levelCache[command.conf.permLevel]) return;
+    if (this.client.commands.has(command) || this.client.commands.forEach(command => {if (command.conf.aliases.includes(command)) return true;})) {
+      command = this.client.commands.get(command);
+      if (level < this.client.levelCache[command.conf.permLevel]) return;
       embed.setTitle(`${args[0]} help`)
-        .setAuthor(message.author.tag, message.author.avatarURL())
         .addField("Command description", command.help.description)
         .addField("Command usage", `\`${command.help.usage}\``)
-        .addField("Command aliases", command.conf.aliases.length == 0 ? "None" : command.conf.aliases.join(", ") )
-        .setTimestamp()
-        .setColor(message.guild.me.roles.highest.color || 0x00AE86)
-        .setFooter("Misaki", this.client.user.avatarURL());
+        .addField("Command aliases", command.conf.aliases.length == 0 ? "None" : command.conf.aliases.join(", ") );
     
       message.channel.send({embed});
 
