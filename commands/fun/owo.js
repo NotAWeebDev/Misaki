@@ -1,4 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
+const { get } = require("snekfetch");
 
 class Owo extends Social {
   constructor(client) {
@@ -14,17 +15,17 @@ class Owo extends Social {
   }
 
   async run(message, args, level, loadingMessage) {
-    const owo = await this.cmdWeeb("owo");
+    const { body } = await get("https://rra.ram.moe/i/r?type=owo");
     await loadingMessage.edit({
       embed: {
         "title": "Click here if the image failed to load.",
-        "url": `https://cdn.ram.moe/${owo}`,
+        "url": `https://cdn.ram.moe/${body.path.replace("/i/", "")}`,
         "color": message.guild.me.roles.highest.color || 5198940,
         "image": {
-          "url": `https://cdn.ram.moe/${owo}`
+          "url": `https://cdn.ram.moe/${body.path.replace("/i/", "")}`
         }
       }
-    });
+  });
 
   }
 }
