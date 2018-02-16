@@ -43,21 +43,19 @@ class Help extends Command {
 
       embed.setDescription(description)
         .addField("Categories", output);
-
-      return message.channel.send({embed});
     } else {
-      let lol = 0;
-      sorted.forEach(c => {
-        if (c.help.category.toLowerCase() == type) {
-          lol = lol + 1;
+      let n = 0;
+      await sorted.forEach(c => {
+        if (c.help.category.toLowerCase() === type.toLowerCase()) {
+          n = n + 1;
         }
       });
     
       let output = "";
       let num = 0;
-      const pg = parseInt(page) && parseInt(page) <= Math.ceil(lol / perpage) ? parseInt(page) : 1;
-      sorted.forEach(c => {
-        if (c.help.category.toLowerCase() == type) {
+      const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
+      for (const c of sorted.values()) {
+        if (c.help.category.toLowerCase() === type.toLowerCase()) {
           if (c.help.category === "Owner" && level < 10 ) return;
           if (c.help.category === "NSFW" && !message.channel.nsfw) return;
           if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
@@ -66,29 +64,27 @@ class Help extends Command {
           }
           num = num + 1;
         }
-      });
+      }
     
       if (num) {
         //message.channel.send(`${title}\n\n${description}\n${output}`, {code:"asciidoc"});
         embed.setTitle("Command category help")
           .setDescription(`A list of commands in the ${type} category.  (Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${message.settings.prefix}help <command>\`\n\n${num > 10 && pg === 1 ? `To view more commands do\` ${message.settings.prefix}help <category> 2\`` : "" }`)
           .addField("Commands", output);
-
-        return message.channel.send({embed});
       }
     }
     // Show individual command's help.
     let command = type;
-    if (this.client.commands.has(command) || this.client.commands.forEach(command => {if (command.conf.aliases.includes(command)) return true;})) {
+    if (this.client.commands.has(command) || this.client.commands.some(command => {if (command.conf.aliases.includes(command)) return true;})) {
       command = this.client.commands.get(command);
       if (level < this.client.levelCache[command.conf.permLevel]) return;
       embed.setTitle(`${type} help`)
         .addField("Command description", command.help.description)
         .addField("Command usage", `\`${command.help.usage}\``)
         .addField("Command aliases", command.conf.aliases.length == 0 ? "None" : command.conf.aliases.join(", ") );
-    
-      return message.channel.send({embed});
     }
+
+    return message.channel.send(embed);
   }
 }
 
