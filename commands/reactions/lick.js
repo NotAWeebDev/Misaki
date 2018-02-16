@@ -21,7 +21,7 @@ class Lick extends Social {
   }
 
   async run(message, args, level, loadingMessage) { // eslint-disable-line no-unused-vars
-    const target = await this.cmdVerify(message. args. loadingMessage);
+    const target = await this.cmdVerify(message, args, loadingMessage);
     const lick = await this.cmdWeeb("lick", "gif", message.channel.nsfw);
     await loadingMessage.edit({
       embed: {

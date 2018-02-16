@@ -18,7 +18,7 @@ class Neko extends Social {
     if (!message.channel.nsfw) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
 
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is looking for a feline...`);
-    const { body } = await get(`https://nekos.life/api${Math.random() >= 0.5 ? "/lewd" : ""}/neko`);
+    const { body } = await get("https://nekos.life/api/lewd/neko");
     await msg.edit({
       embed: {
         "title": "Click here if the image failed to load.",
