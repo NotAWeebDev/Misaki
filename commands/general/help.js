@@ -13,13 +13,9 @@ class Help extends Command {
     super(client, {
       name: "help",
       description: "Get help on a command, command category, or a setting",
-      category: "Utility",
-      enabled:true,
-      guildOnly:false,
+      category: "System",
       usage: "help <category/command/setting> [page-num]",
-      aliases: ["halp","h"],
-      permLevel: "User",
-      examples:["moderation","mute"]
+      aliases: ["halp","h"]
     });
   }
 
