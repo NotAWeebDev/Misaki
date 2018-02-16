@@ -25,7 +25,7 @@ class Owo extends Social {
           "url": `https://cdn.ram.moe/${body.path.replace("/i/", "")}`
         }
       }
-  });
+    });
 
   }
 }
