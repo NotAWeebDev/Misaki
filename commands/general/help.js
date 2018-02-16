@@ -28,8 +28,7 @@ class Help extends Command {
       .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL()); 
     // Preload MessageEmbed.
   
-    // Here we sort out categories in case the user did not provide an argument.
-    
+    // Here we sort out categories in case the user did not provide an argument.    
     let currentCategory = "";
     const sorted = this.client.commands.sort((p, c) => p.help.category > c.help.category ? 1 :  p.help.name > c.help.name && p.help.category === c.help.category ? 1 : -1 );
     if (!type) {
@@ -68,7 +67,6 @@ class Help extends Command {
       }
     
       if (num) {
-        //message.channel.send(`${title}\n\n${description}\n${output}`, {code:"asciidoc"});
         embed.setTitle("Command category help")
           .setDescription(`A list of commands in the ${type} category.  (Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${message.settings.prefix}help <command>\`\n\n${num > 10 && pg === 1 ? `To view more commands do\` ${message.settings.prefix}help <category> 2\`` : "" }`)
           .addField("Commands", output);
