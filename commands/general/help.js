@@ -32,17 +32,13 @@ class Help extends Command {
     const sorted = this.client.commands.sort((p, c) => p.help.category > c.help.category ? 1 :  p.help.name > c.help.name && p.help.category === c.help.category ? 1 : -1 );
     if (!type) {
       const description = `Command category list\n\nUse \`${message.settings.prefix}help <category>\` to find commands for a specific category`;
-      let output = "";
-      sorted.forEach( c => {
-        if (level < 10 && c.help.category == "Owner") return;
-        if (c.help.category === "NSFW" && !message.channel.nsfw) return;
-
+      const output = sorted.filter(c => !(level < 10 && c.help.category == "Owner") || !(c.help.category === "NSFW" && !message.channel.nsfw)).map(c => {
         const cat = c.help.category.toProperCase();
         if (currentCategory !== cat && !type) {
-          output += `\`${message.settings.prefix}help ${cat.toLowerCase()}\` | Shows ${cat} commands\n`;
           currentCategory = cat;
+          return `\n\`${message.settings.prefix}help ${cat.toLowerCase()}\` | Shows ${cat} commands`;
         }
-      });
+      }).join("");
 
       embed.setDescription(description)
         .addField("Categories", output);
@@ -58,7 +54,7 @@ class Help extends Command {
     
       let output = "";
       let num = 0;
-      const pg = parseInt(page) > 0 && parseInt(page) <= Math.ceil(lol / perpage) ? parseInt(page) : 1;
+      const pg = parseInt(page) && parseInt(page) <= Math.ceil(lol / perpage) ? parseInt(page) : 1;
       sorted.forEach(c => {
         if (c.help.category.toLowerCase() == type) {
           if (c.help.category === "Owner" && level < 10 ) return;
@@ -74,7 +70,7 @@ class Help extends Command {
       if (num) {
         //message.channel.send(`${title}\n\n${description}\n${output}`, {code:"asciidoc"});
         embed.setTitle("Command category help")
-          .setDescription(`A list of commands in the ${type} category.  (Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${message.settings.prefix}help <command>\`\n\n${num > 10 && page === 1 ? `To view more commands do\` ${message.settings.prefix}help <category> 2\`` : "" }`)
+          .setDescription(`A list of commands in the ${type} category.  (Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${message.settings.prefix}help <command>\`\n\n${num > 10 && pg === 1 ? `To view more commands do\` ${message.settings.prefix}help <category> 2\`` : "" }`)
           .addField("Commands", output);
 
         return message.channel.send({embed});
