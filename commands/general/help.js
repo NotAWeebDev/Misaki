@@ -75,7 +75,7 @@ class Help extends Command {
     }
     // Show individual command's help.
     let command = type;
-    if (this.client.commands.some(command => command.conf.aliases.includes(command))) {
+    if (this.client.commands.has(command) || this.client.commands.some(command => command.conf.aliases.includes(command))) {
       command = this.client.commands.get(command);
       if (level < this.client.levelCache[command.conf.permLevel]) return;
       embed.setTitle(`${type} help`)
