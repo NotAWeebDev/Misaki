@@ -13,6 +13,7 @@ class Help extends Command {
     super(client, {
       name: "help",
       description: "Get help on a command, command category, or a setting",
+      extended: "This command will display all available commands for your permission level, with the additonal option of getting per command information when you run 'help <command name>'.",
       category: "System",
       usage: "help <category/command/setting> [page-num]"
     });
