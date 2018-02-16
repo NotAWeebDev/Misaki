@@ -57,6 +57,7 @@ class Help extends Command {
         .setAuthor(message.author.tag, message.author.avatarURL())
         .addField("Categories", output)
         .setTimestamp()
+        .setColor(message.guild.me.roles.highest.color || 0x00AE86)
         .setFooter("Misaki", this.client.user.avatarURL()); 
       message.channel.send({embed});
 
@@ -89,6 +90,7 @@ class Help extends Command {
           .addField("Commands", output)
           .setAuthor(message.author.tag, message.author.avatarURL())
           .setTimestamp()
+          .setColor(message.guild.me.roles.highest.color || 0x00AE86)
           .setFooter("Misaki", this.client.user.avatarURL());
         message.channel.send({embed});
     
@@ -106,6 +108,7 @@ class Help extends Command {
         .addField("Command usage", `\`${command.help.usage}\``)
         .addField("Command aliases", command.conf.aliases.length == 0 ? "None" : command.conf.aliases.join(", ") )
         .setTimestamp()
+        .setColor(message.guild.me.roles.highest.color || 0x00AE86)
         .setFooter("Misaki", this.client.user.avatarURL());
     
       message.channel.send({embed});
