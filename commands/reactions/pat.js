@@ -9,7 +9,7 @@ class Pat extends Social {
       usage: "pat <@mention>",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **${{displayName}}** wants to pat someone..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to pat someone..."
     });
   }
 

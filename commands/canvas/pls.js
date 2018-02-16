@@ -10,7 +10,7 @@ class Please extends Social {
       category: "Canvas",
       extended: "Didn't your mother always tell you to say please? Now you can with a bot!",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **${{displayName}** pls..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** pls..."
     });
   }
 
