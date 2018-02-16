@@ -45,9 +45,9 @@ class Help extends Command {
         .addField("Categories", output);
     } else {
       let n = 0;
-      await sorted.forEach(c => {
+      sorted.forEach(c => {
         if (c.help.category.toLowerCase() === type.toLowerCase()) {
-          n = n + 1;
+          n++;
         }
       });
     
@@ -62,7 +62,7 @@ class Help extends Command {
             if (level < this.client.levelCache[c.conf.permLevel]) return;
             output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 50 ? c.help.description.slice(0,50) +"...": c.help.description}`;
           }
-          num = num + 1;
+          num++;
         }
       }
     
