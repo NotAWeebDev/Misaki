@@ -52,18 +52,14 @@ class Help extends Command {
         }
         //output += `${settings.prefix.value}${c.help.name}${" ".repeat(longest - c.help.name.length)} :: ${c.help.description}\n`;
       });
-      embed.setTitle("Misaki Help").setDescription(description).setAuthor(message.author.tag, message.author.avatarURL()).setTimestamp().setFooter("Misaki", this.client.user.avatarURL()).addField("Categories", output);
-    
-    
-    
-    
+      embed.setTitle("Misaki Help")
+        .setDescription(description)
+        .setAuthor(message.author.tag, message.author.avatarURL())
+        .addField("Categories", output)
+        .setTimestamp()
+        .setFooter("Misaki", this.client.user.avatarURL()); 
       message.channel.send({embed});
-    
-    
-    
-    
-    
-    
+
     } else {
       let lol = 0;
       sorted.forEach(c => {
@@ -88,33 +84,32 @@ class Help extends Command {
     
       if (num != 0) {
         //message.channel.send(`${title}\n\n${description}\n${output}`, {code:"asciidoc"});
-        embed.setTitle("Command category help").setDescription(`A list of commands in the ${args[0]} category.  (Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${settings.prefix}help <command>\``).setAuthor(message.author.tag, message.author.avatarURL()).setTimestamp().setFooter("Misaki", this.client.user.avatarURL())
-          .addField("Commands", output);
+        embed.setTitle("Command category help")
+          .setDescription(`A list of commands in the ${args[0]} category.  (Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${settings.prefix}help <command>\``)
+          .addField("Commands", output)
+          .setAuthor(message.author.tag, message.author.avatarURL())
+          .setTimestamp()
+          .setFooter("Misaki", this.client.user.avatarURL());
         message.channel.send({embed});
     
       }
-    
-    
     }
-    
-    
-    
-    
-    
+
     // Show individual command's help.
     let command = args[0];
     if (client.commands.has(command) || client.commands.forEach(command => {if (command.conf.aliases.includes(command)) return true;})) {
       command = client.commands.get(command);
       if (level < client.levelCache[command.conf.permLevel]) return;
-      embed.setTitle(`${args[0]} help`).setAuthor(message.author.tag, message.author.avatarURL()).setTimestamp().setFooter("Misaki", this.client.user.avatarURL())
+      embed.setTitle(`${args[0]} help`)
+        .setAuthor(message.author.tag, message.author.avatarURL())
         .addField("Command description", command.help.description)
         .addField("Command usage", `\`${command.help.usage}\``)
-        .addField("Command aliases", command.conf.aliases.length == 0 ? "None" : command.conf.aliases.join(", ") );
+        .addField("Command aliases", command.conf.aliases.length == 0 ? "None" : command.conf.aliases.join(", ") )
+        .setTimestamp()
+        .setFooter("Misaki", this.client.user.avatarURL());
     
       message.channel.send({embed});
-    
-      //message.channel.send(`= ${command.help.name} = \n${command.help.description}\nusage::${command.help.usage}`, {code:"asciidoc"});
-    
+
     }
   }
 }
