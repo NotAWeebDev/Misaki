@@ -1,4 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
+const { get } = require("snekfetch");
 
 class Rem extends Social {
   constructor(client) {
@@ -13,14 +14,14 @@ class Rem extends Social {
   }
 
   async run(message, args, level, loadingMessage) { // eslint-disable-line no-unused-vars
-    const rem = await this.cmdWeeb("rem");
+    const { body } = await get("https://rra.ram.moe/i/r?type=rem");
     await loadingMessage.edit({
       embed: {
         "title": "Click here if the image failed to load.",
-        "url": `https://cdn.ram.moe/${rem}`,
+        "url": `https://cdn.ram.moe/${body.path.replace("/i/", "")}`,
         "color": message.guild.me.roles.highest.color || 5198940,
         "image": {
-          "url": `https://cdn.ram.moe/${rem}`
+          "url": `https://cdn.ram.moe/${body.path.replace("/i/", "")}`
         }
       }
     });

@@ -11,7 +11,7 @@ class Magic8 extends Social {
       extended: "This Social will answer any question given to it in the style of a magic 8 ball.",
       cost: 5,
       aliases: ["8", "8ball"],
-      loadingString: "<a:typing:397490442469376001> **${me}** is thinking..."
+      loadingString: "<a:typing:397490442469376001> **{{me}}** is thinking..."
     });
     this.answers = [ "Maybe.", "Certainly not.", "I hope so.", "Not in your wildest dreams.", "There is a good chance.", "Quite likely.", "I think so.", "I hope not.", "I hope so.", "Never!", "Fuhgeddaboudit.", "Ahaha! Really?!?", "Pfft.", "Sorry, bucko.", "Hell, yes.", "Hell to the no.", "The future is bleak.", "The future is uncertain.", "I would rather not say.", "Who cares?", "Possibly.", "Never, ever, ever.", "There is a small chance.", "Yes!" ];
   }

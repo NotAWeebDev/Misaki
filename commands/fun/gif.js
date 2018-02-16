@@ -9,7 +9,8 @@ class Gif extends Social {
       usage: "gif",
       cost: 5,
       cooldown: 10,
-      aliases: ["giphy"]
+      aliases: ["giphy"],
+      loadingString: "<a:typing:397490442469376001> **Searching** please wait a few moments."
     });
   }
   async run(message, args, level) { // eslint-disable-line no-unused-vars

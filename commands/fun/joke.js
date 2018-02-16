@@ -10,7 +10,7 @@ class Oneliner extends Social {
       category: "Fun",
       cost: 5,
       aliases: ["1l", "oneliner"],
-      loadingString: "<a:typing:397490442469376001> **${{displayName}}** is thinking of something funny..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is thinking of something funny..."
     });
   }
 

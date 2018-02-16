@@ -10,7 +10,7 @@ class Owo extends Social {
       category: "Fun",
       cost: 5,
       aliases: ["uwu", "UwU", "OwO"],
-      loadingString: "<a:typing:397490442469376001> OwO whats this? **${{displayName}}**..."
+      loadingString: "<a:typing:397490442469376001> OwO whats this? **{{displayName}}**..."
     });
   }
 

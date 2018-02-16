@@ -10,7 +10,7 @@ class Potato extends Social {
       category: "Fun",
       cost: 5,
       aliases: ["spud"],
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is a potato...`"
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is a potato..."
     });
   }
 
