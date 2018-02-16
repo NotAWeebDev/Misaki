@@ -10,25 +10,20 @@ class Wanted extends Social {
       usage: "wanted [@mention|user id]",
       extended: "Mention another user to post a wanted poster of them.",
       cost: 10,
-      cooldown: 10
+      cooldown: 10,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is putting up wanted posters..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars 
-    let msg;
-    try {
-      const wanted = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
-      msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is putting up wanted posters...`);
-      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.wanted(wanted.displayAvatarURL({ format:"png", size:512 })), "vaultboy.png"));
-      await msg.delete();
-    } catch (error) {
-      msg.edit("Something went wrong, please try again later");
-      this.client.logger.error(error);
-    }
+  cmdVerify(message, args, loadingMessage) {
+    return this.verifyUser(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id, { msg: loadingMessage });
+  }
+
+  async run(message, args, level, loadingMessage) {
+    const vaultDweller = await this.cmdVerify(message, args, loadingMessage);
+    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.wanted(vaultDweller.displayAvatarURL({ format:"png", size:512 })), "wanted.png"));
+    await loadingMessage.delete();
   }
 }
 
-module.exports = Wanted;//
+module.exports = Wanted;

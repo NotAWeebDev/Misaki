@@ -35,9 +35,9 @@ class Help extends Command {
         await message.author.send(output, {code:"asciidoc", split: { char: "\u200b" }});
       } catch (error) {
         if (error.message === "Cannot send messages to this user") {
-          await message.reply("I cannot send you the commands message, as it appears you have **Direct Messages's** disabled.");
+          return message.reply("I cannot send you the commands message, as it appears you have **Direct Messages's** disabled.");
         } else {
-          this.client.logger.error(error);
+          throw error;
         }       
       }
     } else {

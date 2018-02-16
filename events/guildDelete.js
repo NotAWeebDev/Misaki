@@ -1,4 +1,4 @@
-const snekfetch = require("snekfetch");
+const { post } = require("snekfetch");
 module.exports = class {
   constructor(client) {
     this.client = client;
@@ -6,7 +6,7 @@ module.exports = class {
 
   async run(guild) {
 
-    snekfetch.post(`https://discordbots.org/api/bots/${this.client.user.id}/stats`)
+    post(`https://discordbots.org/api/bots/${this.client.user.id}/stats`)
       .set("Authorization", this.client.config.apiTokens.dblToken)
       .send({ server_count: this.client.guilds.size })
       .then(() => console.log("Sent guild count to discordbots.org!"));

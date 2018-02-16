@@ -11,27 +11,21 @@ class Respect extends Social {
       extended: "You can pay respects to any user on Discord.",
       cost: 10,
       cooldown: 30,
-      aliases: ["pressf", "f", "rip", "ripme"]
+      aliases: ["pressf", "f", "rip", "ripme"],
+      loadingString: "Paying respects..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    let msg;
-    try {
-      const target = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
+  cmdVerify(message, args, loadingMessage) {
+    return this.verifyMember(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id, { msg: loadingMessage });
+  }
 
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
+  async run(message, args, level, loadingMessage) { // eslint-disable-line no-unused-vars
+    const target = await this.cmdVerify(message, args, loadingMessage);
       
-      msg = await message.channel.send("Paying respects...");
-      const m = await message.channel.send("Press 🇫 to pay respects.", new MessageAttachment(await this.client.idiotAPI.respect(target.displayAvatarURL({format:"png", size:128})), "respect.png"));
-      await msg.delete();
-      m.react("🇫");
-    } catch (error) {
-      msg.edit("Something went wrong, please try again later");
-      this.client.logger.error(error);
-    }
+    const m = await message.channel.send("Press 🇫 to pay respects.", new MessageAttachment(await this.client.idiotAPI.respect(target.displayAvatarURL({format:"png", size:128})), "respect.png"));
+    await loadingMessage.delete();
+    m.react("🇫");
   }
 
 }

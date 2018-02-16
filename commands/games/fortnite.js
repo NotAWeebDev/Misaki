@@ -1,7 +1,6 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 const { MessageEmbed } = require("discord.js");
-const FNite = require("fortnite");
-const fortnite = new FNite(require(`${process.cwd()}/config.js`).apiTokens.TRN);
+const { UsageError } = require("../../util/CustomError.js");
 
 class Fortnite extends Command {
   constructor(client) {
@@ -13,12 +12,17 @@ class Fortnite extends Command {
       cooldown: 10,
       aliases: ["fort", "nite", "fn"]
     });
+    const Fortnite = require("fortnite");
+    this.fortnite = new Fortnite(this.client.config.apiTokens.TRN);
+  }
+
+  cmdVerify(message, args) {
+    if (!args.length) return Promise.reject(new UsageError(`Invalid Usage, please do:\`${this.help.usage}\``));
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    if (!args.length) return message.response("❗", `Invalid Usage, please do:\`${this.help.usage}\``);
     try {
-      const data = await fortnite.getInfo(args.splice(1).join(" "), args[0]);
+      const data = await this.fortnite.getInfo(args.splice(1).join(" "), args[0]);
       message.channel.send(new MessageEmbed()
         .setTitle(`${data.username}, on ${data.platformNameLong}`)
         .setURL(`https://partybus.gg/player/${data.username}`)
@@ -36,7 +40,6 @@ class Fortnite extends Command {
         .addField("Time Played", data.lifetimeStats[13].value, true)
         .addField("Average Survival Time", data.lifetimeStats[14].value, true)
         .setColor(message.guild.member(this.client.user.id).roles.highest.color || 0x00AE86));
-      
     } catch (error) {
       message.channel.send(`Player Not Found or invalid form type, for correct usage do: \`${this.help.usage}\`.`);
     }   

@@ -1,4 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
+const { UsageError } = require("../../util/CustomError.js");
 
 class Pick extends Social {
   constructor(client) {
@@ -10,27 +11,24 @@ class Pick extends Social {
       extended: "This command will help you select out of a list of supplied options.",
       cost: 5,
       aliases: ["choose"],
-      
+      loadingString: "<a:typing:397490442469376001> **{{me}}** is thinking..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
+  cmdVerify(message, args, loadingMessage) {
     const options = args.join(" ");
-    if (options.length < 2) return message.response(undefined, "Invalid command usage, you must supply text.");
+    if (options.length < 2) return Promise.reject(new UsageError("Invalid command usage, you must supply text.", loadingMessage));
     const list = options.split(",");
-    if (list.length < 2 || list[1] === "") return message.response(undefined, "Invalid command usage, you must supply at least two items to pick from.");
-    if (message.settings.socialSystem === "true") {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-    }
-    try {
-      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.guild.me.displayName}** is thinking...`);
-      setTimeout(
-        () => msg.edit(`I think \`${list[Math.floor(Math.random()*list.length)].trim()}\``),
-        Math.random() * (1 - 5) + 1 * 5000
-      );
-    } catch (error) {
-      this.client.logger.error(error);
-    }
+    if (list.length < 2 || list[1] === "") return Promise.reject(new UsageError("Invalid command usage, you must supply at least two items to pick from.", loadingMessage));
+    return Promise.resolve(list);
+  }
+
+  async run(message, args, level, loadingMessage) {
+    const list = await this.cmdVerify(message, args, loadingMessage);
+    setTimeout(
+      () => loadingMessage.edit(`I think \`${list[Math.floor(Math.random()*list.length)].trim()}\``),
+      Math.random() * (1 - 5) + 1 * 5000
+    );
   }
 }
 

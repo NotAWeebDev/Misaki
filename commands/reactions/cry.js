@@ -1,4 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
+const { UsageError } = require("../../util/CustomError.js"); 
 
 class Cry extends Social {
   constructor(client) {
@@ -8,35 +9,31 @@ class Cry extends Social {
       usage: "cry <@mention>",
       category: "Reactions",
       cost: 5,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to cry it all away..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
+  cmdVerify(message, args, loadingMessage) {
     const target = message.mentions.members;
-    if (target.size === 0) return message.response(undefined, "You need to mention someone to cry on their shoulder.");
-    if (message.member == target.first()) return message.response(undefined, "You cannot cry on yourself !");
-    try {
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
-      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** wants to cry it all away...`);
-      const cry = await this.cmdWeeb("cry", "gif", message.channel.nsfw);
-      await msg.edit({
-        embed: {
-          "title": "Click here if the image failed to load.",
-          "url": cry,
-          "description": `**${target.first().displayName}**, **${message.member.displayName}** just cried on your shoulder.`,
-          "color": message.guild.me.roles.highest.color || 5198940,
-          "image": {
-            "url": cry
-          }
+    if (target.size === 0) return Promise.reject(new UsageError("You need to mention someone to cry on their shoulder.", loadingMessage));
+    if (message.member == target.first()) return Promise.reject(new UsageError("You cannot cry on yourself!", loadingMessage));
+    return Promise.resolve(target);
+  }
+
+  async run(message, args, level, loadingMessage) { // eslint-disable-line no-unused-vars
+    const target = await this.cmdVerify(message, args, loadingMessage);
+    const cry = await this.cmdWeeb("cry", "gif", message.channel.nsfw);
+    await loadingMessage.edit({
+      embed: {
+        "title": "Click here if the image failed to load.",
+        "url": cry,
+        "description": `**${target.first().displayName}**, **${message.member.displayName}** just cried on your shoulder.`,
+        "color": message.guild.me.roles.highest.color || 5198940,
+        "image": {
+          "url": cry
         }
-      });
-
-    } catch (e) {
-      console.log(e);
-    }
-
+      }
+    });
   }
 }
 

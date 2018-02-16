@@ -14,16 +14,12 @@ class Reboot extends Owner {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    try {
-      const msg = await message.channel.send(`${this.client.responses.rebootMessages.random().replaceAll("{{user}}", message.member.displayName)}`);
-      await write(`${process.cwd()}/assets/json/reboot.json`, `{ "id": "${msg.id}", "channel": "${message.channel.id}", "user": "${message.author.id}"}`).catch(console.error);
-      this.client.commands.forEach(async cmd => {
-        await this.client.unloadCommand(cmd);
-      });
-      process.exit(1);
-    } catch (e) {
-      console.log(e);
-    }
+    const msg = await message.channel.send(`${this.client.responses.rebootMessages.random().replaceAll("{{user}}", message.member.displayName)}`);
+    await write(`${process.cwd()}/assets/json/reboot.json`, `{ "id": "${msg.id}", "channel": "${message.channel.id}", "user": "${message.author.id}"}`).catch(console.error);
+    this.client.commands.forEach(async cmd => {
+      await this.client.unloadCommand(cmd);
+    });
+    process.exit(1);
   }
 }
 

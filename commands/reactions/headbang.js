@@ -8,29 +8,22 @@ class Banghead extends Social {
       usage: "banghead",
       category: "Reactions",
       cost: 5,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** thinks a palm isn't enough."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    try {
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
-      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** thinks a palm isn't enough.`);
-      const banghead = await this.cmdWeeb("banghead", "gif", message.channel.nsfw);
-      await msg.edit({
-        embed: {
-          "title": "Click here if the image failed to load.",
-          "url": banghead,
-          "color": message.guild.me.roles.highest.color || 5198940,
-          "image": {
-            "url": banghead
-          }
+  async run(message, args, level, loadingMessage) {
+    const banghead = await this.cmdWeeb("banghead", "gif", message.channel.nsfw);
+    await loadingMessage.edit({
+      embed: {
+        "title": "Click here if the image failed to load.",
+        "url": banghead,
+        "color": message.guild.me.roles.highest.color || 5198940,
+        "image": {
+          "url": banghead
         }
-      });
-    } catch (e) {
-      console.log(e);
-    }
+      }
+    });
 
   }
 }
