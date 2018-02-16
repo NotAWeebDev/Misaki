@@ -20,8 +20,8 @@ class Wanted extends Social {
   }
 
   async run(message, args, level, loadingMessage) {
-    const vaultDweller = await this.cmdVerify(message, args, loadingMessage);
-    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.wanted(vaultDweller.displayAvatarURL({ format:"png", size:512 })), "wanted.png"));
+    const wanted = await this.cmdVerify(message, args, loadingMessage);
+    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.wanted(wanted.displayAvatarURL({ format:"png", size:512 })), "wanted.png"));
     await loadingMessage.delete();
   }
 }

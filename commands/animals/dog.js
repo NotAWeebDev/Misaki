@@ -1,5 +1,6 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const { get } = require("snekfetch");
+
 class Dog extends Social {
   constructor(client) {
     super(client, {
@@ -17,7 +18,16 @@ class Dog extends Social {
 
   async run(message, args, level, loadingMessage) {
     const { body } = await get(args[0] ? `https://dog.ceo/api/breed/${args[0]}/images/random` : "https://dog.ceo/api/breeds/image/random");
-    await loadingMessage.edit({embed:{ "title": "Click here if the image failed to load.", "url": body.message, "color":message.guild.me.roles.highest.color || 5198940, "image": {"url": body.message}}});
+    await loadingMessage.edit({
+      embed: {
+        "title": "Click here if the image failed to load.",
+        "url": body.message,
+        "color": message.guild.me.roles.highest.color || 5198940,
+        "image": {
+          "url": body.message
+        }
+      }
+    });
 
   }
 }

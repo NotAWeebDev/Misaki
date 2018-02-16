@@ -1,5 +1,6 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const { get } = require("snekfetch");
+
 class Owl extends Social {
   constructor(client) {
     super(client, {
@@ -15,9 +16,18 @@ class Owl extends Social {
     });
   }
 
-  async run(message, args, level, loadingMessage) { 
+  async run(message, args, level, loadingMessage) {
     const owl = await get("http://pics.floofybot.moe/owl").then(r => r.body.image); // API Provided by Lewdcario
-    await loadingMessage.edit({ embed: { "title": "Click here if the image failed to load.", "url": owl, "color": message.guild.me.roles.highest.color || 5198940, "image": { "url": owl } } });
+    await loadingMessage.edit({
+      embed: {
+        "title": "Click here if the image failed to load.",
+        "url": owl,
+        "color": message.guild.me.roles.highest.color || 5198940,
+        "image": {
+          "url": owl
+        }
+      }
+    });
   }
 }
 

@@ -11,6 +11,7 @@ class Lizard extends Social {
       extended: "This command will return a beautiful lizard.",
       cost: 5,
       cooldown: 10,
+      aliases: ["geko"],
       loadingString: "<a:typing:397490442469376001> **{{displayName}}** is looking for a lizard..."
     });
   }

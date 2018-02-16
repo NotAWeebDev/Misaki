@@ -1,6 +1,6 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 const { MessageEmbed } = require("discord.js");
-const pokemon = require("../../assets/json/pok.json");
+const pokemon = require(`${process.cwd()}/assets/json/pokemon.json`);
 
 class Pokemon extends Command {
   constructor(client) {

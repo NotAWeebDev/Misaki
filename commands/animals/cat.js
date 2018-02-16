@@ -1,5 +1,6 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const { get } = require("snekfetch");
+
 class Cat extends Social {
   constructor(client) {
     super(client, {
@@ -17,7 +18,16 @@ class Cat extends Social {
 
   async run(message, args, level, loadingMessage) {
     const { body } = await get("http://random.cat/meow");
-    await loadingMessage.edit({embed:{ "title": "Click here if the image failed to load.", "url": body.file, "color":message.guild.me.roles.highest.color || 5198940, "image": {"url": body.file}}});
+    await loadingMessage.edit({
+      embed: {
+        "title": "Click here if the image failed to load.",
+        "url": body.file,
+        "color": message.guild.me.roles.highest.color || 5198940,
+        "image": {
+          "url": body.file
+        }
+      }
+    });
   }
 }
 

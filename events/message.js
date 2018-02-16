@@ -73,7 +73,7 @@ module.exports = class {
     try {
       let msg;
       if (cmd instanceof Social) {
-        if (cmd.loadingString) msg = await message.channel.send(cmd.loadingString.repalceAll("{{displayName}}", message.member.displayName).repalceAll("{{me}}", message.guild.me.displayName));
+        if (cmd.loadingString) msg = await message.channel.send(cmd.loadingString.replaceAll("{{displayName}}", message.member.displayName).replaceAll("{{me}}", message.guild.me.displayName));
         await cmd.cmdVerify(message, args, { msg });
         if (message.settings.socialSystem === "true") {
           await cmd.cmdPay(message, message.author.id, cmd.help.cost, { msg });

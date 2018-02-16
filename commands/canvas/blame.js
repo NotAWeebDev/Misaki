@@ -16,7 +16,7 @@ class Blame extends Social {
   }
 
   cmdVerify(message, args, loadingMessage) {
-    return this.verifyMember(message, message.mentions.member.size === 1 ? message.mentions.member.first().id : message.member.id, { msg: loadingMessage });
+    return this.verifyMember(message, message.mentions.members.size === 1 ? message.mentions.member.first().id : message.member.id, { msg: loadingMessage });
   }
 
   async run(message, args, level, loadingMessage) {

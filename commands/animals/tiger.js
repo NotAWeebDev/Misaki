@@ -1,6 +1,7 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const { get } = require("snekfetch");
 const { MessageAttachment } = require("discord.js");
+
 class Tiger extends Social {
   constructor(client) {
     super(client, {
@@ -12,7 +13,7 @@ class Tiger extends Social {
       cost: 5,
       cooldown: 10,
       aliases: ["tigger"],
-      loadingString: "<a:typing:397490442469376001> **${message.member.displayName}** is petting a tiger..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting a tiger..."
     });
   }
 
