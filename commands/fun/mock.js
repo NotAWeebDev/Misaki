@@ -1,6 +1,6 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const { readFile } = require("fs-nextra");
-const { UsageError } = require("../../util/CustomError.js");
+const { UsageError } = require(`${process.cwd()}/util/CustomError.js`);
 
 class Mock extends Social {
   constructor(client) {

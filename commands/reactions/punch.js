@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const { UsageError } = require("../../util/CustomError.js");
+const { UsageError } = require(`${process.cwd()}/util/CustomError.js`);
 
 class Punch extends Social {
   constructor(client) {

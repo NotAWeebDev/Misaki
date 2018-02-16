@@ -1,4 +1,5 @@
 const Meme = require(`${process.cwd()}/base/Meme.js`);
+const { UsageError } = require(`${process.cwd()}/util/CustomError.js`); 
 
 class Brain extends Meme {
   constructor(client) {
@@ -8,15 +9,20 @@ class Brain extends Meme {
       usage: "brain <first text ; second text ; third text ; forth text>",
       category: "meme",
       cost: 5,
+      loadignString: "<a:typing:397490442469376001> **{{displayName}}** reveals their inner knowledge..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
+  cmdVerify(message, args, loadingMessage) {
     const text = args.join(" ");
-    if (text.length === 0) return message.response("❗", "You must supply test to think about!");
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** reveals their inner knowledge...`);
+    if (text.length === 0) return Promise.reject(new UsageError("You must supply test to think about!", loadingMessage));
+    return Promise.resolve(text);
+  }
+
+  async run(message, args, level, loadingMessage) {
+    const text = await this.cmdVerify(message, args, loadingMessage);
     const meme = await this.fourMeme(93895088, text);
-    await msg.edit({
+    await loadingMessage.edit({
       embed: {
         "title": "Click here if the image failed to load.",
         "url": meme,

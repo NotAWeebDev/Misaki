@@ -1,6 +1,6 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const { get } = require("snekfetch");
-const { UsageError } = require("../../util/CustomError.js");
+const { UsageError } = require(`${process.cwd()}/util/CustomError.js`);
 class Yoda extends Social {
   constructor(client) {
     super(client, {

@@ -1,6 +1,6 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const { MessageAttachment } = require("discord.js");
-const { UsageError } = require("../../util/CustomError.js");
+const { UsageError } = require(`${process.cwd()}/util/CustomError.js`);
 
 class SnapChat extends Social {
   constructor(client) {

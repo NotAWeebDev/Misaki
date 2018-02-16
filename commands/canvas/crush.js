@@ -10,7 +10,7 @@ class Crush extends Social {
       usage: "crush [@mention|userid]",
       cost: 10,
       cooldown: 10,
-      loadingString: "<a:typing:397490442469376001> ** {{displayName}}** gaze around..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** gaze around..."
     });
   }
 
