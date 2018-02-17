@@ -48,7 +48,7 @@ class Help extends Command {
         }
       });
 
-      let output = "";
+      var output = "";
       var num = 0;
       const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
       for (const c of sorted.values()) {
@@ -56,7 +56,7 @@ class Help extends Command {
           if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
           if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
             if (level < this.client.levelCache[c.conf.permLevel]) return;
-            output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
+            var output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
           }
           var num = num + 1;
         }
@@ -125,14 +125,14 @@ class Help extends Command {
     nextpage.on("collect", (r) => {
       var num = 0;
       var page = parseInt(msg2.embeds[0].title.split(" ")[1].split("/")[0]) + 1;
-      output = "";
+      var output = "";
       const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
       for (const c of sorted.values()) {
         if (c.help.cat.toLowerCase() === type.toLowerCase()) {
           if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
           if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
             if (level < this.client.levelCache[c.conf.permLevel]) return;
-            output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
+            var output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
           }
           var num = num + 1;
         }
@@ -160,7 +160,7 @@ class Help extends Command {
 
     backpage.on("collect", (r) => {
       var page = parseInt(msg2.embeds[0].title.split(" ")[1].split("/")[0]) - 1;
-      output = "";
+      var output = "";
       var num = 0;
       const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
       for (const c of sorted.values()) {
@@ -168,7 +168,7 @@ class Help extends Command {
           if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
           if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
             if (level < this.client.levelCache[c.conf.permLevel]) return;
-            output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
+            var output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
           }
           var num = num + 1;
         }
@@ -196,7 +196,7 @@ class Help extends Command {
 
     firstpage.on("collect", (r) => {
       var page = 1;
-      output = "";
+      var output = "";
       var num = 0;
       const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
       for (const c of sorted.values()) {
@@ -204,7 +204,7 @@ class Help extends Command {
           if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
           if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
             if (level < this.client.levelCache[c.conf.permLevel]) return;
-            output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
+            var output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
           }
           var num = num + 1;
         }
@@ -232,7 +232,7 @@ class Help extends Command {
 
     lastpage.on("collect", (r) => {
       var page = finalpage;
-      output = "";
+      var output = "";
       var num = 0;
       const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
       for (const c of sorted.values()) {
@@ -240,7 +240,7 @@ class Help extends Command {
           if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
           if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
             if (level < this.client.levelCache[c.conf.permLevel]) return;
-            output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
+            output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
           }
           var num = num + 1;
         }
@@ -287,14 +287,14 @@ class Help extends Command {
         errors: ["time"],
       }).then(async (collected) => {
         var page = parseInt(collected.first().content);
-        output = "";
+        var output = "";
         const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
         for (const c of sorted.values()) {
           if (c.help.cat.toLowerCase() === type.toLowerCase()) {
             if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
             if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
               if (level < this.client.levelCache[c.conf.permLevel]) return;
-              output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
+              var output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
             }
             var num = num + 1;
           }
