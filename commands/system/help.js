@@ -25,7 +25,7 @@ class Help extends Command {
         .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL()); 
 
         let currentCategory = "";
-        const sorted = client.commands.sort((p, c) => p.help.cat > c.help.cat ? 1 :  p.help.name > c.help.name && p.help.cat === c.help.cat ? 1 : -1 );
+        const sorted = this.client.commands.sort((p, c) => p.help.cat > c.help.cat ? 1 :  p.help.name > c.help.name && p.help.cat === c.help.cat ? 1 : -1 );
         if (!type) {
         const description = `Command category list\n\nUse \`${message.settings.prefix}help <category>\` to find commands for a specific category`;
         const output = sorted.filter(c => !(level < 10 && c.help.category == "Owner") || !(c.help.category === "NSFW" && !message.channel.nsfw)).map(c => {
@@ -52,6 +52,7 @@ class Help extends Command {
             if (c.help.cat.toLowerCase() === type.toLowerCase()) {
             if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
             if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
+                if (level < this.client.levelCache[c.conf.permLevel]) return;                
                 output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? c.help.description.slice(0,80) +"...": c.help.description}`;
             }
             num++;
@@ -66,8 +67,9 @@ class Help extends Command {
             }
         }
 
-        if (client.commands.has(type) || client.commands.some(command => command.conf.aliases.includes(type))) {
-        const cm = client.commands.get(type) || client.commands.get(client.aliases.get(type));
+        if (this.client.commands.has(type) || this.client.commands.some(command => command.conf.aliases.includes(type))) {
+        const cm = this.client.commands.get(type) || this.client.commands.get(this.client.aliases.get(type));
+        if (level < this.client.levelCache[cm.conf.permLevel]) return;
         embed.setTitle(cm.help.name)
             .addField("Command description", cm.help.description)
             .addField("Command usage", `\`${cm.help.usage}\``)
@@ -126,7 +128,8 @@ class Help extends Command {
                 if (c.help.cat.toLowerCase() === type.toLowerCase()) {
                 if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
                 if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
-                output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? c.help.description.slice(0,80) +"...": c.help.description}`;
+                    if (level < this.client.levelCache[c.conf.permLevel]) return;
+                    output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? c.help.description.slice(0,80) +"...": c.help.description}`;
                 }
                 num++;
                 }
@@ -159,7 +162,8 @@ class Help extends Command {
             if (c.help.cat.toLowerCase() === type.toLowerCase()) {
                 if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
                 if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
-                output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? c.help.description.slice(0,80) +"...": c.help.description}`;
+                    if (level < this.client.levelCache[c.conf.permLevel]) return;
+                    output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? c.help.description.slice(0,80) +"...": c.help.description}`;
                 }
                 num++;
             }
@@ -192,7 +196,8 @@ class Help extends Command {
             if (c.help.cat.toLowerCase() === type.toLowerCase()) {
                 if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
                 if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
-                output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? c.help.description.slice(0,80) +"...": c.help.description}`;
+                    if (level < this.client.levelCache[c.conf.permLevel]) return;
+                    output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? c.help.description.slice(0,80) +"...": c.help.description}`;
                 }
                 num++;
             }
@@ -225,7 +230,8 @@ class Help extends Command {
             if (c.help.cat.toLowerCase() === type.toLowerCase()) {
                 if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
                 if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
-                output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? c.help.description.slice(0,80) +"...": c.help.description}`;
+                    if (level < this.client.levelCache[c.conf.permLevel]) return;
+                    output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? c.help.description.slice(0,80) +"...": c.help.description}`;
                 }
                 num++;
             }
@@ -275,7 +281,8 @@ class Help extends Command {
                     if (c.help.cat.toLowerCase() === type.toLowerCase()) {
                     if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
                     if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
-                    output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? c.help.description.slice(0,80) +"...": c.help.description}`;
+                        if (level < this.client.levelCache[c.conf.permLevel]) return;
+                        output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? c.help.description.slice(0,80) +"...": c.help.description}`;
                     }
                     num++;
                     }
