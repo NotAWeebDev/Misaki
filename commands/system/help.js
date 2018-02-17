@@ -279,7 +279,6 @@ class Help extends Command {
       if (on) return;
       on = true;
       num = 0;
-      let numbers;
       await message.channel.send(`Please enter a selection from 1 to ${finalpage}`);
       await message.channel.awaitMessages(m => !isNaN(m.content) && m.author.id === message.author.id, {
         max: 1,
