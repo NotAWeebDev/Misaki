@@ -1,6 +1,7 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 const { MessageEmbed } = require("discord.js");
 const perpage = 10;
+let on = false;
 
 class Help extends Command {
   constructor(client) {
@@ -266,6 +267,8 @@ class Help extends Command {
         });
 
         numberpages.on('collect', async r => {
+            if(on) return;
+            on = true;
             num = 0;
             let numbers;
             await message.channel.send(`Please enter a selection from 1 to ${finalpage}`);
@@ -305,6 +308,7 @@ class Help extends Command {
                     }
                 }});
             });
+            on = false;
         });
     };
 };
