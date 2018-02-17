@@ -15,15 +15,15 @@ class Help extends Command {
     });
   }
 
-    async run(message, [type], level) {
+  async run(message, [type], level) {
         let page = 1;
         let n;
         let finalpage;
 
         const embed = new MessageEmbed()
-        .setTimestamp()
-        .setColor(message.guild.me.roles.highest.color || 5198940)
-        .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL()); 
+          .setTimestamp()
+          .setColor(message.guild.me.roles.highest.color || 5198940)
+          .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL()); 
 
         let currentCategory = "";
         const sorted = this.client.commands.sort((p, c) => p.help.cat > c.help.cat ? 1 :  p.help.name > c.help.name && p.help.cat === c.help.cat ? 1 : -1 );
