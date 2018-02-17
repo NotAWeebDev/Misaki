@@ -17,9 +17,10 @@ class Help extends Command {
   }
 
   async run(message, [type], level) {
-    let page = 1;
-    let n;
-    let finalpage;
+    var page = 1;
+    var n;
+    var finalpage;
+    var num;
 
     const embed = new MessageEmbed()
       .setTimestamp()
@@ -40,15 +41,15 @@ class Help extends Command {
       embed.setDescription(description)
         .addField("Categories", output);
     } else {
-      n = 0;
+      var n = 0;
       sorted.forEach((c) => {
         if (c.help.cat.toLowerCase() === type.toLowerCase()) {
-          n++;
+         var n = n + 1;
         }
       });
 
       let output = "";
-      let num = 0;
+      var num = 0;
       const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
       for (const c of sorted.values()) {
         if (c.help.cat.toLowerCase() === type.toLowerCase()) {
@@ -57,7 +58,7 @@ class Help extends Command {
             if (level < this.client.levelCache[c.conf.permLevel]) return;
             output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
           }
-          num++;
+          var num = num + 1;
         }
       }
 
@@ -122,8 +123,8 @@ class Help extends Command {
     );
 
     nextpage.on("collect", (r) => {
-      num = 0;
-      page = parseInt(msg2.embeds[0].title.split(" ")[1].split("/")[0]) + 1;
+      var num = 0;
+      var page = parseInt(msg2.embeds[0].title.split(" ")[1].split("/")[0]) + 1;
       output = "";
       const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
       for (const c of sorted.values()) {
@@ -133,7 +134,7 @@ class Help extends Command {
             if (level < this.client.levelCache[c.conf.permLevel]) return;
             output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
           }
-          num++;
+          var num = num + 1;
         }
       }
       r.users.remove(message.author);
@@ -158,9 +159,9 @@ class Help extends Command {
     });
 
     backpage.on("collect", (r) => {
-      page = parseInt(msg2.embeds[0].title.split(" ")[1].split("/")[0]) - 1;
+      var page = parseInt(msg2.embeds[0].title.split(" ")[1].split("/")[0]) - 1;
       output = "";
-      num = 0;
+      var num = 0;
       const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
       for (const c of sorted.values()) {
         if (c.help.cat.toLowerCase() === type.toLowerCase()) {
@@ -169,7 +170,7 @@ class Help extends Command {
             if (level < this.client.levelCache[c.conf.permLevel]) return;
             output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
           }
-          num++;
+          var num = num + 1;
         }
       }
       r.users.remove(message.author);
@@ -194,9 +195,9 @@ class Help extends Command {
     });
 
     firstpage.on("collect", (r) => {
-      page = 1;
+      var page = 1;
       output = "";
-      num = 0;
+      var num = 0;
       const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
       for (const c of sorted.values()) {
         if (c.help.cat.toLowerCase() === type.toLowerCase()) {
@@ -205,7 +206,7 @@ class Help extends Command {
             if (level < this.client.levelCache[c.conf.permLevel]) return;
             output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
           }
-          num++;
+          var num = num + 1;
         }
       }
       r.users.remove(message.author);
@@ -230,9 +231,9 @@ class Help extends Command {
     });
 
     lastpage.on("collect", (r) => {
-      page = finalpage;
+      var page = finalpage;
       output = "";
-      num = 0;
+      var num = 0;
       const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
       for (const c of sorted.values()) {
         if (c.help.cat.toLowerCase() === type.toLowerCase()) {
@@ -241,7 +242,7 @@ class Help extends Command {
             if (level < this.client.levelCache[c.conf.permLevel]) return;
             output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
           }
-          num++;
+          var num = num + 1;
         }
       }
       r.users.remove(message.author);
@@ -278,14 +279,14 @@ class Help extends Command {
     numberpages.on("collect", async (r) => {
       if (on) return;
       on = true;
-      num = 0;
+      var num = 0;
       await message.channel.send(`Please enter a selection from 1 to ${finalpage}`);
       await message.channel.awaitMessages(m => !isNaN(m.content) && m.author.id === message.author.id, {
         max: 1,
         time: 10000,
         errors: ["time"],
       }).then(async (collected) => {
-        page = parseInt(collected.first().content);
+        var page = parseInt(collected.first().content);
         output = "";
         const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
         for (const c of sorted.values()) {
@@ -295,7 +296,7 @@ class Help extends Command {
               if (level < this.client.levelCache[c.conf.permLevel]) return;
               output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
             }
-            num++;
+            var num = num + 1;
           }
         }
         r.users.remove(message.author);
