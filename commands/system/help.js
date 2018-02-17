@@ -21,7 +21,7 @@ class Help extends Command {
 
         const embed = new MessageEmbed()
         .setTimestamp()
-        .setColor(message.guild.me.roles.highest.color || 0x0AE86)
+        .setColor(message.guild.me.roles.highest.color || 5198940)
         .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL()); 
 
         let currentCategory = "";
@@ -145,7 +145,7 @@ class Help extends Command {
                         value: output
                     }
                 ],
-                color: message.guild.me.roles.highest.color || 0x0AE86,
+                color: message.guild.me.roles.highest.color || 5198940,
                 footer: {
                     text: `Requested by ${message.author.tag}`,
                     icon_url: message.author.avatarURL()
@@ -179,7 +179,7 @@ class Help extends Command {
                         value: output
                     }
                 ],
-                color: message.guild.me.roles.highest.color || 0x0AE86,
+                color: message.guild.me.roles.highest.color || 5198940,
                 footer: {
                     text: `Requested by ${message.author.tag}`,
                     icon_url: message.author.avatarURL()
@@ -213,7 +213,7 @@ class Help extends Command {
                         value: output
                     }
                 ],
-                color: message.guild.me.roles.highest.color || 0x0AE86,
+                color: message.guild.me.roles.highest.color || 5198940,
                 footer: {
                     text: `Requested by ${message.author.tag}`,
                     icon_url: message.author.avatarURL()
@@ -247,7 +247,7 @@ class Help extends Command {
                         value: output
                     }
                 ],
-                color: message.guild.me.roles.highest.color || 0x0AE86,
+                color: message.guild.me.roles.highest.color || 5198940,
                 footer: {
                     text: `Requested by ${message.author.tag}`,
                     icon_url: message.author.avatarURL()
@@ -298,7 +298,7 @@ class Help extends Command {
                             value: output
                         }
                     ],
-                    color: message.guild.me.roles.highest.color || 0x0AE86,
+                    color: message.guild.me.roles.highest.color || 5198940,
                     footer: {
                         text: `Requested by ${message.author.tag}`,
                         icon_url: message.author.avatarURL()
