@@ -44,7 +44,7 @@ class Help extends Command {
       var n = 0;
       sorted.forEach((c) => {
         if (c.help.cat.toLowerCase() === type.toLowerCase()) {
-         var n = n + 1;
+         n = n + 1;
         }
       });
 
