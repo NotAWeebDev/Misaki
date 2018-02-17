@@ -18,7 +18,7 @@ class Help extends Command {
 
   async run(message, [type], level) {
     var page = 1;
-    var n;
+    var n = 0;
     var finalpage;
     var num;
 
@@ -41,7 +41,6 @@ class Help extends Command {
       embed.setDescription(description)
         .addField("Categories", output);
     } else {
-      var n = 0;
       sorted.forEach((c) => {
         if (c.help.cat.toLowerCase() === type.toLowerCase()) {
          n = n + 1;
