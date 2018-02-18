@@ -14,11 +14,12 @@ class Go extends Command {
   }
 
   async run(message, [name, steamid], level) { // eslint-disable-line no-unused-vars
-    try {
-      let game;
-
+    let game;
+    if (name) {
       const title = name.toLowerCase();
       switch (title) {
+        default:
+          break;
         case "dota":
           game = {
             title: "DOTA 2",
@@ -26,7 +27,7 @@ class Go extends Command {
             run: "steam://run/570"
           };
           break;
-        
+
         case "csgo":
           game = {
             title: "Counter-Strike: Global Offensive",
@@ -34,7 +35,7 @@ class Go extends Command {
             run: "steam://run/730"
           };
           break;
-        
+
         case "gmod":
           game = {
             title: "Garry's Mod",
@@ -50,7 +51,6 @@ class Go extends Command {
             run: "steam://run/578080"
           };
           break;
-          
         case "rocketleague":
           game = {
             title: "Rocket League",
@@ -58,10 +58,8 @@ class Go extends Command {
             run: "steam://run/252950"
           };
           break;
-        default:
-          return message.channel.send(`${this.client.responses.goMessages.random().replaceAll("{{user}}", message.author.username).replaceAll("{{game}}", name)}`);
       }
-      
+
       const embed = new MessageEmbed()
         .setColor(message.guild.me.roles.highest.color || 5198940)
         .setAuthor(`${message.author.username}`, `${message.author.displayAvatarURL()}`)
@@ -69,10 +67,12 @@ class Go extends Command {
         .addField("Steam Profile", `${steamid !== undefined ? `[${message.author.username}](https://steamcommunity.com/id/${steamid})` : "Not provided"}`)
         .addField("Launch Game", `**Launch game:** ${game.run}`)
         .setImage(`${game.img}`);
+
       message.channel.send(this.client.responses.goMessages.random().replaceAll("{{user}}", message.author.username).replaceAll("{{game}}", game.title), { embed });
-    } catch (error) {
-      this.client.logger.error(error);
+    } else {
+      message.channel.send(`${this.client.responses.goMessages.random().replaceAll("{{user}}", message.author.username).replaceAll("{{game}}", "game")}`);
     }
+
   }
 
 }

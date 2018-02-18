@@ -1,30 +1,31 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 
-class Gun extends Social {
+class Banghead extends Social {
   constructor(client) {
     super(client, {
-      name: "gun",
+      name: "banghead",
       description: "AAARGHHH!",
-      usage: "gun",
+      usage: "banghead",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** needs a bigger gun."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** thinks a palm isn't enough."
     });
   }
 
-  async run(message, args, level, loadingMessage) { // eslint-disable-line no-unused-vars
-    const bang = await this.cmdWeeb("bang", "gif", message.channel.nsfw);
+  async run(message, args, level, loadingMessage) {
+    const banghead = await this.cmdWeeb("banghead", "gif", message.channel.nsfw);
     await loadingMessage.edit({
       embed: {
         "title": "Click here if the image failed to load.",
-        "url": bang,
+        "url": banghead,
         "color": message.guild.me.roles.highest.color || 5198940,
         "image": {
-          "url": bang
+          "url": banghead
         }
       }
     });
+
   }
 }
 
-module.exports = Gun;
+module.exports = Banghead;

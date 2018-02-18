@@ -25,7 +25,7 @@ class Overwatch extends Command {
       console.log(e.stack);
       return null;
     });
-    if (!data) message.response("❗", "Sorry, But Something Went Wrong, please try again later.");
+    if (!data) message.response("❗", "Sorry, but something wen't wrong.. try again :<");
     const embed = new MessageEmbed()
       .setTitle(`${data.profile.nick} Lvl ${data.profile.level} on ${platform}`)
       .setURL(data.profile.url)

@@ -10,27 +10,20 @@ class Stepped extends Social {
       usage: "stepped [@mention|user id]",
       extended: "Mention another user to step on them.",
       cost: 10,
-      cooldown: 10
+      cooldown: 10,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is out for a walk when suddenly..."
     });
   }
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    let msg;
-    try {
-      const stepped = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
-      
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
 
-      msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is out for a walk when suddenly...`);
-      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.stepped(stepped.displayAvatarURL({ format: "png", size: 128})), "stepped.png"));
-      await msg.delete();
+  cmdVerify(message, args, loadingMessage) {
+    return this.verifyUser(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id, { msg: loadingMessage });
+  }
 
-    } catch (error) {
-      msg.edit("Something went wrong, please try again later");
-      this.client.logger.error(error);
-    }
+  async run(message, args, level, loadingMessage) {
+    const stepped = await this.cmdVerify(message, args, loadingMessage);
+    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.stepped(stepped.displayAvatarURL({ format: "png", size: 128})), "stepped.png"));
+    await loadingMessage.delete();
   }
 }
 
-module.exports = Stepped;//
+module.exports = Stepped;

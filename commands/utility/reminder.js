@@ -21,7 +21,7 @@ class Reminder extends Command {
       else return message.channel.send("**Your Reminders:**\n" + reminders.map(r => `${r.reminder} - ${moment(r.reminderTimestamp).fromNow()}`).join("\n"));
     }
     const blah = await this.regCheck(args.join(" "));
-    if (!blah) return message.respond(undefined, "Invalid Command usage, you must supply a reminder message and duration e.g; `Do the laundry in 20 minutes`.");
+    if (!blah) return message.response(undefined, "Invalid Command usage, you must supply a reminder message and duration e.g; `Do the laundry in 20 minutes`.");
     this.client.reminders.set(`${message.author.id}-${message.createdTimestamp + ms(blah.split("#")[1])}`, {
       id: message.author.id,
       guildid: message.guild.id,
