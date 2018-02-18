@@ -43,21 +43,21 @@ class Help extends Command {
     } else {
       sorted.forEach((c) => {
         if (c.help.cat.toLowerCase() === type.toLowerCase()) {
-         n = n + 1;
+          n = n + 1;
         }
       });
 
       var output = "";
-      var num = 0;
+      num = 0;
       const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
       for (const c of sorted.values()) {
         if (c.help.cat.toLowerCase() === type.toLowerCase()) {
           if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
           if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
             if (level < this.client.levelCache[c.conf.permLevel]) return;
-            var output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
+            output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
           }
-          var num = num + 1;
+          num = num + 1;
         }
       }
 
@@ -131,9 +131,9 @@ class Help extends Command {
           if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
           if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
             if (level < this.client.levelCache[c.conf.permLevel]) return;
-            var output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
+            output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
           }
-          var num = num + 1;
+          num = num + 1;
         }
       }
       r.users.remove(message.author);
@@ -167,9 +167,9 @@ class Help extends Command {
           if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
           if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
             if (level < this.client.levelCache[c.conf.permLevel]) return;
-            var output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
+            output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
           }
-          var num = num + 1;
+          num = num + 1;
         }
       }
       r.users.remove(message.author);
@@ -203,9 +203,9 @@ class Help extends Command {
           if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
           if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
             if (level < this.client.levelCache[c.conf.permLevel]) return;
-            var output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
+            output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
           }
-          var num = num + 1;
+          num = num + 1;
         }
       }
       r.users.remove(message.author);
@@ -241,7 +241,7 @@ class Help extends Command {
             if (level < this.client.levelCache[c.conf.permLevel]) return;
             output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
           }
-          var num = num + 1;
+          num = num + 1;
         }
       }
       r.users.remove(message.author);
@@ -278,7 +278,7 @@ class Help extends Command {
     numberpages.on("collect", async (r) => {
       if (on) return;
       on = true;
-      var num = 0;
+      num = 0;
       await message.channel.send(`Please enter a selection from 1 to ${finalpage}`);
       await message.channel.awaitMessages(m => !isNaN(m.content) && m.author.id === message.author.id, {
         max: 1,
@@ -293,7 +293,7 @@ class Help extends Command {
             if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
             if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
               if (level < this.client.levelCache[c.conf.permLevel]) return;
-              var output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
+              output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
             }
             var num = num + 1;
           }
