@@ -16,7 +16,7 @@ class E621 extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const blacklist = ["loli", "shota", "cub", "young", "child", "baby"];
+    const blacklist = ["loli", "shota", "cub", "young", "child", "baby", "guro", "gore", "vore"];
     if (!message.channel.nsfw) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is checking out ${args.length === 0 ? " " : `${args.join(" ")} on `}e621.net...`);
 

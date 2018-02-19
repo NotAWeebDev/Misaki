@@ -23,7 +23,7 @@ class Konachan extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const blacklist = ["loli", "shota", "cub", "young", "child", "baby"];
+    const blacklist = ["loli", "shota", "cub", "young", "child", "baby", "guro", "gore", "vore"];
     const tags = args.join("_");
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is checking out ${tags.length === 0 ? "something" : tags}...`);
     if (!message.channel.nsfw) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
