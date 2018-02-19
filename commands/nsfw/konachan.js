@@ -23,7 +23,7 @@ class Konachan extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const blacklist = ["loli", "shota", "cub", "young", "child", "baby"];
+    const blacklist = ["loli", "shota", "cub", "young", "child", "baby", "guro", "gore", "vore"];
     const tags = args.join("_");
     let msg;
     try {
