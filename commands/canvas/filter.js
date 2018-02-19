@@ -19,38 +19,33 @@ class Filter extends Social {
     return this.verifyUser(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id, { msg: loadingMessage });
   }
 
-  async run(message, args, loadingMessage) {
-    
+  async run(message, args, level, loadingMessage) {
+    if (message.flags[0].length === 0) return message.channel.send(`Incorrect usage, try any of the following; \`${this.help.usage}\``);
+
     const person = await this.cmdVerify(message, args, loadingMessage);//(message.mentions.users.first() || message.author).displayAvatarURL({ format: "png", size: 2048 });
     if (message.mentions.users.size === 1) args.shift();
-    let msg;
     switch (message.flags[0]) {
       case "sepia":
-        msg = await message.channel.send("<a:typing:397490442469376001> Applying sepia filter...");
         await message.channel.send(new MessageAttachment(await this.client.idiotAPI.sepia(person.displayAvatarURL({ format: "png", size: 2048 })), `${message.author.id}-sepia.png`));
-        await msg.delete();
+        await loadingMessage.delete();
         break;
       case "invert":
-        msg = await message.channel.send("<a:typing:397490442469376001> Applying invert filter...");
         await message.channel.send(new MessageAttachment(await this.client.idiotAPI.invert(person.displayAvatarURL({ format: "png", size: 2048 })), `${message.author.id}-invert.png`));
-        await msg.delete();
+        await loadingMessage.delete();
         break;
       case "grayscale":
       case "greyscale":
-        msg = await message.channel.send("<a:typing:397490442469376001> Applying greyscale filter...");
         await message.channel.send(new MessageAttachment(await this.client.idiotAPI.greyscale(person.displayAvatarURL({ format: "png", size: 2048 })), `${message.author.id}-greyscale.png`));
-        await msg.delete();
+        await loadingMessage.delete();
         break;
       case "igray":
       case "igrey":
-        msg = await message.channel.send("<a:typing:397490442469376001> Applying invert greyscale filter...");
         await message.channel.send(new MessageAttachment(await this.client.idiotAPI.iGrey(person.displayAvatarURL({ format: "png", size: 2048 })), `${message.author.id}-inverted-greyscale.png`));
-        await msg.delete();
+        await loadingMessage.delete();
         break;
       case "silhouette":
-        msg = await message.channel.send("<a:typing:397490442469376001> Applying silhouette filter...");
         await message.channel.send(new MessageAttachment(await this.client.idiotAPI.silhouette(person.displayAvatarURL({ format: "png", size: 2048 })), `${message.author.id}-silhouette.png`));
-        await msg.delete();
+        await loadingMessage.delete();
         break;
       // case "ithres":
       //   msg = await message.channel.send("<a:typing:397490442469376001> Applying inverted threshold filter...");
@@ -64,18 +59,13 @@ class Filter extends Social {
       //   await msg.delete();
       //   break;
       case "brightness":
-        msg = await message.channel.send("<a:typing:397490442469376001> Applying brightness filter...");
         await message.channel.send(new MessageAttachment(await this.client.idiotAPI.brightness(person.displayAvatarURL({ format: "png", size: 2048 }), args[0]), `${message.author.id}-brightness.png`));
-        await msg.delete();
+        await loadingMessage.delete();
         break;
       case "myoldfriend":
       case "darkness":
-        msg = await message.channel.send("<a:typing:397490442469376001> Applying darkness filter...");
         await message.channel.send(new MessageAttachment(await this.client.idiotAPI.darkness(person.displayAvatarURL({ format: "png", size: 2048 }), args[0]), `${message.author.id}-darkness.png`));
-        await msg.delete();
-        break;
-    
-      default:
+        await loadingMessage.delete();
         break;
     }
   }
