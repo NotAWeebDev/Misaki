@@ -20,6 +20,7 @@ class Help extends Command {
     let page = 1;
     let n = 0;
     let num = 0;
+    let reactor; 
 
     const embed = new MessageEmbed()
       .setTimestamp()
@@ -65,8 +66,8 @@ class Help extends Command {
       }
     }
 
-    if (this.client.commands.has(type) || this.client.commands.some(command => command.conf.aliases.includes(type))) {
-      const cm = this.client.commands.get(type) || this.client.commands.get(this.client.aliases.get(type));
+    if (this.client.commands.has(type) || this.client.aliases.has(type)) {
+      const cm = this.client.commands.get(type) || this.client.commands.get(this.client.aliases.get((type)));
       if (level < this.client.levelCache[cm.conf.permLevel]) return;
       embed.setTitle(cm.help.name)
         .addField('Command description', cm.help.description)
@@ -79,14 +80,17 @@ class Help extends Command {
     if (!message.guild.me.hasPermission(['MANAGE_MESSAGES'])) {
       await message.channel.send('I don"t have permission to remove reactions, please do this manually.');
     }
-    if (msg2.embeds[0].title) {
-      for (const emoji of emojis) await msg2.react(emoji);
+
+    if(msg2.embeds[0].title) {
+      if (msg2.embeds[0].title.startsWith('Page')) {
+        for (const emoji of emojis) await msg2.react(emoji);
+      }
     }
 
     const nextpage = msg2.createReactionCollector(
-      (reaction, user) => reaction.emoji.name === '▶' && user.id === message.author.id,
-      { time: 1500000 },
-    );
+        (reaction, user) => reaction.emoji.name === '▶' && user.id === message.author.id,
+        { time: 1500000 },
+      );
 
     const backpage = msg2.createReactionCollector(
       (reaction, user) => reaction.emoji.name === '◀' && user.id === message.author.id,
@@ -112,6 +116,7 @@ class Help extends Command {
       (reaction, user) => reaction.emoji.name === '⏹' && user.id === message.author.id,
       { time: 1500000 },
     );
+
 
     nextpage.on('collect', (r) => {
       pages(message, msg2, Number(msg2.embeds[0].title.split(' ')[1].split('/')[0]) + 1, sorted, type, level, r, this, 'forward');
