@@ -3,7 +3,7 @@
 A new entertainment bot by the Idiot Himself!
 
 [![Discord](https://discordapp.com/api/guilds/396331425621868554/embed.png)](https://discord.gg/RasxyYT)
-[![Travis](https://travis-ci.org/YorkAARGH/Misaki.svg)](https://travis-ci.org/YorkAARGH/Misaki)
+[![Travis](https://travis-ci.org/NotAWeebDev/Misaki.svg)](https://travis-ci.org/NotAWeebDev/Misaki)
 [![Patreon](https://img.shields.io/badge/donate-patreon-F96854.svg)](https://www.patreon.com/anidiotsguide)
 ## Inviting to a guild
 
