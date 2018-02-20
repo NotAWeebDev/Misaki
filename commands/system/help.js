@@ -1,6 +1,6 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 const { MessageEmbed } = require("discord.js");
-
+const emojis = ["⏮", "◀", "⏹", "▶", "⏭", "🔢"];
 const perpage = 10;
 let on = false;
 
@@ -17,10 +17,10 @@ class Help extends Command {
   }
 
   async run(message, [type], level) {
-    var page = 1;
-    var n = 0;
-    var finalpage;
-    var num;
+    let page = 1;
+    let n = 0;
+    let num;
+    let totalpages;
 
     const embed = new MessageEmbed()
       .setTimestamp()
@@ -28,41 +28,39 @@ class Help extends Command {
       .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL());
 
     let currentCategory = "";
-    const sorted = this.client.commands.sort((p, c) => (p.help.cat > c.help.cat ? 1 : p.help.name > c.help.name && p.help.cat === c.help.cat ? 1 : -1));
+    const sorted = this.client.commands.sort((p, c) => (p.help.cat > c.help.category ? 1 : p.help.name > c.help.name && p.help.cat === c.help.category ? 1 : -1));
     if (!type) {
       const description = `Command category list\n\nUse \`${message.settings.prefix}help <category>\` to find commands for a specific category`;
       const output = sorted.filter(c => !(level < 10 && c.help.category === "Owner") || !(c.help.category === "NSFW" && !message.channel.nsfw)).map((c) => {
-        const cat = c.help.cat;
+        const cat = c.help.category;
         if (currentCategory !== cat && !type) {
           currentCategory = cat;
-          return `\n\`${message.settings.prefix}help ${cat.toLowerCase()}\` | Shows ${cat} commands`;
+          return `\n\`${message.settings.prefix}help ${cat.toLowerCase()}\``;
         }
       }).join("");
       embed.setDescription(description)
         .addField("Categories", output);
     } else {
       sorted.forEach((c) => {
-        if (c.help.cat.toLowerCase() === type.toLowerCase()) {
-          n = n + 1;
+        if (c.help.category.toLowerCase() === type.toLowerCase()) {
+          n++;
         }
       });
-
-      var output = "";
+      let output = "";
       num = 0;
-      const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
+      const pg = Number(page) && Number(page) <= Math.ceil(n / perpage) ? Number(page) : 1;
       for (const c of sorted.values()) {
-        if (c.help.cat.toLowerCase() === type.toLowerCase()) {
-          if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
+        if (c.help.category.toLowerCase() === type.toLowerCase()) {
+          if (c.help.category === "NSFW" && !message.channel.nsfw) return;
           if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
             if (level < this.client.levelCache[c.conf.permLevel]) return;
             output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
           }
-          num = num + 1;
+          num++;
         }
       }
 
       if (num) {
-        finalpage = Math.ceil(num / perpage);
         embed.setTitle(`Page ${page}/${Math.ceil(num / perpage)}`)
           .setDescription(`A list of commands in the ${type} category.\n(Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${message.settings.prefix}help <command>\`\n\n${num > 10 && pg === 1 ? `To view more commands do\` ${message.settings.prefix}help <category> 2\`` : ""}`)
           .addField("Commands", output);
@@ -79,16 +77,12 @@ class Help extends Command {
     }
 
     const msg2 = await message.channel.send(embed);
+    totalpages = Math.ceil(num / perpage)
     if (!message.guild.me.hasPermission(["MANAGE_MESSAGES"])) {
       await message.channel.send("I don\"t have permission to remove reactions, please do this manually.");
     }
     if (msg2.embeds[0].title) {
-      await msg2.react("⏮");
-      await msg2.react("◀");
-      await msg2.react("⏹");
-      await msg2.react("▶");
-      await msg2.react("⏭");
-      await msg2.react("🔢");
+        for (const emoji of emojis) await msg2.react(emoji)
     }
 
     const nextpage = msg2.createReactionCollector(
@@ -122,147 +116,22 @@ class Help extends Command {
     );
 
     nextpage.on("collect", (r) => {
-      var num = 0;
-      var page = parseInt(msg2.embeds[0].title.split(" ")[1].split("/")[0]) + 1;
-      var output = "";
-      const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
-      for (const c of sorted.values()) {
-        if (c.help.cat.toLowerCase() === type.toLowerCase()) {
-          if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
-          if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
-            if (level < this.client.levelCache[c.conf.permLevel]) return;
-            output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
-          }
-          num = num + 1;
-        }
-      }
-      r.users.remove(message.author);
-      if (page > Math.ceil(num / perpage)) return;
-      msg2.edit({
-        embed: {
-          title: `Page ${page}/${Math.ceil(num / perpage)}`,
-          description: `A list of commands in the ${type} category.\n(Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${message.settings.prefix}help <command>\`\n\n${num > 10 && pg === 1 ? `To view more commands do\` ${message.settings.prefix}help <category> 2\`` : ""}`,
-          fields: [
-            {
-              name: "Commands",
-              value: output,
-            },
-          ],
-          color: message.guild.me.roles.highest.color || 5198940,
-          footer: {
-            text: `Requested by ${message.author.tag}`,
-            icon_url: message.author.avatarURL(),
-          },
-        },
-      });
+      const page = Number(msg2.embeds[0].title.split(" ")[1].split("/")[0]) + 1;
+      pages(message, msg2, page, sorted, type, level, r, this, 'forward')
     });
 
     backpage.on("collect", (r) => {
-      var page = parseInt(msg2.embeds[0].title.split(" ")[1].split("/")[0]) - 1;
-      var output = "";
-      var num = 0;
-      const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
-      for (const c of sorted.values()) {
-        if (c.help.cat.toLowerCase() === type.toLowerCase()) {
-          if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
-          if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
-            if (level < this.client.levelCache[c.conf.permLevel]) return;
-            output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
-          }
-          num = num + 1;
-        }
-      }
-      r.users.remove(message.author);
-      if (page === 0) return;
-      msg2.edit({
-        embed: {
-          title: `Page ${page}/${Math.ceil(num / perpage)}`,
-          description: `A list of commands in the ${type} category.\n(Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${message.settings.prefix}help <command>\`\n\n${num > 10 && pg === 1 ? `To view more commands do\` ${message.settings.prefix}help <category> 2\`` : ""}`,
-          fields: [
-            {
-              name: "Commands",
-              value: output,
-            },
-          ],
-          color: message.guild.me.roles.highest.color || 5198940,
-          footer: {
-            text: `Requested by ${message.author.tag}`,
-            icon_url: message.author.avatarURL(),
-          },
-        },
+        const page = Number(msg2.embeds[0].title.split(" ")[1].split("/")[0]) - 1;
+        pages(message, msg2, page, sorted, type, level, r, this, 'backward')
       });
-    });
 
     firstpage.on("collect", (r) => {
-      var page = 1;
-      var output = "";
-      var num = 0;
-      const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
-      for (const c of sorted.values()) {
-        if (c.help.cat.toLowerCase() === type.toLowerCase()) {
-          if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
-          if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
-            if (level < this.client.levelCache[c.conf.permLevel]) return;
-            output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
-          }
-          num = num + 1;
-        }
-      }
-      r.users.remove(message.author);
-      if (page === 0) return;
-      msg2.edit({
-        embed: {
-          title: `Page ${page}/${Math.ceil(num / perpage)}`,
-          description: `A list of commands in the ${type} category.\n(Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${message.settings.prefix}help <command>\`\n\n${num > 10 && pg === 1 ? `To view more commands do\` ${message.settings.prefix}help <category> 2\`` : ""}`,
-          fields: [
-            {
-              name: "Commands",
-              value: output,
-            },
-          ],
-          color: message.guild.me.roles.highest.color || 5198940,
-          footer: {
-            text: `Requested by ${message.author.tag}`,
-            icon_url: message.author.avatarURL(),
-          },
-        },
-      });
+        pages(message, msg2, 1, sorted, type, level, r, this)
     });
 
     lastpage.on("collect", (r) => {
-      var page = finalpage;
-      var output = "";
-      var num = 0;
-      const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
-      for (const c of sorted.values()) {
-        if (c.help.cat.toLowerCase() === type.toLowerCase()) {
-          if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
-          if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
-            if (level < this.client.levelCache[c.conf.permLevel]) return;
-            output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
-          }
-          num = num + 1;
-        }
-      }
-      r.users.remove(message.author);
-      if (page === 0) return;
-      msg2.edit({
-        embed: {
-          title: `Page ${page}/${Math.ceil(num / perpage)}`,
-          description: `A list of commands in the ${type} category.\n(Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${message.settings.prefix}help <command>\`\n\n${num > 10 && pg === 1 ? `To view more commands do\` ${message.settings.prefix}help <category> 2\`` : ""}`,
-          fields: [
-            {
-              name: "Commands",
-              value: output,
-            },
-          ],
-          color: message.guild.me.roles.highest.color || 5198940,
-          footer: {
-            text: `Requested by ${message.author.tag}`,
-            icon_url: message.author.avatarURL(),
-          },
-        },
-      });
+        let page = Math.ceil(totalpages)
+        pages(message, msg2, page, sorted, type, level, r, this)
     });
 
     stop.on("collect", (r) => {
@@ -279,48 +148,66 @@ class Help extends Command {
       if (on) return;
       on = true;
       num = 0;
-      await message.channel.send(`Please enter a selection from 1 to ${finalpage}`);
+      await message.channel.send(`Please enter a selection from 1 to ${totalpages}`);
       await message.channel.awaitMessages(m => !isNaN(m.content) && m.author.id === message.author.id, {
         max: 1,
         time: 10000,
         errors: ["time"],
       }).then(async (collected) => {
-        var page = parseInt(collected.first().content);
-        var output = "";
-        const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
-        for (const c of sorted.values()) {
-          if (c.help.cat.toLowerCase() === type.toLowerCase()) {
-            if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
-            if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
-              if (level < this.client.levelCache[c.conf.permLevel]) return;
-              output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
-            }
-            var num = num + 1;
-          }
-        }
-        r.users.remove(message.author);
-        if (page > Math.ceil(num / perpage)) return;
-        msg2.edit({
-          embed: {
-            title: `Page ${page}/${Math.ceil(num / perpage)}`,
-            description: `A list of commands in the ${type} category.\n(Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${message.settings.prefix}help <command>\`\n\n${num > 10 && pg === 1 ? `To view more commands do\` ${message.settings.prefix}help <category> 2\`` : ""}`,
-            fields: [
-              {
-                name: "Commands",
-                value: output,
-              },
-            ],
-            color: message.guild.me.roles.highest.color || 5198940,
-            footer: {
-              text: `Requested by ${message.author.tag}`,
-              icon_url: message.author.avatarURL(),
-            },
-          },
-        });
+        page = Number(collected.first().content);
+        pages(message, msg2, page, sorted, type, level, r, this)
       });
       on = false;
     });
-  }
 }
-
+}
 module.exports = Help;
+
+const pages = async (message, msg2, page, sorted, type, level, r, this2, hm) => {
+    let n = 0;
+    sorted.forEach((c) => {
+        if (c.help.category.toLowerCase() === type.toLowerCase()) {
+          n++;
+        }
+      });
+
+    num = 0;
+    output = "";
+    const pg = Number(page) && Number(page) <= Math.ceil(n / perpage) ? Number(page) : 1;
+    console.log(pg)
+    for (const c of sorted.values()) {
+      if (c.help.category.toLowerCase() === type.toLowerCase()) {
+        if (c.help.cat === "NSFW" && !message.channel.nsfw) return;
+        if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
+          if (level < this2.client.levelCache[c.conf.permLevel]) return;
+          output = output + `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
+          console.log(output)
+        }
+        num++;
+      }
+    }
+    r.users.remove(message.author);
+    if(hm === 'forward') {
+        if (page > Math.ceil(num / perpage)) return;  
+    }
+    if(hm === 'backward') {
+        if (page === 0) return;
+    }
+    await msg2.edit({
+      embed: {
+        title: `Page ${page}/${Math.ceil(num / perpage)}`,
+        description: `A list of commands in the ${type} category.\n(Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${message.settings.prefix}help <command>\`\n\n${num > 10 && pg === 1 ? `To view more commands do\` ${message.settings.prefix}help <category> 2\`` : ""}`,
+        fields: [
+          {
+            name: "Commands",
+            value: output,
+          },
+        ],
+        color: message.guild.me.roles.highest.color || 5198940,
+        footer: {
+          text: `Requested by ${message.author.tag}`,
+          icon_url: message.author.avatarURL(),
+        },
+      },
+    });
+};
