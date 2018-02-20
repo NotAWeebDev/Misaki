@@ -6,8 +6,7 @@ class Store extends Social {
       name: "store",
       description: "Display All Store Items",
       usage: "store <-buy|-sell|-add|-del|-view>",
-      category: "Social",
-      aliases: []
+      category: "Social"
     });
   }
 
@@ -24,9 +23,9 @@ class Store extends Social {
         const name = args.join(" ");
         if (!name) return message.reply(`|\`❌\`| ${this.help.usage}`);
         if (name.toLowerCase() === "slots") {
-          this.buyToken(name, message, this.client);
+          await this.buyToken(name, message, this.client);
         } else {
-          this.buyRole(name, message, this.client);
+          await this.buyRole(name, message, this.client);
         }
         break;
       }
@@ -35,9 +34,9 @@ class Store extends Social {
         const name = args.join(" ");
         if (!name) return message.reply(`|\`❌\`| ${this.help.usage}`);
         if (name.toLowerCase() === "slots") {
-          this.sellToken(name, message, this.client);
+          await this.sellToken(name, message, this.client);
         } else {
-          this.sellRole(name, message, this.client);
+          await this.sellRole(name, message, this.client);
         }
         break;
       }
@@ -86,20 +85,20 @@ class Store extends Social {
         const items = message.guild.store;
         if (!items.length) return  message.channel.send(`= ${message.guild.name} Store =\n` + "\n" + "= Tokens = \n" + `Slots${" ".repeat(20 - "Slots".length)}:: ₲${message.settings.tokenPrice} :: ${message.member.inventory["tokens"]} \n`, { code: "asciidoc" });
         message.channel.send(`= ${message.guild.name} Store =\n` + "\n" + "= Tokens = \n" + `Slots${" ".repeat(20 - "Slots".length)}:: ₲${message.settings.tokenPrice} :: ${message.member.inventory["tokens"]} \n \n`+ "= Roles For Sale = \n"+ items.map(item => 
-          `${message.guild.roles.get(item.id.toString()).name}${" ".repeat(20 - message.guild.roles.get(item.id.toString()).name.length)}::  ${parseInt(item.price) === 0 ? "FREE" : `₲${parseInt(item.price).toLocaleString()}`} ${message.member.roles.has(item.id) ? ":: ✓" : ""}`).join("\n"), { code: "asciidoc" }
+          `${message.guild.roles.get(item.id.toString()).name}${" ".repeat(20 - message.guild.roles.get(item.id.toString()).name.length)}::  ${new Number(item.price) === 0 ? "FREE" : `₲${new Number(item.price).toLocaleString()}`} ${message.member.roles.has(item.id) ? ":: ✓" : ""}`).join("\n"), { code: "asciidoc" }
         );
       }
     }
   }
   async buyToken(name, message, client) {
-    if (parseInt(message.settings.tokenPrice) > parseInt(message.member.score.points)) {
-      return message.channel.send(`You currently have ₲${parseInt(message.member.score.points).toLocaleString()}, but the token costs ${parseInt(message.settings.tokenPrice).toLocaleString()}!`);
+    if (new Number(message.settings.tokenPrice) > new Number(message.member.score.points)) {
+      return message.channel.send(`You currently have ₲${new Number(message.member.score.points).toLocaleString()}, but the token costs ${new Number(message.settings.tokenPrice).toLocaleString()}!`);
     }
     const filter = m => m.author.id === message.author.id;
     const response = await client.awaitReply(message, `Are you sure you want to purchase a Slot Token for ₲${message.settings.tokenPrice}?`, filter, undefined, null);
     if (["y", "yes"].includes(response.toLowerCase())) {
     
-      message.member.takePoints(parseInt(message.settings.tokenPrice));
+      message.member.takePoints(new Number(message.settings.tokenPrice));
       await message.member.giveItem("tokens", 1);
       message.channel.send("You have bought a token");
     
@@ -116,15 +115,15 @@ class Store extends Social {
     if (!item) return message.channel.send("That item doesn't exist, Please make sure it is spelled correctly");
     if (message.member.roles.has(item.array()[0].id)) return message.channel.send("You already have the role :facepalm: ");
     
-    if (parseInt(item.array()[0].price) > parseInt(message.member.score.points)) {
-      return message.channel.send(`You currently have ₲${parseInt(message.member.score.points).toLocaleString()}, but the role costs ${parseInt(item.array()[0].price).toLocaleString()}!`);
+    if (new Number(item.array()[0].price) > new Number(message.member.score.points)) {
+      return message.channel.send(`You currently have ₲${new Number(message.member.score.points).toLocaleString()}, but the role costs ${new Number(item.array()[0].price).toLocaleString()}!`);
     }
   
     const filter = m => m.author.id === message.author.id;
     const response = await client.awaitReply(message, `Are you sure you want to purchase ${item.array()[0].name} for ₲${item.array()[0].price.toLocaleString()}?`, filter, undefined, null);
     if (["y", "yes"].includes(response.toLowerCase())) {
     
-      message.member.takePoints(parseInt(item.array()[0].price));
+      message.member.takePoints(new Number(item.array()[0].price));
       await message.member.roles.add(item.array()[0].id);
       message.channel.send("You have bought the role :tada: ");
     
@@ -135,7 +134,7 @@ class Store extends Social {
     }
   }
   async sellToken(name, message, client) {
-    const returnPrice = parseInt(message.settings.tokenPrice) / 2;
+    const returnPrice = new Number(message.settings.tokenPrice) / 2;
     const filter = m => m.author.id === message.author.id;
     const response = await client.awaitReply(message, `Are you sure you want to sell a Token for ₲${returnPrice}?`, filter, undefined, null);
     if (["y", "yes"].includes(response.toLowerCase())) {
