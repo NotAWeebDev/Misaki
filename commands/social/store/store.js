@@ -85,20 +85,20 @@ class Store extends Social {
         const items = message.guild.store;
         if (!items.length) return  message.channel.send(`= ${message.guild.name} Store =\n` + "\n" + "= Tokens = \n" + `Slots${" ".repeat(20 - "Slots".length)}:: ₲${message.settings.tokenPrice} :: ${message.member.inventory["tokens"]} \n`, { code: "asciidoc" });
         message.channel.send(`= ${message.guild.name} Store =\n` + "\n" + "= Tokens = \n" + `Slots${" ".repeat(20 - "Slots".length)}:: ₲${message.settings.tokenPrice} :: ${message.member.inventory["tokens"]} \n \n`+ "= Roles For Sale = \n"+ items.map(item => 
-          `${message.guild.roles.get(item.id.toString()).name}${" ".repeat(20 - message.guild.roles.get(item.id.toString()).name.length)}::  ${new Number(item.price) === 0 ? "FREE" : `₲${new Number(item.price).toLocaleString()}`} ${message.member.roles.has(item.id) ? ":: ✓" : ""}`).join("\n"), { code: "asciidoc" }
+          `${message.guild.roles.get(item.id.toString()).name}${" ".repeat(20 - message.guild.roles.get(item.id.toString()).name.length)}::  ${Number(item.price) === 0 ? "FREE" : `₲${Number(item.price).toLocaleString()}`} ${message.member.roles.has(item.id) ? ":: ✓" : ""}`).join("\n"), { code: "asciidoc" }
         );
       }
     }
   }
   async buyToken(name, message, client) {
-    if (new Number(message.settings.tokenPrice) > new Number(message.member.score.points)) {
-      return message.channel.send(`You currently have ₲${new Number(message.member.score.points).toLocaleString()}, but the token costs ${new Number(message.settings.tokenPrice).toLocaleString()}!`);
+    if (Number(message.settings.tokenPrice) > Number(message.member.score.points)) {
+      return message.channel.send(`You currently have ₲${Number(message.member.score.points).toLocaleString()}, but the token costs ${Number(message.settings.tokenPrice).toLocaleString()}!`);
     }
     const filter = m => m.author.id === message.author.id;
     const response = await client.awaitReply(message, `Are you sure you want to purchase a Slot Token for ₲${message.settings.tokenPrice}?`, filter, undefined, null);
     if (["y", "yes"].includes(response.toLowerCase())) {
     
-      message.member.takePoints(new Number(message.settings.tokenPrice));
+      message.member.takePoints(Number(message.settings.tokenPrice));
       await message.member.giveItem("tokens", 1);
       message.channel.send("You have bought a token");
     
@@ -113,18 +113,18 @@ class Store extends Social {
     
     if (item.size > 1) return message.reply(`B..Baka! Be more specific more than that, there is more than one item on sale with ${name} as their name`);
     if (!item) return message.channel.send("That item doesn't exist, Please make sure it is spelled correctly");
-    if (message.member.roles.has(item.array()[0].id)) return message.channel.send("You already have the role :facepalm: ");
+    if (message.member.roles.has(item.array().first().id)) return message.channel.send("You already have the role :facepalm: ");
     
-    if (new Number(item.array()[0].price) > new Number(message.member.score.points)) {
-      return message.channel.send(`You currently have ₲${new Number(message.member.score.points).toLocaleString()}, but the role costs ${new Number(item.array()[0].price).toLocaleString()}!`);
+    if (Number(item.array().first().price) > Number(message.member.score.points)) {
+      return message.channel.send(`You currently have ₲${Number(message.member.score.points).toLocaleString()}, but the role costs ${Number(item.array().first().price).toLocaleString()}!`);
     }
   
     const filter = m => m.author.id === message.author.id;
-    const response = await client.awaitReply(message, `Are you sure you want to purchase ${item.array()[0].name} for ₲${item.array()[0].price.toLocaleString()}?`, filter, undefined, null);
+    const response = await client.awaitReply(message, `Are you sure you want to purchase ${item.array().first().name} for ₲${item.array().first().price.toLocaleString()}?`, filter, undefined, null);
     if (["y", "yes"].includes(response.toLowerCase())) {
     
-      message.member.takePoints(new Number(item.array()[0].price));
-      await message.member.roles.add(item.array()[0].id);
+      message.member.takePoints(Number(item.array().first().price));
+      await message.member.roles.add(item.array().first().id);
       message.channel.send("You have bought the role :tada: ");
     
     } else
@@ -134,7 +134,7 @@ class Store extends Social {
     }
   }
   async sellToken(name, message, client) {
-    const returnPrice = new Number(message.settings.tokenPrice) / 2;
+    const returnPrice = Number(message.settings.tokenPrice) / 2;
     const filter = m => m.author.id === message.author.id;
     const response = await client.awaitReply(message, `Are you sure you want to sell a Token for ₲${returnPrice}?`, filter, undefined, null);
     if (["y", "yes"].includes(response.toLowerCase())) {
@@ -154,16 +154,16 @@ class Store extends Social {
     const item = client.store.filter(i => i.name.toLowerCase().includes(name.toLowerCase()));
           
     if (!item) return message.channel.send("That item doesn't exist, Please make sure it is spelled correctly");
-    if (!message.member.roles.has(item.array()[0].id)) return message.channel.send("You don't have the role :facepalm: ");
+    if (!message.member.roles.has(item.array().first().id)) return message.channel.send("You don't have the role :facepalm: ");
     
-    const returnPrice = Math.floor(item.array()[0].price/2);
+    const returnPrice = Math.floor(item.array().first().price/2);
     
     const filter = m => m.author.id === message.author.id;
-    const response = await client.awaitReply(message, `Are you sure you want to sell ${item.array()[0].name} for ₲${returnPrice.toLocaleString()}?`, filter, undefined, null);
+    const response = await client.awaitReply(message, `Are you sure you want to sell ${item.array().first().name} for ₲${returnPrice.toLocaleString()}?`, filter, undefined, null);
     if (["y", "yes"].includes(response.toLowerCase())) {
     
       message.member.givePoints(returnPrice);
-      await message.member.roles.remove(item.array()[0].id);
+      await message.member.roles.remove(item.array().first().id);
       message.channel.send("You have sold the role :tada: ");
     
     } else
