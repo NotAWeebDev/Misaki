@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const snekfetch = require("snekfetch");
+const { post } = require("snekfetch");
 const { URLSearchParams } = require("url");
 
 class Meme extends Social {
@@ -28,7 +28,7 @@ class Meme extends Social {
     params.append("text0", text0);
     params.append("text1", text1);
 
-    const { body } = await snekfetch.post(`https://api.imgflip.com/caption_image?${params}`);
+    const { body } = await post(`https://api.imgflip.com/caption_image?${params}`);
     return body.data.url;
   }
 
@@ -56,7 +56,7 @@ class Meme extends Social {
     params.append("boxes[2][text]", third);
     params.append("boxes[3][text]", forth);
 
-    const { body } = await snekfetch.post(`https://api.imgflip.com/caption_image?${params}`);
+    const { body } = await post(`https://api.imgflip.com/caption_image?${params}`);
     return body.data.url;
   }
 

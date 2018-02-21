@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const snekfetch = require("snekfetch");
+const { get } = require("snekfetch");
 
 class Lizard extends Social {
   constructor(client) {
@@ -11,31 +11,23 @@ class Lizard extends Social {
       extended: "This command will return a beautiful lizard.",
       cost: 5,
       cooldown: 10,
+      aliases: ["geko"],
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is looking for a lizard..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    try {
-
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
-
-      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is looking for a lizard...`);
-      const { body } = await snekfetch.get("https://nekos.life/api/lizard");
-      await msg.edit({
-        embed: {
-          "title": "Click here if the image failed to load.",
-          "url": body.url,
-          "color": message.guild.me.roles.highest.color || 5198940,
-          "image": {
-            "url": body.url
-          }
+  async run(message, args, level, loadingMessage) {
+    const { body } = await get("https://nekos.life/api/lizard");
+    await loadingMessage.edit({
+      embed: {
+        "title": "Click here if the image failed to load.",
+        "url": body.url,
+        "color": message.guild.me.roles.highest.color || 5198940,
+        "image": {
+          "url": body.url
         }
-      });
-    } catch (e) {
-      console.log(e);
-    }
+      }
+    });
   }
 }
 

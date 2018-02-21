@@ -1,3 +1,5 @@
+const { ParseError } = require("../util/CustomError.js");
+
 class Command {
   constructor(client, {
     name = null,
@@ -48,49 +50,33 @@ class Command {
     return `${line1}${line2}`;
   }
 
-  async verifyUser(message, user) {
-    try {
-      const match = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
-      if (!match) {
-        message.response("❗", "Invalid user id.");
-        return false;
-      }
-      const id = match[1];
-      const check = await this.client.users.fetch(id);
-      if (check.username !== undefined) return check;
-    } catch (error) {
-      message.channel.send(error);
-    }
+  async verifyUser(message, user, options = {}) {
+    const match = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
+    if (!match) throw new ParseError("Invalid Mention or ID", options.msg);
+    const id = match[1];
+    return this.client.users.fetch(id);
   }
 
-  async verifyMember(message, member) {
-    const user = await this.verifyUser(message, member);
+  async verifyMember(message, member, options = {}) {
+    const user = await this.verifyUser(message, member, options.msg);
     const target = await message.guild.members.fetch(user);
     return target;
   }
 
-  async verifyMessage(message, msgid) {
-    try {
-      const match = /([0-9]{17,20})/.exec(msgid);
-      if (!match) throw "Invalid message id.";
-      const id = match[1];
-      const check = await message.channel.messages.fetch(id);
-      if (check.cleanContent !== undefined) return id;
-    } catch (error) {
-      message.channel.send(error);
-    }
+  async verifyMessage(message, msgid, options = {}) {
+    const match = /([0-9]{17,20})/.exec(msgid);
+    if (!match) throw new ParseError("Invalid Message ID.", options.msg);
+    const id = match[1];
+    return message.channel.messages.fetch(id).then(m => m.id);
   }
 
-  async verifyChannel(message, chanid) {
-    try {
-      const match = /([0-9]{17,20})/.exec(chanid);
-      if (!match) return message.channel.id;
-      const id = match[1];
-      const check = await message.guild.channels.get(id);
-      if (check.name !== undefined && check.type === "text") return id;
-    } catch (error) {
-      message.channel.send(error);
-    }
+  async verifyChannel(message, chanid, options = {}) {
+    const match = /([0-9]{17,20})/.exec(chanid);
+    if (!match) return message.channel.id;
+    const id = match[1];
+    const check = message.guild.channels.get(id);
+    if (!check || check.type !== "text") throw new ParseError("No Channel found or wrong type", options.msg);
+    return check.id;
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars

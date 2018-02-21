@@ -1,4 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
+const { UsageError } = require(`${process.cwd()}/util/CustomError.js`);
 
 class Hewwo extends Social {
   constructor(client) {
@@ -13,17 +14,13 @@ class Hewwo extends Social {
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    if (args.length < 1) return message.response(undefined, "You need to give the bot a message to send.");
-    if (message.settings.socialSystem === "true") {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-    }
-    const phrase = args.join(" ");
-    try {
-      message.channel.send(this.translate(phrase));
-    } catch (error) {
-      this.client.logger.error(error);
-    }
+  cmdVerify(message, args, loadingMessage) {
+    if (args.length < 1) return Promise.reject(new UsageError("You need to give the bot a message to send.", loadingMessage));
+    return Promise.resolve();
+  }
+
+  async run(message, args) {
+    await message.channel.send(this.translate(args.join(" ")));
   }
 
   translate(phrase) {
