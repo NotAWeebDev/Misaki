@@ -14,8 +14,7 @@ class Help extends Command {
       usage: 'help <category/command/setting>',
       aliases: ['h', 'halp', 'commands'],
     });
-
-    const pages = async (message, msg2, page, sorted, type, level, r, this2, hm) => {
+    this.pages = async (message, msg2, page, sorted, type, level, r, this2, hm) => {
       let n = 0;
       sorted.forEach((c) => {
         if (c.help.category.toLowerCase() === type.toLowerCase()) {
