@@ -23,7 +23,7 @@ class Tiger extends Social {
       }
 
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a tiger...`);
-      const { body } = await snekfetch.get("https://dashboard.typicalbot.com/api/v1/tiger").set("Authentication", this.client.config.apiTokens.tbToken);
+      const { body } = await snekfetch.get("https://dashboard.typicalbot.com/api/v1/tiger").set("Authorization", this.client.config.apiTokens.tbToken);
       await message.channel.buildEmbed()
         .setColor(message.guild.me.roles.highest.color || 5198940)
         .attachFiles([new MessageAttachment(new Buffer(body.data), "image.png")])
