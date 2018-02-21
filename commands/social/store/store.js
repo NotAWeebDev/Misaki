@@ -113,18 +113,18 @@ class Store extends Social {
     
     if (item.size > 1) return message.reply(`B..Baka! Be more specific more than that, there is more than one item on sale with ${name} as their name`);
     if (!item) return message.channel.send("That item doesn't exist, Please make sure it is spelled correctly");
-    if (message.member.roles.has(item.array().first().id)) return message.channel.send("You already have the role :facepalm: ");
+    if (message.member.roles.has(item.first().id)) return message.channel.send("You already have the role :facepalm: ");
     
-    if (Number(item.array().first().price) > Number(message.member.score.points)) {
-      return message.channel.send(`You currently have ₲${Number(message.member.score.points).toLocaleString()}, but the role costs ${Number(item.array().first().price).toLocaleString()}!`);
+    if (Number(item.first().price) > Number(message.member.score.points)) {
+      return message.channel.send(`You currently have ₲${Number(message.member.score.points).toLocaleString()}, but the role costs ${Number(item.first().price).toLocaleString()}!`);
     }
   
     const filter = m => m.author.id === message.author.id;
-    const response = await client.awaitReply(message, `Are you sure you want to purchase ${item.array().first().name} for ₲${item.array().first().price.toLocaleString()}?`, filter, undefined, null);
+    const response = await client.awaitReply(message, `Are you sure you want to purchase ${item.first().name} for ₲${item.first().price.toLocaleString()}?`, filter, undefined, null);
     if (["y", "yes"].includes(response.toLowerCase())) {
     
-      message.member.takePoints(Number(item.array().first().price));
-      await message.member.roles.add(item.array().first().id);
+      message.member.takePoints(Number(item.first().price));
+      await message.member.roles.add(item.first().id);
       message.channel.send("You have bought the role :tada: ");
     
     } else
@@ -154,16 +154,16 @@ class Store extends Social {
     const item = client.store.filter(i => i.name.toLowerCase().includes(name.toLowerCase()));
           
     if (!item) return message.channel.send("That item doesn't exist, Please make sure it is spelled correctly");
-    if (!message.member.roles.has(item.array().first().id)) return message.channel.send("You don't have the role :facepalm: ");
+    if (!message.member.roles.has(item.first().id)) return message.channel.send("You don't have the role :facepalm: ");
     
-    const returnPrice = Math.floor(item.array().first().price/2);
+    const returnPrice = Math.floor(item.first().price/2);
     
     const filter = m => m.author.id === message.author.id;
-    const response = await client.awaitReply(message, `Are you sure you want to sell ${item.array().first().name} for ₲${returnPrice.toLocaleString()}?`, filter, undefined, null);
+    const response = await client.awaitReply(message, `Are you sure you want to sell ${item.first().name} for ₲${returnPrice.toLocaleString()}?`, filter, undefined, null);
     if (["y", "yes"].includes(response.toLowerCase())) {
     
       message.member.givePoints(returnPrice);
-      await message.member.roles.remove(item.array().first().id);
+      await message.member.roles.remove(item.first().id);
       message.channel.send("You have sold the role :tada: ");
     
     } else
