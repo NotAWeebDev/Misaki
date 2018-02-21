@@ -17,7 +17,7 @@ class Help extends Command {
       let n = 0; // eslint-disable-line no-unused-vars
       for (const c of sorted.values()) {
         if (c.help.category.toLowerCase() === type.toLowerCase()) {
-          n++
+          n++;
         }
       }
 
@@ -136,7 +136,7 @@ class Help extends Command {
           select.stop();
           r.message.reactions.removeAll();
           break;
-        case "🔢": // eslint disable no-case-declarations
+        case "🔢": // eslint-disable-line no-case-declarations
           if (on) return;
           on = true;
           await r.message.channel.send(`Please enter a selection from 1 to ${totalpages}`);
