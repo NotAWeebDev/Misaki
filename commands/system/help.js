@@ -2,7 +2,6 @@ const Command = require(`${process.cwd()}/base/Command.js`);
 const { MessageEmbed } = require("discord.js");
 const EMOJIS = ["⏮", "◀", "⏹", "▶", "⏭", "🔢"];
 const perpage = 10;
-
 class Help extends Command {
   constructor(client) {
     super(client, {
@@ -15,10 +14,10 @@ class Help extends Command {
     });
 
     this.pages = async (message, helpmessage, pagenumber, sorted, type, level, reactions, direction) => {
-      let n = 0;
+      let n = 0; // eslint-disable-line no-unused-vars
       for (const c of sorted.values()) {
         if (c.help.category.toLowerCase() === type.toLowerCase()) {
-          n++;
+          n++
         }
       }
 
@@ -106,7 +105,7 @@ class Help extends Command {
     const msg2 = await message.channel.send(helpembed);
     const totalpages = Math.ceil(num / perpage);
     if (!message.guild.me.hasPermission(["MANAGE_MESSAGES"])) {
-      await message.channel.send("I don\'t have permission to remove reactions, please do this manually.");
+      await message.channel.send("I don't have permission to remove reactions, please do this manually.");
     }
 
     if (msg2.embeds[0].title && msg2.embeds[0].title.includes("Page") && Number(msg2.embeds[0].title.split(" ")[1].split("/")[1]) !== 1) {
@@ -137,8 +136,8 @@ class Help extends Command {
           select.stop();
           r.message.reactions.removeAll();
           break;
-        case "🔢":
-          if (on) break;
+        case "🔢": // eslint disable no-case-declarations
+          if (on) return;
           on = true;
           await r.message.channel.send(`Please enter a selection from 1 to ${totalpages}`);
           const whichpage = await message.channel.awaitMessages(m => !isNaN(m.content) && m.author.id === message.author.id, {
