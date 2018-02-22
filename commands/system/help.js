@@ -11,33 +11,34 @@ class Help extends Command {
       extended: "This command will display all available commands for your permission level, with the additonal option of getting per command information when you run 'help <command name>'.",
       category: "System",
       usage: "help <category/command/setting>",
-      aliases: ["h", "halp", "commands"],
+      aliases: ["h", "halp", "commands"]
     });
-    this.pages = async (message, helpmessage, pagenumber, sorted, type, level, reactions, direction) => {
-      let num = 0;
-      let output = "";
-      const pg = Number(pagenumber);
-      for (const cmd of sorted.values()) {
-        if (cmd.help.category.toLowerCase() === type) {
-          if (cmd.help.category === "NSFW" && !message.channel.nsfw) continue;
-          if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
-            if (level < this.client.levelCache[cmd.conf.permLevel]) continue;
-            output += `\n\`${message.settings.prefix + cmd.help.name}\` | ${cmd.help.description.length > 80 ? `${cmd.help.description.slice(0, 80)}...` : cmd.help.description}`;
-          }
-          num++;
+  }
+
+  async pages(message, helpmessage, pagenumber, sorted, type, level, reactions, direction) {
+    let num = 0;
+    let output = "";
+    const pg = Number(pagenumber);
+    for (const cmd of sorted.values()) {
+      if (cmd.help.category.toLowerCase() === type) {
+        if (cmd.help.category === "NSFW" && !message.channel.nsfw) continue;
+        if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
+          if (level < this.client.levelCache[cmd.conf.permLevel]) continue;
+          output += `\n\`${message.settings.prefix + cmd.help.name}\` | ${cmd.help.description.length > 80 ? `${cmd.help.description.slice(0, 80)}...` : cmd.help.description}`;
         }
+        num++;
       }
-      reactions.users.remove(message.author);
-      if (direction === "forward" && pg > Math.ceil(num / perpage)) return;
-      if (direction === "backward" && pg === 0) return;
-      const helpembed = new MessageEmbed()
-        .setTitle(`Page ${pg}/${Math.ceil(num / perpage)} for ${type.toProperCase()}`)
-        .setDescription(`A list of commands in the ${type} category.\n(Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${message.settings.prefix}help <command>\``)
-        .addField("Commands", output)
-        .setColor(message.guild.me.roles.highest.color || 5198940)
-        .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL());
-      await helpmessage.edit(helpembed);
-    };
+    }
+    reactions.users.remove(message.author);
+    if (direction === "forward" && pg > Math.ceil(num / perpage)) return;
+    if (direction === "backward" && pg === 0) return;
+    const helpembed = new MessageEmbed()
+      .setTitle(`Page ${pg}/${Math.ceil(num / perpage)} for ${type.toProperCase()}`)
+      .setDescription(`A list of commands in the ${type} category.\n(Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${message.settings.prefix}help <command>\``)
+      .addField("Commands", output)
+      .setColor(message.guild.me.roles.highest.color || 5198940)
+      .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL());
+    await helpmessage.edit(helpembed);
   }
 
   async run(message, [type, page = 1], level) {
@@ -131,8 +132,8 @@ class Help extends Command {
             time: 300000,
             errors: ["time"]
           });
-          page = Number(whichpage.first().content);
-          this.pages(message, msg2, page, sorted, type, level, r);
+          const pagenumber = Number(whichpage.first().content);
+          this.pages(message, msg2, pagenumber, sorted, type, level, r);
           on = false;
           break;
         }
@@ -148,7 +149,7 @@ class Help extends Command {
 }
 
 Array.prototype.unique = function() {
-  return this.filter((value, index, self) => self.indexOf(value) === index);
+  return [...new Set(this)];
 };
 
 module.exports = Help;
