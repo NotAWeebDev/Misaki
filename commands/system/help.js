@@ -2,6 +2,7 @@ const Command = require(`${process.cwd()}/base/Command.js`);
 const { MessageEmbed } = require("discord.js");
 const EMOJIS = ["⏮", "◀", "⏹", "▶", "⏭", "🔢"];
 const perpage = 10;
+
 class Help extends Command {
   constructor(client) {
     super(client, {
@@ -12,24 +13,16 @@ class Help extends Command {
       usage: "help <category/command/setting>",
       aliases: ["h", "halp", "commands"],
     });
-
     this.pages = async (message, helpmessage, pagenumber, sorted, type, level, reactions, direction) => {
-      let n = 0; // eslint-disable-line no-unused-vars
-      for (const c of sorted.values()) {
-        if (c.help.category.toLowerCase() === type.toLowerCase()) {
-          n++;
-        }
-      }
-
       let num = 0;
       let output = "";
       const pg = Number(pagenumber);
-      for (const c of sorted.values()) {
-        if (c.help.category.toLowerCase() === type.toLowerCase()) {
-          if (c.help.category === "NSFW" && !message.channel.nsfw) continue;
+      for (const cmd of sorted.values()) {
+        if (cmd.help.category.toLowerCase() === type) {
+          if (cmd.help.category === "NSFW" && !message.channel.nsfw) continue;
           if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
-            if (level < this.client.levelCache[c.conf.permLevel]) continue;
-            output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
+            if (level < this.client.levelCache[cmd.conf.permLevel]) continue;
+            output += `\n\`${message.settings.prefix + cmd.help.name}\` | ${cmd.help.description.length > 80 ? `${cmd.help.description.slice(0, 80)}...` : cmd.help.description}`;
           }
           num++;
         }
@@ -52,36 +45,32 @@ class Help extends Command {
   }
 
   async run(message, [type, page = 1], level) {
-    let num = 0;
+    let num = 0;    
+    if (type) type = type.toLowerCase();
     const helpembed = new MessageEmbed()
       .setTimestamp()
       .setColor(message.guild.me.roles.highest.color || 5198940)
       .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL());
 
-    const currentCategory = "";
-    const last = [];
-    const sorted = this.client.commands.sort((p, c) => (p.help.category > c.help.category ? 1 : p.help.name > c.help.name && p.help.category === c.help.category ? 1 : -1));
+    const sorted = this.client.commands.sort((p, cmd) => (p.help.category > cmd.help.category ? 1 : p.help.name > cmd.help.name && p.help.category === cmd.help.category ? 1 : -1));
     if (!type) {
+      let output = "";
       const description = `Command category list\n\nUse \`${message.settings.prefix}help <category>\` to find commands for a specific category`;
-      const output = sorted.map((c) => {
-        const cat = c.help.category;
-        if (currentCategory !== cat && !type) {
-          if (last.includes(cat.toLowerCase())) return;
-          last.push(cat.toLowerCase());
-          return `\n\`${message.settings.prefix}help ${cat.toLowerCase()} | Shows ${cat.toProperCase()} commands\``;
-        }
-      }).join("");
+      const categories = this.client.commands.map(c => c.help.category).unique();
+      for (let i = 0; i < categories.length; i++) { 
+        output += `\n\`${message.settings.prefix}help ${categories[i].toProperCase()}\` | Shows ${categories[i].toProperCase()} commands`;
+      }
       helpembed.setDescription(description)
         .addField("Categories", output);
     } else {
       let output = "";
       const pg = Number(page);
-      for (const c of sorted.values()) {
-        if (c.help.category.toLowerCase() === type.toLowerCase()) {
-          if (c.help.category === "NSFW" && !message.channel.nsfw) return;
+      for (const cmd of sorted.values()) {
+        if (cmd.help.category.toLowerCase() === type) {
+          if (cmd.help.category === "NSFW" && !message.channel.nsfw) return;
           if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
-            if (level < this.client.levelCache[c.conf.permLevel]) return;
-            output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 80 ? `${c.help.description.slice(0, 80)}...` : c.help.description}`;
+            if (level < this.client.levelCache[cmd.conf.permLevel]) return;
+            output += `\n\`${message.settings.prefix + cmd.help.name}\` | ${cmd.help.description.length > 80 ? `${cmd.help.description.slice(0, 80)}...` : cmd.help.description}`;
           }
           num++;
         }
@@ -108,7 +97,7 @@ class Help extends Command {
       await message.channel.send("I don't have permission to remove reactions, please do this manually.");
     }
 
-    if (msg2.embeds[0].title && msg2.embeds[0].title.includes("Page") && Number(msg2.embeds[0].title.split(" ")[1].split("/")[1]) !== 1) {
+    if (msg2.embeds[0].title && msg2.embeds[0].title.includes("Page") && totalpages > 1) {
       for (const emoji of EMOJIS) await msg2.react(emoji);
     }
 
@@ -119,12 +108,13 @@ class Help extends Command {
 
     let on = false;
     select.on("collect", async (r) => {
+      const currentpage = Number(msg2.embeds[0].title.split(" ")[1].split("/")[0]);
       switch (r.emoji.name) {
         case "▶":
-          this.pages(message, msg2, Number(msg2.embeds[0].title.split(" ")[1].split("/")[0]) + 1, sorted, type, level, r, "forward");
+          this.pages(message, msg2, currentpage + 1, sorted, type, level, r, "forward");
           break;
         case "◀":
-          this.pages(message, msg2, Number(msg2.embeds[0].title.split(" ")[1].split("/")[0]) - 1, sorted, type, level, r, "backward");
+          this.pages(message, msg2, currentpage - 1, sorted, type, level, r, "backward");
           break;
         case "⏮":
           this.pages(message, msg2, 1, sorted, type, level, r);
@@ -136,18 +126,20 @@ class Help extends Command {
           select.stop();
           r.message.reactions.removeAll();
           break;
-        case "🔢": // eslint-disable-line no-case-declarations
+        case "🔢": {
           if (on) return;
           on = true;
           await r.message.channel.send(`Please enter a selection from 1 to ${totalpages}`);
           const whichpage = await message.channel.awaitMessages(m => !isNaN(m.content) && m.author.id === message.author.id, {
             max: 1,
             time: 300000,
-            errors: ["time"],
+            errors: ["time"]
           });
-          this.pages(message, msg2, Number(whichpage.first().content), sorted, type, level, r);
+          page = Number(whichpage.first().content);
+          this.pages(message, msg2, page, sorted, type, level, r);
           on = false;
           break;
+        }
       }
     });
 
@@ -157,6 +149,12 @@ class Help extends Command {
       }
     });
   }
+}
+
+Array.prototype.unique = function() {
+  return this.filter(function (value, index, self) { 
+    return self.indexOf(value) === index;
+  });
 }
 
 module.exports = Help;
