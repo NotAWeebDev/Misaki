@@ -60,7 +60,7 @@ module.exports = class {
         return;
       }
     }
-      
+    
     message.author.permLevel = level;
 
     message.flags = [];
@@ -70,6 +70,11 @@ module.exports = class {
     
     this.client.logger.log(`${this.client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) ran command ${cmd.help.name}`, "cmd");
     
+    if (message.channel.type === "text") {
+      const mPerms = this.client.permCheck(message, cmd.conf.botPerms);
+      if (mPerms.length) return message.channel.send(`The bot does not have the following permissions \`${mPerms.join(', ')}\``);
+    }
+
     try {
       let msg;
       if (cmd instanceof Social) {

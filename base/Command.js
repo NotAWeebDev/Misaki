@@ -12,6 +12,7 @@ class Command {
     hidden = false,
     guildOnly = false,
     aliases = [],
+    botPerms = [],
     permLevel = "User",
     location = ""
   }) {
@@ -20,6 +21,7 @@ class Command {
       hidden,
       guildOnly,
       aliases,
+      botPerms,
       permLevel,
       location,
       cooldown
