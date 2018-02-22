@@ -28,12 +28,8 @@ class Help extends Command {
         }
       }
       reactions.users.remove(message.author);
-      if (direction === "forward") {
-        if (pg > Math.ceil(num / perpage)) return;
-      }
-      if (direction === "backward") {
-        if (pg === 0) return;
-      }
+      if (direction === "forward" && pg > Math.ceil(num / perpage)) return;
+      if (direction === "backward" && pg === 0) return;
       const helpembed = new MessageEmbed()
         .setTitle(`Page ${pg}/${Math.ceil(num / perpage)} for ${type.toProperCase()}`)
         .setDescription(`A list of commands in the ${type} category.\n(Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${message.settings.prefix}help <command>\``)
