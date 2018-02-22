@@ -73,7 +73,7 @@ module.exports = class {
     if (message.channel.type === "text") {      
       const mPerms = message.channel.permissionsFor(message.guild.me).missing(cmd.conf.botPerms);
       if (mPerms.includes("SEND_MESSAGES")) return;
-      if (mPerms.length) return message.channel.send(`The bot does not have the following permissions \`${mPerms.join(', ')}\``);
+      if (mPerms.length) return message.channel.send(`The bot does not have the following permissions \`${mPerms.join(", ")}\``);
     }
 
     try {
