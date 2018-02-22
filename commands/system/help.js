@@ -49,7 +49,7 @@ class Help extends Command {
       .setColor(message.guild.me.roles.highest.color || 5198940)
       .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL());
 
-    const sorted = this.client.commands.sort((p, cmd) => (p.help.category > cmd.help.category ? 1 : p.help.name > cmd.help.name && p.help.category === cmd.help.category ? 1 : -1));
+    const sorted = this.client.commands.sort((p, cmd) => (p.help.category > cmd.help.category ? 1 : p.help.name > cmd.help.name && p.help.category === cmd.help.category ? 1 : -1)).filter(c => !(level < 10 && c.help.category == "Owner"));
     if (!type) {
       let output = "";
       const description = `Command category list\n\nUse \`${message.settings.prefix}help <category>\` to find commands for a specific category`;
