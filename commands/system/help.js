@@ -99,7 +99,7 @@ class Help extends Command {
 
     const select = msg2.createReactionCollector(
       (reaction, user) => EMOJIS.includes(reaction.emoji.name) && user.id === message.author.id,
-      { time: 300000 },
+      { time: 30000 }
     );
 
     let on = false;
@@ -147,7 +147,7 @@ class Help extends Command {
   }
 }
 
-Array.prototype.unique = function () {
+Array.prototype.unique = function() {
   return this.filter((value, index, self) => self.indexOf(value) === index);
 };
 
