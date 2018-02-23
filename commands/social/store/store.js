@@ -23,9 +23,9 @@ class Store extends Social {
         const name = args.join(" ");
         if (!name) return message.reply(`|\`❌\`| ${this.help.usage}`);
         if (name.toLowerCase() === "slots") {
-          await this.buyToken(name, message, this.client);
+          await this.buyToken(name, message);
         } else {
-          await this.buyRole(name, message, this.client);
+          await this.buyRole(name, message);
         }
         break;
       }
@@ -34,9 +34,9 @@ class Store extends Social {
         const name = args.join(" ");
         if (!name) return message.reply(`|\`❌\`| ${this.help.usage}`);
         if (name.toLowerCase() === "slots") {
-          await this.sellToken(name, message, this.client);
+          await this.sellToken(name, message);
         } else {
-          await this.sellRole(name, message, this.client);
+          await this.sellRole(name, message);
         }
         break;
       }
@@ -81,21 +81,21 @@ class Store extends Social {
         break;
       }
 
-      case ("view"): {
+      case "view": {
         const items = message.guild.store;
-        if (!items.length) return  message.channel.send(`= ${message.guild.name} Store =\n` + "\n" + "= Tokens = \n" + `Slots${" ".repeat(20 - "Slots".length)}:: ₲${message.settings.tokenPrice} :: ${message.member.inventory["tokens"]} \n`, { code: "asciidoc" });
-        message.channel.send(`= ${message.guild.name} Store =\n` + "\n" + "= Tokens = \n" + `Slots${" ".repeat(20 - "Slots".length)}:: ₲${message.settings.tokenPrice} :: ${message.member.inventory["tokens"]} \n \n`+ "= Roles For Sale = \n"+ items.map(item => 
+        if (!items.length) return  message.channel.send(`= ${message.guild.name} Store =\n` + "\n" + "= Tokens = \n" + `Slots${" ".repeat(20 - "Slots".length)}:: ₲${message.settings.tokenPrice} :: ${message.member.inventory.tokens} \n`, { code: "asciidoc" });
+        message.channel.send(`= ${message.guild.name} Store =\n` + "\n" + "= Tokens = \n" + `Slots${" ".repeat(20 - "Slots".length)}:: ₲${message.settings.tokenPrice} :: ${message.member.inventory.tokens} \n \n`+ "= Roles For Sale = \n"+ items.map(item => 
           `${message.guild.roles.get(item.id.toString()).name}${" ".repeat(20 - message.guild.roles.get(item.id.toString()).name.length)}::  ${Number(item.price) === 0 ? "FREE" : `₲${Number(item.price).toLocaleString()}`} ${message.member.roles.has(item.id) ? ":: ✓" : ""}`).join("\n"), { code: "asciidoc" }
         );
       }
     }
   }
-  async buyToken(name, message, client) {
+  async buyToken(name, message) {
     if (Number(message.settings.tokenPrice) > Number(message.member.score.points)) {
       return message.channel.send(`You currently have ₲${Number(message.member.score.points).toLocaleString()}, but the token costs ${Number(message.settings.tokenPrice).toLocaleString()}!`);
     }
     const filter = m => m.author.id === message.author.id;
-    const response = await client.awaitReply(message, `Are you sure you want to purchase a Slot Token for ₲${message.settings.tokenPrice}?`, filter, undefined, null);
+    const response = await this.client.awaitReply(message, `Are you sure you want to purchase a Slot Token for ₲${message.settings.tokenPrice}?`, filter, undefined, null);
     if (["y", "yes"].includes(response.toLowerCase())) {
     
       message.member.takePoints(Number(message.settings.tokenPrice));
@@ -108,8 +108,8 @@ class Store extends Social {
       message.response(undefined, "Transaction cancelled.");
     }
   }
-  async buyRole(name, message, client) {
-    const item = client.store.filter(i => i.name.toLowerCase().includes(name.toLowerCase()));
+  async buyRole(name, message) {
+    const item = this.client.store.filter(i => i.name.toLowerCase().includes(name.toLowerCase()));
     
     if (item.size > 1) return message.reply(`B..Baka! Be more specific more than that, there is more than one item on sale with ${name} as their name`);
     if (!item) return message.channel.send("That item doesn't exist, Please make sure it is spelled correctly");
@@ -120,7 +120,7 @@ class Store extends Social {
     }
   
     const filter = m => m.author.id === message.author.id;
-    const response = await client.awaitReply(message, `Are you sure you want to purchase ${item.first().name} for ₲${item.first().price.toLocaleString()}?`, filter, undefined, null);
+    const response = await this.client.awaitReply(message, `Are you sure you want to purchase ${item.first().name} for ₲${item.first().price.toLocaleString()}?`, filter, undefined, null);
     if (["y", "yes"].includes(response.toLowerCase())) {
     
       message.member.takePoints(Number(item.first().price));
@@ -133,10 +133,10 @@ class Store extends Social {
       message.response(undefined, "Transaction cancelled.");
     }
   }
-  async sellToken(name, message, client) {
+  async sellToken(name, message) {
     const returnPrice = Number(message.settings.tokenPrice) / 2;
     const filter = m => m.author.id === message.author.id;
-    const response = await client.awaitReply(message, `Are you sure you want to sell a Token for ₲${returnPrice}?`, filter, undefined, null);
+    const response = await this.client.awaitReply(message, `Are you sure you want to sell a Token for ₲${returnPrice}?`, filter, undefined, null);
     if (["y", "yes"].includes(response.toLowerCase())) {
     
       message.member.takePoints(returnPrice);
@@ -150,8 +150,8 @@ class Store extends Social {
     }
   }
   
-  async sellRole(name, message, client) {
-    const item = client.store.filter(i => i.name.toLowerCase().includes(name.toLowerCase()));
+  async sellRole(name, message) {
+    const item = this.client.store.filter(i => i.name.toLowerCase().includes(name.toLowerCase()));
           
     if (!item) return message.channel.send("That item doesn't exist, Please make sure it is spelled correctly");
     if (!message.member.roles.has(item.first().id)) return message.channel.send("You don't have the role :facepalm: ");
@@ -159,7 +159,7 @@ class Store extends Social {
     const returnPrice = Math.floor(item.first().price/2);
     
     const filter = m => m.author.id === message.author.id;
-    const response = await client.awaitReply(message, `Are you sure you want to sell ${item.first().name} for ₲${returnPrice.toLocaleString()}?`, filter, undefined, null);
+    const response = await this.client.awaitReply(message, `Are you sure you want to sell ${item.first().name} for ₲${returnPrice.toLocaleString()}?`, filter, undefined, null);
     if (["y", "yes"].includes(response.toLowerCase())) {
     
       message.member.givePoints(returnPrice);
