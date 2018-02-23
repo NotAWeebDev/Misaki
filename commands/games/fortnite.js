@@ -39,7 +39,7 @@ class Fortnite extends Command {
         .addField("Kills Per Minute", data.lifetimeStats[12].value, true)
         .addField("Time Played", data.lifetimeStats[13].value, true)
         .addField("Average Survival Time", data.lifetimeStats[14].value, true)
-        .setColor(message.guild.member(this.client.user.id).roles.highest.color || 0x00AE86));
+        .setColor(message.guild.me.roles.highest.color || 5198940));
     } catch (error) {
       message.channel.send(`Player Not Found or invalid form type, for correct usage do: \`${this.help.usage}\`.`);
     }   

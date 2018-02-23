@@ -1,6 +1,6 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const { get } = require("snekfetch");
-class Ping extends Social {
+class Momma extends Social {
   constructor(client) {
     super(client, {
       name: "yomomma",
@@ -9,7 +9,7 @@ class Ping extends Social {
       usage: "yomomma",
       cost: 5,
       cooldown: 5,
-      aliases: ["yomama"]
+      aliases: ["yomama", "mum", "mam", "mom"]
     });
   }
 
@@ -19,4 +19,4 @@ class Ping extends Social {
   }
 }
 
-module.exports = Ping;
+module.exports = Momma;
