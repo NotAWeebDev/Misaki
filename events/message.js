@@ -60,7 +60,7 @@ module.exports = class {
         return;
       }
     }
-      
+    
     message.author.permLevel = level;
 
     message.flags = [];
@@ -69,7 +69,7 @@ module.exports = class {
     }
     
     this.client.logger.log(`${this.client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) ran command ${cmd.help.name}`, "cmd");
-    
+
     try {
       let msg;
       if (cmd instanceof Social) {
@@ -79,6 +79,9 @@ module.exports = class {
           await cmd.cmdPay(message, message.author.id, cmd.help.cost, { msg });
         }
       }
+      const mPerms = message.channel.permissionsFor(message.guild.me).missing(cmd.conf.botPerms);
+      if (mPerms.includes("SEND_MESSAGES")) return;
+      if (mPerms.length) return message.channel.send(`The bot does not have the following permissions \`${mPerms.join(", ")}\``);
       await cmd.run(message, args, level, msg);
     } catch (error) {
       this.client.emit("commandError", error, message);
