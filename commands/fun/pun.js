@@ -23,7 +23,7 @@ class PunJoke extends Social {
       .setColor(message.guild.me.roles.highest.color || 5198940);
 
 
-    msg.edit({embed});
+    await msg.edit({embed});
   }
 }
 
