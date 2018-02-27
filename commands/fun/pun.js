@@ -15,13 +15,12 @@ class PunJoke extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const msg = message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is trying to think of something punny...`);
+    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is trying to think of something punny...`);
     const { text } = await get("https://getpuns.herokuapp.com/api/random");
     const embed = new MessageEmbed()
       .setThumbnail("https://cdn.discordapp.com/emojis/257279894885498890.png")
       .setDescription(`_${JSON.parse(text).Pun}_`)
       .setColor(message.guild.me.roles.highest.color || 5198940);
-
 
     await msg.edit({embed});
   }
