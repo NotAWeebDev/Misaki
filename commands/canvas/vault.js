@@ -23,7 +23,7 @@ class Valut extends Social {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       }
       msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is wandering the wastelands...`);
-      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.vaultBoy(vaultDweller.displayAvatarURL({ format:"png", size:512 })), "vaultboy.png"));
+      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.vaultBoy(vaultDweller.displayAvatarURL({ format:"png", size:128 })), "vaultboy.png"));
       await msg.delete();
     } catch (error) {
       msg.edit("Something went wrong, please try again later");
@@ -32,4 +32,4 @@ class Valut extends Social {
   }
 }
 
-module.exports = Valut;//
+module.exports = Valut;
