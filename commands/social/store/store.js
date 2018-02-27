@@ -93,7 +93,7 @@ class Store extends Social {
   async buyToken(name, message) {
     const tokenPrice = Number(message.settings.tokenPrice)
     const userPoints = Number(message.member.score.points)
-    if tokenPrice > userPoints) {
+    if (tokenPrice > userPoints) {
       return message.channel.send(`You currently have ₲${userPoints.toLocaleString()}, but the token costs ${tokenPrice.toLocaleString()}!`);
     }
     const filter = m => m.author.id === message.author.id;
