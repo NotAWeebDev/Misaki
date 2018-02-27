@@ -91,8 +91,10 @@ class Store extends Social {
     }
   }
   async buyToken(name, message) {
-    if (Number(message.settings.tokenPrice) > Number(message.member.score.points)) {
-      return message.channel.send(`You currently have ₲${Number(message.member.score.points).toLocaleString()}, but the token costs ${Number(message.settings.tokenPrice).toLocaleString()}!`);
+    const tokenPrice = Number(message.settings.tokenPrice)
+    const userPoints = Number(message.member.score.points)
+    if tokenPrice > userPoints) {
+      return message.channel.send(`You currently have ₲${userPoints.toLocaleString()}, but the token costs ${tokenPrice.toLocaleString()}!`);
     }
     const filter = m => m.author.id === message.author.id;
     const response = await this.client.awaitReply(message, `Are you sure you want to purchase a Slot Token for ₲${message.settings.tokenPrice}?`, filter, undefined, null);
@@ -115,8 +117,11 @@ class Store extends Social {
     if (!item) return message.channel.send("That item doesn't exist, Please make sure it is spelled correctly");
     if (message.member.roles.has(item.first().id)) return message.channel.send("You already have the role :facepalm: ");
     
-    if (Number(item.first().price) > Number(message.member.score.points)) {
-      return message.channel.send(`You currently have ₲${Number(message.member.score.points).toLocaleString()}, but the role costs ${Number(item.first().price).toLocaleString()}!`);
+    const userPoints = Number(message.member.score.points);
+    const rolePrice = Number(item.first().price);
+    
+    if (userPoints > rolePrice) {
+      return message.channel.send(`You currently have ₲${userPoints.toLocaleString()}, but the role costs ${rolePrice.toLocaleString()}!`);
     }
   
     const filter = m => m.author.id === message.author.id;
@@ -134,7 +139,8 @@ class Store extends Social {
     }
   }
   async sellToken(name, message) {
-    const returnPrice = Number(message.settings.tokenPrice) / 2;
+    const tokenPrice = Number(message.settings.tokenPrice)
+    const returnPrice = tokenPrice / 2;
     const filter = m => m.author.id === message.author.id;
     const response = await this.client.awaitReply(message, `Are you sure you want to sell a Token for ₲${returnPrice}?`, filter, undefined, null);
     if (["y", "yes"].includes(response.toLowerCase())) {
