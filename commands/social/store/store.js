@@ -91,8 +91,8 @@ class Store extends Social {
     }
   }
   async buyToken(name, message) {
-    const tokenPrice = Number(message.settings.tokenPrice)
-    const userPoints = Number(message.member.score.points)
+    const tokenPrice = Number(message.settings.tokenPrice);
+    const userPoints = Number(message.member.score.points);
     if (tokenPrice > userPoints) {
       return message.channel.send(`You currently have ₲${userPoints.toLocaleString()}, but the token costs ${tokenPrice.toLocaleString()}!`);
     }
@@ -139,7 +139,7 @@ class Store extends Social {
     }
   }
   async sellToken(name, message) {
-    const tokenPrice = Number(message.settings.tokenPrice)
+    const tokenPrice = Number(message.settings.tokenPrice);
     const returnPrice = tokenPrice / 2;
     const filter = m => m.author.id === message.author.id;
     const response = await this.client.awaitReply(message, `Are you sure you want to sell a Token for ₲${returnPrice}?`, filter, undefined, null);
