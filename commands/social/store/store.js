@@ -100,7 +100,7 @@ class Store extends Social {
     const response = await this.client.awaitReply(message, `Are you sure you want to purchase a Slot Token for ₲${message.settings.tokenPrice}?`, filter, undefined, null);
     if (["y", "yes"].includes(response.toLowerCase())) {
     
-      message.member.takePoints(Number(message.settings.tokenPrice));
+      message.member.takePoints(tokenPrice);
       await message.member.giveItem("tokens", 1);
       message.channel.send("You have bought a token");
     
@@ -128,7 +128,7 @@ class Store extends Social {
     const response = await this.client.awaitReply(message, `Are you sure you want to purchase ${item.first().name} for ₲${item.first().price.toLocaleString()}?`, filter, undefined, null);
     if (["y", "yes"].includes(response.toLowerCase())) {
     
-      message.member.takePoints(Number(item.first().price));
+      message.member.takePoints(rolePrice);
       await message.member.roles.add(item.first().id);
       message.channel.send("You have bought the role :tada: ");
     
