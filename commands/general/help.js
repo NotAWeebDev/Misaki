@@ -16,6 +16,9 @@ class Help extends Command {
 
   async run(message, [type, page], level) {
 
+    type ? type = type.toLowerCase() : undefined;
+    page ? page = parseInt(page) : undefined;
+
     const embed = new MessageEmbed()
       .setTimestamp()
       .setColor(message.guild.me.roles.highest.color || 5198940)
@@ -37,7 +40,7 @@ class Help extends Command {
         .addField("Categories", output);
 
     } else {
-      if (this.client.commands.has(type) || this.client.commands.some(command => command.conf.aliases.includes(type))) {
+      if (this.client.commands.has(type) || this.client.aliases.has(type)) {
         const cm = this.client.commands.get(type) || this.client.commands.get(this.client.aliases.get(type));
         if (level < this.client.levelCache[cm.conf.permLevel]) return;
         embed.setTitle(cm.help.name.toProperCase())
@@ -48,14 +51,12 @@ class Help extends Command {
       } else {
         let n = 0;
         sorted.forEach(c => {
-          if (c.help.category.toLowerCase() === type) {
-            n++;
-          }
+          c.help.category.toLowerCase() === type ? n++ : n;
         });
     
         let output = "";
         let num = 0;
-        const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
+        const pg = page && page <= Math.ceil(n / perpage) ? page : 1;
         for (const c of sorted.values()) {
           if (c.help.category.toLowerCase() === type) {
             if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
