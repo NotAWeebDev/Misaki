@@ -48,21 +48,20 @@ class Help extends Command {
       const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
       for (const c of sorted.values()) {
         if (c.help.category.toLowerCase() === type.toLowerCase()) {
-          if (c.help.category === "Owner" && level < 10 ) return;
-          if (c.help.category === "NSFW" && !message.channel.nsfw) return;
           if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
-            if (level < this.client.levelCache[c.conf.permLevel]) return;
+            if (level < this.client.levelCache[c.conf.permLevel]) continue;
+            if (c.help.category === "NSFW" && !message.channel.nsfw && level < 10) continue;
             output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 50 ? c.help.description.slice(0,50) +"...": c.help.description}`;
           }
           num++;
         }
       }
     
-      if (num) {
-        embed.setTitle("Command category help")
-          .setDescription(`A list of commands in the ${type} category.\n(Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${message.settings.prefix}help <command>\`\n\n${num > 10 && pg === 1 ? `To view more commands do\` ${message.settings.prefix}help <category> 2\`` : "" }`)
-          .addField("Commands", output);
-      }
+      if (!num) return;
+      embed.setTitle("Command category help")
+        .setDescription(`A list of commands in the ${type} category.\n(Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${message.settings.prefix}help <command>\`\n\n${num > 10 && pg === 1 ? `To view more commands do\` ${message.settings.prefix}help <category> 2\`` : "" }`)
+        .addField("Commands", output);
+      
     }
 
     if (this.client.commands.has(type) || this.client.commands.some(command => command.conf.aliases.includes(type))) {
@@ -73,8 +72,6 @@ class Help extends Command {
         .addField("Command usage", `\`${cm.help.usage}\``)
         .addField("Command aliases", cm.conf.aliases.length == 0 ? "None" : cm.conf.aliases.join(", ") );
     }
-    
-    if (!embed.fields[0]) return;
 
     return message.channel.send(embed);
   }
