@@ -39,7 +39,14 @@ const EMOJIS = {
   hook_right: "↪",
   hook_left: "↩",
   arrow_clockwise: "🔃",
-  reload: "🔃"
+  reload: "🔃",
+  exclamation: "❕",
+  red_exclamation: "❗",
+  check: "✔",
+  green_check: "✅",
+  cross: "✖",
+  red_cross: "❌"
+
 };
 
 const peutil = class PagedEmbedUtil {
@@ -104,15 +111,28 @@ const peutil = class PagedEmbedUtil {
     return this;
   }
 
-  nextPage() {
+  reapplyReactions() {
+    const perms = this.channel.permissionsFor(this.channel.guild.me).has("MANAGE_REACTIONS");
+    if (perms) this.message.reactions.removeAll();
+    else this.message.reactions.map(r => r.users.remove());
+  }
+
+  end() {
+    const perms = this.channel.permissionsFor(this.channel.guild.me).has("MANAGE_REACTIONS");
+    if (perms) this.message.reactions.removeAll();
+    else this.message.reactions.map(r => r.users.remove());
+    this.collector.stop();
+  }
+
+  nextPage(overlap = true) {
     this.currentPage++;
-    if (this.currentPage >= this.pages.length) this.currentPage = 0;
+    if (this.currentPage >= this.pages.length) this.currentPage = overlap ? this.pages.length - 1 : 0;
     return this._update();
   }
 
-  prevPage() {
+  prevPage(overlap = true) {
     this.currentPage--;
-    if (this.currentPage < 0) this.currentPage = this.pages.length - 1;
+    if (this.currentPage < 0) this.currentPage = overlap ? 0 : this.pages.length - 1;
     return this._update();
   }
 
@@ -127,12 +147,12 @@ const peutil = class PagedEmbedUtil {
 
   prompt() {
     this.channel.client.awaitReply(this.message, "What page do you want to see? (Say `cancel` to cancel this prompt)", m => m.author.id === this.caller.user.id, undefined, null)
-    .then(response => {
-      if (response.toLowerCase().trim() === "cancel") return;
-      const page = Number(response);
-      if (isNaN(page)) return this.channel.send("That is not a valid response.");
-      return this.pageTo(page).catch(() => this.channel.send("That page does not exist."));
-    });
+      .then(response => {
+        if (response.toLowerCase().trim() === "cancel") return;
+        const page = Number(response);
+        if (isNaN(page)) return this.channel.send("That is not a valid response.");
+        return this.pageTo(page).catch(() => this.channel.send("That page does not exist."));
+      });
   }
 
   async run() {
@@ -158,14 +178,11 @@ const peutil = class PagedEmbedUtil {
       cb();
     });
 
-    this.collector.on("end", () => {
-      const perms = this.channel.permissionsFor(this.channel.guild.me).has("MANAGE_REACTIONS");
-      if (perms) this.message.clearReactions();
-      else this.message.reactions.map(r => r.remove());
-    });
+    this.collector.on("end", () => this.end);
   }
 
   _update() {
+    console.log("tiddies");
     const embed = this.pages[this.currentPage];
     if (!embed) return;
     embed.footer = {
