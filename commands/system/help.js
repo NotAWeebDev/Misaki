@@ -16,7 +16,7 @@ class Help extends Command {
   }
 
   async run(message, [type, page], level) {
-
+    type = type ? type.toLowerCase() : null;
     let embed;
     const embedPreset = {
       timestamp: new Date().getTime(),
@@ -26,81 +26,101 @@ class Help extends Command {
         iconURL: message.author.avatarURL()
       }
     };
+    const command = this.client.commands.get(type) || this.client.commands.find(c => c.conf.aliases && c.conf.aliases.includes(type));
 
-    if (this.client.commands.has(type) || this.client.commands.some(command => command.conf.aliases.includes(type))) {
-      const cm = this.client.commands.get(type) || this.client.commands.get(this.client.aliases.get(type));
-      if (level < this.client.levelCache[cm.conf.permLevel]) return;
+    if (command) {
+      const category = command.help.category.toLowerCase();
+      const permLevel = this.client.levelCache[command.conf.permLevel];
+      const prohibited = (category === "nsfw" && !message.channel.nsfw) || level < permLevel;
+
+      if (prohibited) return;
+
+      const name = command.help.name.toProperCase();
+      const description = command.help.description;
+      const extended = command.help.extended;
+      const usage = command.help.usage;
+      const aliases = command.conf.aliases;
       embed = new MessageEmbed(embedPreset)
-        .setTitle(cm.help.name.toProperCase())
-        .addField("Command description", cm.help.description, false)
-        .addField("Command usage", `\`${cm.help.usage}\``, false)
-        .addField("Command aliases", cm.conf.aliases.length == 0 ? "None" : cm.conf.aliases.join(", "), false);
+        .setTitle(`${name} - ${description.length <= 75 ? description : `${description.slice(0, 75)}...`}`)
+        .addField("Command details", extended, false)
+        .addField("Command usage", `\`${usage}\``, false)
+        .addField("Command aliases", !aliases.length ? "None" : aliases.join(", "), false);
       
       return message.channel.send({ embed });
     } else {
-      let currentCategory = "";
-      const sorted = this.client.commands.sort((p, c) => p.help.category > c.help.category ? 1 :  p.help.name > c.help.name && p.help.category === c.help.category ? 1 : -1 );
+      const prefix = message.settings.prefix;
+      const commandsPreset = this.client.commands
+        .sort((p, c) => p.help.category > c.help.category ? 1 :  p.help.name > c.help.name && p.help.category === c.help.category ? 1 : -1 )
+        .filter(c => {
+          const category = c.help.category.toLowerCase();
+          const permLevel = this.client.levelCache[c.conf.permLevel];
+
+          return (!((category === "nsfw" && !message.channel.nsfw) || level < permLevel));
+        });
+      const isPage = type && !isNaN(type);
+      const isDefault = !type || isPage;
+      page = isPage ? parseInt(type) : page ? parseInt(page) : 1;
       embed = new PaginationEmbed(embedPreset)
         .setAuthorisedUser(message.author)
         .setChannel(message.channel)
         .setElementsPerPage(perpage)
         .showPageIndicator(true)
-        .setTimeout(60 * 1000);
+        .setTimeout(2 * 60 * 1000);
 
-      if (!type) {
-        const title = "Command category list";
-        const description = `Use \`${message.settings.prefix}help <category>\` to find commands for a specific category`;
-        const categories = sorted.filter(c => !(level < 10 && c.help.category == "Owner") || !(c.help.category === "NSFW" && !message.channel.nsfw)).map(c => {
-          const cat = c.help.category.toProperCase();
-          if (currentCategory !== cat && !type) {
-            currentCategory = cat;
-            return `\`${message.settings.prefix}help ${cat.toLowerCase()}\` | Shows ${cat} commands`;
+      if (isDefault) {
+        let previousCategory;
+        const description = `Use \`${prefix}help <category>\` to find commands for a specific category`;
+        const tip = `\nTo skip to a page for more categories:\n\tReact with ↗; or\n\tDo \`${prefix}help [page-num]\``;
+        const categories = Array.from(commandsPreset.values());
+        const output = categories.map(c => {
+          const beautifyCategory = c.help.category.toProperCase();
+          const currentCategory = c.help.category.toLowerCase();
+
+          if (currentCategory !== previousCategory) {
+            previousCategory = currentCategory;
+
+            return `\`${prefix}help ${currentCategory}\` | Shows ${beautifyCategory} commands`;
           }
-        });
-        const output = [];
-        
-        for (let i = 0; i < categories.length; i++) {
-          if (categories[i] === undefined) continue;
-          output.push(categories[i]);
-        }
+
+          return null;
+        }).filter(c => c);
+        const pages = Math.ceil(output.length / perpage);
 
         embed
-          .setTitle(title)
-          .setDescription(description)
+          .setTitle("Command category list")
+          .setDescription([description, pages > 2 ? tip : ""])
           .setArray(output)
           .formatField("Categories", el => el);
+
+        if (isPage) embed.setPage(page);
       } else {
-        let n = 0;
-        sorted.forEach(c => {
-          if (c.help.category.toLowerCase() === type.toLowerCase()) {
-            n++;
-          }
+        const filteredCommands = Array.from(commandsPreset.filter(c => c.help.category.toLowerCase() === type).values());
+        const output = filteredCommands.map(c => {
+          const help = c.help;
+          const name = help.name;
+          const description = help.description;
+          
+          return `\`${prefix}${name}\` | ${description.length <= 50 ? description : `${description.slice(0, 50)}...`}`;
         });
-      
-        const output = [];
-        let num = 0;
-        const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
-        for (const c of sorted.values()) {
-          if (c.help.category.toLowerCase() === type.toLowerCase()) {
-            if (c.help.category === "Owner" && level < 10 ) return;
-            if (c.help.category === "NSFW" && !message.channel.nsfw) return;
-            if (level < this.client.levelCache[c.conf.permLevel]) return;
-            output.push(`\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 50 ? c.help.description.slice(0,50) +"...": c.help.description}`);
-            num++;
-          }
-        }
-      
-        if (num) {
+        const commandsLength = output.length;
+        const pages = Math.ceil(commandsLength / perpage);
+
+        if (commandsLength) {
+          const description = `A list of commands in the ${type.toProperCase()} category.\n(Total of ${commandsLength} commands in this category)\n\nTo get help on a specific command do \`${prefix}help <command>\``;
+          const tip = `\nTo skip to a page for more commands:\n\tReact with ↗; or\n\tDo \`${prefix}help ${type} [page-num]\``;
+
           embed
             .setTitle("Command category help")
-            .setDescription(`A list of commands in the ${type} category.\n(Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${message.settings.prefix}help <command>\`${num > perpage && pg === 1 ? "\n\nTo skip to a page for more commands react with ↗" : "" }`)
+            .setDescription([description, pages > 2 ? tip : ""])
             .setArray(output)
-            .setPage(pg)
+            .setPage(page)
             .formatField("Commands", el => el);
         }
       }
 
-      return await embed.build();
+      if (!embed.array || !embed.array.length) return;
+
+      return embed.build();
     }
   }
 }
