@@ -54,16 +54,7 @@ const EMOJIS = {
  */
 
 const peutil = class PagedEmbedUtil {
-  /**
-   * @typedef {object} PagedEmbedUtilOptions
-   * @property {User} [caller] The user who instantiated the command.
-   * @property {Message} [message] The message to edit with the paged embed. If there is no message,
-   * it will send a message instead.
-   * @property {Text}
-   */
-  /**
-   * @param {PagedEmbedUtilOptions} options 
-   */
+  
   constructor(options = {}) {
 
     this.pages = [];
@@ -74,7 +65,6 @@ const peutil = class PagedEmbedUtil {
 
     this.message = options.message || null; 
     this.channel = options.channel || null;
-    // if its a TextChannel, the message will be sent with the first page when the pagedembed is executed.
 
     const caller = options.caller;
     if (caller instanceof GuildMember) this.caller = caller;
@@ -125,10 +115,14 @@ const peutil = class PagedEmbedUtil {
     return this;
   }
 
-  reapplyReactions() {
+  async reapplyReactions() {
     const perms = this.channel.permissionsFor(this.channel.guild.me).has("MANAGE_REACTIONS");
     if (perms) this.message.reactions.removeAll();
     else this.message.reactions.map(r => r.users.remove());
+    for (const emoji of this.reactions) {
+      await this.message.react(emoji);
+    }
+    return this;
   }
 
   end() {
@@ -136,6 +130,7 @@ const peutil = class PagedEmbedUtil {
     if (perms) this.message.reactions.removeAll();
     else this.message.reactions.map(r => r.users.remove());
     this.collector.stop();
+    return this;
   }
 
   nextPage(overlap = true) {
@@ -192,6 +187,7 @@ const peutil = class PagedEmbedUtil {
     });
 
     this.collector.on("end", () => this.end);
+    return this;
   }
 
   _update() {
