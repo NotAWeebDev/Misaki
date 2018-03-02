@@ -1,5 +1,6 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 const { MessageEmbed } = require("discord.js");
+const peutil = require("../../util/PagedEmbedUtil");
 const perpage = 10;
 
 class Help extends Command {
@@ -14,7 +15,7 @@ class Help extends Command {
     });
   }
 
-  async run(message, [type, page], level) {
+  async run(message, [type], level) {
 
     const embed = new MessageEmbed()
       .setTimestamp()
@@ -36,32 +37,28 @@ class Help extends Command {
       embed.setDescription(description)
         .addField("Categories", output);
     } else {
-      let n = 0;
-      sorted.forEach(c => {
-        if (c.help.category.toLowerCase() === type.toLowerCase()) {
-          n++;
-        }
-      });
     
       let output = "";
       let num = 0;
-      const pg = parseInt(page) && parseInt(page) <= Math.ceil(n / perpage) ? parseInt(page) : 1;
       for (const c of sorted.values()) {
         if (c.help.category.toLowerCase() === type.toLowerCase()) {
           if (c.help.category === "Owner" && level < 10 ) return;
           if (c.help.category === "NSFW" && !message.channel.nsfw) return;
-          if (num < perpage * pg && num > perpage * pg - (perpage + 1)) {
-            if (level < this.client.levelCache[c.conf.permLevel]) return;
-            output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 50 ? c.help.description.slice(0,50) +"...": c.help.description}`;
-          }
+          if (level < this.client.levelCache[c.conf.permLevel]) return;
+          output += `\n\`${message.settings.prefix + c.help.name}\` | ${c.help.description.length > 50 ? c.help.description.slice(0,50) +"...": c.help.description}`;
           num++;
         }
       }
     
       if (num) {
         embed.setTitle("Command category help")
-          .setDescription(`A list of commands in the ${type} category.\n(Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${message.settings.prefix}help <command>\`\n\n${num > 10 && pg === 1 ? `To view more commands do\` ${message.settings.prefix}help <category> 2\`` : "" }`)
-          .addField("Commands", output);
+          .setDescription(`A list of commands in the ${type} category.\n(Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${message.settings.prefix}help <command>\`\n`);
+        const pages = peutil.splitFields(output, "\n", embed, perpage, "Commands");
+        if (pages.length === 1) return message.channel.send({embed: pages[0]});
+        return new peutil({caller: message.author, channel: message.channel})
+          .addPages(pages).useReaction(peutil.EMOJIS.left, "prev")
+          .useReaction(peutil.EMOJIS.right, "next")
+          .run();
       }
     }
 
@@ -75,7 +72,6 @@ class Help extends Command {
     }
     
     if (!embed.fields[0]) return;
-
     return message.channel.send(embed);
   }
 }

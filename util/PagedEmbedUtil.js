@@ -126,13 +126,13 @@ const peutil = class PagedEmbedUtil {
 
   nextPage(overlap = true) {
     this.currentPage++;
-    if (this.currentPage >= this.pages.length) this.currentPage = overlap ? this.pages.length - 1 : 0;
+    if (this.currentPage >= this.pages.length) this.currentPage = overlap ?  0: this.pages.length - 1;
     return this._update();
   }
 
   prevPage(overlap = true) {
     this.currentPage--;
-    if (this.currentPage < 0) this.currentPage = overlap ? 0 : this.pages.length - 1;
+    if (this.currentPage < 0) this.currentPage = overlap ? this.pages.length - 1 : 0;
     return this._update();
   }
 
@@ -168,21 +168,19 @@ const peutil = class PagedEmbedUtil {
       await this.message.react(emoji);
     }
 
-    this.collector = this.message.createReactionCollector((reaction, user) => user === this.caller.user && this.reactions.indexOf(reaction.emoji.name) !== -1, {time: 15 * 60 * 1000}, this.collectorOptions);
+    this.collector = this.message.createReactionCollector((reaction, user) => user === this.caller.user && this.reactions.indexOf(reaction.emoji.name) !== -1, {time: 15 * 60 * 1000});
 
     this.collector.on("collect", r => {
       const perms = this.channel.permissionsFor(this.channel.guild.me).has("MANAGE_REACTIONS");
       if (perms) r.users.remove(this.caller.user);
       const cb = this.responseMap.get(r.emoji.name);
-      if (!cb) throw new TypeError(`Invalid action for emoji ${r.emoji.name}, must be a function or recognised string`);
-      cb();
+      if (cb) cb();
     });
 
     this.collector.on("end", () => this.end);
   }
 
   _update() {
-    console.log("tiddies");
     const embed = this.pages[this.currentPage];
     if (!embed) return;
     embed.footer = {
@@ -191,29 +189,27 @@ const peutil = class PagedEmbedUtil {
     return this.message.edit({ embed });
   }
 
-  static splitFields(string, embed, perPage = 2, fieldTitle = "\u200b") {
-    
-    const split = string.split(/(\n|\.)/).reduce((acc, b, i) => {
-      if (i % 2 === 1) acc.push(b);
+  static splitFields(string, splitRegex = /(\n|\.)/,embed, perPage = 10, fieldTitle = "\u200b") {
+    if (typeof splitRegex === "string") splitRegex = new RegExp(`(${splitRegex})`);
+    const split = string.split(splitRegex).reduce((acc, b, i) => {//first iteration of i is 0
+      if (i % 2 === 0) acc.push(b);
       else acc[acc.length - 1] += b;
       return acc;
-    }, []).reduce((acc, b) => {
-      if (acc[acc.length - 1].length + b.length > 1024) acc.push(b);
+    }, [""]).reduce((acc, b, i) => {
+      if (i % perPage === 0) acc.push(b);
+      else if (acc[acc.length - 1].length + b.length > 1020) acc.push(b);
       else acc[acc.length - 1] += b;
       return acc;
-    }, []);
+    }, [""]).filter(a => /[^\n\s]+/.test(a));
 
     if (!embed) return split;
-    return split.reduce((acc, b, i) => {
-      if (acc % perPage === 1) acc.push(this.cloneEmbed(embed));
-      acc[acc.length - 1].addField(i === 1 ? fieldTitle : "\u200b");
-    }, []);
-
+    console.log(split);
+    return split.map(e => this.cloneEmbed(embed).addField(fieldTitle, e));
 
   }
 
   static cloneEmbed(embed) {
-    return Object.assign(new MessageEmbed(), embed);
+    return Object.assign(new MessageEmbed(), JSON.parse(JSON.stringify(embed)));
   }
 };
 
