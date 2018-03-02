@@ -13,7 +13,7 @@ class Vaportype extends Command {
   async run(message, args) {
     if (!args.length) return message.reply("you have to provide me text to space out you baka."); // Test for any args.
     let msg = "";
-    for (let i =0; i < args.length; i++) msg += args[i].toUpperCase().split("").join(" ") + "  "; // Split up the arguments, then add to msg.
+    for (let i = 0; i < args.length; i++) msg += args[i].toUpperCase().split("").join(" ") + "  "; // Split up the arguments, then add to msg.
     return message.channel.send(msg);
   }
 
