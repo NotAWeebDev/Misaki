@@ -11,14 +11,12 @@ class Vaportype extends Command {
   }
 
   async run(message, args) {
-    args[0] ? this.space(message, args) : message.reply("you have to provide me text to space out you baka.");
-  }
-
-  async space(message, args) {
+    if (!args.length) return message.reply("you have to provide me text to space out you baka."); // Test for any args.
     let msg = "";
-    for (const c of args) msg += c.toUpperCase().split("").join(" ") + "  ";
+    for (let i =0; i < args.length; i++) msg += args[i].toUpperCase().split("").join(" ") + "  "; // Split up the arguments, then add to msg.
     return message.channel.send(msg);
   }
+
 }
 
 module.exports = Vaportype;
