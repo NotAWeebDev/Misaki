@@ -49,7 +49,21 @@ const EMOJIS = {
 
 };
 
+/**
+ * A utility that manages paged embeds.
+ */
+
 const peutil = class PagedEmbedUtil {
+  /**
+   * @typedef {object} PagedEmbedUtilOptions
+   * @property {User} [caller] The user who instantiated the command.
+   * @property {Message} [message] The message to edit with the paged embed. If there is no message,
+   * it will send a message instead.
+   * @property {Text}
+   */
+  /**
+   * @param {PagedEmbedUtilOptions} options 
+   */
   constructor(options = {}) {
 
     this.pages = [];
