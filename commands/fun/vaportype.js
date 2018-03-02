@@ -16,7 +16,7 @@ class Vaportype extends Command {
 
   async space(message, args) {
     let msg = "";
-    for (const c of args) { msg += c.toUpperCase().split("").join(" ") + "  "; }
+    for (const c of args) msg += c.toUpperCase().split("").join(" ") + "  ";
     return message.channel.send(msg);
   }
 }
