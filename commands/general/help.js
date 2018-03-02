@@ -15,7 +15,7 @@ class Help extends Command {
   }
 
   async run(message, [type, page], level) {
-    
+
     if (type) type = type.toLowerCase();
     if (page) page = parseInt(page);
 
@@ -29,7 +29,7 @@ class Help extends Command {
     
     if (!type) {
       const description = `Command category list\n\nUse \`${message.settings.prefix}help <category>\` to find commands for a specific category`;
-      const output = sorted.filter(c => !(level < 10 && c.help.category == "Owner") || !(c.help.category === "NSFW" && !message.channel.nsfw)).map(c => {
+      const output = sorted.filter(c => !(level < 10 && c.help.category === "Owner") || !(c.help.category === "NSFW" && !message.channel.nsfw)).map(c => {
         const cat = c.help.category.toProperCase();
         if (currentCategory !== cat && !type) {
           currentCategory = cat;
@@ -46,7 +46,7 @@ class Help extends Command {
         embed.setTitle(cm.help.name.toProperCase())
           .addField("Command description", cm.help.description)
           .addField("Command usage", `\`${cm.help.usage}\``)
-          .addField("Command aliases", cm.conf.aliases.length == 0 ? "None" : cm.conf.aliases.join(", ") );
+          .addField("Command aliases", cm.conf.aliases.length === 0 ? "None" : cm.conf.aliases.join(", ") );
 
       } else {
         let n = 0;
