@@ -10,14 +10,14 @@ class Vaportype extends Command {
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
+  async run(message, args) {
     args[0] ? this.space(message, args) : message.reply("you have to provide me text to space out you baka.");
   }
 
   async space(message, args) {
     let msg = "";
-    await args.forEach(c => msg += c.toUpperCase().split("").join(" ") + "  ");
-    message.channel.send(msg);
+    for (const c of args) { msg += c.toUpperCase().split("").join(" ") + "  "; }
+    return message.channel.send(msg);
   }
 }
 
