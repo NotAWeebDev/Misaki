@@ -3,7 +3,8 @@ class Owner extends Command {
 
   constructor(client, options) {
     super(client, Object.assign(options, {
-      hidden: true
+      hidden: true,
+      permLevel: "Bot Owner"
     }));
   } 
 

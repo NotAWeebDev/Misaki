@@ -4,8 +4,7 @@ class Emit extends Owner {
     super(client, {
       name: "emit",
       description: "Emit an event, debugging only...",
-      usage: "emit",
-      permLevel: "Bot Owner"
+      usage: "emit"
     });
   }
 

@@ -8,7 +8,7 @@ class Command {
     cost = 0,
     cooldown = 0,
     hidden = false,
-    guildOnly = false,
+    guildOnly = true,
     aliases = [],
     permLevel = "User",
     location = ""

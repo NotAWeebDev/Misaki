@@ -1,13 +1,13 @@
-const Owner = require(`${process.cwd()}/base/Owner.js`);
+const Command = require(`${process.cwd()}/base/Command.js`);
 const {promisify} = require("util");
 const write = promisify(require("fs").writeFile);
 
-class Reboot extends Owner {
+class Reboot extends Command {
   constructor(client) {
     super(client, {
       name: "reboot",
       description: "If running under PM2, bot will restart.",
-      category: "Owner",
+      category: "System",
       usage: "reboot",
       permLevel: "Bot Admin"
     });

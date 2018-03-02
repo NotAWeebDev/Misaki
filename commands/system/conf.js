@@ -1,11 +1,11 @@
-const Owner = require(`${process.cwd()}/base/Owner.js`);
+const Command = require(`${process.cwd()}/base/Command.js`);
 
-class Conf extends Owner {
+class Conf extends Command {
   constructor(client) {
     super(client, {
       name: "conf",
       description: "Modify the default configuration for all guilds.",
-      category: "Owner",
+      category: "System",
       usage: "conf <view/get/edit> <key> <value>",
       guildOnly: true,
       aliases: ["defaults"],

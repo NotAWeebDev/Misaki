@@ -6,8 +6,8 @@ class Xkdc extends Social {
       name: "xkcd",
       description: "Get the daily comic from XKCD",
       category: "Fun",
-      usage: "xkcd [r] [f] <num>",
-      extended: "Get the daily comic by using the command on its own, to get a random comic add the flag R, to see a selected comic use the flag F with a comic number",
+      usage: "xkcd [-r] [-f <num>]",
+      extended: "Get the daily comic by using the command on its own, to get a random comic add the flag `-r`, to see a selected comic use the flag `-f` with a comic number",
       cost: 10,
       cooldown: 10
     });
