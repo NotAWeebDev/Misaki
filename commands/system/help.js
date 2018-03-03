@@ -53,7 +53,7 @@ class Help extends Command {
       if (num) {
         embed.setTitle("Command category help")
           .setDescription(`A list of commands in the ${type} category.\n(Total of ${num} commands in this category)\n\nTo get help on a specific command do \`${message.settings.prefix}help <command>\`\n`);
-        const pages = peutil.splitFields(output, "\n", embed, perpage, "Commands");
+        const pages = peutil.splitFields(output, "\n", perpage, embed, "Commands");
         if (pages.length === 1) return message.channel.send({embed: pages[0]});
         return new peutil({caller: message.author, channel: message.channel})
           .addPages(pages).useReaction(peutil.EMOJIS.left, "prev")
