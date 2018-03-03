@@ -1,6 +1,1 @@
-* text=auto
-eol=lf
-*.js text
-*.json text
-*.md text
-*.example text
+* text=auto eol=lf
