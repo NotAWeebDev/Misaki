@@ -1,36 +1,62 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const { get } = require("snekfetch");
-class Xkdc extends Social {
+const peutil = require("../../util/PagedEmbedUtil.js");
+class XKCD extends Social {
   constructor(client) {
     super(client, {
       name: "xkcd",
       description: "Get the daily comic from XKCD",
       category: "Fun",
-      usage: "xkcd [r] [f] <num>",
-      extended: "Get the daily comic by using the command on its own, to get a random comic add the flag R, to see a selected comic use the flag F with a comic number",
+      usage: "xkcd [num] [-i]",
+      extended: "Get a random comic, type an ID number to get a specific comic, or type -i to flick through random comics with a paged embed.",
       cost: 10,
       cooldown: 10
     });
   }
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
+
+  async init() {
     const inf = await get("https://xkcd.com/info.0.json");
-    const ob = await inf.body;
-    if (message.flags[0] == "f") {
-      if (!args[0]) return message.reply(`Please make a selection between 1 - ${ob.num}`);
-      if (args[0].isNumber() !== true) return message.reply("Please make a numerical selection.");
-      if (args[0] > ob.num || args[0] <= 0) return message.reply(`Please make a selection between 1 - ${ob.num}`);
-      const ef = await get(`https://xkcd.com/${args[0]}/info.0.json`);
-      const ab = await ef.body;
-      return message.channel.send({"embed": {"author":{"name":"Misaki | XKCD Comics"}, "description":`${ab.title} | #${ab.num}\n${ab.alt}`, "image":{"url":ab.img}}});
+    this.info = inf.body;
+  }
+
+  async run(message, args, level) { // eslint-disable-line no-unused-vars
+    
+    let embed;
+    if (args[0]) {
+      embed = await this.getPage(args[0], message);
+    } else {
+      embed = await this.random();
     }
-    if (message.flags[0] == "r") {
-      const rn = await this.client.randomNum(1, ob.num);
-      const ef = await get(`https://xkcd.com/${rn}/info.0.json`);
-      const ab = await ef.body;
-      return message.channel.send({"embed": {"author":{"name":"Misaki | XKCD Comics"}, "description":`${ab.title} | #${ab.num}\n${ab.alt}`, "image":{"url":ab.img}}});
-    }
-    message.channel.send({"embed": {"author":{"name":"Misaki | Daily XKCD Comics"}, "description":`${ob.title} | #${ob.num}\n${ob.alt}`, "image":{"url":ob.img}}});
+    if (message.flags[0] !== "i") return message.channel.send({embed});
+
+    const pagedEmbed = new peutil({caller: message.member, channel: message.channel}).addPage(embed);
+    pagedEmbed
+      .useReaction(peutil.EMOJIS.left, () => pagedEmbed.prevPage(false))
+      .useReaction(peutil.EMOJIS.right, async () => {
+        pagedEmbed.addPage(await this.random())
+          .nextPage();
+      }).useReaction(peutil.EMOJIS.red_cross, () => pagedEmbed.end())
+      .run();
+
+
+  }
+
+  async random() {
+    const rn = await this.client.randomNum(1, this.info.num);
+    const ef = await get(`https://xkcd.com/${rn}/info.0.json`);
+    const ab = ef.body;
+    return {author:{name:"Misaki | XKCD Comics"}, description:`${ab.title} | #${ab.num}\n${ab.alt}`, image:{url:ab.img}};
+  }
+
+  async getPage(page, message) {
+    if (!page) return message.reply(`Please make a selection between 1 - ${this.info.num}`);
+    if (page.isNumber() !== true) return message.reply("Please make a numerical selection.");
+    if (page > this.info.num || page <= 0) return message.reply(`Please make a selection between 1 - ${this.info.num}`);
+    const ef = await get(`https://xkcd.com/${page}/info.0.json`);
+    const ab =  ef.body;
+    
+    return {author:{name:"Misaki | XKCD Comics"}, description:`${ab.title} | #${ab.num}\n${ab.alt}`, image:{url:ab.img}};
   }
 }
 
-module.exports = Xkdc;
+module.exports = XKCD;
