@@ -5,7 +5,7 @@ class Painting extends Social {
   constructor(client) {
     super(client, {
       name: "wreck",
-      description: "Based on the Wreck It Raplh 2 meme.",
+      description: "Based on the Wreck It Ralph 2 meme.",
       category: "Canvas",
       usage: "wreck [@mention|user id]",
       cost: 10,
