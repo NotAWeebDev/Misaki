@@ -27,6 +27,7 @@ class Facepalm extends Social {
     } catch (error) {
       msg.edit("Something went wrong, please try again later");
       this.client.logger.error(error);
+    }
   }
 }
 
