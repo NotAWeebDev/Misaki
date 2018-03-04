@@ -1,13 +1,14 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const { MessageAttachment } = require("discord.js");
 
-class BobRoss extends Social {
+class Painting extends Social {
   constructor(client) {
     super(client, {
-      name: "bobross",
-      description: "Paint a happy little accident.",
+      name: "painting",
+      description: "Display a valuable, but deadly painting.",
       category: "Canvas",
-      usage: "bobross @mention",
+      usage: "painting [@mention|user id]",
+      extended: "Mention another user to post a deadly painting of them.",
       cost: 10,
       cooldown: 10
     });
@@ -20,8 +21,8 @@ class BobRoss extends Social {
       if (message.settings.socialSystem === "true") {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       }
-      msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is painting a happy little accident...`);
-      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.bobRoss(painting.displayAvatarURL({ format: "png", size: 512 })), "painting.png"));
+      msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is selling a painting...`);
+      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.painting(painting.displayAvatarURL({ format: "png", size: 256 })), "painting.png"));
       await msg.delete();
     } catch (error) {
       msg.edit("Something went wrong, please try again later");
@@ -30,4 +31,4 @@ class BobRoss extends Social {
   }
 }
 
-module.exports = BobRoss;
+module.exports = Painting;//

@@ -31,7 +31,7 @@
     "fs-nextra": "^0.3.2",
     "heapdump": "^0.3.9",
     "html-entities": "^1.2.1",
-    "idiotic-api": "^0.1.7",
+    "idiotic-api": "^0.1.8",
     "inquirer": "^4.0.0",
     "kitsu": "^3.1.4",
     "klaw": "^2.1.1",

@@ -1,5 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const { get } = require("snekfetch");
+const { MessageAttachment } = require("discord.js");
 
 class Waifu extends Social {
   constructor(client) {
@@ -15,17 +15,14 @@ class Waifu extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars 
-    const target = message.mentions.members;
-    if (target.size === 0) return message.response(undefined, "You need to mention someone to rate them.");
-    if (message.member == target.first()) return message.response(undefined, "You cannot rate yourself!");
     let msg;
     try {
+      const waifu = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
       if (message.settings.socialSystem === "true") {
         if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
       }
-      msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** looks at **${target.first().displayName}**, juding them...`);
-      const { body } = await get(`https://dev.anidiots.guide/generators/waifuinsult/?avatar=${target.first().user.displayAvatarURL({ format: "png", size: 512 })}`).set("Authorization", this.client.config.apiTokens.idiotToken);
-      await message.channel.send({ files: [{ attachment: Buffer.from(body.data), name: "waifu.jpg" }] });
+      msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is judging a waifu...`);
+      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.waifuInsult(waifu.displayAvatarURL({ format: "png", size: 256 })), "waifu.png"));
       await msg.delete();
     } catch (error) {
       msg.edit("Something went wrong, please try again later");
