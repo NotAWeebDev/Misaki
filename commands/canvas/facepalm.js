@@ -11,11 +11,10 @@ class Facepalm extends Social {
       extended: "Facepalm after witnessing something very stupid.",
       cost: 10,
       cooldown: 10,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is just lost for words..."
     });
   }
 
-  async run(message, args, level, loadingMessage) {
+  async run(message, args, level) {
     let msg;
     try {
       if (message.settings.socialSystem === "true") {
