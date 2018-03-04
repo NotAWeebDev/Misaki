@@ -5,16 +5,16 @@ class Facepalm extends Social {
   constructor(client) {
     super(client, {
       name: "facepalm",
-      description: "Slap another user as Batman.",
+      description: "Facepalm at someone's stupidity",
       category: "Canvas",
       usage: "facepalm",
-      extended: "Mention another user to slap them as batman.",
+      extended: "Facepalm after witnessing something very stupid.",
       cost: 10,
-      cooldown: 10
+      cooldown: 10,
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
+  async run(message, args, level) {//eslint-disable-line no-unused-vars
     let msg;
     try {
       if (message.settings.socialSystem === "true") {

@@ -4,7 +4,7 @@ class Gun extends Social {
   constructor(client) {
     super(client, {
       name: "gun",
-      description: "AAARGHHH!",
+      description: "When you just wanna shoot someone!",
       usage: "gun",
       category: "Reactions",
       cost: 5,

@@ -5,7 +5,7 @@ class Vaportype extends Command {
       name: "vaportype",
       description: "W O A H  D U D E  S P A C E D  O U T",
       usage: "vaportype <text>",
-      category: "fun",
+      category: "Fun",
       aliases: ["vapor", "vpt"]
     });
   }
