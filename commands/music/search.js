@@ -21,6 +21,13 @@ class Search extends Command {
       .setAuthor("Error")
       .setDescription("You must be in a voice channel first!")
       .setColor(message.guild.me.roles.highest.color || 0x00AE86);
+    if (!args[0]) {
+      const embed = new MessageEmbed()
+        .setAuthor("Error")
+        .setDescription("Please list a song you would like to play")
+        .setColor(message.guild.me.roles.highest.color || 0x00AE86);
+      return message.channel.send(embed);
+    }
 
     if (!voiceChannel) return message.channel.send(noVoiceChannelEmbed);
     const permissions = voiceChannel.permissionsFor(message.client.user);
