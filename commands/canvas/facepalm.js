@@ -14,7 +14,7 @@ class Facepalm extends Social {
     });
   }
 
-  async run(message, args, level) {
+  async run(message, args, level) {//eslint-disable-line no-unused-vars
     let msg;
     try {
       if (message.settings.socialSystem === "true") {
