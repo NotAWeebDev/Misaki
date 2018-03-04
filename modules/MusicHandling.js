@@ -52,7 +52,7 @@ const handleVideo = async (video, message, voiceChannel, playlist = false) => {
     }
   }
   return;
-}
+};
   
 function play(guild, song) {
   const queue = guild.client.playlists;
