@@ -14,6 +14,7 @@ module.exports = class {
 
 
     setInterval(() => {
+      if (this.client.status !== 0) return;
       const toRemind = this.client.reminders.filter(r => r.reminderTimestamp <= Date.now());
       toRemind.forEach(reminder => {
         this.client.users.get(reminder.id).send(`You asked me to remind you about: \`${reminder.reminder}\` in \`${this.client.guilds.get(reminder.guildid).name}\``);
