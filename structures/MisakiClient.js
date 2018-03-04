@@ -21,7 +21,8 @@ class MisakiClient extends Client {
     this.upvoters = [];
     this.ratelimits = new Collection();
     this.methods = {
-      Embed: MessageEmbed
+      Embed: MessageEmbed,
+      util: require(`${process.cwd()}/util/util.js`)
     };
 
     // Enmap
