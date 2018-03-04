@@ -21,6 +21,7 @@ class Misaki extends Client {
     this.commands = new Collection();
     this.upvoters = [];
     this.ratelimits = new Collection();
+    this.playlists = new Collection();
 
     this.settings = new Enmap({ provider: new EnmapLevel({ name: "settings" }) });
     
