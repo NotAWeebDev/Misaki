@@ -2,7 +2,7 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 const { MessageEmbed } = require("discord.js");
 const ytapi = require("simple-youtube-api"); 
-const youtube = new ytapi("AIzaSyCqeZHQu2R-LrkPolNH_kfszTUjp3oUPls"); 
+const youtube = new ytapi("YOUTUBE-API-KEY-HERE"); 
 const handleVideo = require("../../modules/MusicHandling.js");
 
 class Search extends Command {
