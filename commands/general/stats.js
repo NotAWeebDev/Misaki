@@ -15,7 +15,7 @@ class Stats extends Command {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const duration = moment.duration(this.client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
-    message.buildEmbed()
+    const embed = this.client.methods.Embed()
       .setDescription(`\`\`\`asciidoc\n= STATISTICS =
 • Mem Usage  :: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB
 • Uptime     :: ${duration}
@@ -26,9 +26,8 @@ class Stats extends Command {
 • Node       :: ${process.version}\`\`\``)
       .setColor(message.guild.me.roles.highest.color || 5198940)
       .addField("Invite Me", "If you want to add me to your guild, you can do so by grabbing my invite code from [here](https://discordapp.com/oauth2/authorize/?permissions=268755008&scope=bot&client_id=396323622953680910)")
-      .addField("Okami Academy", "If you need help setting me up, you can join the [Okami Academy](https://discord.gg/RasxyYT) to get help with getting me ready on your guild!")
-      .send();
-
+      .addField("Okami Academy", "If you need help setting me up, you can join the [Okami Academy](https://discord.gg/RasxyYT) to get help with getting me ready on your guild!");
+    message.channel.send({ embed });  
   }
 }
 

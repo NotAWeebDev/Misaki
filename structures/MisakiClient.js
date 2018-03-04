@@ -1,4 +1,5 @@
-const { Client, Collection } = require("discord.js");
+const { Client, Collection, MessageEmbed } = require("discord.js");
+const CommandStore = require(`${process.cwd()}/structures/CommandStore.js`);
 const Enmap = require("enmap");
 const EnmapLevel = require("enmap-level");
 const klaw = require("klaw");
@@ -16,15 +17,16 @@ class MisakiClient extends Client {
     this.responses = require(`${process.cwd()}/assets/responses.js`);
     this.idiotAPI = new idioticApi.Client(this.config.apiTokens.idiotToken, { dev: true });
 
-    this.aliases = new Collection();
-    this.commands = new Collection();
+    this.commands = new CommandStore(this);
     this.upvoters = [];
     this.ratelimits = new Collection();
+    this.methods = {
+      Embed: MessageEmbed
+    };
 
+    // Enmap
     this.settings = new Enmap({ provider: new EnmapLevel({ name: "settings" }) });
-
     this.reminders = new Enmap({ provider: new EnmapLevel({ name: "reminders" }) });
-
     this.points = new Enmap({ provider: new EnmapLevel({ name: "points" }) });
     this.store = new Enmap({ provider: new EnmapLevel({ name: "shop" }) });
     this.inventory = new Enmap({ provider: new EnmapLevel({ name: "inventory" }) });
@@ -58,15 +60,12 @@ class MisakiClient extends Client {
 
   loadCommand(commandPath, commandName) {
     try {
-      const props = new (require(`${commandPath}${path.sep}${commandName}`))(this);
+      const command = new (require(`${commandPath}${path.sep}${commandName}`))(this);
       // client.logger.log(`Loading Command: ${props.help.name}. 👌`, "log");
-      props.conf.location = commandPath;
-      if (props.init) props.init(this);
+      command.location = commandPath;
+      if (command.init) command.init();
 
-      this.commands.set(props.help.name, props);
-      props.conf.aliases.forEach(alias => {
-        this.aliases.set(alias, props.help.name);
-      });
+      this.commands.set(command);
       return false;
     } catch (e) {
       return `Unable to load command ${commandName}: ${e}`;
@@ -74,15 +73,11 @@ class MisakiClient extends Client {
   }
 
   async unloadCommand(commandPath, commandName) {
-    let command;
-    if (this.commands.has(commandName)) {
-      command = this.commands.get(commandName);
-    } else if (this.aliases.has(commandName)) {
-      command = this.commands.get(this.aliases.get(commandName));
-    }
+    const command = this.commands.get(commandName);
+
     if (!command) return `The command \`${commandName}\` doesn"t seem to exist, nor is it an alias. Try again!`;
 
-    if (command.shutdown) await command.shutdown(this);
+    if (command.shutdown) await command.shutdown();
 
     delete require.cache[require.resolve(`${commandPath}${path.sep}${commandName}.js`)];
     return false;
@@ -180,17 +175,17 @@ class MisakiClient extends Client {
     }
   }
 
-  async ratelimit(message, level, key, duration) {
+  async ratelimit(message, level, cmd) {
     if (level > 2) return false;
 
-    duration *= 1000;
+    cmd.cooldown *= 1000;
     const ratelimits = this.ratelimits.get(message.author.id) || {}; // get the ENMAP first.
-    if (!ratelimits[key]) ratelimits[key] = Date.now() - duration; // see if the command has been run before if not, add the ratelimit
-    const differnce = Date.now() - ratelimits[key]; // easier to see the difference
-    if (differnce < duration) { // check the if the duration the command was run, is more than the cooldown
-      return moment.duration(duration - differnce).format("D [days], H [hours], m [minutes], s [seconds]", 1); // returns a string to send to a channel
+    if (!ratelimits[cmd.name]) ratelimits[cmd.name] = Date.now() - cmd.cooldown; // see if the command has been run before if not, add the ratelimit
+    const differnce = Date.now() - ratelimits[cmd.name]; // easier to see the difference
+    if (differnce < cmd.cooldown) { // check the if the duration the command was run, is more than the cooldown
+      return moment.duration(cmd.cooldown - differnce).format("D [days], H [hours], m [minutes], s [seconds]", 1); // returns a string to send to a channel
     } else {
-      ratelimits[key] = Date.now(); // set the key to now, to mark the start of the cooldown
+      ratelimits[cmd.name] = Date.now(); // set the key to now, to mark the start of the cooldown
       this.ratelimits.set(message.author.id, ratelimits); // set it
       return true;
     }

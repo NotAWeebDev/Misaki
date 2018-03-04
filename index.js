@@ -1,14 +1,24 @@
-require(`${process.cwd()}/extenders/Guild.js`);
 require(`${process.cwd()}/modules/Prototypes.js`);
 const MisakiClient = require(`${process.cwd()}/structures/MisakiClient.js`);
 
 const client = new MisakiClient({
-  fetchAllMembers: false,
+  disabledEvents: [
+    "CHANNEL_PINS_UPDATE",
+    "GUILD_BAN_ADD",
+    "GUILD_BAN_REMOVE",
+    "GUILD_SYNC",
+    "RELATIONSHIP_ADD",
+    "RELATIONSHIP_REMOVE",
+    "TYPING_START",
+    "USER_NOTE_UPDATE",
+    "USER_SETTINGS_UPDATE",
+    "VOICE_SERVER_UPDATE",
+    "VOICE_STATE_UPDATE"],
   disableEveryone: true,
-  disabledEvents: ["CHANNEL_PINS_UPDATE", "GUILD_BAN_ADD", "GUILD_BAN_REMOVE", "GUILD_SYNC", "RELATIONSHIP_ADD", "RELATIONSHIP_REMOVE", "TYPING_START", "USER_NOTE_UPDATE", "USER_SETTINGS_UPDATE", "VOICE_SERVER_UPDATE", "VOICE_STATE_UPDATE"]
+  messageCacheMaxSize: 100,
+  messageCacheLifetime: 240,
+  messageSweepInterval: 300
 });
-
-require(`${process.cwd()}/modules/functions.js`)(client);
 
 client.on("disconnect", () => client.logger.warn("Bot is disconnecting..."))
   .on("reconnect", () => client.logger.log("Bot reconnecting...", "log"))

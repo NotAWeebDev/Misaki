@@ -1,5 +1,6 @@
 const Owner = require(`${process.cwd()}/base/Owner.js`);
 const { get } = require("snekfetch");
+
 class DBLStats extends Owner {
   constructor(client) {
     super(client, {
@@ -13,14 +14,14 @@ class DBLStats extends Owner {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const { body } = await get(`https://discordbots.org/api/bots/${this.client.user.id}/votes?onlyids=true`).set("Authorization", this.client.config.dblToken);
-    await message.buildEmbed()
+    const embed = this.client.methods.Embed()
       .setColor(message.guild.me.roles.highest.color || 5198940)
       .setThumbnail(this.client.user.displayAvatarURL({format: "png"}))
       .setTitle("Discord Bot List Upvoters")
       .setDescription(`Voter(s) <@${body.join(">, <@")}>`)
       .addField("Voter Count", body.length, true)
-      .setTimestamp()
-      .send();
+      .setTimestamp();
+    message.channel.send({ embed });
   }
 }
 

@@ -12,8 +12,8 @@ module.exports = class {
       const { id: rebootMsgID, channel: rebootMsgChan, user: rebootMsgUserID } = JSON.parse(fs.readFileSync(`${process.cwd()}/assets/json/reboot.json`, "utf8"));
       const u = await this.client.users.fetch(rebootMsgUserID);
       const m = await this.client.channels.get(rebootMsgChan).messages.fetch(rebootMsgID);
-      await m.edit(`${this.client.responses.bootOneMessages.random().replaceAll("{{user}}", u.username).trim()}`);
-      await m.edit(`${this.client.responses.bootTwoMessages.random().replaceAll("{{user}}", u.username).replaceAll("{{ms}}", `${m.editedTimestamp - m.createdTimestamp}`).trim()}`);
+      await m.edit(this.client.responses.bootOneMessages.random().replaceAll("{{user}}", u.username).trim());
+      await m.edit(this.client.responses.bootTwoMessages.random().replaceAll("{{user}}", u.username).replaceAll("{{ms}}", `${m.editedTimestamp - m.createdTimestamp}`).trim());
       fs.unlinkSync("./reboot.json");
     } catch (error) {
       this.client.logger.error(error);

@@ -19,11 +19,11 @@ class Tiger extends Social {
 
   async run(message, args, level, loadingMessage) {
     const { body } = await get("https://dashboard.typicalbot.com/api/v1/tiger").set("Authentication", this.client.config.apiTokens.tbToken);
-    await message.channel.buildEmbed()
+    const embed = this.client.methods.Embed()
       .setColor(message.guild.me.roles.highest.color || 5198940)
-      .attachFiles([new MessageAttachment(new Buffer(body.data), "image.png")])
-      .setImage("attachment://image.png")
-      .send();
+      .attachFiles([new MessageAttachment(Buffer.from(body.data), "image.png")])
+      .setImage("attachment://image.png");
+    message.channel.send({ embed });
     await loadingMessage.delete();
   }
 }
