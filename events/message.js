@@ -1,8 +1,28 @@
 const Event = require(`${process.cwd()}/base/Event.js`);
 const monitor = require(`${process.cwd()}/monitors/monitor.js`);
-const Social = require("../base/Social.js");
+const Social = require(`${process.cwd()}/base/Social.js`);
+const { Permissions } = require("discord.js");
 
 module.exports = class extends Event {
+
+  constructor(...args) {
+    super(...args);
+    this.impliedPermissions = new Permissions([
+      "VIEW_CHANNEL",
+      "SEND_MESSAGES",
+      "SEND_TTS_MESSAGES",
+      "EMBED_LINKS",
+      "ATTACH_FILES",
+      "READ_MESSAGE_HISTORY",
+      "MENTION_EVERYONE",
+      "USE_EXTERNAL_EMOJIS",
+      "ADD_REACTIONS"
+    ]);
+    this.friendlyPerms = Object.keys(Permissions.FLAGS).reduce((obj, key) => {
+      obj[key] = key.split("_").join(" ").toProperCase();
+      return obj;
+    }, {});
+  }
 
   async run(message) {
     if (message.author.bot) return;
@@ -12,6 +32,7 @@ module.exports = class extends Event {
       return message.channel.send(`The prefix is \`${message.settings.prefix}\`.`);
     }
     const level = this.client.permlevel(message);
+    message.author.permLevel = level;
 
     if (message.settings.socialSystem === "true") monitor.run(this.client, message, level);
 
@@ -22,49 +43,50 @@ module.exports = class extends Event {
     if (!cmd) return;
     const rateLimit = await this.client.ratelimit(message, level, cmd);
 
-    if (typeof rateLimit == "string") {
-      this.client.logger.log(`${this.client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) got ratelimited while running command ${cmd.name}`);
-      return message.channel.send(`Please wait ${rateLimit.toPlural()} to run this command.`); //return stop command from executing
+    if (typeof rateLimit === "string") {
+      this.client.logger.log(`${this.client.config.permLevels.find(perm => perm.level === level).name} ${message.author.username} (${message.author.id}) got ratelimited while running command ${cmd.name}`);
+      return message.channel.send(`Please wait ${rateLimit.toPlural()} to run this command.`); // return stop command from executing
     }
 
     if (cmd.guildOnly && !message.guild) return message.channel.send("This command is unavailable via private message. Please run this command in a guild.");
 
     if (level < this.client.levelCache[cmd.permLevel]) {
-      if (message.settings.systemNotice === "true") {
-        return message.channel.send(`B-Baka! You're only level ${level}, a ${this.client.config.permLevels.find(l => l.level === level).name.toLowerCase()}, why should I listen to you instead of a ${cmd.conf.permLevel} (level ${this.client.levelCache[cmd.conf.permLevel]}).`);
-      } else {
-        return;
-      }
+      if (message.settings.systemNotice !== "true") return;
+      return message.channel.send(`B-Baka! You're only level ${level}, a ${this.client.config.permLevels.find(perm => perm.level === level).name.toLowerCase()}, why should I listen to you instead of a ${cmd.permLevel} (level ${this.client.levelCache[cmd.permLevel]}).`);
     }
 
-    message.author.permLevel = level;
-
-    while (args[0] && args[0][0] === "-") {
-      message.flags.push(args.shift().slice(1));
-    }
-    
-    this.client.logger.log(`${this.client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) ran command ${cmd.name}`, "cmd");
-
-    try {
-      let msg;
-      if (cmd instanceof Social) {
-        if (cmd.loadingString) msg = await message.channel.send(cmd.loadingString.replaceAll("{{displayName}}", message.member.displayName).replaceAll("{{me}}", message.guild.me.displayName).replaceAll("{{filterName}}", message.flags[0]));
-        await cmd.cmdVerify(message, args, msg);
-        if (message.settings.socialSystem === "true") {
-          await cmd.cmdPay(message, message.author.id, cmd.cost, { msg });
-        }
-      }
-      const mPerms = message.channel.permissionsFor(message.guild.me).missing(cmd.botPerms);
-      if (mPerms.includes("SEND_MESSAGES")) return;
-      if (mPerms.length) return message.channel.send(`The bot does not have the following permissions \`${mPerms.join(", ")}\``);
-      await cmd.run(message, args, level, msg);
-    } catch (error) {
-      this.client.emit("commandError", error, message);
-    }
+    while (args[0] && args[0][0] === "-") message.flags.push(args.shift().slice(1));
+    await this.runCommand(message, cmd, args);
   }
 
   regExpEsc(str) {
     return str.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
+  }
+
+  botPerms(message, cmd) {
+    const missing = message.channel.type === "text" ? message.channel.permissionsFor(this.client.user).missing(cmd.botPerms) : this.impliedPermissions.missing(cmd.botPerms);
+    if (missing.length > 0) {
+      message.channel.send(`The bot does not have the following permissions \`${missing.map(key => this.friendlyPerms[key]).join(", ")}\``);
+      return false;
+    }
+    return true;
+  }
+
+  async runCommand(message, cmd, args) {
+    try {
+      const hasPerm = this.botPerms(message, cmd);
+      if (!hasPerm) return;
+      let msg;
+      if (cmd instanceof Social) {
+        if (cmd.loadingString) msg = await message.channel.send(cmd.loadingString.replaceAll("{{displayName}}", message.member.displayName).replaceAll("{{me}}", message.guild.me.displayName).replaceAll("{{filterName}}", message.flags[0]));
+        await cmd.cmdVerify(message, args, msg);
+        if (message.settings.socialSystem === "true") await cmd.cmdPay(message, message.author.id, cmd.cost, { msg });
+      }
+      await cmd.run(message, args, message.author.permLevel, msg);
+      this.client.logger.log(`${this.client.config.permLevels.find(perm => perm.level === message.author.permLevel).name} ${message.author.username} (${message.author.id}) ran command ${cmd.name}`, "cmd");
+    } catch (error) {
+      this.client.emit("commandError", error, message);
+    }
   }
 
 };

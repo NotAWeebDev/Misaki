@@ -15,24 +15,24 @@ class Logger {
       case "cmd": return console.log(`${timestamp} ${chalk.black.bgWhite(type.toUpperCase())} ${content}`);
       case "ready": return console.log(`${timestamp} ${chalk.black.bgGreen(type.toUpperCase())} ${content}`);
       default: throw new TypeError("Logger type must be either warn, debug, log, ready, cmd or error.");
-    } 
+    }
   }
-  
+
   static error(content) {
     return this.log(content, "error");
   }
-  
+
   static warn(content) {
     return this.log(content, "warn");
   }
-  
+
   static debug(content) {
     return this.log(content, "debug");
-  } 
-  
+  }
+
   static cmd(content) {
     return this.log(content, "cmd");
-  } 
+  }
 }
 
 module.exports = Logger;

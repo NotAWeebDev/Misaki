@@ -3,7 +3,7 @@ const Event = require(`${process.cwd()}/base/Event.js`);
 module.exports = class extends Event {
 
   async run() {
-    await this.client.methods.util.wait(500);
+    await this.client.methods.util.wait(750);
     if (!this.client.settings.has("default")) {
       if (!this.client.config.defaultSettings) throw new Error("defaultSettings not preset in config.js or settings database. Bot cannot load.");
       this.client.settings.set("default", this.client.config.defaultSettings);
@@ -13,7 +13,7 @@ module.exports = class extends Event {
     this.client.logger.log(`${this.client.user.tag}, ready to serve ${this.client.users.size} users in ${this.client.guilds.size} servers.`, "ready");
     setInterval(() => {
       if (this.client.status !== 0) return;
-      const toRemind = this.client.reminders.filter(r => r.reminderTimestamp <= Date.now());
+      const toRemind = this.client.reminders.filter(reminder => reminder.reminderTimestamp <= Date.now());
       toRemind.forEach(reminder => {
         this.client.users.get(reminder.id).send(`You asked me to remind you about: \`${reminder.reminder}\` in \`${this.client.guilds.get(reminder.guildid).name}\``);
         this.client.reminders.delete(`${reminder.id}-${reminder.reminderTimestamp}`);

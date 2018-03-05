@@ -29,10 +29,10 @@ client.login(client.config.token);
 
 client.on("disconnect", () => client.logger.warn("Bot is disconnecting..."))
   .on("reconnect", () => client.logger.log("Bot reconnecting...", "log"))
-  .on("error", e => client.logger.error(e))
+  .on("error", err => client.logger.error(err))
   .on("warn", info => client.logger.warn(info));
 
-process.on("uncaughtException", (err) => {
+process.on("uncaughtException", err => {
   const errorMsg = err.stack.replace(new RegExp(`${__dirname}/`, "g"), "./");
   client.logger.error(`Uncaught Exception: ${errorMsg}`);
   process.exit(1);

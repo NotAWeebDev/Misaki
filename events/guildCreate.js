@@ -11,7 +11,7 @@ module.exports = class extends Event {
     post(`https://discordbots.org/api/bots/${this.client.user.id}/stats`)
       .set("Authorization", this.client.config.apiTokens.dblToken)
       .send({ server_count: this.client.guilds.size })
-      .then(() => console.log("Sent guild count to discordbots.org!"));
-
+      .then(() => this.client.logger.log("Sent guild count to discordbots.org!"))
+      .catch(() => this.client.logger.error("Error sending guild count to discordbots.org"));
   }
 };

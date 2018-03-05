@@ -13,7 +13,7 @@ String.prototype.replaceAll = function(search, replacement) {
   return this.replace(RegExp(search, "gi"), replacement);
 };
 
-String.prototype.isNumber = function() { 
+String.prototype.isNumber = function() {
   return /^\d+$/.test(this);
 };
 
@@ -22,7 +22,7 @@ Array.prototype.random = function() {
 };
 
 Array.prototype.remove = function(element) {
-  const index = this.indexOf(element); 
+  const index = this.indexOf(element);
   if (index !== -1) this.splice(index, 1);
   return this;
 };

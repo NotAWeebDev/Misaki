@@ -5,10 +5,8 @@ const { URLSearchParams } = require("url");
 class Meme extends Social {
 
   constructor(client, options) {
-    super(client, Object.assign(options, {
-      guildOnly: true
-    }));
-  } 
+    super(client, Object.assign(options, { guildOnly: true }));
+  }
 
   async twoMeme(template_id, text, font = "impact", max_font_size = "50px") {
     const params = new URLSearchParams();
@@ -42,7 +40,7 @@ class Meme extends Social {
       [first, second, third, forth] = text.split("; ");
     } else {
       first = text;
-      second = "";     
+      second = "";
       third = "";
       forth = "";
     }

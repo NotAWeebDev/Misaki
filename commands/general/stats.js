@@ -27,7 +27,7 @@ class Stats extends Command {
       .setColor(message.guild.me.roles.highest.color || 5198940)
       .addField("Invite Me", "If you want to add me to your guild, you can do so by grabbing my invite code from [here](https://discordapp.com/oauth2/authorize/?permissions=268755008&scope=bot&client_id=396323622953680910)")
       .addField("Okami Academy", "If you need help setting me up, you can join the [Okami Academy](https://discord.gg/RasxyYT) to get help with getting me ready on your guild!");
-    message.channel.send({ embed });  
+    message.channel.send({ embed });
   }
 }
 

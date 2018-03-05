@@ -1,4 +1,5 @@
 const { ParseError } = require("../util/CustomError.js");
+const { Permissions } = require("discord.js");
 
 class Command {
   constructor(client, options) {
@@ -14,18 +15,14 @@ class Command {
     this.cooldown = options.cooldown || 0;
     this.hidden = options.hidden || false;
     this.guildOnly = options.guildOnly || false;
-    this.botPerms = options.botPerms || [];
+    this.botPerms = new Permissions(options.botPerms || []).freeze();
     this.permLevel = options.permLevel || "User";
     this.location = "";
   }
 
   makeTitles(data) {
-    const arr = new Array();
-    const { makeTitle } = this;
-    for (let i = 0; i <5; i++) {
-      arr.push(`\n${i + 1}:`);
-      arr.push(makeTitle(i, data));
-    }
+    const arr = [];
+    for (let i = 0; i < 5; i++) arr.push(`\n${i + 1}: ${this.makeTitle(i, data)}`);
     return arr.join(" ");
   }
 
@@ -35,7 +32,7 @@ class Command {
     return `${line1}${line2}`;
   }
 
-  async verifyUser(message, user, options = {}) {
+  verifyUser(message, user, options = {}) {
     const match = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
     if (!match) throw new ParseError("Invalid Mention or ID", options.msg);
     const id = match[1];
@@ -43,16 +40,15 @@ class Command {
   }
 
   async verifyMember(message, member, options = {}) {
-    const user = await this.verifyUser(message, member, options.msg);
-    const target = await message.guild.members.fetch(user);
-    return target;
+    const user = await this.verifyUser(message, member, options);
+    return message.guild.members.fetch(user);
   }
 
   async verifyMessage(message, msgid, options = {}) {
     const match = /([0-9]{17,20})/.exec(msgid);
     if (!match) throw new ParseError("Invalid Message ID.", options.msg);
     const id = match[1];
-    return message.channel.messages.fetch(id).then(m => m.id);
+    return message.channel.messages.fetch(id).then(msg => msg.id);
   }
 
   async verifyChannel(message, chanid, options = {}) {
@@ -65,11 +61,7 @@ class Command {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    throw new Error(`Command ${this.constructor.name} doesn't provide a run method.`); 
-  }
-
-  async init() {
-    // ¯\_(ツ)_/¯
+    throw new Error(`Command ${this.constructor.name} doesn't provide a run method.`);
   }
 
 }

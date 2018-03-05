@@ -51,7 +51,7 @@ class MisakiClient extends Client {
   permlevel(message) {
     let permlvl = 0;
 
-    const permOrder = this.config.permLevels.slice(0).sort((p, c) => p.level < c.level ? 1 : -1);
+    const permOrder = this.config.permLevels.slice(0).sort((prev, val) => prev.level < val.level ? 1 : -1);
 
     while (permOrder.length) {
       const currentLevel = permOrder.shift();
@@ -68,17 +68,15 @@ class MisakiClient extends Client {
     try {
       const command = new (require(`${commandPath}${path.sep}${commandName}`))(this);
       command.location = commandPath;
-      if (command.init) await command.init();
       this.commands.set(command);
-    } catch (e) {
-      this.logger.error(`Unable to load command ${commandName}: ${e}`);
+    } catch (err) {
+      this.logger.error(`Unable to load command ${commandName}: ${err}`);
     }
   }
 
   async unloadCommand(commandPath, commandName) {
     const command = this.commands.get(commandName);
     if (!command) return `The command \`${commandName}\` doesn"t seem to exist, nor is it an alias. Try again!`;
-    if (command.shutdown) await command.shutdown();
     delete require.cache[require.resolve(`${commandPath}${path.sep}${commandName}.js`)];
   }
 
@@ -87,7 +85,7 @@ class MisakiClient extends Client {
     let guild = this.settings.get(id);
     if (typeof guild !== "object") guild = {};
     const returnObject = {};
-    Object.keys(defaults).forEach((key) => {
+    Object.keys(defaults).forEach(key => {
       returnObject[key] = guild[key] ? guild[key] : defaults[key];
     });
     return returnObject;
@@ -108,15 +106,15 @@ class MisakiClient extends Client {
   }
 
   init() {
-    klaw("./commands").on("data", async (item) => {
+    klaw("./commands").on("data", async item => {
       const cmdFile = path.parse(item.path);
       if (!cmdFile.ext || cmdFile.ext !== ".js") return;
       await this.loadCommand(cmdFile.dir, `${cmdFile.name}${cmdFile.ext}`);
     }).on("end", () => {
       this.logger.log(`Loaded a total of ${this.commands.size} commands.`);
-    }).on("error", (error) => this.logger.error(error));
+    }).on("error", error => this.logger.error(error));
 
-    klaw("./events").on("data", (item) => {
+    klaw("./events").on("data", item => {
       const eventFile = path.parse(item.path);
       if (!eventFile.ext || eventFile.ext !== ".js") return;
       const event = new (require(`${eventFile.dir}${path.sep}${eventFile.name}${eventFile.ext}`))(this, eventFile.name);
@@ -124,7 +122,7 @@ class MisakiClient extends Client {
       delete require.cache[require.resolve(`${eventFile.dir}${path.sep}${eventFile.name}${eventFile.ext}`)];
     }).on("end", () => {
       this.logger.log(`Loaded a total of ${this.events.size} events.`);
-    }).on("error", (error) => this.logger.error(error));
+    }).on("error", error => this.logger.error(error));
 
     this.levelCache = {};
     for (let i = 0; i < this.config.permLevels.length; i++) {
