@@ -17,7 +17,7 @@ class Announcements extends Command {
       const messages = await channel.messages.fetch({limit:5});
       const announcement = messages.first();
 
-      const embed = this.client.methods.Embed()
+      const embed = new this.client.methods.Embed()
         .setTitle("Bot announcement!")
         .setAuthor(announcement.author.username, announcement.author.displayAvatarURL({ format:"png", size:32 }))
         .setDescription(announcement.cleanContent)
