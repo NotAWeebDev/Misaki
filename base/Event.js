@@ -19,7 +19,7 @@ class Event {
   }
 
   unload() {
-    return this.client.events.delete(this);
+    return this.client.events.delete(this.name);
   }
 
   disable() {

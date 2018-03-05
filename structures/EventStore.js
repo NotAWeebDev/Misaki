@@ -13,7 +13,7 @@ class EventStore extends Collection {
   }
 
   delete(name) {
-    const event = this.resolve(name);
+    const event = this.get(name);
     if (!event) return false;
     this.client.removeAllListeners(event.name);
     super.delete(event.name);
