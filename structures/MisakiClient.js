@@ -64,13 +64,12 @@ class MisakiClient extends Client {
     return permlvl;
   }
 
-  loadCommand(commandPath, commandName) {
+  async loadCommand(commandPath, commandName) {
     try {
       const command = new (require(`${commandPath}${path.sep}${commandName}`))(this);
       command.location = commandPath;
-      if (command.init) command.init();
+      if (command.init) await command.init();
       this.commands.set(command);
-      return false;
     } catch (e) {
       this.logger.error(`Unable to load command ${commandName}: ${e}`);
     }
@@ -81,7 +80,6 @@ class MisakiClient extends Client {
     if (!command) return `The command \`${commandName}\` doesn"t seem to exist, nor is it an alias. Try again!`;
     if (command.shutdown) await command.shutdown();
     delete require.cache[require.resolve(`${commandPath}${path.sep}${commandName}.js`)];
-    return false;
   }
 
   getSettings(id) {
@@ -110,10 +108,10 @@ class MisakiClient extends Client {
   }
 
   init() {
-    klaw("./commands").on("data", (item) => {
+    klaw("./commands").on("data", async (item) => {
       const cmdFile = path.parse(item.path);
       if (!cmdFile.ext || cmdFile.ext !== ".js") return;
-      this.loadCommand(cmdFile.dir, `${cmdFile.name}${cmdFile.ext}`);
+      await this.loadCommand(cmdFile.dir, `${cmdFile.name}${cmdFile.ext}`);
     }).on("end", () => {
       this.logger.log(`Loaded a total of ${this.commands.size} commands.`);
     }).on("error", (error) => this.logger.error(error));
