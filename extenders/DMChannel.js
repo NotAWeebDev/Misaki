@@ -1,7 +1,7 @@
 const { Structures } = require("discord.js");
 
-module.exports = Structures.extend("TextChannel", DiscordTextChannel => {
-  return class MisakiTextChannel extends DiscordTextChannel {
+module.exports = Structures.extend("DMChannel", DiscordDMChannel => {
+  return class MisakiTextChannel extends DiscordDMChannel {
 
     get readable() {
       return !this.guild || this.permissionsFor(this.guild.me).has("VIEW_CHANNEL");

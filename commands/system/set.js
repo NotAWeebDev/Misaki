@@ -34,7 +34,7 @@ class Set extends Command {
       if (!settings[key]) return message.reply("This key does not exist in the settings");
       
       const filter = m => m.author.id === message.author.id;
-      const response = await this.client.awaitReply(message, `Are you sure you want to reset \`${key}\` to the default \`${defaults[key]}\`?`, filter, undefined, null);
+      const response = await message.awaitReply(`Are you sure you want to reset \`${key}\` to the default \`${defaults[key]}\`?`, filter, undefined, null);
 
       if (["y", "yes"].includes(response)) {
 

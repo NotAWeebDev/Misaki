@@ -27,4 +27,4 @@ class Beautiful extends Social {
   }
 }
 
-module.exports = Beautiful;//
+module.exports = Beautiful;

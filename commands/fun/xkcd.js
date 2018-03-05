@@ -24,12 +24,18 @@ class Xkdc extends Social {
       return message.channel.send({"embed": {"author":{"name":"Misaki | XKCD Comics"}, "description":`${ab.title} | #${ab.num}\n${ab.alt}`, "image":{"url":ab.img}}});
     }
     if (message.flags[0] == "r") {
-      const rn = await this.client.randomNum(1, ob.num);
+      const rn = await this.randomNum(1, ob.num);
       const ef = await get(`https://xkcd.com/${rn}/info.0.json`);
       const ab = await ef.body;
       return message.channel.send({"embed": {"author":{"name":"Misaki | XKCD Comics"}, "description":`${ab.title} | #${ab.num}\n${ab.alt}`, "image":{"url":ab.img}}});
     }
     message.channel.send({"embed": {"author":{"name":"Misaki | Daily XKCD Comics"}, "description":`${ob.title} | #${ob.num}\n${ob.alt}`, "image":{"url":ob.img}}});
+  }
+
+  randomNum(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 }
 

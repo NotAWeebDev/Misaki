@@ -1,39 +1,22 @@
 const { ParseError } = require("../util/CustomError.js");
 
 class Command {
-  constructor(client, {
-    name = null,
-    description = "No description provided.",
-    category = "General",
-    usage = "No usage provided.",
-    extended = "No information provided.",
-    cost = 0,
-    cooldown = 0,
-    hidden = false,
-    guildOnly = false,
-    aliases = [],
-    botPerms = [],
-    permLevel = "User",
-    location = ""
-  }) {
+  constructor(client, options) {
+
     this.client = client;
-    this.conf = {
-      hidden,
-      guildOnly,
-      aliases,
-      botPerms,
-      permLevel,
-      location,
-      cooldown
-    };
-    this.help = {
-      name,
-      description,
-      category,
-      usage,
-      extended,
-      cost
-    };
+    this.name = options.name || null;
+    this.aliases = options.aliases || [];
+    this.description = options.description || "No description provided.";
+    this.category = options.category || "General";
+    this.usage = options.usage || "No usage provided.";
+    this.extended = options.extended || "No information provided.";
+    this.cost = options.cost || 0;
+    this.cooldown = options.cooldown || 0;
+    this.hidden = options.hidden || false;
+    this.guildOnly = options.guildOnly || false;
+    this.botPerms = options.botPerms || [];
+    this.permLevel = options.permLevel || "User";
+    this.location = "";
   }
 
   makeTitles(data) {
@@ -84,5 +67,10 @@ class Command {
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     throw new Error(`Command ${this.constructor.name} doesn't provide a run method.`); 
   }
+
+  async init() {
+    // ¯\_(ツ)_/¯
+  }
+
 }
 module.exports = Command;

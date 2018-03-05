@@ -1,8 +1,7 @@
 const { post } = require("snekfetch");
-module.exports = class {
-  constructor(client) {
-    this.client = client;
-  }
+const Event = require(`${process.cwd()}/base/Event.js`);
+
+module.exports = class extends Event {
 
   async run(guild) {
     this.client.user.setActivity(`@${this.client.user.username} help | ${this.client.guilds.size} Servers`);

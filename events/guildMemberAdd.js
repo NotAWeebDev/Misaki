@@ -1,13 +1,10 @@
-module.exports = class {
-  constructor(client) {
-    this.client = client;
-  }
+const Event = require(`${process.cwd()}/base/Event.js`);
+
+module.exports = class extends Event {
 
   async run(member) {
     const guild = member.guild;
     if (!member || !member.id || !guild) return;
-    
-    if (!member.user.bot) this.client.points.set(`${guild.id}-${member.id}`, { points: 0, level:0, user: member.id, guild: guild.id, daily: 1504120109 });
 
     const settings = this.client.getSettings(guild.id);
     

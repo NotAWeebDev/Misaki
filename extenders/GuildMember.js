@@ -1,7 +1,7 @@
 const { Structures } = require("discord.js");
 
 module.exports = Structures.extend("GuildMember", DiscordGuildMember => {
-  return class GuildMember extends DiscordGuildMember {
+  return class MisakiGuildMember extends DiscordGuildMember {
 
     constructor(...args) {
       super(...args);
@@ -9,19 +9,15 @@ module.exports = Structures.extend("GuildMember", DiscordGuildMember => {
     }
 
     get reminders() {
-      const reminderList = this.client.reminders.findAll("id", this.id);
-      if (!reminderList) return false;
-      return reminderList;
+      return this.client.reminders.findAll("id", this.id) || null;
     }
 
     get score() {
-      if (!this.client.points.get(this.fullId)) return { points: 0, level: 0, user: this.id, guild: this.guild.id, daily: 1504120109 };
-      return this.client.points.get(this.fullId);
+      return this.client.points.get(this.fullId) || { points: 0, level: 0, user: this.id, guild: this.guild.id, daily: Date.now() - 86400000 };
     }
 
     get inventory() {
-      if (!this.client.inventory.get(this.fullId)) return { keys: 0, crates: 0, tokens: 0 };
-      return this.client.inventory.get(this.fullId);
+      return this.client.inventory.get(this.fullId) || { keys: 0, crates: 0, tokens: 0 };
     }
 
     giveItem(item, amount) {

@@ -39,4 +39,11 @@ class APIError extends CustomError {
   }
 }
 
-module.exports = { SocialError, ParseError, AnimeError, CustomError, UsageError, APIError };
+module.exports = { 
+  SocialError,
+  ParseError,
+  AnimeError,
+  CustomError,
+  UsageError,
+  APIError
+};
