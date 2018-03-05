@@ -94,7 +94,7 @@ class MisakiClient extends Client {
   }
 
   writeSettings(id, newSettings) {
-    const defaults = this.settings.get("default");
+    const defaults = this.settings.get("default") || this.config.defaultSettings;
     let settings = this.settings.get(id);
     if (typeof settings !== "object") settings = {};
     for (const key in newSettings) {
@@ -130,17 +130,6 @@ class MisakiClient extends Client {
     for (let i = 0; i < this.config.permLevels.length; i++) {
       const thisLevel = this.config.permLevels[i];
       this.levelCache[thisLevel.name] = thisLevel.level;
-    }
-  }
-
-  async awaitReply(message, question, filter, limit = 60000, embed) {
-    await message.channel.send(question, embed);
-    try {
-      const collected = await message.channel.awaitMessages(filter, { max: 1, time: limit, errors: ["time"] });
-      return collected.first().content;
-    } catch (error) {
-      this.logger.error(error);
-      return false;
     }
   }
 

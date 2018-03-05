@@ -39,7 +39,7 @@ class Trivia extends Social {
       .addField("D", randomChoices[3])
       .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL({format: "png", size: 64}));
 
-    const question = await this.client.awaitReply(message, null, m => m.author.id === message.author.id, 60000, {embed:emb}); // Ask the question.
+    const question = await message.awaitReply(null, m => m.author.id === message.author.id, 60000, { embed: emb }); // Ask the question.
 
     if (!question) return message.reply("I'm sorry but you took too long to respond."); // Check against time it took. 1 Minute by default.
     const choice = randomChoices[["a", "b", "c", "d"].indexOf(question.toLowerCase())]; // Assign correct value to "choice" from randomChoices.

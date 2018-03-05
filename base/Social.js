@@ -47,7 +47,7 @@ class Social extends Command {
     if (payerScore.points < amount) return message.response(undefined, `Insufficient funds, you have ₲${payerScore.points}`);
     
     const filter = m => m.author.id === message.author.id;
-    const response = await this.client.awaitReply(message, `Are you sure you want to pay ${getPayee.displayName} ₲${amount}?
+    const response = await message.awaitReply(`Are you sure you want to pay ${getPayee.displayName} ₲${amount}?
 
 (**y**es | **n**o)
 

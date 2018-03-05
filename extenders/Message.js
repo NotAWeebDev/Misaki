@@ -15,5 +15,16 @@ module.exports = Structures.extend("Message", DiscordMessage => {
       return this.channel.send(`${this.author} \`|${emoji}|\` ${content}`, embed);
     }
 
+    async awaitReply(question, filter, limit = 60000, embed) {
+      await this.channel.send(question, embed);
+      try {
+        const collected = await this.channel.awaitMessages(filter, { max: 1, time: limit, errors: ["time"] });
+        return collected.first().content;
+      } catch (error) {
+        this.logger.error(error);
+        return false;
+      }
+    }
+
   };
 });
