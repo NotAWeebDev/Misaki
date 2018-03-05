@@ -39,24 +39,25 @@ class Social extends Command {
   }
 
   async usrPay(message, payer, payee, amount) {
-    const getPayee = message.guild.member(payee);
-    const getPayer = message.guild.member(payer);
+    amount = parseInt(amount);
+    const getPayee = await message.guild.members.fetch(payee);
+    const getPayer = await message.guild.members.fetch(payer);
     const payerScore = getPayer.score;
 
-    if (payerScore.points < parseInt(amount)) {
-      message.response(undefined, `Insufficient funds, you have ₲${payerScore.points}`);
-      return;
-    }
+    if (payerScore.points < amount) return message.response(undefined, `Insufficient funds, you have ₲${payerScore.points}`);
+    
     const filter = m => m.author.id === message.author.id;
-    const response = await message.client.awaitReply(message, `Are you sure you want to pay ${getPayee.displayName} ₲${parseInt(amount)}?\n\n(**y**es | **n**o)\n\nReply with \`cancel\` to cancel the message. The message will timeout after 60 seconds.`, filter, 6000, null);
+    const response = await this.client.awaitReply(message, `Are you sure you want to pay ${getPayee.displayName} ₲${amount}?
+
+(**y**es | **n**o)
+
+Reply with \`cancel\` to cancel the message. The message will timeout after 60 seconds.`, filter, 6000, null);
 
     if (["yes", "y", "confirm"].includes(response.toLowerCase())) {
-      getPayer.takePoints(parseInt(amount));
-      getPayee.givePoints(parseInt(amount));
-      await message.channel.send(`The payment of ₲${parseInt(amount)} has been sent to ${getPayee.displayName}.`);
-    } else
-    
-    if (["no", "n", "cancel"].includes(response.toLowerCase())) {
+      getPayer.takePoints(amount);
+      getPayee.givePoints(amount);
+      await message.channel.send(`The payment of ₲${amount} has been sent to ${getPayee.displayName}.`);
+    } else if (["no", "n", "cancel"].includes(response.toLowerCase())) {
       message.channel.send("Payment cancelled");
     } else {
       message.channel.send("Invalid response, please try again.");
