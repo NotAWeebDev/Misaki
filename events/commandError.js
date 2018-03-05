@@ -1,9 +1,7 @@
-const { CustomError } = require("../util/CustomError.js");
+const { CustomError } = require(`${process.cwd()}/util/CustomError.js`);
+const Event = require(`${process.cwd()}/base/Event.js`);
 
-module.exports = class {
-  constructor(client) {
-    this.client = client;
-  }
+module.exports = class extends Event {
 
   async run(error, message) {
     if (error instanceof CustomError) {

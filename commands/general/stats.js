@@ -15,7 +15,7 @@ class Stats extends Command {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const duration = moment.duration(this.client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
-    const embed = this.client.methods.Embed()
+    const embed = new this.client.methods.Embed()
       .setDescription(`\`\`\`asciidoc\n= STATISTICS =
 • Mem Usage  :: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB
 • Uptime     :: ${duration}

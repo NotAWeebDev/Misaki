@@ -64,7 +64,7 @@ class Social extends Command {
   }
 
   async cmdPay(message, user, cost, options = {}) {
-    const [bot, _user] = await this.verifySocialUser(message, user, options); // eslint-disable-line no-unused-vars
+    const [, _user] = await this.verifySocialUser(message, user, options);
     const getPayee = message.guild.member(_user.id);
     const score = getPayee.score;
     if (cost > score.points) throw new SocialError(`Insufficient funds, you need ₲${cost}. Your current balance: ₲${score.points}`, options.msg);
@@ -73,17 +73,15 @@ class Social extends Command {
   }
 
   async cmdRew(message, user, amount) {
-    const getPayee = message.guild.member(user);
-    getPayee.givePoints(parseInt(amount));
-    await message.channel.send(`Awarded ₲${parseInt(amount)} to ${message.guild.member(user).displayName}.`);
-    return;
+    const member = await message.guild.members.fetch(user);
+    member.givePoints(amount);
+    return message.channel.send(`Awarded ₲${amount} to ${member.displayName}.`);
   }
 
   async cmdPun(message, user, amount) {
-    const getPayee = message.guild.member(user);
-    getPayee.takePoints(parseInt(amount));
-    await message.channel.send(`Deducted ₲${parseInt(amount)} from ${message.guild.member(user).displayName}.`);
-    return;
+    const member = await message.guild.members.fetch(user);
+    member.takePoints(amount);
+    return message.channel.send(`Deducted ₲${amount} from ${member.displayName}.`);
   }
 
   async cmdWeeb(type, imgType, nsfw = false) {

@@ -1,4 +1,9 @@
 require(`${process.cwd()}/modules/Prototypes.js`);
+require(`${process.cwd()}/extenders/Message.js`);
+require(`${process.cwd()}/extenders/GuildMember.js`);
+require(`${process.cwd()}/extenders/Guild.js`);
+require(`${process.cwd()}/extenders/DMChannel.js`);
+require(`${process.cwd()}/extenders/TextChannel.js`);
 const MisakiClient = require(`${process.cwd()}/structures/MisakiClient.js`);
 
 const client = new MisakiClient({
@@ -19,6 +24,8 @@ const client = new MisakiClient({
   messageCacheLifetime: 240,
   messageSweepInterval: 300
 });
+
+client.login(client.config.token);
 
 client.on("disconnect", () => client.logger.warn("Bot is disconnecting..."))
   .on("reconnect", () => client.logger.log("Bot reconnecting...", "log"))

@@ -1,8 +1,7 @@
 const { post } = require("snekfetch");
-module.exports = class {
-  constructor(client) {
-    this.client = client;
-  }
+const Event = require(`${process.cwd()}/base/Event.js`);
+
+module.exports = class extends Event {
 
   async run(guild) {
     this.client.user.setActivity(`@${this.client.user.username} help | ${this.client.guilds.size} Server${this.client.guilds.size > 1 ? "s" : ""}`);
@@ -17,7 +16,5 @@ module.exports = class {
       .set("Authorization", this.client.config.apiTokens.dblToken)
       .send({ server_count: this.client.guilds.size })
       .then(() => console.log("Sent guild count to discordbots.org!"));
-
-
   }
 };

@@ -1,5 +1,6 @@
 const { Client, Collection, MessageEmbed } = require("discord.js");
 const CommandStore = require(`${process.cwd()}/structures/CommandStore.js`);
+const EventStore = require(`${process.cwd()}/structures/EventStore.js`);
 const Enmap = require("enmap");
 const EnmapLevel = require("enmap-level");
 const klaw = require("klaw");
@@ -18,6 +19,7 @@ class MisakiClient extends Client {
     this.idiotAPI = new idioticApi.Client(this.config.apiTokens.idiotToken, { dev: true });
 
     this.commands = new CommandStore(this);
+    this.events = new EventStore(this);
     this.upvoters = [];
     this.ratelimits = new Collection();
     this.methods = {
@@ -37,8 +39,11 @@ class MisakiClient extends Client {
     this.on("ready", this._ready.bind(this));
   }
 
-  async _ready() {
+  async login(token) {
     await this.init();
+    return super.login(token);
+  }
+  _ready() {
     this.ready = true;
     this.emit("misakiReady");
   }
@@ -62,30 +67,25 @@ class MisakiClient extends Client {
   loadCommand(commandPath, commandName) {
     try {
       const command = new (require(`${commandPath}${path.sep}${commandName}`))(this);
-      // client.logger.log(`Loading Command: ${props.help.name}. 👌`, "log");
       command.location = commandPath;
       if (command.init) command.init();
-
       this.commands.set(command);
       return false;
     } catch (e) {
-      return `Unable to load command ${commandName}: ${e}`;
+      this.logger.error(`Unable to load command ${commandName}: ${e}`);
     }
   }
 
   async unloadCommand(commandPath, commandName) {
     const command = this.commands.get(commandName);
-
     if (!command) return `The command \`${commandName}\` doesn"t seem to exist, nor is it an alias. Try again!`;
-
     if (command.shutdown) await command.shutdown();
-
     delete require.cache[require.resolve(`${commandPath}${path.sep}${commandName}.js`)];
     return false;
   }
 
   getSettings(id) {
-    const defaults = this.settings.get("default");
+    const defaults = this.settings.get("default") || this.config.defaultSettings;
     let guild = this.settings.get(id);
     if (typeof guild !== "object") guild = {};
     const returnObject = {};
@@ -109,47 +109,23 @@ class MisakiClient extends Client {
     this.settings.set(id, settings);
   }
 
-  async init() {
-    const commandList = [];
+  init() {
     klaw("./commands").on("data", (item) => {
       const cmdFile = path.parse(item.path);
       if (!cmdFile.ext || cmdFile.ext !== ".js") return;
-      const response = this.loadCommand(cmdFile.dir, `${cmdFile.name}${cmdFile.ext}`);
-      commandList.push(cmdFile.name);
-      if (response) this.logger.error(response);
+      this.loadCommand(cmdFile.dir, `${cmdFile.name}${cmdFile.ext}`);
     }).on("end", () => {
-      this.logger.log(`Loaded a total of ${commandList.length} commands.`);
+      this.logger.log(`Loaded a total of ${this.commands.size} commands.`);
     }).on("error", (error) => this.logger.error(error));
 
-    const extendList = [];
-    klaw("./extenders").on("data", (item) => {
-      const extFile = path.parse(item.path);
-      if (!extFile.ext || extFile.ext !== ".js") return;
-      try {
-        require(`${extFile.dir}${path.sep}${extFile.base}`);
-        extendList.push(extFile.name);
-      } catch (error) {
-        this.logger.error(`Error loading ${extFile.name} extension: ${error}`);
-      }
-    }).on("end", () => {
-      this.logger.log(`Loaded a total of ${extendList.length} extensions.`);
-    }).on("error", (error) => this.logger.error(error));
-
-    const eventList = [];
     klaw("./events").on("data", (item) => {
       const eventFile = path.parse(item.path);
       if (!eventFile.ext || eventFile.ext !== ".js") return;
-      const eventName = eventFile.name.split(".")[0];
-      try {
-        const event = new (require(`${eventFile.dir}${path.sep}${eventFile.name}${eventFile.ext}`))(this);
-        eventList.push(event);
-        this.on(eventName, (...args) => event.run(...args));
-        delete require.cache[require.resolve(`${eventFile.dir}${path.sep}${eventFile.name}${eventFile.ext}`)];
-      } catch (error) {
-        this.logger.error(`Error loading event ${eventFile.name}: ${error}`);
-      }
+      const event = new (require(`${eventFile.dir}${path.sep}${eventFile.name}${eventFile.ext}`))(this, eventFile.name);
+      this.events.set(event);
+      delete require.cache[require.resolve(`${eventFile.dir}${path.sep}${eventFile.name}${eventFile.ext}`)];
     }).on("end", () => {
-      this.logger.log(`Loaded a total of ${eventList.length} events.`);
+      this.logger.log(`Loaded a total of ${this.events.size} events.`);
     }).on("error", (error) => this.logger.error(error));
 
     this.levelCache = {};
@@ -157,12 +133,6 @@ class MisakiClient extends Client {
       const thisLevel = this.config.permLevels[i];
       this.levelCache[thisLevel.name] = thisLevel.level;
     }
-  }
-
-  randomNum(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   async awaitReply(message, question, filter, limit = 60000, embed) {
