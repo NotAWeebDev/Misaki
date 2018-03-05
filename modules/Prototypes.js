@@ -1,13 +1,6 @@
 /*
   WARNING: These are some handy prototype functions for String and Array, extending of native prototypes is a bad practice
 */
-const { MessageEmbed, TextChannel, DMChannel, User } = require("discord.js");
-
-MessageEmbed.prototype.send = function(content = "") {
-  if (!this.sendToChannel || !(this.sendToChannel instanceof TextChannel || this.sendToChannel instanceof User || this.sendToChannel instanceof DMChannel)) return Promise.reject("Embed not created in a channel");
-  return this.sendToChannel.send(content, { embed: this });
-};
-
 String.prototype.toProperCase = function() {
   return this.replace(/([^\W_]+[^\s-]*) */g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
 };
