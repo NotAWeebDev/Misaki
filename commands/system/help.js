@@ -1,6 +1,6 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 const { MessageEmbed } = require("discord.js");
-const PaginationEmbed = require(`${process.cwd()}/util/PaginationEmbed`);
+const PaginationEmbed = require(`${process.cwd()}/util/pagination/FieldsEmbed`);
 const perpage = 10;
 
 class Help extends Command {

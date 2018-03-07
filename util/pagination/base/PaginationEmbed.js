@@ -4,19 +4,12 @@ const { MessageEmbed } = require("discord.js");
  * @extends {MessageEmbed}
  */
 class PaginationEmbed extends MessageEmbed {
+
   /**
    * Options for PaginationEmbed.clientMessage.
    * @typedef {Object} ClientMessageOptions
    * @property {Message} [message=null] - The message object sent by the client, if there is any.
    * @property {string} [content="Preparing..."] - The custom message content while preparing the embed.
-   */
-
-  /**
-   * Options for PaginatonEmbed.fields.
-   * @typedef {Object[]} FieldOptions
-   * @property {string} name - Name of the field.
-   * @property {Function} value - Value of the field. Function for Array.prototype.map().join("\n").
-   * @property {boolean} [inline=true] - Whether the field is inline with other field or not.
    */
 
   /**
@@ -30,24 +23,22 @@ class PaginationEmbed extends MessageEmbed {
 
   /**
    * Options for the constructor.
-   * @typedef {Object} PaginationOptions
+   * @typedef {Object} PaginationEmbedOptions
    * @property {User} [authorisedUser=null] - The authorised user to navigate the pages.
    * @property {TextChannel} channel - The channel where to send the embed.
    * @property {ClientMessageOptions} [clientMessage=null] - Settings for the message sent by the client.
-   * @property {Array} array - An array of elements to paginate.
-   * @property {number} [elementsPerPage=10] - Items per page.
-   * @property {boolean} [pageIndicator=true] - Whether page number indicator on embed description text is shown or not.
-   * @property {FieldOptions} fields - An array formatted fields to input.
-   * @property {nmber|string} [page=1] - Jumps to a certain page upon PaginationEmbed.build().
+   * @property {*[]} array - An array of elements to paginate.
+   * @property {boolean} [pageIndicator=true] - Whether page number indicator on client"s message is shown or not.
+   * @property {nmber|string} [page=1] - Jumps to a certain page upon PaginationEmbeds.build().
    * @property {number} [timeout=30000] - The time for awaiting a user action before timeout in ms.
    * @property {NavigationButtons} [emojis={back:"◀",jump:"↗",forward:"▶",delete:"🗑"}] - The emojis used for navigation buttons.
    */
 
   /**
-   * @param {PaginationOptions} [options={}] Options for pagination utility.
+   * @param {PaginationEmbedOptions} [options={}] Options for PaginationEmbed.
    */
   constructor(options = {}) {
-    if (!(options instanceof Object)) throw new Error("Cannot invoke Pagination class without an actual options object.");
+    if (!(options instanceof Object)) throw new Error("Cannot invoke PaginationEmbed class without an actual options object.");
 
     super(options);
 
@@ -71,32 +62,19 @@ class PaginationEmbed extends MessageEmbed {
 
     /**
      * An array of elements to paginate.
-     * @type {Array}
+     * @type {*[]}
      */
     this.array = options.array || [];
 
     /**
-     * Maximum number of elements to be displayed per page.
-     * @type {number}
-     */
-    this.elementsPerPage = options.elementsPerPage || 10;
-
-    /**
-     * Whether page number indicator on embed description text is shown or not.
+     * Whether page number indicator on client"s message is shown or not.
      * @type {boolean}
      */
     this.pageIndicator = options.pageIndicator || true;
 
     /**
-     * An array of formatted fields to input.
-     * PaginationEmbed.formatField() is recommended.
-     * @type {FieldOptions}
-     */
-    this.fields = options.fields || [];
-
-    /**
      * Jumps to a certain page upon PaginationEmbed.build().
-     * @type {Number|String}
+     * @type {number|string}
      */
     this.page = options.page || 1;
 
@@ -126,137 +104,8 @@ class PaginationEmbed extends MessageEmbed {
     this.pages = null;
   }
 
-  /**
-   * Elements in the current page.
-   * @returns {*[]} - An array for a page.
-   */
-  get elementList() {
-    const begin = (this.page - 1) * this.elementsPerPage;
-    const end = begin + this.elementsPerPage;
-
-    return this.array.slice(begin, end);
-  }
-
-  /**
-   * Build the Pagination Embed.
-   *
-   * @example
-   *
-   * // Object as constructor.
-   * const PaginationEmbed = require("<utils>/PaginationEmbed");
-   *
-   * // Under message event.
-   * new PaginationEmbed({
-   *  authorisedUser: message.author,
-   *  channel: message.channel,
-   *  clientMessage: { content: "Preparing the embed..." },
-   *  array: [
-   *    { id: 1, name: "John Doe" },
-   *    { id: 2, name: "Jane Doe" }
-   *  ],
-   *  elementsPerPage: 1,
-   *  pageIndicator: false,
-   *  fields: [
-   *    { name: "ID", value: el => el.id },
-   *    { name: "Name", value: el => el.name }
-   *  ],
-   *  page: 2,
-   *  timeout: 69000,
-   *  emojis: {
-   *    back: "◀",
-   *    jump: "↗",
-   *    forward: "▶",
-   *    delete: "🗑"
-   *  }
-   * }).build();
-   *
-   * @example
-   *
-   * // Methods as constructor.
-   * const PaginationEmbed = require("<utils>/PaginationEmbed");
-   *
-   * // Under message event.
-   * new PaginationEmbed()
-   *  .setAuthorisedUser(message.author)
-   *  .setChannel(message.channel)
-   *  .setClientMessage(null, "Preparing the embed...")
-   *  .setArray([
-   *    { id: 1, name: "John Doe" },
-   *    { id: 2, name: "Jane Doe" }
-   *  ])
-   *  .setElementsPerPage(1)
-   *  .setPageIndicator(false)
-   *  .formatField("ID", el => el.id)
-   *  .formatField("Name", el => el.name)
-   *  .setPage(2)
-   *  .setTimeout(69000)
-   *  .setEmojis({
-   *    back: "◀",
-   *    jump: "↗",
-   *    forward: "▶",
-   *    delete: "🗑"
-   *  })
-   *  .build();
-   */
-  async build() {
-    this
-      .setAuthorisedUser(this.authorisedUser)
-      .setChannel(this.channel)
-      .setClientMessage(this.clientMessage.message, this.clientMessage.content)
-      .setArray(this.array)
-      .setElementsPerPage(this.elementsPerPage)
-      .showPageIndicator(this.pageIndicator)
-      .setTimeout(this.timeout)
-      .setEmojis(this.emojis);
-
-    this.pages = Math.ceil(this.array.length / this.elementsPerPage);
-    this.setPage(this.page);
-
-    if (!(this.page >= 1 && this.page <= this.pages)) throw new Error("Invalid page.");
-
-    const message = this.clientMessage.message
-      ? await this.clientMessage.message.edit(this.clientMessage.content)
-      : await this.channel.send(this.clientMessage.content);
-    this.setClientMessage(message, this.clientMessage.content);
-
-    const permissions = ["ADD_REACTIONS", "MANAGE_MESSAGES", "EMBED_LINKS"];
-    const missing = message.channel.permissionsFor(message.client.user).missing(permissions);
-
-    if (missing.length)
-      throw new Error(`Cannot invoke Pagination class without required permissions: ${missing.join(", ")}`);
-
-    const isValidFields = Array.isArray(this.fields) && Boolean(this.fields.length);
-
-    if (!isValidFields) throw new Error("Cannot invoke Pagination class without initialising at least one field.");
-
-    const fields = this.fields;
-    this.fields = [];
-
-    for (let i = 0; i < fields.length; i++) {
-      const field = fields[i];
-
-      this.formatField(field.name, field.value, field.inline);
-    }
-
-    const hasPaginateField = this.fields.filter(f => typeof f.value === "function");
-
-    if (!hasPaginateField) throw new Error("Cannot invoke Pagination class without at least one field to paginate.");
-
-    await this._loadList();
-  }
-
-  /**
-   * Adds a field to the embed.
-   * Same as MessageEmbed.addField, but value takes a function instead.
-   * @param {string} name - Name of the field.
-   * @param {Function} value - Value of the field. Function for Array.prototype.map().join("\n").
-   * @param {boolean} [inline=true] - Whether the field is inline with other field or not.
-   * @returns {PaginationEmbed} - Instance of PaginationEmbed
-   */
-  formatField(name, value, inline = true) {
-    this.fields.push({ name, value, inline });
-
-    return this;
+  build() {
+    throw new Error("Cannot invoke this class. Invoke with [pagination/Embeds] or [pagination/FieldsEmbed] instead.");
   }
 
   /**
@@ -267,7 +116,7 @@ class PaginationEmbed extends MessageEmbed {
   setArray(array) {
     const isValidArray = Array.isArray(array) && Boolean(array.length);
 
-    if (!isValidArray) throw new Error("Cannot invoke Pagination class without initialising the array to paginate.");
+    if (!isValidArray) throw new Error("Cannot invoke PaginationEmbed class without initialising the array to paginate.");
 
     this.array = array;
 
@@ -311,19 +160,6 @@ class PaginationEmbed extends MessageEmbed {
   }
 
   /**
-   * Sets the maximum number of elements to be displayed per page.
-   * @param {number} [number=10] - Maximum number of elements to be displayed per page.
-   * @returns {PaginationEmbed} - Instance of PaginationEmbed
-   */
-  setElementsPerPage(number = 10) {
-    if (typeof number !== "number") throw new Error("setElementsPerPage() only accepts number type.");
-
-    this.elementsPerPage = number;
-
-    return this;
-  }
-
-  /**
    * Sets the emojis used for navigation buttons.
    * @param {NavigationButtons} [emojis={}] - An object containing customised emojis to use as navigation buttons.
    * @returns {PaginationEmbed} - Instance of PaginationEmbed
@@ -344,10 +180,9 @@ class PaginationEmbed extends MessageEmbed {
 
     if (!(!isNaN(param) || isString)) throw new Error("setPage() only accepts number/string type.");
 
-    const navigator = {
-      back: this.page === 1 ? this.page : this.page - 1,
-      forward: this.page === this.pages ? this.pages : this.page + 1
-    }[param];
+    const navigator = param === "back"
+      ? this.page === 1 ? this.page : this.page - 1
+      : this.page === this.pages ? this.pages : this.page + 1;
 
     this.page = isString ? navigator : param;
 
@@ -368,62 +203,53 @@ class PaginationEmbed extends MessageEmbed {
   }
 
   /**
-   * Sets whether page number indicator on embed description text is shown or not.
+   * Sets whether page number indicator on client"s message is shown or not.
    * @param {boolean} [boolean=true] - Show page indicator?
    * @returns {PaginationEmbed} - Instance of PaginationEmbed
    */
   showPageIndicator(boolean = true) {
     if (typeof boolean !== "boolean") throw new Error("showPageIndicator() only accepts boolean type.");
 
-    this.pageIndicator = boolean === true;
+    this.pageIndicator = boolean;
 
     return this;
   }
 
   /**
-   * Prepares the PaginationEmbed.
    * @private
    * @protected
-   * @returns {MessageEmbed} - Instance of MessageEmbed.
+   * Evaluates the constructor and the client.
+   * @param {number} pages - The number of pages in this instance.
    */
-  _drawList() {
-    const embed = new MessageEmbed({
-      type: this.type,
-      title: this.title,
-      description: this.description,
-      url: this.url,
-      color: this.color,
-      timestamp: this.timestamp,
-      thumbnail: this.thumbnail,
-      image: this.image,
-      video: this.video,
-      author: this.author,
-      provider: this.provider,
-      footer: this.footer,
-      files: this.files
-    });
+  async _verify(pages) {
+    this
+      .setChannel(this.channel)
+      .setAuthorisedUser(this.authorisedUser)
+      .setClientMessage(this.clientMessage.message, this.clientMessage.content)
+      .setArray(this.array)
+      .showPageIndicator(this.pageIndicator)
+      .setTimeout(this.timeout)
+      .setEmojis(this.emojis);
 
-    if (this.pageIndicator && this.pages > 1)
-      embed.setDescription(
-        this.description
-          ? `${this.description}\n\nPage ${this.page} of ${this.pages}`
-          : `Page ${this.page} of ${this.pages}`
-      );
+    this.pages = pages;
+    this.setPage(this.page);
 
-    for (let i = 0; i < this.fields.length; i++) {
-      const field = this.fields[i];
+    if (!(this.page >= 1 && this.page <= this.pages)) throw new Error("Invalid page.");
 
-      if (typeof field.value === "function")
-        embed.addField(field.name, this.elementList.map(field.value).join("\n"), field.inline);
-      else
-        embed.addField(field.name, field.value, field.inline);
-    }
+    const message = this.clientMessage.message
+      ? await this.clientMessage.message.edit(this.clientMessage.content)
+      : await this.channel.send(this.clientMessage.content);
+    this.setClientMessage(message, this.clientMessage.content);
 
-    return embed;
+    const permissions = ["ADD_REACTIONS", "MANAGE_REACTIONS", "MANAGE_MESSAGES", "EMBED_LINKS"];
+    const missing = message.channel.permissionsFor(message.client.user).missing(permissions);
+
+    if (missing.length)
+      throw new Error(`Cannot invoke PaginationEmbeds class without required permissions: ${missing.join(", ")}`);
   }
 
   /**
-   * Deploys emoji reacts for the MessageEmbed.
+   * Deploys emoji reacts for the message sent by the client.
    * @private
    * @protected
    */
@@ -437,15 +263,13 @@ class PaginationEmbed extends MessageEmbed {
   }
 
   /**
-   * Initialises the MessageEmbed.
+   * Helper for intialising the MessageEmbed.
+   * [For sub-class] Initialises the MessageEmbed.
    * @private
    * @protected
    * @param {boolean} [callNavigation=true] - Whether to call _drawNavigation() or not.
    */
-  async _loadList(callNavigation = true) {
-    const embed = this._drawList();
-    await this.clientMessage.message.edit({ embed });
-
+  _loadList(callNavigation = true) {
     if (callNavigation) return this._drawNavigation();
 
     this.clientMessage.message.react(this.emojis.delete);
@@ -517,9 +341,7 @@ class PaginationEmbed extends MessageEmbed {
           break;
       }
     } catch (c) {
-      clientMessage.reactions.removeAll().catch(err => {
-        throw err;
-      });
+      await clientMessage.reactions.removeAll();
 
       if (c instanceof Error) throw c;
     }
@@ -532,36 +354,33 @@ class PaginationEmbed extends MessageEmbed {
    * @param {User} user - The user who reacted to jump on a certain page.
    */
   async _awaitResponseEx(user) {
+    const cancel = ["0", "cancel"];
     const filter = m => {
       const supposedPage = parseInt(m.content);
 
       return (
         m.author.id === user.id && (
           (!isNaN(m.content) && supposedPage !== this.page && supposedPage >= 1 && supposedPage <= this.pages) ||
-          m.content.toLowerCase() === "cancel"
+          cancel.includes(m.content.toLowerCase())
         )
       );
     };
     const channel = this.clientMessage.message.channel;
-    const prompt = await channel.send("To what page would you like to jump? Say `cancel` to cancel the prompt.");
+    const prompt = await channel.send("To what page would you like to jump? Say `cancel` or `0` to cancel the prompt.");
 
     try {
       const responses = await channel.awaitMessages(filter, { max: 1, time: this.timeout, errors: ["time"] });
       const response = responses.first();
-      let content = response.content;
+      const content = response.content;
 
       await prompt.delete();
       await response.delete();
 
-      if (content === "cancel") return this._awaitResponse();
+      if (cancel.includes(content)) return this._awaitResponse();
 
-      content = parseInt(content);
-
-      this._loadPage(content);
+      this._loadPage(parseInt(content));
     } catch (c) {
-      prompt.delete().catch(err => {
-        throw err;
-      });
+      await prompt.delete();
 
       if (c instanceof Error) throw c;
     }
