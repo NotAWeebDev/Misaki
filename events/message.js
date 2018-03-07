@@ -19,7 +19,6 @@ module.exports = class {
       monitor.run(this.client, message, level);
     }
 
-  
     const mentionPrefix = new RegExp(`^<@!?${this.client.user.id}> `);
     const prefixMention = mentionPrefix.exec(message.content);
 
