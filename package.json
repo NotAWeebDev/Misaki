@@ -23,7 +23,7 @@
   "homepage": "https://github.com/YorkAARGH/Misaki#readme",
   "dependencies": {
     "chalk": "^2.3.2",
-    "discord.js": "github:hydrabolt/discord.js#2e0048add1036c4648a99cd6a780280b6dd4ce9b",
+    "discord.js": "github:hydrabolt/discord.js",
     "enmap": "^0.6.1",
     "enmap-level": "^1.0.1",
     "fast-html-parser": "^1.0.1",
