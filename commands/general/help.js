@@ -47,7 +47,7 @@ class Help extends Command {
           .addField("Command description", cm.help.description)
           .addField("Command usage", `\`${cm.help.usage}\``)
           .addField("Command aliases", cm.conf.aliases.length === 0 ? "None" : cm.conf.aliases.join(", ") )
-          .addField("Extended description", cm.help.extended ? cm.help.extended : "None");
+          .addField("Extended description", cm.help.extended);
 
       } else {
         let n = 0;
