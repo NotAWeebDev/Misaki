@@ -1,5 +1,6 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const snekfetch = require("snekfetch");
+const { version } = require(`${process.cwd()}/package.json`);
 class Cat extends Social {
   constructor(client) {
     super(client, {
@@ -22,8 +23,19 @@ class Cat extends Social {
       }
 
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a cat...`);
-      const { body } = await snekfetch.get("http://random.cat/meow");
-      await msg.edit({embed:{ "title": "Click here if the image failed to load.", "url": body.file, "color":message.guild.me.roles.highest.color || 5198940, "image": {"url": body.file}}});
+      const { body } = await snekfetch.get("https://api.weeb.sh/images/random?type=animal_cat")
+        .set("Authorization", this.client.config.apiTokens.Wolken)
+        .set("User-Agent", `Misaki/${version}/${this.client.user.id === "396323622953680910" ? "Production" : "Development"}`);
+      await msg.edit({
+        embed: {
+          "title": "Click here if the image failed to load.",
+          "url": body.url,
+          "color": message.guild.me.roles.highest.color || 5198940,
+          "image": {
+            "url": body.url
+          }
+        }
+      });
     } catch (e) {
       console.log(e);
     }
