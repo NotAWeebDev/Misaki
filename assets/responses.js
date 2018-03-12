@@ -156,17 +156,6 @@ exports.goMessages = [
 
 // System
 
-// Reboot
-exports.bootOneMessages = [
-  "**{{user}}-san**! I'm back!",
-  "**{{user}}**, why did you do that?"
-];
-
-exports.bootTwoMessages = [
-  "**{{user}}-san**, did you miss me? I only took **{{ms}}ms**.",
-  "**{{user}}**, I only got **{{ms}}ms** of sleep"
-];
-
 // Reload
 exports.reloadMissingArg = [
   "N-nani?! I don't know what to do, you didn't give me anything!",
