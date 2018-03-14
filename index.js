@@ -1,7 +1,7 @@
 require("dotenv").load();
 require(`${process.cwd()}/extenders/Guild.js`);
 require(`${process.cwd()}/modules/Prototypes.js`);
-if (process.version.slice(1).split(".")[0] < 8) throw new Error("Node 8.0.0 or higher is required. Update Node on your system.");
+if (Number(process.version.slice(1).split(".")[0]) < 8) throw new Error("Node 8.0.0 or higher is required. Update Node on your system.");
 
 const { Client, Collection } = require("discord.js");
 const Enmap = require("enmap");
