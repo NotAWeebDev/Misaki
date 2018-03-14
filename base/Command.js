@@ -55,9 +55,9 @@ class Command {
   async verifyUser(message, user, options = {}) {
     let match;
     const idMatch = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
-    const nameMatch = /./gi.exec(user);
+    const nameMatch = /./gi.test(user);
     if (!idMatch && !nameMatch) throw new ParseError("Invalid Mention or ID", options.msg);
-    user.startsWith("<@") && user.endsWith(">") ? match = user.substr(2, 18) : match = user;
+    if (idMatch) match = idMatch[1];
     if (/(#[0-9]{4})$/.test(user)) match = user.substr(0, user.length-5);
     if (!idMatch) match = message.guild.members.find(m => m.user.username === match).id;
     return this.client.users.fetch(match);
