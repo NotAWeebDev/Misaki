@@ -15,6 +15,7 @@ events/raw.js
 commands/nsfw/r34.js
 commands/fun/coin.js
 commands/wolke/test.js
+.env
 
 # Runtime data
 pids

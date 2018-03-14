@@ -24,7 +24,7 @@ class Cat extends Social {
 
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a cat...`);
       const { body } = await snekfetch.get("https://api.weeb.sh/images/random?type=animal_cat")
-        .set("Authorization", this.client.config.apiTokens.Wolken)
+        .set("Authorization", `Wolke ${process.env.WEEBSH}`)
         .set("User-Agent", `Misaki/${version}/${this.client.user.id === "396323622953680910" ? "Production" : "Development"}`);
       await msg.edit({
         embed: {

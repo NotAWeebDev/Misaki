@@ -7,7 +7,7 @@ module.exports = class {
   async run(guild) {
 
     snekfetch.post(`https://discordbots.org/api/bots/${this.client.user.id}/stats`)
-      .set("Authorization", this.client.config.apiTokens.dblToken)
+      .set("Authorization", process.env.DBLTOKEN)
       .send({ server_count: this.client.guilds.size })
       .then(() => console.log("Sent guild count to discordbots.org!"));
 

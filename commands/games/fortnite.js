@@ -1,7 +1,7 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 const { MessageEmbed } = require("discord.js");
 const FNite = require("fortnite");
-const fortnite = new FNite(require(`${process.cwd()}/config.js`).apiTokens.TRN);
+const fortnite = new FNite(process.env.TRACKER);
 
 class Fortnite extends Command {
   constructor(client) {

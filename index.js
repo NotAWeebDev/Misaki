@@ -1,3 +1,4 @@
+require("dotenv").load();
 require(`${process.cwd()}/extenders/Guild.js`);
 require(`${process.cwd()}/modules/Prototypes.js`);
 if (process.version.slice(1).split(".")[0] < 8) throw new Error("Node 8.0.0 or higher is required. Update Node on your system.");
@@ -15,7 +16,7 @@ class Misaki extends Client {
     this.config = require(`${process.cwd()}/config.js`);
     this.logger = require(`${process.cwd()}/util/Logger`);
     this.responses = require(`${process.cwd()}/assets/responses.js`);
-    this.idiotAPI = new Idiot.Client(this.config.apiTokens.idiotToken, { dev: true });
+    this.idiotAPI = new Idiot.Client(process.env.IDIOTAPI, { dev: true });
 
     this.aliases = new Collection();
     this.commands = new Collection();
@@ -168,7 +169,7 @@ const init = async () => {
     client.levelCache[thisLevel.name] = thisLevel.level;
   }
 
-  client.login(client.config.token);
+  client.login(process.env.DISCORD);
 };
 
 init();
