@@ -53,14 +53,13 @@ class Command {
   }
 
   async verifyUser(message, user, options = {}) {
-    let match;
+    let member;
     const idMatch = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
-    const nameMatch = /./gi.test(user);
-    if (!idMatch && !nameMatch) throw new ParseError("Invalid Mention or ID", options.msg);
-    if (idMatch) match = idMatch[1];
-    if (/(#[0-9]{4})$/.test(user)) match = user.substr(0, user.length-5);
-    if (!idMatch) match = message.guild.members.find(m => m.user.username === match).id;
-    return this.client.users.fetch(match);
+    if (idMatch) return this.client.users.fetch(idMatch[1]);
+    if (/(#[0-9]{4})$/.test(user)) member = message.guild.members.find(member => member.user.tag === user);
+    else member = message.guild.members.find(member => member.user.username === user);
+    if (member) return member.user;
+    throw new ParseError("Invalid Mention or ID", options.msg);
   }
 
   async verifyMember(message, member, options = {}) {
