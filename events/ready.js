@@ -1,4 +1,4 @@
-const { get } = require("snekfetch");
+const { get, post } = require("snekfetch");
 module.exports = class {
   constructor(client) {
     this.client = client;
@@ -23,6 +23,14 @@ module.exports = class {
         this.client.reminders.delete(`${reminder.id}-${reminder.reminderTimestamp}`);
       }); 
     }, 60000); 
+
+    //Posting DBl Stats
+    setInterval(() => {
+      post(`https://discordbots.org/api/bots/${this.client.user.id}/stats`)
+        .set("Authorization", process.env.DBLTOKEN)
+        .send({ server_count: this.client.guilds.size })
+        .then(() => this.client.logger.ready("DBL Stats Updated"));
+    }, 3600000);
     
     // Upvote Reward Stuff
     setInterval(async () => {
