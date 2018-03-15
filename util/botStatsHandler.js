@@ -9,10 +9,10 @@ module.exports = class BotListHandler {
   async updateStats() {
     try {
       await post(`https://discordbots.org/api/bots/${this.client.user.id}/stats`)
-        .set("Authorization", this.client.tokens.DBLTOKEN)
+        .set("Authorization", process.env.DBLTOKEN)
         .send({server_count: this.client.guilds.size});
       await post(`https://bots.discord.pw/api/bots/${this.client.user.id}/stats`)
-        .set("Authorization", this.client.tokens.DPWTOKEN)
+        .set("Authorization", process.env.DPWTOKEN)
         .send({server_count: this.client.guilds.size }); 
     } catch (error) {
       this.client.logger.error(error);
