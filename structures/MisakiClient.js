@@ -1,4 +1,4 @@
-const { Client, Collection, MessageEmbed } = require("discord.js");
+const { Client, Collection, MessageEmbed, MessageAttachment } = require("discord.js");
 const CommandStore = require(`${process.cwd()}/structures/CommandStore.js`);
 const EventStore = require(`${process.cwd()}/structures/EventStore.js`);
 const Enmap = require("enmap");
@@ -24,6 +24,7 @@ class MisakiClient extends Client {
     this.ratelimits = new Collection();
     this.methods = {
       Embed: MessageEmbed,
+      Attachment: MessageAttachment,
       util: require(`${process.cwd()}/util/util.js`)
     };
 
