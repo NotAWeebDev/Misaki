@@ -1,6 +1,8 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 const { MessageEmbed } = require("discord.js");
 const { UsageError } = require(`${process.cwd()}/util/CustomError.js`);
+const FortniteModule = require("fortnite");
+const fortniteClient = new FortniteModule(process.env.TRACKER);
 
 class Fortnite extends Command {
   constructor(client) {
@@ -12,8 +14,6 @@ class Fortnite extends Command {
       cooldown: 10,
       aliases: ["fort", "nite", "fn"]
     });
-    const Fortnite = require("fortnite");
-    this.fortnite = new Fortnite(process.env.TRACKER);
   }
 
   cmdVerify(message, args) {
@@ -22,7 +22,7 @@ class Fortnite extends Command {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     try {
-      const data = await this.fortnite.getInfo(args.splice(1).join(" "), args[0]);
+      const data = await fortniteClient.getInfo(args.splice(1).join(" "), args[0]);
       message.channel.send(new MessageEmbed()
         .setTitle(`${data.username}, on ${data.platformNameLong}`)
         .setURL(`https://partybus.gg/player/${data.username}`)
