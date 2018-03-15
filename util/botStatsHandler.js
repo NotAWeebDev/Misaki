@@ -15,7 +15,7 @@ module.exports = class BotListHandler {
         .set("Authorization", this.client.tokens.DPWTOKEN)
         .send({server_count: this.client.guilds.size }); 
     } catch (error) {
-      this.client.console.error(error);
+      this.client.logger.error(error);
     }
   }
 };
