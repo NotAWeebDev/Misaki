@@ -82,7 +82,7 @@ Reply with \`cancel\` to cancel the message. The message will timeout after 60 s
 
   async cmdWeeb(type, imgType, nsfw = false) {
     const { body } = await get(`https://api.weeb.sh/images/random?type=${type}&filetype=${imgType}&nsfw=${nsfw}`)
-      .set("Authorization", this.client.config.apiTokens.Wolken)
+      .set("Authorization", `Wolke ${process.env.WEEBSH}`)
       .set("User-Agent", `Misaki/${version}/${this.client.user.id === "396323622953680910" ? "Production" : "Development"}`);
     return body.url;
   }

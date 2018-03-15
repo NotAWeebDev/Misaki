@@ -15,10 +15,9 @@ class Anime extends Command {
     super(client, {
       name: "anime",
       description: "Search for an anime on Kitsu!",
-      category: "General",
+      category: "Fun",
       usage: "anime attack on titan",
       cooldown: 10,
-      guildOnly: true,
     });
   }
 

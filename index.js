@@ -1,3 +1,4 @@
+require("dotenv").load();
 require(`${process.cwd()}/modules/Prototypes.js`);
 require(`${process.cwd()}/extenders/Message.js`);
 require(`${process.cwd()}/extenders/GuildMember.js`);

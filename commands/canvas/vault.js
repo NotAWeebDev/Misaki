@@ -22,7 +22,7 @@ class Valut extends Social {
 
   async run(message, args, level, loadingMessage) {
     const vaultDweller = await this.cmdVerify(message, args, loadingMessage);
-    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.vaultBoy(vaultDweller.displayAvatarURL({ format:"png", size:512 })), "vaultboy.png"));
+    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.vaultBoy(vaultDweller.displayAvatarURL({ format: "png", size: 128 })), "vaultboy.png"));
     await loadingMessage.delete();
   }
 }

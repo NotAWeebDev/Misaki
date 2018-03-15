@@ -1,8 +1,9 @@
 const { ParseError } = require("../util/CustomError.js");
 const { Permissions } = require("discord.js");
+const pageButtons = ["⬅","➡","🛑"];
 
 class Command {
-  constructor(client, options) {
+  constructor(client, options = {}) {
 
     this.client = client;
     this.name = options.name || null;
@@ -20,6 +21,39 @@ class Command {
     this.location = "";
   }
 
+  async paginate(message, list, makeEmbed) {
+    const msg = await message.channel.send("`Loading please wait ...`");
+    for (let i = 0; i < pageButtons.length; i++) { await msg.react(pageButtons[i]); }
+    const embed = await msg.edit("", { embed: (this.makeEmbed(list, 0)) });
+
+    return await this.progressPages(message, embed, list, 0, makeEmbed);
+  }
+  
+  progressPages(message, embed, list, page, embedMakerFunction) {
+    embed.awaitReactions((rec, user) => user.id === message.author.id && pageButtons.includes(rec.emoji.toString()), { time: 30000, max: 1, errors: ["time"] })
+      .then((reactions) => {
+        const res = reactions.first();
+        switch (res._emoji.name) {
+          case "⬅":
+            page -= 1;
+            break;
+          case "➡":
+            page += 1;
+            break;
+          case "🛑":
+            return embed.reactions.removeAll();
+        }
+        page = page <= 0 ? 0 : page >= list.length  ? list.length - 1 : page;      
+        embed.edit(embedMakerFunction(list, page));
+        res.users.remove(message.author);
+        return this.progressPages(message, embed, list, page, embedMakerFunction);
+      })
+      .catch((error) => {
+        this.client.logger.error(error);
+        return message.channel.send("There was some error, sorry for the interuption.").then(sent => sent.delete({ timeout : 5000 }));
+      });
+  }
+
   makeTitles(data) {
     const arr = [];
     for (let i = 0; i < 5; i++) arr.push(`\n${i + 1}: ${this.makeTitle(i, data)}`);
@@ -32,11 +66,14 @@ class Command {
     return `${line1}${line2}`;
   }
 
-  verifyUser(message, user, options = {}) {
-    const match = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
-    if (!match) throw new ParseError("Invalid Mention or ID", options.msg);
-    const id = match[1];
-    return this.client.users.fetch(id);
+  async verifyUser(message, user, options = {}) {
+    let member;
+    const idMatch = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
+    if (idMatch) return this.client.users.fetch(idMatch[1]);
+    if (/(#[0-9]{4})$/.test(user)) member = message.guild.members.find(member => member.user.tag === user);
+    else member = message.guild.members.find(member => member.user.username === user);
+    if (member) return member.user;
+    throw new ParseError("Invalid Mention or ID", options.msg);
   }
 
   async verifyMember(message, member, options = {}) {

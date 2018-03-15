@@ -19,8 +19,8 @@ class Meme extends Social {
       text1 = "";
     }
     params.append("template_id", template_id);
-    params.append("username", this.client.config.apiTokens.imgflipUser);
-    params.append("password", this.client.config.apiTokens.imgflipPass);
+    params.append("username", process.env.FLIPUSER);
+    params.append("password", process.env.FLIPPASS);
     params.append("font", font);
     params.append("max_font_size", max_font_size);
     params.append("text0", text0);
@@ -45,8 +45,8 @@ class Meme extends Social {
       forth = "";
     }
     params.append("template_id", template_id);
-    params.append("username", this.client.config.apiTokens.imgflipUser);
-    params.append("password", this.client.config.apiTokens.imgflipPass);
+    params.append("username", process.env.FLIPUSER);
+    params.append("password", process.env.FLIPPASS);
     params.append("font", font);
     params.append("max_font_size", max_font_size);
     params.append("boxes[0][text]", first);
