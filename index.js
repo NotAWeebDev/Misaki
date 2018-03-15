@@ -9,7 +9,7 @@ const EnmapLevel = require("enmap-level");
 const klaw = require("klaw");
 const path = require("path");
 const Idiot = require("idiotic-api");
-const BotStatsHandler = require("./util/botStatsHandler"); 
+const BotStatsHandler = require(`${process.cwd()}/util/botStatsHandler`); 
 
 class Misaki extends Client {
   constructor(options) {
