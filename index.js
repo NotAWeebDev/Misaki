@@ -1,6 +1,7 @@
+require("dotenv").load();
 require(`${process.cwd()}/extenders/Guild.js`);
 require(`${process.cwd()}/modules/Prototypes.js`);
-if (process.version.slice(1).split(".")[0] < 8) throw new Error("Node 8.0.0 or higher is required. Update Node on your system.");
+if (Number(process.version.slice(1).split(".")[0]) < 8) throw new Error("Node 8.0.0 or higher is required. Update Node on your system.");
 
 const { Client, Collection } = require("discord.js");
 const Enmap = require("enmap");
@@ -15,7 +16,7 @@ class Misaki extends Client {
     this.config = require(`${process.cwd()}/config.js`);
     this.logger = require(`${process.cwd()}/util/Logger`);
     this.responses = require(`${process.cwd()}/assets/responses.js`);
-    this.idiotAPI = new Idiot.Client(this.config.apiTokens.idiotToken, { dev: true });
+    this.idiotAPI = new Idiot.Client(process.env.IDIOTAPI, { dev: true });
 
     this.aliases = new Collection();
     this.commands = new Collection();
@@ -24,11 +25,11 @@ class Misaki extends Client {
 
     this.settings = new Enmap({ provider: new EnmapLevel({ name: "settings" }) });
     
-    this.reminders = new Enmap({provider: new EnmapLevel({ name: "reminders" }) });
+    this.reminders = new Enmap({ provider: new EnmapLevel({ name: "reminders" }) });
 
-    this.points = new Enmap({provider: new EnmapLevel({ name: "points" }) });
-    this.store = new Enmap({provider: new EnmapLevel({ name: "shop" }) });
-    this.inventory = new Enmap({provider: new EnmapLevel({ name: "inventory" }) });
+    this.points = new Enmap({ provider: new EnmapLevel({ name: "points" }) });
+    this.store = new Enmap({ provider: new EnmapLevel({ name: "shop" }) });
+    this.inventory = new Enmap({ provider: new EnmapLevel({ name: "inventory" }) });
   }
 
   permlevel(message) {
@@ -50,7 +51,6 @@ class Misaki extends Client {
   loadCommand(commandPath, commandName) {
     try {
       const props = new (require(`${commandPath}${path.sep}${commandName}`))(client);
-      // client.logger.log(`Loading Command: ${props.help.name}. 👌`, "log");
       props.conf.location = commandPath;
       if (props.init) {
         props.init(client);
@@ -74,9 +74,6 @@ class Misaki extends Client {
     }
     if (!command) return `The command \`${commandName}\` doesn"t seem to exist, nor is it an alias. Try again!`;
 
-    if (command.shutdown) {
-      await command.shutdown(client);
-    }
     delete require.cache[require.resolve(`${commandPath}${path.sep}${commandName}.js`)];
     return false;
   }
@@ -165,7 +162,7 @@ const init = async () => {
     client.levelCache[thisLevel.name] = thisLevel.level;
   }
 
-  client.login(client.config.token);
+  client.login(process.env.DISCORD);
 };
 
 init();

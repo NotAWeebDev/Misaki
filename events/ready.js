@@ -36,7 +36,7 @@ module.exports = class {
     
     // Upvote Reward Stuff
     // setInterval(async () => {
-    //   const { body } = await get("https://discordbots.org/api/bots/396323622953680910/votes?onlyids=true").set("Authorization", this.client.config.apiTokens.dblToken);
+    //   const { body } = await get("https://discordbots.org/api/bots/396323622953680910/votes?onlyids=true").set("Authorization", process.env.DBLTOKEN);
     //   this.client.upvoters = [];
     //   for (const id of body) {
     //     const members = supportGuild.members;

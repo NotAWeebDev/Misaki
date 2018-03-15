@@ -13,7 +13,7 @@ class Fortnite extends Command {
       aliases: ["fort", "nite", "fn"]
     });
     const Fortnite = require("fortnite");
-    this.fortnite = new Fortnite(this.client.config.apiTokens.TRN);
+    this.fortnite = new Fortnite(process.env.TRACKER);
   }
 
   cmdVerify(message, args) {
