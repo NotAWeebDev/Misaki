@@ -15,5 +15,5 @@ class MyLevel extends Command {
     message.channel.send(`${this.client.responses.myLevelMessages.random().replaceAll("{{user}}", message.member.displayName).replaceAll("{{level}}", level).replaceAll("{{friendly}}", friendly.toLowerCase())}.`);
   }
 }
-
+// Why keep using "this"
 module.exports = MyLevel;
