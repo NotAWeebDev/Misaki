@@ -23,7 +23,7 @@ class DadJoke extends Social {
       .setColor(message.guild.me.roles.highest.color || 5198940);
 
 
-    loadingMessage.edit({embed});
+    await loadingMessage.edit({embed});
   }
 }
 

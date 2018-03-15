@@ -1,4 +1,5 @@
 const { ParseError } = require("../util/CustomError.js");
+const pageButtons = ["⬅","➡","🛑"];
 
 class Command {
   constructor(client, {
@@ -10,7 +11,7 @@ class Command {
     cost = 0,
     cooldown = 0,
     hidden = false,
-    guildOnly = false,
+    guildOnly = true,
     aliases = [],
     botPerms = [],
     permLevel = "User",
@@ -34,6 +35,39 @@ class Command {
       extended,
       cost
     };
+  }
+
+  async paginate(message, list, makeEmbed) {
+    const msg = await message.channel.send("`Loading please wait ...`");
+    for (let i = 0; i < pageButtons.length; i++) { await msg.react(pageButtons[i]); }
+    const embed = await msg.edit("", { embed: (this.makeEmbed(list, 0)) });
+
+    return await this.progressPages(message, embed, list, 0, makeEmbed);
+  }
+  
+  progressPages(message, embed, list, page, embedMakerFunction) {
+    embed.awaitReactions((rec, user) => user.id === message.author.id && pageButtons.includes(rec.emoji.toString()), { time: 30000, max: 1, errors: ["time"] })
+      .then((reactions) => {
+        const res = reactions.first();
+        switch (res._emoji.name) {
+          case "⬅":
+            page -= 1;
+            break;
+          case "➡":
+            page += 1;
+            break;
+          case "🛑":
+            return embed.reactions.removeAll();
+        }
+        page = page <= 0 ? 0 : page >= list.length  ? list.length - 1 : page;      
+        embed.edit(embedMakerFunction(list, page));
+        res.users.remove(message.author);
+        return this.progressPages(message, embed, list, page, embedMakerFunction);
+      })
+      .catch((error) => {
+        this.client.logger.error(error);
+        return message.channel.send("There was some error, sorry for the interuption.").then(sent => sent.delete({ timeout : 5000 }));
+      });
   }
 
   makeTitles(data) {
