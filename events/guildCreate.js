@@ -1,4 +1,3 @@
-const { post } = require("snekfetch");
 module.exports = class {
   constructor(client) {
     this.client = client;
