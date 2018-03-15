@@ -3,7 +3,7 @@ const { post } = require("snekfetch");
 module.exports = class BotListHandler {
   constructor(client) {
     this.client = client;
-    this.interval = this.client.setInterval(this.updateStats.bind(this), 9e5);//9e5 is 900,000 ms or 15 minutes
+    this.interval = this.client.setInterval(this.updateStats.bind(this), 9e5); //9e5 is 900,000 ms or 15 minutes
   }
 
   async updateStats() {
