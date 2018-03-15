@@ -1,3 +1,4 @@
+const pageButtons = ["⬅","➡","🛑"];
 class Command {
   constructor(client, {
     name = null,
@@ -30,6 +31,46 @@ class Command {
       extended,
       cost
     };
+  }
+
+
+  // below two functions inside the command class so that they can be called in any command.
+  async paginate(message, list, makeEmbed) {
+  /*
+  message is simply discord.js message object
+  list is an array
+  makeEmbed is the function which returns messageEmbed
+  */
+    const msg = await message.channel.send("`Loading please wait ...`");
+    for (let i = 0; i < pageButtons.length; i++) { await msg.react(pageButtons[i]); }
+    const embed = await msg.edit("", { embed: (this.makeEmbed(list, 0)) });
+    // waiting users reaction
+    return await this.progressPages(message, embed, list, 0, makeEmbed);
+  }
+
+  progressPages(message, embed, list, page, embedMakerFunction) {
+    embed.awaitReactions((rec, user) => user.id === message.author.id && pageButtons.includes(rec.emoji.toString()), { time: 30000, max: 1, errors: ["time"] })
+      .then((reactions) => {
+        const res = reactions.first();
+        switch (res._emoji.name) {
+          case "⬅":
+            page -= 1;
+            break;
+          case "➡":
+            page += 1;
+            break;
+          case "🛑":
+            return embed.reactions.removeAll();
+        }
+        page = page <= 0 ? 0 : page >= list.length  ? list.length - 1 : page;      
+        embed.edit(embedMakerFunction(list, page));
+        res.users.remove(message.author);
+        return this.progressPages(message, embed, list, page, embedMakerFunction);
+      })
+      .catch((error) => {
+        this.client.logger.error(error);
+        return message.channel.send("There was some error, sorry for the interuption.").then(sent => sent.delete({ timeout : 5000 }));
+      });
   }
 
   makeTitles(data) {
