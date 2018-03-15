@@ -10,6 +10,7 @@ class LoveMeter extends Social {
       category: "Fun",
       usage: "lovecalc @<user>",
       cost: 10,
+      aliases: ["cupid"]
     });
   }
 
