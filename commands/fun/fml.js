@@ -1,7 +1,6 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const request = require("snekfetch");
 const HTMLParser = require("fast-html-parser");
-const { MessageEmbed } = require("discord.js");
 const { APIError } = require("../../util/CustomError.js");
 
 class FML extends Social {
@@ -25,7 +24,7 @@ class FML extends Social {
     const article = root.querySelector(".block a");
     const downdoot = root.querySelector(".vote-down");
     const updoot = root.querySelector(".vote-up");
-    const embed = new MessageEmbed()
+    const embed = new this.client.methods.Embed()
       .setTitle("Fuck my Life, Random Edition!")
       .setColor(165868)
       .setThumbnail("http://i.imgur.com/5cMj0fw.png")

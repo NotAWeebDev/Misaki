@@ -1,6 +1,5 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const { get } = require("snekfetch");
-const { MessageEmbed } = require("discord.js");
 
 class DadJoke extends Social {
   constructor(client) {
@@ -17,13 +16,12 @@ class DadJoke extends Social {
 
   async run(message, args, level, loadingMessage) {
     const { text } = await get("https://icanhazdadjoke.com/").set("Accept", "text/plain");
-    const embed = new MessageEmbed()
+    const embed = new this.client.methods.Embed()
       .setThumbnail("https://cdn.discordapp.com/emojis/397910503013220354.png")
       .setDescription(`_${text}_`)
       .setColor(message.guild.me.roles.highest.color || 5198940);
 
-
-    await loadingMessage.edit({embed});
+    await loadingMessage.edit({ embed });
   }
 }
 

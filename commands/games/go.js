@@ -1,5 +1,4 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
-const {MessageEmbed} = require("discord.js");
 
 class Go extends Command {
   constructor(client) {
@@ -60,7 +59,7 @@ class Go extends Command {
           break;
       }
 
-      const embed = new MessageEmbed()
+      const embed = new this.client.methods.Embed()
         .setColor(message.guild.me.roles.highest.color || 5198940)
         .setAuthor(`${message.author.username}`, `${message.author.displayAvatarURL()}`)
         .setThumbnail(`${message.author.displayAvatarURL()}`)
