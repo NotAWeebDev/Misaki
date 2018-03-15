@@ -9,6 +9,7 @@ const EnmapLevel = require("enmap-level");
 const klaw = require("klaw");
 const path = require("path");
 const Idiot = require("idiotic-api");
+const BotStatsHandler = require(`${process.cwd()}/util/botStatsHandler`); 
 
 class Misaki extends Client {
   constructor(options) {
@@ -17,6 +18,7 @@ class Misaki extends Client {
     this.logger = require(`${process.cwd()}/util/Logger`);
     this.responses = require(`${process.cwd()}/assets/responses.js`);
     this.idiotAPI = new Idiot.Client(process.env.IDIOTAPI, { dev: true });
+    this.botStatsHandler = new BotStatsHandler(this);
 
     this.aliases = new Collection();
     this.commands = new Collection();
