@@ -11,6 +11,9 @@ module.exports = class BotListHandler {
       await post(`https://discordbots.org/api/bots/${this.client.user.id}/stats`)
         .set("Authorization", this.client.tokens.DBLTOKEN)
         .send({server_count: this.client.guilds.size});
+      await post(`https://bots.discord.pw/api/bots/${this.client.user.id}/stats`)
+        .set("Authorization", this.client.tokens.DPWTOKEN)
+        .send({server_count: this.client.guilds.size }); 
     } catch (error) {
       this.client.console.error(error);
     }
