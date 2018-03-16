@@ -3,7 +3,6 @@ const pageButtons = ["⬅","➡","🛑"];
 
 class Command {
   constructor(client, file, options = {}) {
-
     this.client = client;
     this.name = options.name || file[file.length - 1].slice(0, -3);
     this.aliases = options.aliases || [];

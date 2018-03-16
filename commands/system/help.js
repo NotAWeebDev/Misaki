@@ -39,6 +39,7 @@ class Help extends Command {
       const extended = command.extended;
       const usage = command.usage;
       const aliases = command.aliases;
+      console.log(aliases);
       embed = new this.client.methods.Embed(embedPreset)
         .setTitle(`${name} - ${description.length <= 75 ? description : `${description.slice(0, 75)}...`}`)
         .addField("Command details", extended, false)

@@ -4,8 +4,8 @@ const { URLSearchParams } = require("url");
 
 class Meme extends Social {
 
-  constructor(client, options = {}) {
-    super(client, Object.assign(options, { guildOnly: true }));
+  constructor(client, file, options = {}) {
+    super(client, file, Object.assign(options, { guildOnly: true }));
   }
 
   async twoMeme(template_id, text, font = "impact", max_font_size = "50px") {

@@ -5,8 +5,8 @@ const { get } = require("snekfetch");
 
 class Social extends Command {
 
-  constructor(client, options = {}) {
-    super(client, Object.assign(options, { guildOnly: true }));
+  constructor(client, file, options = {}) {
+    super(client, file, Object.assign(options, { guildOnly: true }));
     this.loadingString = options.loadingString;
   }
 
