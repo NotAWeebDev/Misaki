@@ -25,7 +25,7 @@ class Xkdc extends Social {
       return message.channel.send({"embed": {"author":{"name":"Misaki | XKCD Comics"}, "description":`${ab.title} | #${ab.num}\n${ab.alt}`, "image":{"url":ab.img}}});
     }
     if (message.flags[0] == "r") {
-      const rn = await this.randomNum(1, ob.num);
+      const rn = this.randomNum(1, ob.num);
       const ef = await get(`https://xkcd.com/${rn}/info.0.json`);
       const ab = await ef.body;
       return message.channel.send({"embed": {"author":{"name":"Misaki | XKCD Comics"}, "description":`${ab.title} | #${ab.num}\n${ab.alt}`, "image":{"url":ab.img}}});
