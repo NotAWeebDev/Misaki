@@ -26,8 +26,8 @@ class Reload extends Command {
 
   resolvePiece(arg) {
     const isCommand = this.client.commands.get(arg);
-    const isEvent = this.client.events.get(arg);
     if (isCommand) return isCommand;
+    const isEvent = this.client.events.get(arg);
     if (isEvent) return isEvent;
     return false;
   }

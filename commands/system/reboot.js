@@ -12,7 +12,7 @@ class Reboot extends Command {
   }
 
   async run(message) {
-    await message.channel.send("Rebooting...");
+    await message.channel.send("Rebooting...").catch(err => this.client.console.error(err));
     process.exit(1);
   }
 }

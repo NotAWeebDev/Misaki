@@ -103,7 +103,8 @@ class Store extends Social {
     }
   
     const filter = m => m.author.id === message.author.id;
-    const response = await message.awaitReply(`Are you sure you want to purchase ${item.first().name} for ₲${item.first().price.toLocaleString()}?`, filter, undefined, null);
+    const firstItem = item.first();
+    const response = await message.awaitReply(`Are you sure you want to purchase ${firstItem.name} for ₲${firstItem.price.toLocaleString()}?`, filter, undefined, null);
     if (["y", "yes"].includes(response.toLowerCase())) {
     
       message.member.takePoints(rolePrice);
