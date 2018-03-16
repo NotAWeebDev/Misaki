@@ -24,7 +24,7 @@ class Achievement extends Social {
 
   async run(message, [...text], level, loadingMessage) {
     text = text.join(" ");
-    if (message.mentions.users.first()) text = text.replace(/<@!?\d+>/, "").replace(/\n/g, " ").trim();
+    if (message.mentions.users.size) text = text.replace(/<@!?\d+>/, "").replace(/\n/g, " ").trim();
     await loadingMessage.delete();
     return message.channel.send(new this.client.methods.Attachment(await this.client.idiotAPI.achievement((message.mentions.users.first() || message.author).displayAvatarURL({ format:"png", size:32 }), text), "achievement.png"));
   }
