@@ -1,7 +1,7 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 class Ping extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "ping",
       description: "Latency and API response times.",
       usage: "ping",

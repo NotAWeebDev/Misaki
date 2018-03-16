@@ -2,8 +2,8 @@ const Command = require(`${process.cwd()}/base/Command.js`);
 const pokemon = require(`${process.cwd()}/assets/json/pokemon.json`);
 
 class Pokemon extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "pokemon",
       description: "Guess That Pokemon",
       usage: "pokemon",

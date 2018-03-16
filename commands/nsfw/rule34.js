@@ -2,8 +2,8 @@ const Social = require(`${process.cwd()}/base/Social.js`);
 const { get } = require("snekfetch");
 
 class Rule34 extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "rule34",
       description: "Searches rule34 for your search term.",
       category: "NSFW",

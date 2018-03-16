@@ -2,8 +2,8 @@ const Social = require(`${process.cwd()}/base/Social.js`);
 const { get } = require("snekfetch");
 
 class Potato extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "potato",
       description: "Someone needs a potato",
       usage: "potato",

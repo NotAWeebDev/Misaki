@@ -1,9 +1,8 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const { UsageError } = require(`${process.cwd()}/util/CustomError.js`);
 
 class Pick extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "pick",
       description: "Pick out of a list",
       category: "Fun",
@@ -17,9 +16,9 @@ class Pick extends Social {
 
   cmdVerify(message, args, loadingMessage) {
     const options = args.join(" ");
-    if (options.length < 2) return Promise.reject(new UsageError("Invalid command usage, you must supply text.", loadingMessage));
+    if (options.length < 2) return Promise.reject(new this.client.methods.errors.UsageError("Invalid command usage, you must supply text.", loadingMessage));
     const list = options.split(",");
-    if (list.length < 2 || list[1] === "") return Promise.reject(new UsageError("Invalid command usage, you must supply at least two items to pick from.", loadingMessage));
+    if (list.length < 2 || list[1] === "") return Promise.reject(new this.client.methods.errors.UsageError("Invalid command usage, you must supply at least two items to pick from.", loadingMessage));
     return Promise.resolve(list);
   }
 

@@ -2,8 +2,8 @@ const Social = require(`${process.cwd()}/base/Social.js`);
 const { get } = require("snekfetch");
 
 class PunJoke extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "pun",
       description: "This command will give you a terrible pun.",
       usage: "pun",

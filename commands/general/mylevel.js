@@ -1,7 +1,7 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 class MyLevel extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "mylevel",
       description: "Displays your permission level for your location.",
       usage: "mylevel",

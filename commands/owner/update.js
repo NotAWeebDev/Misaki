@@ -4,8 +4,8 @@ const exec = promisify(require("child_process").exec);
 const path = require("path");
 
 class Update extends Owner {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "update",
       description: "This updates the bot from its git repo.",
       usage: "update",

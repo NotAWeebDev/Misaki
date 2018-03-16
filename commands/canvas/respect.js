@@ -2,8 +2,8 @@ const Social = require(`${process.cwd()}/base/Social.js`);
 const { MessageAttachment } = require("discord.js");
 
 class Respect extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "respect",
       description: "Pay respects to someone.",
       category: "Canvas",

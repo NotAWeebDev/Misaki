@@ -2,8 +2,8 @@ const Social = require(`${process.cwd()}/base/Social.js`);
 const { get } = require("snekfetch");
 
 class Gtn extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "gtn",
       description: "Displays a random comic by GreenTeaNeko",
       usage: "gtn",

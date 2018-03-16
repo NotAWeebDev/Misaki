@@ -2,8 +2,8 @@ const Social = require(`${process.cwd()}/base/Social.js`);
 const { MessageAttachment } = require("discord.js");
 
 class Challenger extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "challenger",
       description: "A new challenger has appeared.",
       category: "Canvas",

@@ -1,8 +1,8 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 
 class Daily extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "daily",
       description: "Claim your daily points.",
       usage: "daily",

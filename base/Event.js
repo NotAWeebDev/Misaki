@@ -3,8 +3,9 @@ class Event {
   constructor(client, file, options = {}) {
     this.client = client;
 
-    this.name = options.name || file.split(".")[0];
+    this.name = options.name || file[file.length - 1].slice(0, -3);
     this.enabled = options.enabled || true;
+    this.store = this.client.events;
     this.file = file;
   }
 
@@ -32,6 +33,9 @@ class Event {
     return this;
   }
 
+  reload() {
+    return this.client.events.load(this.file);
+  }
 }
 
 module.exports = Event;

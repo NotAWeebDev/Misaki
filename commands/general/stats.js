@@ -4,8 +4,8 @@ const moment = require("moment");
 require("moment-duration-format");
 
 class Stats extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "stats",
       description: "Gives some useful bot statistics.",
       usage: "stats",

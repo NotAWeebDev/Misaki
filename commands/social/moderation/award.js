@@ -1,8 +1,8 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 
 class Award extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "award",
       description: "Gives a nominated user points.",
       usage: "award <@mention|userid> <amount>",

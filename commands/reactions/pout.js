@@ -1,8 +1,8 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 
 class Pout extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "pout",
       description: "Someone needs a pout",
       usage: "pout",

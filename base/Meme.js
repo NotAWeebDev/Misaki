@@ -4,7 +4,7 @@ const { URLSearchParams } = require("url");
 
 class Meme extends Social {
 
-  constructor(client, options) {
+  constructor(client, options = {}) {
     super(client, Object.assign(options, { guildOnly: true }));
   }
 

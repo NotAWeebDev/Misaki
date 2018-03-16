@@ -1,8 +1,8 @@
 const Owner = require(`${process.cwd()}/base/Owner.js`);
 
 class Conf extends Owner {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "conf",
       description: "Modify the default configuration for all guilds.",
       category: "Owner",

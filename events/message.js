@@ -42,10 +42,10 @@ module.exports = class extends Event {
     const args = message.content.slice(prefix[0].length).trim().split(/ +/g);
     const cmd = this.client.commands.get(args.shift().toLowerCase());
     if (!cmd) return;
-    const rateLimit = await this.client.ratelimit(message, level, cmd);
+    const rateLimit = this.client.ratelimit(message, level, cmd);
 
     if (typeof rateLimit === "string") {
-      this.client.console.log(`${userPermLevel.name} ${message.author.username} (${message.author.id}) got ratelimited while running command ${cmd.name}`);
+      this.client.console.log(`\u001b[43;30m[${userPermLevel.name}]\u001b[49;39m \u001b[44m${message.author.username} (${message.author.id})\u001b[49m got ratelimited while running command ${cmd.name}`);
       return message.channel.send(`Please wait ${rateLimit.toPlural()} to run this command.`); // return stop command from executing
     }
 

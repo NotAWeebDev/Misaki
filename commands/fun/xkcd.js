@@ -1,8 +1,8 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const { get } = require("snekfetch");
 class Xkdc extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "xkcd",
       description: "Get the daily comic from XKCD",
       category: "Fun",

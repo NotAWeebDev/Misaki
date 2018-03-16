@@ -2,8 +2,8 @@ const Social = require(`${process.cwd()}/base/Social.js`);
 const { MessageAttachment } = require("discord.js");
 //-ithres [@mention] <number> | -threshold [@mention] <number> | 
 class Filter extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "filter",
       description: "Change the style of your avatar with these basic filters.",
       category: "Canvas",

@@ -1,9 +1,8 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const { UsageError } = require(`${process.cwd()}/util/CustomError.js`);
 
 class Magic8 extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "magic8",
       description: "Answers a question, magic 8 ball style.",
       usage: "magic8 <question>?",
@@ -18,8 +17,8 @@ class Magic8 extends Social {
 
 
   cmdVerify(message, args, loadingMessage) {
-    if (!message.content.endsWith("?")) return Promise.reject(new UsageError("That does not look like a question, (hint, end your question with a `?`.)", loadingMessage));
-    if (!args) return Promise.reject(new UsageError("You need to actually ask a question...", loadingMessage));
+    if (!message.content.endsWith("?")) return Promise.reject(new this.client.methods.errors.UsageError("That does not look like a question, (hint, end your question with a `?`.)", loadingMessage));
+    if (!args) return Promise.reject(new this.client.methods.errors.UsageError("You need to actually ask a question...", loadingMessage));
     return Promise.resolve();
   }
 

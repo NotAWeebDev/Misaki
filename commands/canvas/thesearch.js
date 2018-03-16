@@ -1,10 +1,9 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const { MessageAttachment } = require("discord.js");
-const { UsageError } = require(`${process.cwd()}/util/CustomError.js`);
 
 class TheSearch extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "thesearch",
       description: "Creates a meme based on a webcomic.",
       category: "Canvas",
@@ -17,7 +16,7 @@ class TheSearch extends Social {
 
   cmdVerify(message, args, loadingMessage) {
     const text = args.join(" ");
-    if (text.length < 1) return Promise.reject(new UsageError("You must give some text.", { msg: loadingMessage}));
+    if (text.length < 1) return Promise.reject(new this.client.methods.errors.UsageError("You must give some text.", { msg: loadingMessage}));
     return Promise.resolve(text);
   }
 

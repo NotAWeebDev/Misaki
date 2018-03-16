@@ -1,8 +1,8 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 
 class Go extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "go",
       description: "Gets other users to join you in games.",
       category: "Games",

@@ -1,9 +1,8 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const { UsageError } = require(`${process.cwd()}/util/CustomError.js`);
 
 class Tickle extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "tickle",
       description: "Someone needs a good tickle",
       usage: "tickle <@mention>",
@@ -15,8 +14,8 @@ class Tickle extends Social {
 
   cmdVerify(message, args, loadingMessage) {
     const target = message.mentions.members;
-    if (target.size === 0) return Promise.reject(new UsageError("You need to mention someone to tickle them.", loadingMessage));
-    if (message.member == target.first()) return Promise.reject(new UsageError("You cannot tickle yourself!", loadingMessage));
+    if (target.size === 0) return Promise.reject(new this.client.methods.errors.UsageError("You need to mention someone to tickle them.", loadingMessage));
+    if (message.member == target.first()) return Promise.reject(new this.client.methods.errors.UsageError("You cannot tickle yourself!", loadingMessage));
     return Promise.resolve(target);
   }
 

@@ -1,9 +1,8 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const { UsageError } = require(`${process.cwd()}/util/CustomError.js`);
 
 class Stare extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "stare",
       description: "Just stare at them...",
       usage: "stare <@mention>",
@@ -15,8 +14,8 @@ class Stare extends Social {
 
   cmdVerify(message, args, loadingMessage) {
     const target = message.mentions.members;
-    if (target.size === 0) return Promise.reject(new UsageError("You need to mention someone to stare at them.", loadingMessage));
-    if (message.member == target.first()) return Promise.reject(new UsageError("You cannot stare at yourself!", loadingMessage));
+    if (target.size === 0) return Promise.reject(new this.client.methods.errors.UsageError("You need to mention someone to stare at them.", loadingMessage));
+    if (message.member == target.first()) return Promise.reject(new this.client.methods.errors.UsageError("You cannot stare at yourself!", loadingMessage));
     return Promise.resolve(target);
   }
 

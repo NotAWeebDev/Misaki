@@ -1,8 +1,8 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 
 class Level extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "level",
       description: "Displays your current level.",
       usage: "level",

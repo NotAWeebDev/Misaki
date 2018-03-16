@@ -2,8 +2,8 @@ const Social = require(`${process.cwd()}/base/Social.js`);
 const { get } = require("snekfetch");
 
 class Shibe extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "shiba",
       description: "Post a randomly selected image of a Shiba Inu.",
       category: "Animals",

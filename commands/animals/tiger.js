@@ -3,8 +3,8 @@ const { get } = require("snekfetch");
 const { MessageAttachment } = require("discord.js");
 
 class Tiger extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "tiger",
       description: "Post a randomly selected image of a tiger.",
       category: "Animals",

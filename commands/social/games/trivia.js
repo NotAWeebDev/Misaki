@@ -3,8 +3,8 @@ const { get } = require("snekfetch");
 const h = new (require("html-entities").AllHtmlEntities)(); // HTML encoding decoder
 
 class Trivia extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "trivia",
       description: "Delivers a quiz with the correct answer awarding 10 points.",
       category: "Fun",

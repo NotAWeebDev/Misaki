@@ -1,10 +1,9 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 const FortniteAPI = require("fortnite");
-const { UsageError } = require(`${process.cwd()}/util/CustomError.js`);
 
 class Fortnite extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "fortnite",
       description: "Get's a user's fortnite profile.",
       category: "Games",
@@ -17,7 +16,7 @@ class Fortnite extends Command {
   }
 
   cmdVerify(message, args) {
-    if (!args.length) return Promise.reject(new UsageError(`Invalid Usage, please do:\`${this.help.usage}\``));
+    if (!args.length) return Promise.reject(new this.client.methods.errors.UsageError(`Invalid Usage, please do:\`${this.help.usage}\``));
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars

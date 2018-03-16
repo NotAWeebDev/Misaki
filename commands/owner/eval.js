@@ -3,8 +3,8 @@ const { inspect } = require("util");
 const { post } = require("snekfetch");
 
 class Eval extends Owner {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "eval",
       description: "Evaluates arbitrary Javascript.",
       category: "Owner",

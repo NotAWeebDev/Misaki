@@ -1,8 +1,8 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 
 class Store extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "store",
       description: "Display All Store Items",
       usage: "store <-buy|-sell|-add|-del|-view>",

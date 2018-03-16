@@ -1,8 +1,8 @@
 const Meme = require(`${process.cwd()}/base/Meme.js`);
 
 class Cheers extends Meme {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "cheers",
       description: "Say cheers with Leonardo DiCaprio!",
       usage: "cheers <top text ; bottom text>",

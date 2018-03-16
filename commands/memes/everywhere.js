@@ -1,8 +1,8 @@
 const Meme = require(`${process.cwd()}/base/Meme.js`);
 
 class Everywhere extends Meme {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "everywhere",
       description: "X, X Everywhere",
       usage: "everywhere <first text ; second text>",

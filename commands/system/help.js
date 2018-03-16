@@ -3,8 +3,8 @@ const PaginationEmbed = require(`${process.cwd()}/util/pagination/FieldsEmbed`);
 const perpage = 10;
 
 class Help extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "help",
       description: "Get help on a command, command category, or a setting",
       extended: "This command will display all available commands for your permission level, with the additonal option of getting per command information when you run 'help <command name>'.",

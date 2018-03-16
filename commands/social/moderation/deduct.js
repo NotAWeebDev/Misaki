@@ -1,8 +1,8 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 
 class Deduct extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "deduct",
       description: "Takes points away from the nominated user.",
       usage: "deduct <@mention|userid> <amount>",

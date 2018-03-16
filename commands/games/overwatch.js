@@ -4,8 +4,8 @@ const locationArray = ["us", "eu", "kr", "cn", "global"];
 const platformArray = ["pc", "xbl", "psn", "xbox"];
 
 class Overwatch extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "overwatch",
       description: "Find Your Ow Player Stats",
       usage: "overwatch <pc|xbl|psn> [us|eu|kr|cn|global] <full-battle-tag|gamertag>",

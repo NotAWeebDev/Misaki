@@ -3,7 +3,6 @@ const Event = require(`${process.cwd()}/base/Event.js`);
 module.exports = class extends Event {
 
   async run() {
-    await this.client.methods.util.wait(1000);
     if (!this.client.settings.has("default")) {
       if (!this.client.config.defaultSettings) throw new Error("defaultSettings not preset in config.js or settings database. Bot cannot load.");
       this.client.settings.set("default", this.client.config.defaultSettings);

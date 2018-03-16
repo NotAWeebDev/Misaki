@@ -1,11 +1,10 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const request = require("snekfetch");
 const HTMLParser = require("fast-html-parser");
-const { APIError } = require("../../util/CustomError.js");
 
 class FML extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "fml",
       description: "Grabs a random fml story.",
       usage: "fml",
@@ -32,8 +31,8 @@ class FML extends Social {
       .setDescription(`_${article.childNodes[0].text}\n\n_`)
       .addField("I agree, your life sucks", updoot.childNodes[0].text, true)
       .addField("You deserved it:", downdoot.childNodes[0].text, true);
-    if (article.childNodes[0].text.length < 5 ) throw new APIError("Today, something went wrong, so you'll have to try again in a few moments. FML", loadingMassage);
-    loadingMassage.edit({embed});
+    if (article.childNodes[0].text.length < 5) throw new this.client.methods.errors.APIError("Today, something went wrong, so you'll have to try again in a few moments. FML", loadingMassage);
+    loadingMassage.edit({ embed });
   }
 }
 

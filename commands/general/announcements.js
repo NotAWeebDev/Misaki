@@ -1,7 +1,7 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 class Announcements extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "announcements",
       description: "Get bot related announcements.",
       usage: "announcements",

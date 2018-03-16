@@ -1,9 +1,8 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
-const { UsageError } = require(`${process.cwd()}/util/CustomError.js`);
 
 class Lick extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "lick",
       description: "When someone's good enough to eat.",
       usage: "lick <@mention>",
@@ -15,8 +14,8 @@ class Lick extends Social {
 
   cmdVerify(message, args, loadingMessage) {
     const target = message.mentions.members;
-    if (target.size === 0) return Promise.reject(new UsageError("You need to mention someone to lick them.", loadingMessage));
-    if (message.member == target.first()) return Promise.reject(new UsageError("You cannot lick yourself!", loadingMessage));
+    if (target.size === 0) return Promise.reject(new this.client.methods.errors.UsageError("You need to mention someone to lick them.", loadingMessage));
+    if (message.member == target.first()) return Promise.reject(new this.client.methods.errors.UsageError("You cannot lick yourself!", loadingMessage));
     return Promise.resolve(target);
   }
 

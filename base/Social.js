@@ -2,11 +2,10 @@ const Command = require(`${process.cwd()}/base/Command.js`);
 const { version } = require(`${process.cwd()}/package.json`);
 const moment = require("moment");
 const { get } = require("snekfetch");
-const { SocialError } = require("../util/CustomError.js");
 
 class Social extends Command {
 
-  constructor(client, options) {
+  constructor(client, options = {}) {
     super(client, Object.assign(options, { guildOnly: true }));
     this.loadingString = options.loadingString;
   }
@@ -63,7 +62,7 @@ Reply with \`cancel\` to cancel the message. The message will timeout after 60 s
   async cmdPay(message, user, cost, options = {}) {
     const [, _user] = await this.verifySocialUser(message, user, options);
     const getPayee = message.guild.member(_user.id);
-    if (cost > getPayee.score.points) throw new SocialError(`Insufficient funds, you need ₲${cost}. Your current balance: ₲${getPayee.score.points}`, options.msg);
+    if (cost > getPayee.score.points) throw new this.client.methods.errors.SocialError(`Insufficient funds, you need ₲${cost}. Your current balance: ₲${getPayee.score.points}`, options.msg);
     getPayee.takePoints(cost);
     this.client.points.set(getPayee.fullId, getPayee.score);
   }

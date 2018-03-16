@@ -10,19 +10,15 @@ module.exports = Structures.extend("Message", Message => class extends Message {
     this.flags = [];
   }
 
-  response(emoji = "❌", content, embed, options = {}) { // eslint-disable-line no-unused-vars
-    return this.channel.send(`${this.author} \`|${emoji}|\` ${content}`, embed);
+  response(emoji = "❌", content, embed, options = {}) {
+    return this.channel.send(`${this.author} \`|${emoji}|\` ${content}`, Object.assign({}, options,  { embed }));
   }
 
   async awaitReply(question, filter, limit = 60000, embed) {
     await this.channel.send(question, embed);
-    try {
-      const collected = await this.channel.awaitMessages(filter, { max: 1, time: limit, errors: ["time"] });
-      return collected.first().content;
-    } catch (error) {
-      this.client.console.error(error);
-      return false;
-    }
+    return this.channel.awaitMessages(filter, { max: 1, time: limit, errors: ["time"] })
+      .then(collected => collected.first().content)
+      .catch(() => false);
   }
 
 });

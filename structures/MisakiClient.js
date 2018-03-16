@@ -1,11 +1,9 @@
 const { Client, Collection, MessageEmbed, MessageAttachment } = require("discord.js");
-const CommandStore = require(`${process.cwd()}/structures/CommandStore.js`);
-const EventStore = require(`${process.cwd()}/structures/EventStore.js`);
-const MisakiConsole = require(`${process.cwd()}/structures/MisakiConsole`);
+const CommandStore = require("./CommandStore.js");
+const EventStore = require("./EventStore.js");
+const MisakiConsole = require("./MisakiConsole");
 const Enmap = require("enmap");
 const EnmapLevel = require("enmap-level");
-const klaw = require("klaw");
-const path = require("path");
 const idioticApi = require("idiotic-api");
 const moment = require("moment");
 require("moment-duration-format");
@@ -26,7 +24,8 @@ class MisakiClient extends Client {
     this.methods = {
       Embed: MessageEmbed,
       Attachment: MessageAttachment,
-      util: require(`${process.cwd()}/util/util.js`)
+      util: require(`${process.cwd()}/util/util.js`),
+      errors: require(`${process.cwd()}/util/CustomError`)
     };
 
     // Enmap
@@ -45,6 +44,7 @@ class MisakiClient extends Client {
     await this.init();
     return super.login(token);
   }
+
   _ready() {
     this.ready = true;
     this.emit("misakiReady");
@@ -64,22 +64,6 @@ class MisakiClient extends Client {
       }
     }
     return permlvl;
-  }
-
-  async loadCommand(commandPath, commandName) {
-    try {
-      const command = new (require(`${commandPath}${path.sep}${commandName}`))(this);
-      command.location = commandPath;
-      this.commands.set(command);
-    } catch (err) {
-      this.console.error(`Unable to load command ${commandName}: ${err}`);
-    }
-  }
-
-  async unloadCommand(commandPath, commandName) {
-    const command = this.commands.get(commandName);
-    if (!command) return `The command \`${commandName}\` doesn"t seem to exist, nor is it an alias. Try again!`;
-    delete require.cache[require.resolve(`${commandPath}${path.sep}${commandName}.js`)];
   }
 
   getSettings(id) {
@@ -107,24 +91,10 @@ class MisakiClient extends Client {
     this.settings.set(id, settings);
   }
 
-  init() {
-    klaw("./commands").on("data", async item => {
-      const cmdFile = path.parse(item.path);
-      if (!cmdFile.ext || cmdFile.ext !== ".js") return;
-      await this.loadCommand(cmdFile.dir, `${cmdFile.name}${cmdFile.ext}`);
-    }).on("end", () => {
-      this.console.log(`Loaded a total of ${this.commands.size} commands.`);
-    }).on("error", error => this.console.error(error));
-
-    klaw("./events").on("data", item => {
-      const eventFile = path.parse(item.path);
-      if (!eventFile.ext || eventFile.ext !== ".js") return;
-      const event = new (require(`${eventFile.dir}${path.sep}${eventFile.name}${eventFile.ext}`))(this, eventFile.name);
-      this.events.set(event);
-      delete require.cache[require.resolve(`${eventFile.dir}${path.sep}${eventFile.name}${eventFile.ext}`)];
-    }).on("end", () => {
-      this.console.log(`Loaded a total of ${this.events.size} events.`);
-    }).on("error", error => this.console.error(error));
+  async init() {
+    const [commands, events] = await Promise.all([this.commands.loadAll(), this.events.loadAll()]);
+    this.console.log(`Loaded a total of ${commands} commands`);
+    this.console.log(`Loaded a total of ${events} events`);
 
     this.levelCache = {};
     for (let i = 0; i < this.config.permLevels.length; i++) {
@@ -133,15 +103,15 @@ class MisakiClient extends Client {
     }
   }
 
-  async ratelimit(message, level, cmd) {
-    if (level > 2) return false;
+  ratelimit(message, level, cmd) {
+    if (level > 4) return false;
 
-    cmd.cooldown *= 1000;
+    const cooldown = cmd.cooldown * 1000;
     const ratelimits = this.ratelimits.get(message.author.id) || {}; // get the ENMAP first.
-    if (!ratelimits[cmd.name]) ratelimits[cmd.name] = Date.now() - cmd.cooldown; // see if the command has been run before if not, add the ratelimit
+    if (!ratelimits[cmd.name]) ratelimits[cmd.name] = Date.now() - cooldown; // see if the command has been run before if not, add the ratelimit
     const differnce = Date.now() - ratelimits[cmd.name]; // easier to see the difference
-    if (differnce < cmd.cooldown) { // check the if the duration the command was run, is more than the cooldown
-      return moment.duration(cmd.cooldown - differnce).format("D [days], H [hours], m [minutes], s [seconds]", 1); // returns a string to send to a channel
+    if (differnce < cooldown) { // check the if the duration the command was run, is more than the cooldown
+      return moment.duration(cooldown - differnce).format("D [days], H [hours], m [minutes], s [seconds]", 1); // returns a string to send to a channel
     } else {
       ratelimits[cmd.name] = Date.now(); // set the key to now, to mark the start of the cooldown
       this.ratelimits.set(message.author.id, ratelimits); // set it

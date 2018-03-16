@@ -1,18 +1,15 @@
 /*
-
   All credits for the core of this command go to Yukine <@184632227894657025>
   You can find his repo here; https://github.com/Dev-Yukine
-
 */
 const Command = require(`${process.cwd()}/base/Command.js`);
-const { AnimeError } = require("../../util/CustomError.js");
 const { Collection } = require("discord.js");
 const Kitsu = require("kitsu");
 const kitsu = new Kitsu();
 
 class Manga extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "manga",
       description: "Search for a manga on Kitsu!",
       category: "Fun",
@@ -30,7 +27,7 @@ class Manga extends Command {
     let msg = await message.channel.send("*fetching information from kitsu!*");
     try {
       const { data } = await kitsu.fetch("manga", { filter: { text: args.join("-") } });
-      if (data.length < 1) throw new AnimeError("No result found");
+      if (data.length < 1) throw new this.client.methods.errors.AnimeError("No result found");
       msg = await msg.edit(`Okay I found 5 possible matches which do you want to see? (just write the first number, it will be canceled after 60 seconds)${this.makeTitles(data)}`);
       const collected = await message.channel.awaitMessages(filter, { max: 20, maxProcessed: 1, time: 60000, errors: ["time"] });
       const returnMessage = collected.first();

@@ -3,8 +3,8 @@ const ms = require("ms");
 const moment = require("moment");
 
 class Reminder extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "reminder",
       description: "Remind yourself with this command.",
       category: "Utilities",

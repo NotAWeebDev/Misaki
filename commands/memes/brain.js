@@ -1,9 +1,8 @@
 const Meme = require(`${process.cwd()}/base/Meme.js`);
-const { UsageError } = require(`${process.cwd()}/util/CustomError.js`); 
 
 class Brain extends Meme {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "brain",
       description: "Blow your mind",
       usage: "brain <first text ; second text ; third text ; forth text>",
@@ -15,7 +14,7 @@ class Brain extends Meme {
 
   cmdVerify(message, args, loadingMessage) {
     const text = args.join(" ");
-    if (text.length === 0) return Promise.reject(new UsageError("You must supply test to think about!", loadingMessage));
+    if (!text.length) return Promise.reject(new this.client.methods.errors.UsageError("You must supply test to think about!", loadingMessage));
     return Promise.resolve(text);
   }
 

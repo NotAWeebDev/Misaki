@@ -1,8 +1,8 @@
 const Meme = require(`${process.cwd()}/base/Meme.js`);
 
 class Notsure extends Meme {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "skeptical",
       description: "Express your skepticism with Philip J Fry!",
       usage: "skeptical <top text ; bottom text>",

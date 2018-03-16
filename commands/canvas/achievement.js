@@ -1,10 +1,9 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const { MessageAttachment } = require("discord.js");
-const { UsageError } = require(`${process.cwd()}/util/CustomError.js`);
 
 class Achievement extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "achievement",
       description: "Creates an Achievement.",
       category: "Canvas",
@@ -19,8 +18,8 @@ class Achievement extends Social {
 
   cmdVerify(message, args, options) {
     const text = args.join(" ");
-    if (text.length < 1) return Promise.reject(new UsageError("You must give an achievement description.", options.msg));
-    if (text.length > 22) return Promise.reject(new UsageError("I can only handle a maximum of 22 characters", options.msg));
+    if (text.length < 1) return Promise.reject(new this.client.methods.errors.UsageError("You must give an achievement description.", options.msg));
+    if (text.length > 22) return Promise.reject(new this.client.methods.errors.UsageError("I can only handle a maximum of 22 characters", options.msg));
     return Promise.resolve();
   }
 
