@@ -8,18 +8,7 @@ require(`${process.cwd()}/extenders/TextChannel.js`);
 const MisakiClient = require(`${process.cwd()}/structures/MisakiClient.js`);
 
 const client = new MisakiClient({
-  disabledEvents: [
-    "CHANNEL_PINS_UPDATE",
-    "GUILD_BAN_ADD",
-    "GUILD_BAN_REMOVE",
-    "GUILD_SYNC",
-    "RELATIONSHIP_ADD",
-    "RELATIONSHIP_REMOVE",
-    "TYPING_START",
-    "USER_NOTE_UPDATE",
-    "USER_SETTINGS_UPDATE",
-    "VOICE_SERVER_UPDATE",
-    "VOICE_STATE_UPDATE"],
+  disabledEvents: ["CHANNEL_PINS_UPDATE", "GUILD_BAN_ADD", "GUILD_BAN_REMOVE", "RELATIONSHIP_ADD", "RELATIONSHIP_REMOVE", "TYPING_START", "VOICE_SERVER_UPDATE", "VOICE_STATE_UPDATE"],
   disableEveryone: true,
   messageCacheMaxSize: 100,
   messageCacheLifetime: 240,
