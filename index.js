@@ -5,7 +5,7 @@ require(`${process.cwd()}/extenders/GuildMember.js`);
 require(`${process.cwd()}/extenders/Guild.js`);
 require(`${process.cwd()}/extenders/DMChannel.js`);
 require(`${process.cwd()}/extenders/TextChannel.js`);
-const MisakiClient = require(`${process.cwd()}/structures/MisakiClient.js`);
+const MisakiClient = require("./structures/MisakiClient.js");
 
 const client = new MisakiClient({
   disabledEvents: ["CHANNEL_PINS_UPDATE", "GUILD_BAN_ADD", "GUILD_BAN_REMOVE", "RELATIONSHIP_ADD", "RELATIONSHIP_REMOVE", "TYPING_START", "VOICE_SERVER_UPDATE", "VOICE_STATE_UPDATE"],

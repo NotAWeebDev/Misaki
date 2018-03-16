@@ -23,8 +23,7 @@ class Command {
   async paginate(message, list, makeEmbed) {
     const msg = await message.channel.send("`Loading please wait ...`");
     for (let i = 0; i < pageButtons.length; i++) await msg.react(pageButtons[i]);
-    const embed = await msg.edit("", { embed: (this.makeEmbed(list, 0)) });
-
+    const embed = await msg.edit({ embed: this.makeEmbed(list, 0) });
     return this.progressPages(message, embed, list, 0, makeEmbed);
   }
   
