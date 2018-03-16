@@ -1,5 +1,4 @@
-const Command = require(`${process.cwd()}/base/Command.js`);
-const { MessageEmbed } = require("discord.js");
+const Command = require("../../base/Command.js");
 const snek = require("snekfetch");
 
 module.exports = class UrbanCommand extends Command {
@@ -25,7 +24,7 @@ module.exports = class UrbanCommand extends Command {
     let description = list[page].definition;
     description += `\n\n**❯ Example**:\n${list[page].example}`;
 		
-    return new MessageEmbed()
+    return new this.client.methods.Embed()
       .setColor(0x1e90ff)
       .setDescription(description)
       .setThumbnail("https://i.imgur.com/ressY86.png")
