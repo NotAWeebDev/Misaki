@@ -17,6 +17,7 @@ class MisakiClient extends Client {
     this.commands = new CommandStore(this);
     this.events = new EventStore(this);
     this.upvoters = [];
+    this.levelCache = {};
     this.methods = {
       Embed: MessageEmbed,
       Attachment: MessageAttachment,
@@ -92,7 +93,6 @@ class MisakiClient extends Client {
     this.console.log(`Loaded a total of ${commands} commands`);
     this.console.log(`Loaded a total of ${events} events`);
 
-    this.levelCache = {};
     for (let i = 0; i < this.config.permLevels.length; i++) {
       const thisLevel = this.config.permLevels[i];
       this.levelCache[thisLevel.name] = thisLevel.level;
