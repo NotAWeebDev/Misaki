@@ -15,12 +15,13 @@ class Reminder extends Command {
   }
 
   async run(message, [...text]) {
+    text = text.join(" ");
     if (!text.length) {
       const reminders = message.member.reminders;
       if (!reminders.length) return message.response(undefined, "You do not have any reminders set.");
       else return message.channel.send("**Your Reminders:**\n" + reminders.map(r => `${r.reminder} - ${moment(r.reminderTimestamp).fromNow()}`).join("\n"));
     }
-    const blah = await this.regCheck(text.join(" "));
+    const blah = await this.regCheck(text);
     if (!blah) return message.response(undefined, "Invalid Command usage, you must supply a reminder message and duration e.g; `Do the laundry in 20 minutes`.");
     this.client.reminders.set(`${message.author.id}-${message.createdTimestamp + ms(blah.split("#")[1])}`, {
       id: message.author.id,

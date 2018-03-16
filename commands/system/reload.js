@@ -14,13 +14,13 @@ class Reload extends Command {
   async run(message, [piece]) {
     if (!piece || !piece.length) return message.channel.send(this.client.responses.reloadMissingArg.random().replaceAll("{{user}}", message.member.displayName));
     piece = this.resolvePiece(piece);
-    if (!piece) return message.channel.send("Invalid piece");
+    if (!piece) return message.channel.send(this.client.responses.reloadNotFound.random().replaceAll("{{user}}", message.member.displayName));
     try {
       const reloadedPiece = await piece.reload();
-      return message.channel.send(`Successfully reloaded ${reloadedPiece.store.name.slice(0, -1)}: ${reloadedPiece.name}`);
+      return message.channel.send(this.client.responses.reloadSuccess.random().replaceAll("{{command}}", reloadedPiece.name));
     } catch (error) {
       piece.store.set(piece);
-      return message.channel.send(`Unsucessfully reloaded ${piece.store.name.slice(0, -1)}: ${error}`);
+      return message.channel.send(this.client.responses.reloadErrUnload.random().replaceAll("{{user}}", message.member.displayName).replaceAll("{{response}}", error.message || error.toString()));
     }
   }
 

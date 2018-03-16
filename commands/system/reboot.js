@@ -11,7 +11,7 @@ class Reboot extends Command {
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
+  async run(message) {
     await message.channel.send("Rebooting...");
     process.exit(1);
   }
