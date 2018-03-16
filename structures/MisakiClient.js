@@ -10,18 +10,17 @@ class MisakiClient extends Client {
   constructor(options) {
     super(options);
 
-    this.config = require(`${process.cwd()}/config.js`);
+    this.config = require("../config.js");
     this.console = new MisakiConsole(this);
-    this.responses = require(`${process.cwd()}/assets/responses.js`);
+    this.responses = require("../assets/responses.js");
     this.idiotAPI = new idioticApi.Client(process.env.IDIOTAPI, { dev: true });
-
     this.commands = new CommandStore(this);
     this.events = new EventStore(this);
     this.upvoters = [];
-    this.ratelimits = new Collection();
     this.methods = {
       Embed: MessageEmbed,
       Attachment: MessageAttachment,
+      Collection,
       util: require(`${process.cwd()}/util/util.js`),
       errors: require(`${process.cwd()}/util/CustomError`)
     };
@@ -34,7 +33,6 @@ class MisakiClient extends Client {
     this.inventory = new Enmap({ provider: new EnmapLevel({ name: "inventory" }) });
 
     this.ready = false;
-
     this.on("ready", this._ready.bind(this));
   }
 
