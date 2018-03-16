@@ -21,7 +21,7 @@ class Say extends Social {
       args.shift();
     }
     const channel = message.guild.channels.get(channelid);
-    if (!message.member.permissionsIn(channel).has(["SEND_MESSAGES", "READ_MESSAGES"])) throw new this.client.methods.errors.UsageError("You do not have permission to `say` in that channel.", loadingMessage);
+    if (channel.permissionsFor(message.member).missing(["SEND_MESSAGES", "READ_MESSAGES"]).length) throw new this.client.methods.errors.UsageError("You do not have permission to `say` in that channel.", loadingMessage);
     return channel;
   }
 
