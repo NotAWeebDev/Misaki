@@ -32,11 +32,12 @@ module.exports = class extends Event {
       return message.channel.send(`The prefix is \`${message.settings.prefix}\`.`);
     }
     const level = this.client.permlevel(message);
+    const userPermLevel = this.client.config.permLevels.find(perm => perm.level === level);
     message.author.permLevel = level;
 
     if (message.settings.socialSystem === "true") monitor.run(this.client, message, level);
 
-    const prefix = new RegExp(`^<@!?${this.client.user.id}> |^${this.regExpEsc(message.settings.prefix)}`).exec(message.content);
+    const prefix = new RegExp(`^<@!?${this.client.user.id}> |^${this.client.methods.util.regExpEsc(message.settings.prefix)}`).exec(message.content);
     if (!prefix) return;
     const args = message.content.slice(prefix[0].length).trim().split(/ +/g);
     const cmd = this.client.commands.get(args.shift().toLowerCase());
@@ -44,7 +45,7 @@ module.exports = class extends Event {
     const rateLimit = await this.client.ratelimit(message, level, cmd);
 
     if (typeof rateLimit === "string") {
-      this.client.logger.log(`${this.client.config.permLevels.find(perm => perm.level === level).name} ${message.author.username} (${message.author.id}) got ratelimited while running command ${cmd.name}`);
+      this.client.console.log(`${userPermLevel.name} ${message.author.username} (${message.author.id}) got ratelimited while running command ${cmd.name}`);
       return message.channel.send(`Please wait ${rateLimit.toPlural()} to run this command.`); // return stop command from executing
     }
 
@@ -52,15 +53,11 @@ module.exports = class extends Event {
 
     if (level < this.client.levelCache[cmd.permLevel]) {
       if (message.settings.systemNotice !== "true") return;
-      return message.channel.send(`B-Baka! You're only level ${level}, a ${this.client.config.permLevels.find(perm => perm.level === level).name.toLowerCase()}, why should I listen to you instead of a ${cmd.permLevel} (level ${this.client.levelCache[cmd.permLevel]}).`);
+      return message.channel.send(`B-Baka! You're only level ${level}, a ${userPermLevel.name.toLowerCase()}, why should I listen to you instead of a ${cmd.permLevel} (level ${this.client.levelCache[cmd.permLevel]}).`);
     }
 
     while (args[0] && args[0][0] === "-") message.flags.push(args.shift().slice(1));
     await this.runCommand(message, cmd, args);
-  }
-
-  regExpEsc(str) {
-    return str.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
   }
 
   botPerms(message, cmd) {
@@ -82,8 +79,9 @@ module.exports = class extends Event {
         await cmd.cmdVerify(message, args, msg);
         if (message.settings.socialSystem === "true") await cmd.cmdPay(message, message.author.id, cmd.cost, { msg });
       }
+      const userPermLevel = this.client.config.permLevels.find(perm => perm.level === message.author.permLevel);
+      this.client.console.log(`\u001b[43;30m[${userPermLevel.name}]\u001b[49;39m \u001b[44m${message.author.username} (${message.author.id})\u001b[49m ran command ${cmd.name}`);
       await cmd.run(message, args, message.author.permLevel, msg);
-      this.client.logger.log(`${this.client.config.permLevels.find(perm => perm.level === message.author.permLevel).name} ${message.author.username} (${message.author.id}) ran command ${cmd.name}`, "cmd");
     } catch (error) {
       this.client.emit("commandError", error, message);
     }

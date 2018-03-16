@@ -20,7 +20,7 @@ module.exports = Structures.extend("Message", Message => class extends Message {
       const collected = await this.channel.awaitMessages(filter, { max: 1, time: limit, errors: ["time"] });
       return collected.first().content;
     } catch (error) {
-      this.logger.error(error);
+      this.client.console.error(error);
       return false;
     }
   }

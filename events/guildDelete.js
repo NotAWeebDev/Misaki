@@ -9,6 +9,6 @@ module.exports = class extends Event {
     this.client.reminders.findAll("guildid", guild.id).forEach(i => {
       if (guild.id === i.guildid) this.client.reminders.delete(`${i.id}-${i.reminderTimestamp}`);
     });
-    this.client.logger.log(`A guild has been left: ${guild.name} (${guild.id}) with ${guild.memberCount - 1} members`);
+    this.client.console.log(`A guild has been left: ${guild.name} (${guild.id}) with ${guild.memberCount - 1} members`);
   }
 };

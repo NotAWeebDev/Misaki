@@ -9,6 +9,6 @@ module.exports = class extends Event {
       else return message.channel.send(error.message);
     }
     message.channel.send("Something went wrong, please try again later");
-    this.client.logger.error(error);
+    this.client.console.error(error);
   }
 };

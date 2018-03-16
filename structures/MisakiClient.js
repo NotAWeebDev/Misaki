@@ -1,6 +1,7 @@
 const { Client, Collection, MessageEmbed, MessageAttachment } = require("discord.js");
 const CommandStore = require(`${process.cwd()}/structures/CommandStore.js`);
 const EventStore = require(`${process.cwd()}/structures/EventStore.js`);
+const MisakiConsole = require(`${process.cwd()}/structures/MisakiConsole`);
 const Enmap = require("enmap");
 const EnmapLevel = require("enmap-level");
 const klaw = require("klaw");
@@ -14,9 +15,9 @@ class MisakiClient extends Client {
     super(options);
 
     this.config = require(`${process.cwd()}/config.js`);
-    this.logger = require(`${process.cwd()}/util/Logger`);
+    this.console = new MisakiConsole(this);
     this.responses = require(`${process.cwd()}/assets/responses.js`);
-    this.idiotAPI = new idioticApi.Client(this.config.apiTokens.idiotToken, { dev: true });
+    this.idiotAPI = new idioticApi.Client(process.env.IDIOTAPI, { dev: true });
 
     this.commands = new CommandStore(this);
     this.events = new EventStore(this);
@@ -71,7 +72,7 @@ class MisakiClient extends Client {
       command.location = commandPath;
       this.commands.set(command);
     } catch (err) {
-      this.logger.error(`Unable to load command ${commandName}: ${err}`);
+      this.console.error(`Unable to load command ${commandName}: ${err}`);
     }
   }
 
@@ -112,8 +113,8 @@ class MisakiClient extends Client {
       if (!cmdFile.ext || cmdFile.ext !== ".js") return;
       await this.loadCommand(cmdFile.dir, `${cmdFile.name}${cmdFile.ext}`);
     }).on("end", () => {
-      this.logger.log(`Loaded a total of ${this.commands.size} commands.`);
-    }).on("error", error => this.logger.error(error));
+      this.console.log(`Loaded a total of ${this.commands.size} commands.`);
+    }).on("error", error => this.console.error(error));
 
     klaw("./events").on("data", item => {
       const eventFile = path.parse(item.path);
@@ -122,8 +123,8 @@ class MisakiClient extends Client {
       this.events.set(event);
       delete require.cache[require.resolve(`${eventFile.dir}${path.sep}${eventFile.name}${eventFile.ext}`)];
     }).on("end", () => {
-      this.logger.log(`Loaded a total of ${this.events.size} events.`);
-    }).on("error", error => this.logger.error(error));
+      this.console.log(`Loaded a total of ${this.events.size} events.`);
+    }).on("error", error => this.console.error(error));
 
     this.levelCache = {};
     for (let i = 0; i < this.config.permLevels.length; i++) {

@@ -49,7 +49,7 @@ class Command {
         return this.progressPages(message, embed, list, page, embedMakerFunction);
       })
       .catch((error) => {
-        this.client.logger.error(error);
+        this.client.console.error(error);
         return message.channel.send("There was some error, sorry for the interuption.").then(sent => sent.delete({ timeout : 5000 }));
       });
   }

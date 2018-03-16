@@ -13,7 +13,7 @@ class Event {
       try {
         await this.run(...args);
       } catch (err) {
-        this.client.logger.error(err);
+        this.client.console.error(err);
       }
     }
   }
