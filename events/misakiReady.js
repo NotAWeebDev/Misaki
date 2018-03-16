@@ -31,7 +31,7 @@ module.exports = class extends Event {
     //       console.log(`Added the upvoter role to ${members.get(id).user.username}`);
     //     }
     //   }
-    //   for (const id of this.client.arrDiff(this.client.upvoters, supportGuild.roles.get(upvoterRole).members.keyArray())) {
+    //   for (const id of this.client.methods.util.arrDiff(this.client.upvoters, supportGuild.roles.get(upvoterRole).members.keyArray())) {
     //     const members = supportGuild.members;
     //     members.get(id).roles.remove(upvoterRole);
     //     console.log(`Removed the upvoter role from ${members.get(id).user.tag}`);

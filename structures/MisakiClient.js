@@ -119,17 +119,6 @@ class MisakiClient extends Client {
     }
   }
 
-  arrDiff(a, b) {
-    if (a === b) return [];
-
-    for (const item of a) {
-      const ind = b.indexOf(item);
-      if (ind !== -1) b.splice(ind, 1);
-    }
-
-    return b;
-  }
-
 }
 
 module.exports = MisakiClient;
