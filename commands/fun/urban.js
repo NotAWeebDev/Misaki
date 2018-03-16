@@ -31,10 +31,10 @@ module.exports = class UrbanCommand extends Command {
       .setDescription(description)
       .setThumbnail("https://i.imgur.com/ressY86.png")
       .setTitle(`${list[page].word} - Page ${page+1}/${list.length}`)
-      .addField(":thumbsup:", list[page].thumbs_up, true)
-      .addField(":thumbsdown:", list[page].thumbs_down, true)
+      .addField("👍", list[page].thumbs_up, true)
+      .addField("👎", list[page].thumbs_down, true)
       .addBlankField(true)
-      .setURL(`${list[page].permalink}`)
+      .setURL(list[page].permalink)
       .setFooter(`Author: ${list[page].author}`);
   }
   
