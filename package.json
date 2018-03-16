@@ -1,6 +1,6 @@
 {
   "name": "misaki",
-  "version": "5.0.0",
+  "version": "2.0.0",
   "description": "Misaki is all of the fun and entertainment commands taken from GuideBot aka York-Dev and bundled into this tsundere themed bot.",
   "main": "index.js",
   "scripts": {
