@@ -13,8 +13,8 @@ class Cuddle extends Social {
 
   cmdVerify(message, args, loadingMessage) {
     const target = message.mentions.members;
-    if (target.size === 0) return Promise.reject(new this.client.methods.errors.UsageError("You need to mention someone to cry on their shoulder.", loadingMessage));
-    if (message.member == target.first()) return Promise.reject(new this.client.methods.errors.UsageError("You cannot cry on yourself!", loadingMessage));
+    if (!target) return Promise.reject(new this.client.methods.errors.UsageError("You need to mention someone to cry on their shoulder.", loadingMessage));
+    if (message.member === target.first()) return Promise.reject(new this.client.methods.errors.UsageError("You cannot cry on yourself!", loadingMessage));
     return Promise.resolve(target);
   }
 
