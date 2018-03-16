@@ -2,9 +2,8 @@ const { Structures } = require("discord.js");
 
 module.exports = Structures.extend("GuildMember", GuildMember => class extends GuildMember {
 
-  constructor(...args) {
-    super(...args);
-    this.fullId = `${this.guild.id}-${this.id}`;
+  get fullId() {
+    return `${this.guild.id}-${this.id}`;
   }
 
   get reminders() {
@@ -20,12 +19,12 @@ module.exports = Structures.extend("GuildMember", GuildMember => class extends G
   }
 
   giveItem(item, amount) {
-    this.inventory[item] += parseInt(amount);
+    this.inventory[item] += amount;
     return this.client.inventory.set(this.fullId, this.inventory);
   }
 
   takeItem(item, amount) {
-    this.inventory[item] -= parseInt(amount);
+    this.inventory[item] -= amount;
     return this.client.inventory.set(this.fullId, this.inventory);
   }
 

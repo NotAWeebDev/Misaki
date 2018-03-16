@@ -98,9 +98,9 @@ module.exports = class extends Event {
     const cooldown = cmd.cooldown * 1000;
     const ratelimits = this.ratelimits.get(message.author.id) || {}; // get the ENMAP first.
     if (!ratelimits[cmd.name]) ratelimits[cmd.name] = Date.now() - cooldown; // see if the command has been run before if not, add the ratelimit
-    const differnce = Date.now() - ratelimits[cmd.name]; // easier to see the difference
-    if (differnce < cooldown) { // check the if the duration the command was run, is more than the cooldown
-      return moment.duration(cooldown - differnce).format("D [days], H [hours], m [minutes], s [seconds]", 1); // returns a string to send to a channel
+    const difference = Date.now() - ratelimits[cmd.name]; // easier to see the difference
+    if (difference < cooldown) { // check the if the duration the command was run, is more than the cooldown
+      return moment.duration(cooldown - difference).format("D [days], H [hours], m [minutes], s [seconds]", 1); // returns a string to send to a channel
     } else {
       ratelimits[cmd.name] = Date.now(); // set the key to now, to mark the start of the cooldown
       this.ratelimits.set(message.author.id, ratelimits); // set it

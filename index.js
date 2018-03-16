@@ -6,6 +6,7 @@ require("./extenders/Guild.js");
 require("./extenders/DMChannel.js");
 require("./extenders/TextChannel.js");
 const MisakiClient = require("./structures/MisakiClient.js");
+const errorDirnameRegex = new RegExp(`${__dirname}/`, "g");
 
 const client = new MisakiClient({
   disabledEvents: ["CHANNEL_PINS_UPDATE", "GUILD_BAN_ADD", "GUILD_BAN_REMOVE", "RELATIONSHIP_ADD", "RELATIONSHIP_REMOVE", "TYPING_START", "VOICE_SERVER_UPDATE", "VOICE_STATE_UPDATE"],
@@ -23,9 +24,9 @@ client.on("disconnect", () => client.console.warn("Bot is disconnecting..."))
   .on("warn", info => client.console.warn(info));
 
 process.on("uncaughtException", err => {
-  const errorMsg = err.stack.replace(new RegExp(`${__dirname}/`, "g"), "./");
+  const errorMsg = err.stack.replace(errorDirnameRegex, "./");
   client.console.error(`Uncaught Exception: ${errorMsg}`);
   process.exit(1);
 });
 
-process.on("unhandledRejection", console.log);
+process.on("unhandledRejection", client.console.error);
