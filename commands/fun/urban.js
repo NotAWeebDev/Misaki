@@ -12,9 +12,11 @@ module.exports = class UrbanCommand extends Command {
     });
   }
 
-  async run(message, [...text]) { // eslint-disable-line no-unused-vars
-    if (!text.length) return message.send(message.getText("MUST_PROVIDE_SEARCH_TERM"));
-    const { body } = await snek.get(`http://api.urbandictionary.com/v0/define?term=${text.join(" ")}`);
+  async run(message, [...text]) {
+    text = text.join(" ");
+    if (!text.length) return message.channel.send("You must provide some term to search in urban dictionary.");
+    const { body } = await snek.get("http://api.urbandictionary.com/v0/define")
+      .query({ term: text });
     if (body.result_type === "no_result") return message.channel.send("No data found...");	
   
     return this.paginate(message, body.list, this.makeEmbed);

@@ -4,7 +4,7 @@ class Event {
     this.client = client;
 
     this.name = options.name || file[file.length - 1].slice(0, -3);
-    this.enabled = options.enabled || true;
+    this.enabled = "enabled" in options ? options.enabled : true;
     this.store = this.client.events;
     this.file = file;
   }

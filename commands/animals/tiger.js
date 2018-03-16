@@ -19,7 +19,7 @@ class Tiger extends Social {
 
   async run(message, args, level, loadingMessage) {
     const { body } = await get("https://dashboard.typicalbot.com/api/v1/tiger").set("Authentication", process.env.TYPICAL);
-    const embed = this.client.methods.Embed()
+    const embed = new this.client.methods.Embed()
       .setColor(message.guild.me.roles.highest.color || 5198940)
       .attachFiles([new MessageAttachment(Buffer.from(body.data), "image.png")])
       .setImage("attachment://image.png");

@@ -17,7 +17,7 @@ class Achievement extends Social {
 
   async cmdVerify(message, [...text], options) {
     text = text.join(" ");
-    if (!text.length || text.length < 1) throw new this.client.methods.errors.UsageError("You must give an achievement description.", options.msg);
+    if (!text) throw new this.client.methods.errors.UsageError("You must give an achievement description.", options.msg);
     if (text.length > 22) throw new this.client.methods.errors.UsageError("I can only handle a maximum of 22 characters", options.msg);
     return;
   }
@@ -26,7 +26,7 @@ class Achievement extends Social {
     text = text.join(" ");
     if (message.mentions.users.first()) text = text.replace(/<@!?\d+>/, "").replace(/\n/g, " ").trim();
     await loadingMessage.delete();
-    return  message.channel.send(new this.client.methods.Attachment(await this.client.idiotAPI.achievement((message.mentions.users.first() || message.author).displayAvatarURL({ format:"png", size:32 }), text), "achievement.png"));
+    return message.channel.send(new this.client.methods.Attachment(await this.client.idiotAPI.achievement((message.mentions.users.first() || message.author).displayAvatarURL({ format:"png", size:32 }), text), "achievement.png"));
   }
 
   

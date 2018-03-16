@@ -15,7 +15,7 @@ class Tickle extends Social {
   cmdVerify(message, args, loadingMessage) {
     const target = message.mentions.members;
     if (target.size === 0) return Promise.reject(new this.client.methods.errors.UsageError("You need to mention someone to tickle them.", loadingMessage));
-    if (message.member == target.first()) return Promise.reject(new this.client.methods.errors.UsageError("You cannot tickle yourself!", loadingMessage));
+    if (message.member === target.first()) return Promise.reject(new this.client.methods.errors.UsageError("You cannot tickle yourself!", loadingMessage));
     return Promise.resolve(target);
   }
 

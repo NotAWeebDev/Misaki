@@ -11,7 +11,7 @@ class Command {
     this.usage = options.usage || "No usage provided.";
     this.extended = options.extended || "No information provided.";
     this.cost = options.cost || 0;
-    this.cooldown = options.cooldown || 5;
+    this.cooldown = "cooldown" in options ? options.cooldown : 0;
     this.hidden = options.hidden || false;
     this.guildOnly = options.guildOnly || false;
     this.botPerms = new Permissions(options.botPerms || []).freeze();
