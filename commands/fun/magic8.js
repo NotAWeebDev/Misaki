@@ -1,4 +1,4 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../base/Social.js");
 
 class Magic8 extends Social {
   constructor(...args) {

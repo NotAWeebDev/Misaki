@@ -1,4 +1,4 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../base/Social.js");
 const { readFile } = require("fs-nextra");
 
 class Mock extends Social {

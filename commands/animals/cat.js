@@ -1,6 +1,6 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../base/Social.js");
 const { get } = require("snekfetch");
-const { version } = require(`${process.cwd()}/package.json`);
+const { version } = require("../../package.json");
 
 class Cat extends Social {
   constructor(...args) {

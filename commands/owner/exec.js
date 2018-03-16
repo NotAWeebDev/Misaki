@@ -1,4 +1,4 @@
-const Owner = require(`${process.cwd()}/base/Owner.js`);
+const Owner = require("../../base/Owner.js");
 const exec = require("child_process").exec;
 
 class Exec extends Owner {

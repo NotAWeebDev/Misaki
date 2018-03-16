@@ -1,6 +1,6 @@
-const Event = require(`${process.cwd()}/base/Event.js`);
-const monitor = require(`${process.cwd()}/monitors/monitor.js`);
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Event = require("../base/Event.js");
+const monitor = require("../monitors/monitor.js");
+const Social = require("../base/Social.js");
 const { Permissions } = require("discord.js");
 const moment = require("moment");
 require("moment-duration-format");

@@ -1,4 +1,4 @@
-const Command = require(`${process.cwd()}/base/Command.js`);
+const Command = require("../../base/Command.js");
 const owjs = require("overwatch-js");
 const locationArray = ["us", "eu", "kr", "cn", "global"];
 const platformArray = ["pc", "xbl", "psn", "xbox"];
@@ -21,7 +21,7 @@ class Overwatch extends Command {
     if (platform === "xbox") platform = "xbl";
     player = player.replace(/#/g , "-");
     const data = await owjs.getAll(platform, location, player).catch(e => {
-      console.log(e.stack);
+      this.client.console.error(e);
       return null;
     });
     if (!data) message.response("❗", "Sorry, but something wen't wrong.. try again :<");

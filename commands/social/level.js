@@ -1,4 +1,4 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../base/Social.js");
 
 class Level extends Social {
   constructor(...args) {

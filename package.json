@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YorkAARGH/Misaki.git"
+    "url": "git+https://github.com/NotAWeebDev/Misaki.git"
   },
   "author": "York (http://anidiots.guide)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/YorkAARGH/Misaki/issues"
+    "url": "https://github.com/NotAWeebDev/Misaki/issues"
   },
-  "homepage": "https://github.com/YorkAARGH/Misaki#readme",
+  "homepage": "https://github.com/NotAWeebDev/Misaki#readme",
   "dependencies": {
     "discord.js": "github:discordjs/discord.js",
     "dotenv": "^5.0.1",

@@ -2,8 +2,7 @@
   All credits for the core of this command go to Yukine <@184632227894657025>
   You can find his repo here; https://github.com/Dev-Yukine
 */
-const Command = require(`${process.cwd()}/base/Command.js`);
-const { Collection } = require("discord.js");
+const Command = require("../../base/Command.js");
 const Kitsu = require("kitsu");
 const kitsu = new Kitsu();
 
@@ -35,7 +34,7 @@ class Anime extends Command {
       if (message.channel.permissionsFor(this.client.user).has("MANAGE_MESSAGES")) await returnMessage.delete(); 
       await msg.edit(`**Title JP:** ${data[index].titles.en_jp}\n**Title English:** ${data[index].titles.en}\n**Type:** ${data[index].subtype}\n**Start Date:** ${data[index].startDate}\n**End Date:** ${data[index].endDate || "in Progress"}\n**PopularityRank:** ${data[index].popularityRank}\n**Link:** <https://kitsu.io/anime/${data[index].id}>\n**Synopsis:** ${data[index].synopsis}`);
     } catch (error) {
-      if (error instanceof Collection) return message.reply("command canceled due timer");
+      if (error instanceof this.client.methods.Collection) return message.reply("command canceled due timer");
       throw error;
     }
   }

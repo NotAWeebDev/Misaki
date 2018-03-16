@@ -1,4 +1,4 @@
-const Command = require(`${process.cwd()}/base/Command.js`);
+const Command = require("../../base/Command.js");
 
 class Set extends Command {
   constructor(...args) {

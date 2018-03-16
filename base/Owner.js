@@ -1,4 +1,4 @@
-const Command = require(`${process.cwd()}/base/Command.js`);
+const Command = require("./Command.js");
 class Owner extends Command {
 
   constructor(client, file, options = {}) {

@@ -1,5 +1,5 @@
-const Command = require(`${process.cwd()}/base/Command.js`);
-const { version } = require(`${process.cwd()}/package.json`);
+const Command = require("./Command.js");
+const { version } = require("../package.json");
 const moment = require("moment");
 const { get } = require("snekfetch");
 

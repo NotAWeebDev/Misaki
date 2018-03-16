@@ -1,4 +1,4 @@
-const Event = require(`${process.cwd()}/base/Event.js`);
+const Event = require("../base/Event.js");
 
 module.exports = class extends Event {
 

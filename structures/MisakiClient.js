@@ -22,8 +22,8 @@ class MisakiClient extends Client {
       Embed: MessageEmbed,
       Attachment: MessageAttachment,
       Collection,
-      util: require(`${process.cwd()}/util/util.js`),
-      errors: require(`${process.cwd()}/util/CustomError`)
+      util: require("../util/util.js"),
+      errors: require("../util/CustomError")
     };
 
     // Enmap

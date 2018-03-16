@@ -1,10 +1,10 @@
 require("dotenv").config();
-require(`${process.cwd()}/modules/Prototypes.js`);
-require(`${process.cwd()}/extenders/Message.js`);
-require(`${process.cwd()}/extenders/GuildMember.js`);
-require(`${process.cwd()}/extenders/Guild.js`);
-require(`${process.cwd()}/extenders/DMChannel.js`);
-require(`${process.cwd()}/extenders/TextChannel.js`);
+require("./modules/Prototypes.js");
+require("./extenders/Message.js");
+require("./extenders/GuildMember.js");
+require("./extenders/Guild.js");
+require("./extenders/DMChannel.js");
+require("./extenders/TextChannel.js");
 const MisakiClient = require("./structures/MisakiClient.js");
 
 const client = new MisakiClient({

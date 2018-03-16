@@ -1,4 +1,4 @@
-const Command = require(`${process.cwd()}/base/Command.js`);
+const Command = require("../../base/Command.js");
 const { version } = require("discord.js");
 const moment = require("moment");
 require("moment-duration-format");

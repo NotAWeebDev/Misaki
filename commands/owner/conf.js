@@ -1,4 +1,4 @@
-const Owner = require(`${process.cwd()}/base/Owner.js`);
+const Owner = require("../../base/Owner.js");
 
 class Conf extends Owner {
   constructor(...args) {

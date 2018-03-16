@@ -1,5 +1,5 @@
-const Command = require(`${process.cwd()}/base/Command.js`);
-const pokemon = require(`${process.cwd()}/assets/json/pokemon.json`);
+const Command = require("../../base/Command.js");
+const pokemon = require("../../assets/json/pokemon.json");
 
 class Pokemon extends Command {
   constructor(...args) {

@@ -1,5 +1,5 @@
-const Command = require(`${process.cwd()}/base/Command.js`);
-const PaginationEmbed = require(`${process.cwd()}/util/pagination/FieldsEmbed`);
+const Command = require("../../base/Command.js");
+const PaginationEmbed = require("../../util/pagination/FieldsEmbed");
 const perpage = 10;
 
 class Help extends Command {

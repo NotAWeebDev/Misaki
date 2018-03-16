@@ -1,4 +1,4 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("./Social.js");
 const { post } = require("snekfetch");
 const { URLSearchParams } = require("url");
 
