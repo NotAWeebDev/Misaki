@@ -18,7 +18,8 @@ class Cuddle extends Social {
     return Promise.resolve(target);
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
+  async run(message) {
+    const target = await this.cmdVerify(message);
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** wants to give **${target.first().displayName}** a loving cuddle...`);
     const cuddle = await this.cmdWeeb("cuddle", "gif", message.channel.nsfw);
     await msg.edit({
