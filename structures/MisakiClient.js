@@ -5,8 +5,6 @@ const MisakiConsole = require("./MisakiConsole");
 const Enmap = require("enmap");
 const EnmapLevel = require("enmap-level");
 const idioticApi = require("idiotic-api");
-const moment = require("moment");
-require("moment-duration-format");
 
 class MisakiClient extends Client {
   constructor(options) {
@@ -102,23 +100,6 @@ class MisakiClient extends Client {
       this.levelCache[thisLevel.name] = thisLevel.level;
     }
   }
-
-  ratelimit(message, level, cmd) {
-    if (level > 4) return false;
-
-    const cooldown = cmd.cooldown * 1000;
-    const ratelimits = this.ratelimits.get(message.author.id) || {}; // get the ENMAP first.
-    if (!ratelimits[cmd.name]) ratelimits[cmd.name] = Date.now() - cooldown; // see if the command has been run before if not, add the ratelimit
-    const differnce = Date.now() - ratelimits[cmd.name]; // easier to see the difference
-    if (differnce < cooldown) { // check the if the duration the command was run, is more than the cooldown
-      return moment.duration(cooldown - differnce).format("D [days], H [hours], m [minutes], s [seconds]", 1); // returns a string to send to a channel
-    } else {
-      ratelimits[cmd.name] = Date.now(); // set the key to now, to mark the start of the cooldown
-      this.ratelimits.set(message.author.id, ratelimits); // set it
-      return true;
-    }
-  }
-
 }
 
 module.exports = MisakiClient;
