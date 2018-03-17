@@ -1,12 +1,12 @@
+const path = require("path");
+
 class Event {
 
-  constructor(client, file, options = {}) {
+  constructor(client, filepath, options = {}) {
     this.client = client;
-
-    this.name = options.name || file[file.length - 1].slice(0, -3);
+    this.name = options.name || path.parse(filepath).name;
     this.enabled = "enabled" in options ? options.enabled : true;
-    this.store = this.client.events;
-    this.file = file;
+    this.file = filepath;
   }
 
   async _run(...args) {
@@ -19,23 +19,10 @@ class Event {
     }
   }
 
-  unload() {
-    return this.client.events.delete(this.name);
-  }
-
-  disable() {
-    this.enabled = false;
-    return this;
-  }
-
-  enable() {
-    this.enabled = true;
-    return this;
-  }
-
   reload() {
     return this.client.events.load(this.file);
   }
+
 }
 
 module.exports = Event;

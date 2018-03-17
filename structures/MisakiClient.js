@@ -89,7 +89,7 @@ class MisakiClient extends Client {
   }
 
   async init() {
-    const [commands, events] = await Promise.all([this.commands.loadAll(), this.events.loadAll()]);
+    const [commands, events] = await Promise.all([this.commands.loadFiles(), this.events.loadFiles()]);
     this.console.log(`Loaded a total of ${commands} commands`);
     this.console.log(`Loaded a total of ${events} events`);
 
