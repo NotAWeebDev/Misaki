@@ -1,4 +1,4 @@
-const { Permissions } = require("discord.js");
+const { Permissions, MessageEmbed } = require("discord.js");
 const path = require("path");
 const pageButtons = ["⬅","➡","🛑"];
 
@@ -64,14 +64,21 @@ class Command {
     return `${line1}${line2}`;
   }
 
+  async embedMessage(message) {
+    if (!message) throw new this.client.methods.errors.ParseError("Invalid format, missing required value: MESSAGE");
+    const embed = await new MessageEmbed().setColor(message.guild.me.roles.highest.color || 5198940).setTimestamp().setFooter(`Requested by ${message.member.user.username}`, message.guild.me.user.displayAvatarURL());
+    return embed;
+  }
+
   async verifyUser(message, user, options = {}) {
+    if (!message) throw new this.client.methods.errors.ParseError("Invalid format, missing required value: MESSAGE", options.msg);
+    if (!user) throw new this.client.methods.errors.ParseError("Invalid format, missing required value: USER", options.msg);
     let member;
     const idMatch = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
     if (idMatch) return this.client.users.fetch(idMatch[1]);
     if (/(#[0-9]{4})$/.test(user)) member = message.guild.members.find(member => member.user.tag === user);
     else member = message.guild.members.find(member => member.user.username === user);
     if (member) return member.user;
-    throw new this.client.methods.errors.ParseError("Invalid Mention or ID", options.msg);
   }
 
   async verifyMember(message, member, options = {}) {
