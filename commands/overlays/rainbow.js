@@ -1,9 +1,9 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../base/Social.js");
 const { MessageAttachment } = require("discord.js");
 
 class Rainbow extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "rainbow",
       description: "Show off your rainbow.",
       category: "Canvas",

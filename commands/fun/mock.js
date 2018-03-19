@@ -1,10 +1,9 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../base/Social.js");
 const { readFile } = require("fs-nextra");
-const { UsageError } = require(`${process.cwd()}/util/CustomError.js`);
 
 class Mock extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "mock",
       description: "Mocks a nominated message.",
       usage: "mock",
@@ -20,7 +19,7 @@ class Mock extends Social {
     const grabMock = args.length === 0 ? await message.channel.messages.fetch({ limit:1, before: message.id}) : await message.channel.messages.fetch(await this.verifyMessage(message, args[0], { msg: loadingMessage }));
     const mockBob = await readFile("./assets/images/spongebob.png");
     const mock = grabMock.size === 1 ? grabMock.first() : grabMock;
-    if (mock.author.bot) throw new UsageError("You cannot mock bots.", loadingMessage);
+    if (mock.author.bot) throw new this.client.methods.errors.UsageError("You cannot mock bots.", loadingMessage);
     return { mock, mockBob };
   }
 

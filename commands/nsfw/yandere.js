@@ -1,9 +1,9 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../base/Social.js");
 const { get } = require("snekfetch");
 
 class Yandere extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "yandere",
       description: "Searches yande.re for your search term.",
       category: "NSFW",

@@ -1,9 +1,9 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../base/Social.js");
 const { get } = require("snekfetch");
 
 class Reddit extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "reddit",
       description: "Posts a random subreddit entry.",
       usage: "reddit [-new|-random|-hot|-top] [subreddit]",

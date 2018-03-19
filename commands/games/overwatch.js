@@ -1,12 +1,11 @@
-const Command = require(`${process.cwd()}/base/Command.js`);
+const Command = require("../../base/Command.js");
 const owjs = require("overwatch-js");
-const { MessageEmbed } = require("discord.js");
 const locationArray = ["us", "eu", "kr", "cn", "global"];
 const platformArray = ["pc", "xbl", "psn", "xbox"];
 
 class Overwatch extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "overwatch",
       description: "Find Your Ow Player Stats",
       usage: "overwatch <pc|xbl|psn> [us|eu|kr|cn|global] <full-battle-tag|gamertag>",
@@ -22,11 +21,11 @@ class Overwatch extends Command {
     if (platform === "xbox") platform = "xbl";
     player = player.replace(/#/g , "-");
     const data = await owjs.getAll(platform, location, player).catch(e => {
-      console.log(e.stack);
+      this.client.console.error(e);
       return null;
     });
     if (!data) message.response("❗", "Sorry, but something wen't wrong.. try again :<");
-    const embed = new MessageEmbed()
+    const embed = new this.client.methods.Embed()
       .setTitle(`${data.profile.nick} Lvl ${data.profile.level} on ${platform}`)
       .setURL(data.profile.url)
       .setThumbnail(data.profile.avatar)

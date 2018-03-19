@@ -1,7 +1,8 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../../base/Social.js");
+
 class Item extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "inventory",
       description: "Displays, adds, and removes from inventories.",
       usage: "inventory [-<give|take> <mention|userid> <amount> <name>]",
@@ -19,7 +20,7 @@ class Item extends Social {
       if (bot) return message.response("❗", "Bot's do not have an inventory.");
       const _member = message.guild.members.get(user.id);
       switch (message.flags[0]) {
-        case ("give"):
+        case "give":
           if (level < 2) return message.response(undefined, "B...Baka! You are too low level to add items to inventories");
           if (_member.inventory[name] === undefined) return message.response(undefined, `Invalid item ${name}`);
           if (isNaN(parseInt(amount))) return message.response(undefined, `B...Baka! ${amount} isn't even a number!`);
@@ -36,7 +37,7 @@ class Item extends Social {
           message.channel.send(`Successfully took ${amount} ${name} from ${_member.displayName}, enjoy!`);
           break;
       
-        case ("view"):
+        case "view":
           message.channel.send(`= ${message.member.displayName}'s Inventory =\n` + `Keys${" ".repeat(20 - "Keys".length)}::  ${message.member.inventory["keys"]}
 Crates${" ".repeat(20 - "Crates".length)}::  ${message.member.inventory["crates"]}
 Tokens${" ".repeat(20 - "Tokens".length)}::  ${message.member.inventory["tokens"]}` , { code: "asciidoc" });

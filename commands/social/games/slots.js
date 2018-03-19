@@ -1,4 +1,4 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../../base/Social.js");
 
 const { SlotMachine, SlotSymbol } = require("slot-machine");
 
@@ -19,8 +19,8 @@ const jackpot = new SlotSymbol("jackpot", { display: "🔅", points: 50, weight:
 const machine = new SlotMachine(3, [cherry, lemon, watermelon, apple, grape, orange, wild, bell, clover, heart, money, diamond, jackpot]);
 
 class Slots extends Social {
-  constructor(client) {!
-    super(client, {
+  constructor(...args) {!
+    super(...args, {
       name: "slots",
       description: "Try your luck with the slots.",
       category: "Fun",
@@ -36,12 +36,12 @@ class Slots extends Social {
     await message.member.takeItem("tokens", 1);
     const results = machine.play();
     const winnings = this.help.cost * results.totalPoints;
-    message.buildEmbed()
+    const embed = new this.client.methods.Embed()
       .setColor(message.guild.me.roles.highest.color || 5198940)
       .setAuthor("Misaki Slots")
       .setDescription(`${results.visualize(false)}\n\n${results.winCount === 0 ? `${message.member.displayName} has lost!\nBetter luck next time!` : `Whoa... ${message.member.displayName} won!`}\n\n${results.winCount === 0 ? "" : `You have won ₲${winnings.toLocaleString()}`}`)
-      .setTimestamp()
-      .send();
+      .setTimestamp();
+    message.channel.send({ embed });
     if (results.winCount > 0) return message.member.givePoints(winnings);
   }
 }

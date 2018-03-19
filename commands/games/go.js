@@ -1,9 +1,8 @@
-const Command = require(`${process.cwd()}/base/Command.js`);
-const {MessageEmbed} = require("discord.js");
+const Command = require("../../base/Command.js");
 
 class Go extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "go",
       description: "Gets other users to join you in games.",
       category: "Games",
@@ -60,7 +59,7 @@ class Go extends Command {
           break;
       }
 
-      const embed = new MessageEmbed()
+      const embed = new this.client.methods.Embed()
         .setColor(message.guild.me.roles.highest.color || 5198940)
         .setAuthor(`${message.author.username}`, `${message.author.displayAvatarURL()}`)
         .setThumbnail(`${message.author.displayAvatarURL()}`)

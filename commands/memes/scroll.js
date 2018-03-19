@@ -1,8 +1,8 @@
-const Meme = require(`${process.cwd()}/base/Meme.js`);
+const Meme = require("../../base/Meme.js");
 
 class Scroll extends Meme {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "scroll",
       description: "Discover the scroll of truth!",
       usage: "scroll <text>",

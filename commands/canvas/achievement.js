@@ -1,10 +1,8 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
-const { MessageAttachment } = require("discord.js");
-const { UsageError } = require(`${process.cwd()}/util/CustomError.js`);
+const Social = require("../../base/Social.js");
 
 class Achievement extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "achievement",
       description: "Creates an Achievement.",
       category: "Canvas",
@@ -17,18 +15,18 @@ class Achievement extends Social {
     });
   }
 
-  cmdVerify(message, args, options) {
-    const text = args.join(" ");
-    if (text.length < 1) return Promise.reject(new UsageError("You must give an achievement description.", options.msg));
-    if (text.length > 22) return Promise.reject(new UsageError("I can only handle a maximum of 22 characters", options.msg));
-    return Promise.resolve();
+  async cmdVerify(message, [...text], options) {
+    text = text.join(" ");
+    if (!text) throw new this.client.methods.errors.UsageError("You must give an achievement description.", options.msg);
+    if (text.length > 22) throw new this.client.methods.errors.UsageError("I can only handle a maximum of 22 characters", options.msg);
+    return;
   }
 
-  async run(message, args, level, loadingMessage) {
-    let text = args.join(" ");
-    if (message.mentions.users.first()) text = text.replace(/<@!?\d+>/, "").replace(/\n/g, " ").trim();
-    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.achievement((message.mentions.users.first() || message.author).displayAvatarURL({ format:"png", size:32 }), text), "achievement.png"));
+  async run(message, [...text], level, loadingMessage) {
+    text = text.join(" ");
+    if (message.mentions.users.size) text = text.replace(/<@!?\d+>/, "").replace(/\n/g, " ").trim();
     await loadingMessage.delete();
+    return message.channel.send(new this.client.methods.Attachment(await this.client.idiotAPI.achievement((message.mentions.users.first() || message.author).displayAvatarURL({ format:"png", size:32 }), text), "achievement.png"));
   }
 
   

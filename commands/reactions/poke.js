@@ -1,9 +1,8 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
-const { UsageError } = require(`${process.cwd()}/util/CustomError.js`);
+const Social = require("../../base/Social.js");
 
 class Poke extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "poke",
       description: "Just want to poke someone.",
       usage: "poke <@mention>",
@@ -15,8 +14,8 @@ class Poke extends Social {
 
   cmdVerify(message, args, loadingMessage) {
     const target = message.mentions.members;
-    if (target.size === 0) return Promise.reject(new UsageError("You need to mention someone to poke them.", loadingMessage));
-    if (message.member == target.first()) return Promise.reject(new UsageError("You cannot poke yourself!", loadingMessage));
+    if (!target) return Promise.reject(new this.client.methods.errors.UsageError("You need to mention someone to poke them.", loadingMessage));
+    if (message.member === target.first()) return Promise.reject(new this.client.methods.errors.UsageError("You cannot poke yourself!", loadingMessage));
     return Promise.resolve(target);
   }
 

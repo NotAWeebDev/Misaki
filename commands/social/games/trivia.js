@@ -1,11 +1,10 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
-const Discord = require("discord.js");
+const Social = require("../../../base/Social.js");
 const { get } = require("snekfetch");
 const h = new (require("html-entities").AllHtmlEntities)(); // HTML encoding decoder
 
 class Trivia extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "trivia",
       description: "Delivers a quiz with the correct answer awarding 10 points.",
       category: "Fun",
@@ -29,7 +28,7 @@ class Trivia extends Social {
       choices.splice(choices.indexOf(randomChoices[i]), 1); // Remove it from the array.
     } // Repeat until complete
 
-    const emb = new Discord.MessageEmbed() // Embed it
+    const emb = new this.client.methods.Embed()
       .setAuthor("Misaki Trivia", this.client.user.displayAvatarURL())
       .setColor(message.guild.me.roles.highest.color || 5198940)
       .setDescription(h.decode(quiz.question))
@@ -39,7 +38,7 @@ class Trivia extends Social {
       .addField("D", randomChoices[3])
       .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL({format: "png", size: 64}));
 
-    const question = await this.client.awaitReply(message, null, m => m.author.id === message.author.id, 60000, {embed:emb}); // Ask the question.
+    const question = await message.awaitReply(null, m => m.author.id === message.author.id, 60000, { embed: emb }); // Ask the question.
 
     if (!question) return message.reply("I'm sorry but you took too long to respond."); // Check against time it took. 1 Minute by default.
     const choice = randomChoices[["a", "b", "c", "d"].indexOf(question.toLowerCase())]; // Assign correct value to "choice" from randomChoices.

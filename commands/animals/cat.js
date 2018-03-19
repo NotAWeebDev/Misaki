@@ -1,10 +1,10 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../base/Social.js");
 const { get } = require("snekfetch");
-const { version } = require(`${process.cwd()}/package.json`);
+const { version } = require("../../package.json");
 
 class Cat extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "cat",
       description: "Post a randomly selected image of a cat.",
       category: "Animals",

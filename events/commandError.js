@@ -1,19 +1,13 @@
-const { CustomError } = require("../util/CustomError.js");
+const Event = require("../base/Event.js");
 
-module.exports = class {
-  constructor(client) {
-    this.client = client;
-  }
+module.exports = class extends Event {
 
   async run(error, message) {
-    if (error instanceof CustomError) {
-      if (error.msg) {
-        return error.msg.edit(error.message);
-      } else { 
-        return message.channel.send(error.message);
-      }
+    if (error instanceof this.client.methods.errors.CustomError) {
+      if (error.msg) return error.msg.edit(error.message);
+      return message.channel.send(error.message);
     }
     message.channel.send("Something went wrong, please try again later");
-    this.client.logger.error(error);
+    this.client.console.error(error);
   }
 };

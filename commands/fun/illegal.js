@@ -1,10 +1,9 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../base/Social.js");
 const { get, post } = require("snekfetch");
-const { APIError, UsageError } = require("../../util/CustomError.js");
 
 class IsNowIllegal extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "illegal",
       description: "US President Trump makes something illegal.",
       usage: "illegal <thing>",
@@ -19,11 +18,11 @@ class IsNowIllegal extends Social {
   }
 
   cmdVerify(message, args, loadingMessage) {
-    if (this.inUse) return Promise.reject(new APIError("Trump is currently making something illegal, please wait.", loadingMessage));
+    if (this.inUse) return Promise.reject(new this.client.methods.errors.APIError("Trump is currently making something illegal, please wait.", loadingMessage));
     const word = args.join(" ");
-    if (word.length < 1 || word.length > 10) return Promise.reject(new UsageError("Cannot be longer than 10 characters or shorter than 1 character.", loadingMessage));
+    if (word.length < 1 || word.length > 10) return Promise.reject(new this.client.methods.errors.UsageError("Cannot be longer than 10 characters or shorter than 1 character.", loadingMessage));
     const wordMatch = /^[a-zA-Z\s]{1,10}$/.exec(word);
-    if (!wordMatch) return Promise.reject(new UsageError("oops! Non-standard unicode characters are now illegal.", loadingMessage));
+    if (!wordMatch) return Promise.reject(new this.client.methods.errors.UsageError("oops! Non-standard unicode characters are now illegal.", loadingMessage));
     return Promise.resolve(word);
   }
 

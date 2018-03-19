@@ -1,15 +1,13 @@
-const { MessageEmbed, Structures } = require("discord.js");
+const { Structures } = require("discord.js");
 
-module.exports = Structures.extend("TextChannel", DiscordTextChannel => {
-  return class TextChannel extends DiscordTextChannel {
+module.exports = Structures.extend("TextChannel", TextChannel => class extends TextChannel {
 
-    constructor(...args) {
-      super(...args);
-      
-    }
+  get readable() {
+    return this.permissionsFor(this.guild.me).has("VIEW_CHANNEL");
+  }
 
-    buildEmbed() {
-      return Object.defineProperty(new MessageEmbed(), "sendToChannel", { value: this });
-    }
-  };
+  get postable() {
+    return (this.readable && this.permissionsFor(this.guild.me).has("SEND_MESSAGES"));
+  }
+
 });

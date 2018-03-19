@@ -1,9 +1,8 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
-const { UsageError } = require(`${process.cwd()}/util/CustomError.js`);
+const Social = require("../../base/Social.js");
 
 class Say extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "say",
       description: "Make the bot say something.",
       usage: "say [#channel] <message>",
@@ -16,13 +15,13 @@ class Say extends Social {
 
 
   async cmdVerify(message, args, loadingMessage) {
-    if (args.length < 1) throw new UsageError("You need to give the bot a message to send.", loadingMessage);
+    if (args.length < 1) throw new this.client.methods.errors.UsageError("You need to give the bot a message to send.", loadingMessage);
     const channelid = await this.verifyChannel(message, args[0], { msg: loadingMessage });
     if (channelid !== message.channel.id) {
       args.shift();
     }
     const channel = message.guild.channels.get(channelid);
-    if (!message.member.permissionsIn(channel).has(["SEND_MESSAGES", "READ_MESSAGES"])) throw new UsageError("You do not have permission to `say` in that channel.", loadingMessage);
+    if (channel.permissionsFor(message.member).missing(["SEND_MESSAGES", "READ_MESSAGES"]).length) throw new this.client.methods.errors.UsageError("You do not have permission to `say` in that channel.", loadingMessage);
     return channel;
   }
 

@@ -1,8 +1,8 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../base/Social.js");
 
 class Leaderboard extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "leaderboard",
       description: "Displays the top 10 active users.",
       usage: "leaderboard",

@@ -1,8 +1,8 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../base/Social.js");
 const { get } = require("snekfetch");
 class Nyan extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "nyan",
       description: "Someone needs a nyan in their life.",
       usage: "nyan",

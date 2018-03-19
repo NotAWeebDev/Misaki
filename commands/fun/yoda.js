@@ -1,9 +1,9 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../base/Social.js");
 const { get } = require("snekfetch");
-const { UsageError } = require(`${process.cwd()}/util/CustomError.js`);
+
 class Yoda extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "yoda",
       description: "With this, like Yoda you can speak. Yes",
       category: "Fun",
@@ -14,7 +14,7 @@ class Yoda extends Social {
   }
 
   cmdVerify(message, args) {
-    if (args.length < 2) return Promise.reject(new UsageError("Invalid command usage, you must supply text for Yoda. Yes."));
+    if (args.length < 2) return Promise.reject(new this.client.methods.errors.UsageError("Invalid command usage, you must supply text for Yoda. Yes."));
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars

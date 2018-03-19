@@ -1,9 +1,8 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
-const { UsageError } = require(`${process.cwd()}/util/CustomError.js`);
+const Social = require("../../base/Social.js");
 
 class Pat extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "pat",
       description: "Someone needs a pat",
       usage: "pat <@mention>",
@@ -15,8 +14,8 @@ class Pat extends Social {
 
   cmdVerify(message, args, loadingMessage) {
     const target = message.mentions.members;
-    if (target.size === 0) return Promise.reject(new UsageError("You need to mention someone to pat them.", loadingMessage));
-    if (message.member == target.first()) return Promise.reject(new UsageError("You cannot pat yourself!", loadingMessage));
+    if (!target) return Promise.reject(new this.client.methods.errors.UsageError("You need to mention someone to pat them.", loadingMessage));
+    if (message.member === target.first()) return Promise.reject(new this.client.methods.errors.UsageError("You cannot pat yourself!", loadingMessage));
     return Promise.resolve(target);
   }
 

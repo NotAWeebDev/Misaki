@@ -1,8 +1,8 @@
-const Owner = require(`${process.cwd()}/base/Owner.js`);
+const Owner = require("../../base/Owner.js");
 
 class Conf extends Owner {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "conf",
       description: "Modify the default configuration for all guilds.",
       category: "Owner",
@@ -42,7 +42,7 @@ class Conf extends Owner {
       if (!defaults[key]) return message.reply("This key does not exist in the settings");
       const filter = m => m.author.id === message.author.id;
 
-      const response = await this.client.awaitReply(message, `Are you sure you want to permanently delete ${key} from all guilds? This **CANNOT** be undone.`, filter, undefined, null);
+      const response = await message.awaitReply(`Are you sure you want to permanently delete ${key} from all guilds? This **CANNOT** be undone.`, filter, undefined, null);
 
       if (["y", "yes"].includes(response)) {
 

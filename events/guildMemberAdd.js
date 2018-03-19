@@ -1,9 +1,6 @@
-const { MessageAttachment } = require("discord.js");
+const Event = require("../base/Event.js");
 
-module.exports = class {
-  constructor(client) {
-    this.client = client;
-  }
+module.exports = class extends Event {
 
   async run(member) {
     if (!member || !member.id || !member.guild) return;
@@ -13,7 +10,20 @@ module.exports = class {
     const settings = this.client.getSettings(member.guild.id);
     
     if (settings.welcomeEnabled !== "true") return;
-    if (settings.welcomeType === "text") member.guild.channels.find("name", settings.welcomeChannel).send(`${this.client.emojis.get("396391329367588878")}  ${this.client.responses.welcomeMessages.random().replaceAll("{{user}}", member.user.username).replaceAll("{{amount}}", member.guild.memberCount).replaceAll("{{guild}}", member.guild.name).trim()}`).catch(console.error);
-    if (settings.welcomeType === "image") member.guild.channels.find("name", settings.welcomeChannel).send(new MessageAttachment(await this.client.idiotAPI.welcome("anime", member.user.bot, member.user.displayAvatarURL({ format: "png", size: 128 }), encodeURIComponent(member.user.tag), null, null))).catch(console.error);
+    if (settings.welcomeType === "text") {
+      const channel = member.guild.channels.find("name", settings.welcomeChannel);
+      if (!channel) return;
+      const message = this.client.responses.welcomeMessages.random()
+        .replaceAll("{{user}}", member.user.username)
+        .replaceAll("{{amount}}", member.guild.memberCount)
+        .replaceAll("{{guild}}", member.guild.name).trim();
+      channel.send(`${this.client.emojis.get("396391329367588878")} ${message}`).catch(console.error);
+    }
+    if (settings.welcomeType === "image") {
+      const channel = member.guild.channels.find("name", settings.welcomeChannel);
+      if (!channel) return;
+      const image = await this.client.idiotAPI.welcome("anime", member.user.bot, member.user.displayAvatarURL({ format: "png", size: 128 }), member.user.tag);
+      channel.send(new this.client.methods.Attachment(image)).catch(console.error);
+    }
   }
 };

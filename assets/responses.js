@@ -136,16 +136,6 @@ exports.aboutMessages = [
   "I'm Misaki! Your entertainment assistant for An Idiot's Guide, a fantastic place owned by my father. I have a wide range of manga and anime; if you ever have a question or just want to look at it, all you need to do is ask. I also help out with keeping the community up by providing allowances for everyone! I've even kept track of everyone's balance so you can see where you are, even though you're always at the top for me!\n\nP.S. I get my beautiful looks from `@VixtoriaGoober` (follow her on Twitter)"
 ];
 
-exports.rebootMessages = [
-  "I'm just leaving for a bit... W-what are you? O-obsessed?",
-  "I'm feeling a bit tired, better get some sleep. **Goodnight**",
-  "S-senpai please wait for me...",
-  "B-baka! You need to wait for me...",
-  "W-what, **{{user}}**, you want to watch me sleep? P-pervert.",
-  "**{{user}}-san**! I'm restarting, give me a moment...",
-  "Hey! **{{user}}**, what are you doing!?! WAIT!!"
-];
-
 // Go Messages
 exports.goMessages = [
   "Ehhhhh! **{{user}}-san** invites everyone to play **{{game}}**!",

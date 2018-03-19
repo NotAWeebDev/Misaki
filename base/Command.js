@@ -1,52 +1,34 @@
-const { ParseError } = require("../util/CustomError.js");
+const { Permissions } = require("discord.js");
+const path = require("path");
 const pageButtons = ["⬅","➡","🛑"];
 
 class Command {
-  constructor(client, {
-    name = null,
-    description = "No description provided.",
-    category = "General",
-    usage = "No usage provided.",
-    extended = "No information provided.",
-    cost = 0,
-    cooldown = 0,
-    hidden = false,
-    guildOnly = true,
-    aliases = [],
-    botPerms = [],
-    permLevel = "User",
-    location = ""
-  }) {
+  constructor(client, filepath, options = {}) {
     this.client = client;
-    this.conf = {
-      hidden,
-      guildOnly,
-      aliases,
-      botPerms,
-      permLevel,
-      location,
-      cooldown
-    };
-    this.help = {
-      name,
-      description,
-      category,
-      usage,
-      extended,
-      cost
-    };
+    this.name = options.name || path.parse(filepath).name;
+    this.aliases = options.aliases || [];
+    this.description = options.description || "No description provided.";
+    this.category = options.category || "General";
+    this.usage = options.usage || "No usage provided.";
+    this.extended = options.extended || "No information provided.";
+    this.cost = options.cost || 0;
+    this.cooldown = "cooldown" in options ? options.cooldown : 0;
+    this.hidden = options.hidden || false;
+    this.guildOnly = options.guildOnly || false;
+    this.botPerms = new Permissions(options.botPerms || []).freeze();
+    this.permLevel = options.permLevel || "User";
+    this.file = filepath;
   }
 
   async paginate(message, list, makeEmbed) {
     const msg = await message.channel.send("`Loading please wait ...`");
-    for (let i = 0; i < pageButtons.length; i++) { await msg.react(pageButtons[i]); }
-    const embed = await msg.edit("", { embed: (this.makeEmbed(list, 0)) });
-
-    return await this.progressPages(message, embed, list, 0, makeEmbed);
+    for (let i = 0; i < pageButtons.length; i++) await msg.react(pageButtons[i]);
+    const embed = await msg.edit({ embed: this.makeEmbed(list, 0) });
+    return this.progressPages(message, embed, list, 0, makeEmbed);
   }
   
   progressPages(message, embed, list, page, embedMakerFunction) {
-    embed.awaitReactions((rec, user) => user.id === message.author.id && pageButtons.includes(rec.emoji.toString()), { time: 30000, max: 1, errors: ["time"] })
+    return embed.awaitReactions((rec, user) => user.id === message.author.id && pageButtons.includes(rec.emoji.toString()), { time: 30000, max: 1, errors: ["time"] })
       .then((reactions) => {
         const res = reactions.first();
         switch (res._emoji.name) {
@@ -65,18 +47,14 @@ class Command {
         return this.progressPages(message, embed, list, page, embedMakerFunction);
       })
       .catch((error) => {
-        this.client.logger.error(error);
+        this.client.console.error(error);
         return message.channel.send("There was some error, sorry for the interuption.").then(sent => sent.delete({ timeout : 5000 }));
       });
   }
 
   makeTitles(data) {
-    const arr = new Array();
-    const { makeTitle } = this;
-    for (let i = 0; i <5; i++) {
-      arr.push(`\n${i + 1}:`);
-      arr.push(makeTitle(i, data));
-    }
+    const arr = [];
+    for (let i = 0; i < 5; i++) arr.push(`\n${i + 1}: ${this.makeTitle(i, data)}`);
     return arr.join(" ");
   }
 
@@ -93,20 +71,19 @@ class Command {
     if (/(#[0-9]{4})$/.test(user)) member = message.guild.members.find(member => member.user.tag === user);
     else member = message.guild.members.find(member => member.user.username === user);
     if (member) return member.user;
-    throw new ParseError("Invalid Mention or ID", options.msg);
+    throw new this.client.methods.errors.ParseError("Invalid Mention or ID", options.msg);
   }
 
   async verifyMember(message, member, options = {}) {
-    const user = await this.verifyUser(message, member, options.msg);
-    const target = await message.guild.members.fetch(user);
-    return target;
+    const user = await this.verifyUser(message, member, options);
+    return message.guild.members.fetch(user);
   }
 
   async verifyMessage(message, msgid, options = {}) {
     const match = /([0-9]{17,20})/.exec(msgid);
-    if (!match) throw new ParseError("Invalid Message ID.", options.msg);
+    if (!match) throw new this.client.methods.errors.ParseError("Invalid Message ID.", options.msg);
     const id = match[1];
-    return message.channel.messages.fetch(id).then(m => m.id);
+    return message.channel.messages.fetch(id).then(msg => msg.id);
   }
 
   async verifyChannel(message, chanid, options = {}) {
@@ -114,12 +91,17 @@ class Command {
     if (!match) return message.channel.id;
     const id = match[1];
     const check = message.guild.channels.get(id);
-    if (!check || check.type !== "text") throw new ParseError("No Channel found or wrong type", options.msg);
+    if (!check || check.type !== "text") throw new this.client.methods.errors.ParseError("No Channel found or wrong type", options.msg);
     return check.id;
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    throw new Error(`Command ${this.constructor.name} doesn't provide a run method.`); 
+    throw new Error(`Command ${this.constructor.name} doesn't provide a run method.`);
   }
+
+  reload() {
+    return this.client.commands.load(this.file);
+  }
+
 }
 module.exports = Command;

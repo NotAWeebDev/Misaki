@@ -1,10 +1,9 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../base/Social.js");
 const { MessageAttachment } = require("discord.js");
-const { UsageError } = require(`${process.cwd()}/util/CustomError.js`);
 
 class SnapChat extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "snapchat",
       description: "Creates a snapchat based meme.",
       usage: "snapchat <text>",
@@ -19,8 +18,8 @@ class SnapChat extends Social {
 
   cmdVerify(message, args, loadingMessage) {
     const text = args.join(" ");
-    if (text.length < 1) return Promise.reject(new UsageError("You must give the snap some text.", { msg: loadingMessage}));
-    if (text.length > 28) return Promise.reject(new UsageError("I can only handle a maximum of 28 characters.", { msg: loadingMessage}));
+    if (text.length < 1) return Promise.reject(new this.client.methods.errors.UsageError("You must give the snap some text.", { msg: loadingMessage}));
+    if (text.length > 28) return Promise.reject(new this.client.methods.errors.UsageError("I can only handle a maximum of 28 characters.", { msg: loadingMessage}));
     return Promise.resolve(text);
   }
 

@@ -1,10 +1,9 @@
-const Command = require(`${process.cwd()}/base/Command.js`);
-const { MessageEmbed } = require("discord.js");
-const pokemon = require(`${process.cwd()}/assets/json/pokemon.json`);
+const Command = require("../../base/Command.js");
+const pokemon = require("../../assets/json/pokemon.json");
 
 class Pokemon extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "pokemon",
       description: "Guess That Pokemon",
       usage: "pokemon",
@@ -18,7 +17,7 @@ class Pokemon extends Command {
     const poke = rand > 0 ? rand : Math.floor(Math.random() * 802);
     const pokem = pokemon[poke];
 
-    const embed = new MessageEmbed()
+    const embed = new this.client.methods.Embed()
       .setTitle("You have 15 seconds to guess ! Who's that Pokémon !")
       .setAuthor(message.member.displayName, message.author.displayAvatarURL())
       .setImage(pokem.imageURL)

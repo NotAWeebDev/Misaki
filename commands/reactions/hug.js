@@ -1,9 +1,8 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
-const UsageError = require("../../util/CustomError.js");
+const Social = require("../../base/Social.js");
 
 class Hug extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "hug",
       description: "Give someone a hug.",
       usage: "hug <@mention>",
@@ -15,8 +14,8 @@ class Hug extends Social {
 
   cmdVerify(message, args, loadingMessage) {
     const target = message.mentions.members;
-    if (target.size === 0) return Promise.reject(new UsageError("You need to mention someone to send them a hug.", loadingMessage));
-    if (message.member == target.first()) return Promise.reject(new UsageError("You cannot hug yourself !", loadingMessage));
+    if (!target) return Promise.reject(new this.client.methods.errors.UsageError("You need to mention someone to send them a hug.", loadingMessage));
+    if (message.member === target.first()) return Promise.reject(new this.client.methods.errors.UsageError("You cannot hug yourself !", loadingMessage));
     return Promise.resolve(target);
   }
 

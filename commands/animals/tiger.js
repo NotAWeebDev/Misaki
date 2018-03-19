@@ -1,10 +1,10 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../base/Social.js");
 const { get } = require("snekfetch");
 const { MessageAttachment } = require("discord.js");
 
 class Tiger extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "tiger",
       description: "Post a randomly selected image of a tiger.",
       category: "Animals",
@@ -19,11 +19,11 @@ class Tiger extends Social {
 
   async run(message, args, level, loadingMessage) {
     const { body } = await get("https://dashboard.typicalbot.com/api/v1/tiger").set("Authentication", process.env.TYPICAL);
-    await message.channel.buildEmbed()
+    const embed = new this.client.methods.Embed()
       .setColor(message.guild.me.roles.highest.color || 5198940)
-      .attachFiles([new MessageAttachment(new Buffer(body.data), "image.png")])
-      .setImage("attachment://image.png")
-      .send();
+      .attachFiles([new MessageAttachment(Buffer.from(body.data), "image.png")])
+      .setImage("attachment://image.png");
+    message.channel.send({ embed });
     await loadingMessage.delete();
   }
 }
