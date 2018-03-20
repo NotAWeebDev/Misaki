@@ -11,7 +11,7 @@ class Help extends Command {
       category: "System",
       usage: "help <category/command/setting> [page-num]",
       aliases: ["h", "halp", "commands"],
-      botPerms: ["MANAGE_MESSAGES"]
+      botPerms: ["MANAGE_MESSAGES", "ADD_REACTIONS", "EMBED_LINKS"]
     });
   }
 
