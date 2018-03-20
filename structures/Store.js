@@ -27,7 +27,11 @@ class Store extends Collection {
   load(file) {
     const filepath = path.join(this.dir, file);
     try {
-      const piece = this.set(new (require(filepath))(this.client, filepath));
+      const parsedFile = {
+        path: filepath,
+        name: path.parse(filepath).name
+      };
+      const piece = this.set(new (require(filepath))(this.client, parsedFile));
       delete require.cache[filepath];
       return piece;
     } catch (error) {
