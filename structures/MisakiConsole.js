@@ -59,19 +59,19 @@ MisakiConsole.TYPES = {
 
 MisakiConsole.COLORS = { 
   debug: {
-    time: { opening: "\u001b[45m", closing: "\u001b[49m" },
+    time: { opening: "\u001b[44;30m", closing: "\u001b[49;39m" },
     message: { opening: "\u001b[m", closing: "\u001b[m" } 
   },
   error: { 
-    time: { opening: "\u001b[41m", closing: "\u001b[49m" },
+    time: { opening: "\u001b[44;30m", closing: "\u001b[49;39m" },
     message: { opening: "\u001b[m", closing: "\u001b[m" } 
   },
   log: {
-    time: { opening: "\u001b[44m", closing: "\u001b[49m" },
+    time: { opening: "\u001b[44;30m", closing: "\u001b[49;39m" },
     message: { opening: "\u001b[m", closing: "\u001b[m" }
   },
   warn: { 
-    time: { opening: "\u001b[103;30m", closing: "\u001b[49;39m" },
+    time: { opening: "\u001b[44;30m", closing: "\u001b[49;39m" },
     message: { opening: "\u001b[m", closing: "\u001b[m" }
   }
 };
