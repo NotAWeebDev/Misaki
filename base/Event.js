@@ -1,10 +1,12 @@
+const path = require("path");
+
 class Event {
 
-  constructor(client, file, options = {}) {
+  constructor(client, filepath, options = {}) {
     this.client = client;
-    this.name = options.name || file.name;
+    this.name = options.name || path.parse(filepath).name;
     this.enabled = "enabled" in options ? options.enabled : true;
-    this.file = file;
+    this.file = filepath;
   }
 
   async _run(...args) {
@@ -18,7 +20,7 @@ class Event {
   }
 
   reload() {
-    return this.client.events.load(this.file.path);
+    return this.client.events.load(this.file);
   }
 
 }

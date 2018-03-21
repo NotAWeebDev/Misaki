@@ -3,13 +3,17 @@ const Event = require("../base/Event.js");
 module.exports = class extends Event {
 
   async run() {
+    if (this.client.users.has("1")) this.client.users.delete("1");
+
     if (!this.client.settings.has("default")) {
       if (!this.client.config.defaultSettings) throw new Error("defaultSettings not preset in config.js or settings database. Bot cannot load.");
       this.client.settings.set("default", this.client.config.defaultSettings);
     }
+
     this.client.user.setActivity(`@${this.client.user.username} help | ${this.client.guilds.size} Server${this.client.guilds.size > 1 ? "s" : ""}`);
 
     this.client.console.log(`${this.client.user.tag}, ready to serve ${this.client.users.size} users in ${this.client.guilds.size} servers.`);
+    
     setInterval(() => {
       if (this.client.status !== 0) return;
       const toRemind = this.client.reminders.filter(reminder => reminder.reminderTimestamp <= Date.now());

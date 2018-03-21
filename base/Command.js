@@ -1,10 +1,11 @@
 const { Permissions } = require("discord.js");
+const path = require("path");
 const pageButtons = ["⬅","➡","🛑"];
 
 class Command {
-  constructor(client, file, options = {}) {
+  constructor(client, filepath, options = {}) {
     this.client = client;
-    this.name = options.name || file.name;
+    this.name = options.name || path.parse(filepath).name;
     this.aliases = options.aliases || [];
     this.description = options.description || "No description provided.";
     this.category = options.category || "General";
@@ -16,7 +17,7 @@ class Command {
     this.guildOnly = options.guildOnly || false;
     this.botPerms = new Permissions(options.botPerms || []).freeze();
     this.permLevel = options.permLevel || "User";
-    this.file = file;
+    this.file = filepath;
   }
 
   async paginate(message, list, makeEmbed) {
@@ -99,7 +100,7 @@ class Command {
   }
 
   reload() {
-    return this.client.commands.load(this.file.path);
+    return this.client.commands.load(this.file);
   }
 
 }
