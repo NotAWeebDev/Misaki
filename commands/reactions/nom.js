@@ -1,4 +1,4 @@
-const Social = require("../../base/Social.js");
+const Social = require("../../structures/Social.js");
 
 class Nom extends Social {
   constructor(...args) {

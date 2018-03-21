@@ -1,4 +1,4 @@
-const Meme = require("../../base/Meme.js");
+const Meme = require("../../structures/Meme.js");
 
 class Notsure extends Meme {
   constructor(...args) {

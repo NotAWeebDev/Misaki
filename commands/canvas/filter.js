@@ -1,4 +1,4 @@
-const Social = require("../../base/Social.js");
+const Social = require("../../structures/Social.js");
 const { MessageAttachment } = require("discord.js");
 //-ithres [@mention] <number> | -threshold [@mention] <number> | 
 class Filter extends Social {

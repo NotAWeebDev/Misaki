@@ -1,4 +1,4 @@
-const Command = require("../../base/Command.js");
+const Command = require("../../structures/Command.js");
 
 class Go extends Command {
   constructor(...args) {

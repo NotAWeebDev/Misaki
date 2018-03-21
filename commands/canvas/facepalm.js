@@ -1,4 +1,4 @@
-const Social = require("../../base/Social.js");
+const Social = require("../../structures/Social.js");
 const { MessageAttachment } = require("discord.js");
 
 class Facepalm extends Social {

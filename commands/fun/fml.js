@@ -1,4 +1,4 @@
-const Social = require("../../base/Social.js");
+const Social = require("../../structures/Social.js");
 const request = require("snekfetch");
 const HTMLParser = require("fast-html-parser");
 

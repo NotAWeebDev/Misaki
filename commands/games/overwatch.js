@@ -1,4 +1,4 @@
-const Command = require("../../base/Command.js");
+const Command = require("../../structures/Command.js");
 const owjs = require("overwatch-js");
 const locationArray = ["us", "eu", "kr", "cn", "global"];
 const platformArray = ["pc", "xbl", "psn", "xbox"];

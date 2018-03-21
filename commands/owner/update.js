@@ -1,4 +1,4 @@
-const Owner = require("../../base/Owner.js");
+const Owner = require("../../structures/Owner.js");
 const { promisify } = require("util");
 const exec = promisify(require("child_process").exec);
 const path = require("path");

@@ -1,4 +1,4 @@
-const Command = require("../../base/Command.js");
+const Command = require("../../structures/Command.js");
 const FortniteAPI = require("fortnite");
 
 class Fortnite extends Command {

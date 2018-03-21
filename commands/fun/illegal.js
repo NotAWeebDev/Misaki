@@ -1,4 +1,4 @@
-const Social = require("../../base/Social.js");
+const Social = require("../../structures/Social.js");
 const { get, post } = require("snekfetch");
 
 class IsNowIllegal extends Social {

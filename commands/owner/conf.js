@@ -1,4 +1,4 @@
-const Owner = require("../../base/Owner.js");
+const Owner = require("../../structures/Owner.js");
 
 class Conf extends Owner {
   constructor(...args) {

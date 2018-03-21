@@ -1,4 +1,4 @@
-const Owner = require("../../base/Owner.js");
+const Owner = require("../../structures/Owner.js");
 const { inspect } = require("util");
 const { post } = require("snekfetch");
 

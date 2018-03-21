@@ -2,7 +2,7 @@
   All credits for the core of this command go to Yukine <@184632227894657025>
   You can find his repo here; https://github.com/Dev-Yukine
 */
-const Command = require("../../base/Command.js");
+const Command = require("../../structures/Command.js");
 const Kitsu = require("kitsu");
 const kitsu = new Kitsu();
 

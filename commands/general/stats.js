@@ -1,4 +1,4 @@
-const Command = require("../../base/Command.js");
+const Command = require("../../structures/Command.js");
 const { version } = require("discord.js");
 const moment = require("moment");
 require("moment-duration-format");

@@ -1,4 +1,4 @@
-const Command = require("../../base/Command.js");
+const Command = require("../../structures/Command.js");
 
 class Set extends Command {
   constructor(...args) {

@@ -1,6 +1,6 @@
-const Event = require("../base/Event.js");
+const Event = require("../structures/Event.js");
 const monitor = require("../monitors/monitor.js");
-const Social = require("../base/Social.js");
+const Social = require("../structures/Social.js");
 const { Permissions } = require("discord.js");
 const moment = require("moment");
 require("moment-duration-format");
