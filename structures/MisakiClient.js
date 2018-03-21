@@ -5,6 +5,7 @@ const MisakiConsole = require("./MisakiConsole");
 const Enmap = require("enmap");
 const EnmapLevel = require("enmap-level");
 const idioticApi = require("idiotic-api");
+const Database = require("./Database");
 
 class MisakiClient extends Client {
   constructor(options) {
@@ -18,6 +19,7 @@ class MisakiClient extends Client {
     this.events = new EventStore(this);
     this.upvoters = [];
     this.levelCache = {};
+    this.database = Database.db;
     this.methods = {
       Embed: MessageEmbed,
       Attachment: MessageAttachment,
@@ -27,7 +29,8 @@ class MisakiClient extends Client {
     };
 
     // Enmap
-    this.settings = new Enmap({ provider: new EnmapLevel({ name: "settings" }) });
+    // this.settings = new Enmap({ provider: new EnmapLevel({ name: "settings" }) });
+    this.settings = require("../models/settings");
     this.reminders = new Enmap({ provider: new EnmapLevel({ name: "reminders" }) });
     this.points = new Enmap({ provider: new EnmapLevel({ name: "points" }) });
     this.store = new Enmap({ provider: new EnmapLevel({ name: "shop" }) });
@@ -43,6 +46,7 @@ class MisakiClient extends Client {
   }
 
   _ready() {
+    Database.start();
     this.ready = true;
     this.emit("misakiReady");
   }
@@ -63,15 +67,8 @@ class MisakiClient extends Client {
     return permlvl;
   }
 
-  getSettings(id) {
-    const defaults = this.settings.get("default") || this.config.defaultSettings;
-    let guild = this.settings.get(id);
-    if (typeof guild !== "object") guild = {};
-    const returnObject = {};
-    Object.keys(defaults).forEach(key => {
-      returnObject[key] = guild[key] ? guild[key] : defaults[key];
-    });
-    return returnObject;
+  async getSettings(id) {
+    return await this.settings.findOrCreate({ where: { id } });
   }
 
   writeSettings(id, newSettings) {

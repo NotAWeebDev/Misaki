@@ -5,10 +5,10 @@ module.exports = class extends Event {
   async run() {
     if (this.client.users.has("1")) this.client.users.delete("1");
 
-    if (!this.client.settings.has("default")) {
-      if (!this.client.config.defaultSettings) throw new Error("defaultSettings not preset in config.js or settings database. Bot cannot load.");
-      this.client.settings.set("default", this.client.config.defaultSettings);
-    }
+    // if (!this.client.settings.has("default")) {
+    //   if (!this.client.config.defaultSettings) throw new Error("defaultSettings not preset in config.js or settings database. Bot cannot load.");
+    //   this.client.settings.set("default", this.client.config.defaultSettings);
+    // }
 
     this.client.user.setActivity(`@${this.client.user.username} help | ${this.client.guilds.size} Server${this.client.guilds.size > 1 ? "s" : ""}`);
 

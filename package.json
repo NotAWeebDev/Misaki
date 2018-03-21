@@ -31,15 +31,18 @@
     "fs-nextra": "^0.3.2",
     "html-entities": "^1.2.1",
     "idiotic-api": "^0.2.0",
-    "kitsu": "^5.0.6",
+    "kitsu": "^5.0.7",
     "moment": "^2.21.0",
     "moment-duration-format": "^2.2.2",
     "ms": "^2.1.1",
     "overwatch-js": "^1.6.1",
+    "pg": "^7.4.1",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.37.3",
     "slot-machine": "^2.1.0",
     "snekfetch": "^3.6.4"
   },
   "devDependencies": {
-    "eslint": "^4.18.2"
+    "eslint": "^4.19.0"
   }
 }
