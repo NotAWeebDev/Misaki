@@ -21,7 +21,7 @@ module.exports = class {
     
     if (settings.welcomeType === "image") {
       const { body } = await get(`https://dev.anidiots.guide/greetings/anime_goodbye/?bot=${member.user.bot}&avatar=${member.user.displayAvatarURL({ format: "png", size: 128 })}&usertag=${encodeURIComponent(member.user.tag)}`).set("Authorization", process.env.IDIOTAPI);
-      member.guild.channels.find("name", settings.welcomeChannel).send({ files: [{ attachment: Buffer.from(body.data), name: "goodbye.jpg" }] }).catch(console.error);
+      member.guild.channels.find("name", settings.welcomeChannel).send({ files: [{ attachment: Buffer.from(body.data), name: "goodbye.png" }] }).catch(console.error);
     }
 
 

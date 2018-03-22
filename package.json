@@ -32,9 +32,9 @@
     "fs-nextra": "^0.3.2",
     "heapdump": "^0.3.9",
     "html-entities": "^1.2.1",
-    "idiotic-api": "^0.1.9",
+    "idiotic-api": "^0.2.2",
     "inquirer": "^5.1.0",
-    "kitsu": "^5.0.6",
+    "kitsu": "^5.0.7",
     "klaw": "^2.1.1",
     "moment": "^2.21.0",
     "moment-duration-format": "^2.2.2",
@@ -44,6 +44,6 @@
     "snekfetch": "^3.6.4"
   },
   "devDependencies": {
-    "eslint": "^4.18.2"
+    "eslint": "^4.19.1"
   }
 }
