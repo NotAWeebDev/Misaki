@@ -43,7 +43,7 @@ class MisakiConsole extends Console {
   }
 
   static parseData(data) {
-    if (Array.isArray(data)) return data.join("\n");
+    if (Array.isArray(data)) return data.map(MisakiConsole.parseData).join("\n");
     if (typeof data === "object" && data !== null) return inspect(data, { depth: 0, colors: true });
     if (data && data.constructor === Error) return data.stack || data.message || String(data);
     return String(data);
