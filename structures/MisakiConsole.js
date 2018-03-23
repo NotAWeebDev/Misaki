@@ -3,12 +3,10 @@ const moment = require("moment");
 const { inspect } = require("util");
 
 class MisakiConsole extends Console {
-  constructor(client, options = {}) {
-    super(options.stdout || process.stdout, options.stderr || process.stderr);
+  constructor(client) {
+    super(process.stdout, process.stderr);
 
     Object.defineProperty(this, "client", { value: client });
-    Object.defineProperty(this, "stdout", { value: options.stdout });
-    Object.defineProperty(this, "stderr", { value: options.stderr });
 
     this.template = options.timestamp || "YYYY-MM-DD HH:mm:ss";
   }
