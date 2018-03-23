@@ -8,7 +8,7 @@ class MisakiConsole extends Console {
 
     Object.defineProperty(this, "client", { value: client });
 
-    this.template = options.timestamp || "YYYY-MM-DD HH:mm:ss";
+    this.template = "YYYY-MM-DD HH:mm:ss";
   }
 
   get timestamp() {
