@@ -32,7 +32,7 @@
     "fs-nextra": "^0.3.2",
     "heapdump": "^0.3.9",
     "html-entities": "^1.2.1",
-    "idiotic-api": "^0.2.2",
+    "idiotic-api": "^0.2.3",
     "inquirer": "^5.1.0",
     "kitsu": "^5.0.7",
     "klaw": "^2.1.1",
