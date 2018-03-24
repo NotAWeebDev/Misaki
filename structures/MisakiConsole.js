@@ -19,9 +19,8 @@ class MisakiConsole extends Console {
     type = type.toLowerCase();
     data = MisakiConsole.parseData(data);
     const { time, message } = MisakiConsole.COLORS[type];
-    const timestamp = `${time.opening}[${this.timestamp}]${time.closing}`;
-    const messageStr = str => `${message.opening}${str}${message.closing}`;
-    super[MisakiConsole.TYPES[type] || "log"](data.split("\n").map(str => `${timestamp} ${messageStr(str)}`).join("\n"));
+    const timestamp = time(`[${this.timestamp}]`);
+    super[MisakiConsole.TYPES[type] || "log"](data.split("\n").map(str => `${timestamp} ${message(str)}`).join("\n"));
   }
 
   log(...data) {
@@ -57,20 +56,20 @@ MisakiConsole.TYPES = {
 
 MisakiConsole.COLORS = { 
   debug: {
-    time: { opening: "\u001b[45m", closing: "\u001b[49m" },
-    message: { opening: "\u001b[m", closing: "\u001b[m" } 
+    time: (str) => `\u001b[45m${str}\u001b[49m`,
+    message: (str) => `\u001b[m${str}\u001b[m` 
   },
   error: { 
-    time: { opening: "\u001b[41m", closing: "\u001b[49m" },
-    message: { opening: "\u001b[m", closing: "\u001b[m" } 
+    time: (str) => `\u001b[41m${str}\u001b[49m`,
+    message: (str) => `\u001b[m${str}\u001b[m` 
   },
   log: {
-    time: { opening: "\u001b[44m", closing: "\u001b[49m" },
-    message: { opening: "\u001b[m", closing: "\u001b[m" }
+    time: (str) => `\u001b[44m${str}\u001b[49m`,
+    message: (str) => `\u001b[m${str}\u001b[m`
   },
   warn: { 
-    time: { opening: "\u001b[103;30m", closing: "\u001b[49;39m" },
-    message: { opening: "\u001b[m", closing: "\u001b[m" }
+    time: (str) => `\u001b[103;30m${str}\u001b[49;39m`,
+    message: (str) => `\u001b[m${str}\u001b[m`
   }
 };
 
