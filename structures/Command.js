@@ -52,18 +52,6 @@ class Command {
       });
   }
 
-  makeTitles(data) {
-    const arr = [];
-    for (let i = 0; i < 5; i++) arr.push(`\n${i + 1}: ${this.makeTitle(i, data)}`);
-    return arr.join(" ");
-  }
-
-  makeTitle(index, data) {
-    const line1 = data[index].titles.en_jp ? data[index].titles.en_jp : "";
-    const line2 = data[index].titles.en ? `/${data[index].titles.en}` : "";
-    return `${line1}${line2}`;
-  }
-
   async verifyUser(message, user, options = {}) {
     let member;
     const idMatch = /(?:<@!?)?([0-9]{17,20})>?/gi.exec(user);
@@ -79,7 +67,7 @@ class Command {
     return message.guild.members.fetch(user);
   }
 
-  async verifyMessage(message, msgid, options = {}) {
+  verifyMessage(message, msgid, options = {}) {
     const match = /([0-9]{17,20})/.exec(msgid);
     if (!match) throw new this.client.methods.errors.ParseError("Invalid Message ID.", options.msg);
     const id = match[1];
