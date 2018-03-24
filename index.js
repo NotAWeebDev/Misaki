@@ -1,5 +1,5 @@
 require("dotenv").config();
-require("./modules/Prototypes.js");
+require("./util/Prototypes.js");
 require("./extenders/Message.js");
 require("./extenders/GuildMember.js");
 require("./extenders/Guild.js");

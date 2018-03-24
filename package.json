@@ -30,7 +30,7 @@
     "fortnite": "^3.0.0",
     "fs-nextra": "^0.3.2",
     "html-entities": "^1.2.1",
-    "idiotic-api": "^0.2.0",
+    "idiotic-api": "^0.2.3",
     "kitsu": "^5.0.7",
     "moment": "^2.21.0",
     "moment-duration-format": "^2.2.2",
@@ -43,6 +43,6 @@
     "snekfetch": "^3.6.4"
   },
   "devDependencies": {
-    "eslint": "^4.19.0"
+    "eslint": "^4.19.1"
   }
 }
