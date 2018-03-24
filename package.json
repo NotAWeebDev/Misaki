@@ -38,7 +38,7 @@
     "overwatch-js": "^1.6.1",
     "pg": "^7.4.1",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^4.37.3",
+    "sequelize": "^4.37.4",
     "slot-machine": "^2.1.0",
     "snekfetch": "^3.6.4"
   },

@@ -2,8 +2,8 @@ const { Client, Collection, MessageEmbed, MessageAttachment } = require("discord
 const CommandStore = require("./CommandStore.js");
 const EventStore = require("./EventStore.js");
 const MisakiConsole = require("./MisakiConsole");
-const Enmap = require("enmap");
-const EnmapLevel = require("enmap-level");
+/* const Enmap = require("enmap");
+const EnmapLevel = require("enmap-level"); */
 const idioticApi = require("idiotic-api");
 const Database = require("./Database");
 
@@ -19,7 +19,7 @@ class MisakiClient extends Client {
     this.events = new EventStore(this);
     this.upvoters = [];
     this.levelCache = {};
-    this.database = Database.db;
+    this.database = new Database(this);
     this.methods = {
       Embed: MessageEmbed,
       Attachment: MessageAttachment,
@@ -28,13 +28,18 @@ class MisakiClient extends Client {
       errors: require("../util/CustomError")
     };
 
-    // Enmap
-    // this.settings = new Enmap({ provider: new EnmapLevel({ name: "settings" }) });
-    this.settings = require("../models/settings");
+    /*     // Enmap
+    this.settings = new Enmap({ provider: new EnmapLevel({ name: "settings" }) });
     this.reminders = new Enmap({ provider: new EnmapLevel({ name: "reminders" }) });
     this.points = new Enmap({ provider: new EnmapLevel({ name: "points" }) });
     this.store = new Enmap({ provider: new EnmapLevel({ name: "shop" }) });
-    this.inventory = new Enmap({ provider: new EnmapLevel({ name: "inventory" }) });
+    this.inventory = new Enmap({ provider: new EnmapLevel({ name: "inventory" }) }); */
+
+    this.settings = this.database.settings;
+    this.reminders = this.database.reminders;
+    this.points = this.database.points;
+    this.store = this.database.store;
+    this.inventory = this.database.inventory;
 
     this.ready = false;
     this.on("ready", this._ready.bind(this));
@@ -46,7 +51,7 @@ class MisakiClient extends Client {
   }
 
   _ready() {
-    Database.start();
+    this.database._ready();
     this.ready = true;
     this.emit("misakiReady");
   }
@@ -67,8 +72,8 @@ class MisakiClient extends Client {
     return permlvl;
   }
 
-  async getSettings(id) {
-    return await this.settings.findOrCreate({ where: { id } });
+  getSettings(id) {
+    return this.settings.findOrCreate({ where: { id } });
   }
 
   writeSettings(id, newSettings) {
