@@ -20,14 +20,14 @@ const machine = new SlotMachine(3, [cherry, lemon, watermelon, apple, grape, ora
 
 class Slots extends Social {
   constructor(client) {!
-    super(client, {
-      name: "slots",
-      description: "Try your luck with the slots.",
-      category: "Fun",
-      usage: "slots",
-      cost: 10,
-      cooldown: 5,
-    });
+  super(client, {
+    name: "slots",
+    description: "Try your luck with the slots.",
+    category: "Fun",
+    usage: "slots",
+    cost: 10,
+    cooldown: 5,
+  });
   }
   
   async run(message, args, level) { // eslint-disable-line no-unused-vars
