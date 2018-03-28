@@ -1,7 +1,7 @@
 const Command = require(`${process.cwd()}/base/Command.js`);
 const { version } = require(`${process.cwd()}/package.json`);
 const moment = require("moment");
-const snekfetch = require("snekfetch");
+const { get } = require("snekfetch");
 
 class Social extends Command {
 
@@ -29,8 +29,8 @@ class Social extends Command {
     let pointsReward = parseInt(settings.pointsReward);
     const score = message.member.score;
     try {
-      const upvoter = this.client.upvoters;
-      if (upvoter.includes(message.author.id)) pointsReward += 750;
+      const { body } = await get(`https://discordbots.org/api/bots/${this.client.user.id}/check?userId=${message.author.id}`).set("Authorization", process.env.DBLTOKEN);
+      if (Boolean(body.voted)) pointsReward += 750; // eslint-disable-line no-extra-boolean-cast
       if (Date.now() > score.daily) {
         const msg = await message.channel.send(`${this.client.responses.dailySuccessMessages.random().replaceAll("{{user}}", message.member.displayName).replaceAll("{{amount}}", `₲${pointsReward.toLocaleString()}`)}`);
         score.daily = msg.createdTimestamp + (dailyTime * 60 * 60 * 1000);
@@ -117,7 +117,7 @@ class Social extends Command {
   }
 
   async cmdWeeb(type, imgType, nsfw = false) {
-    const { body } = await snekfetch.get(`https://api.weeb.sh/images/random?type=${type}&filetype=${imgType}&nsfw=${nsfw}`)
+    const { body } = await get(`https://api.weeb.sh/images/random?type=${type}&filetype=${imgType}&nsfw=${nsfw}`)
       .set("Authorization", `Wolke ${process.env.WEEBSH}`)
       .set("User-Agent", `Misaki/${version}/${this.client.user.id === "396323622953680910" ? "Production" : "Development"}`);
     return body.url;
