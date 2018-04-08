@@ -24,8 +24,7 @@ class Cat extends Social {
       }
 
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a cat...`);
-      const { body } = await snekfetch.get("https://nekos.life/api/v2/img/meow")
-        .set("User-Agent", `Misaki/${version}/${this.client.user.id === "396323622953680910" ? "Production" : "Development"}`);
+      const { body } = await snekfetch.get("https://nekos.life/api/v2/img/meow");
       await msg.edit({
         embed: {
           "title": "Click here if the image failed to load.",
