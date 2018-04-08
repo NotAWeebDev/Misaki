@@ -1,6 +1,7 @@
 const Social = require(`${process.cwd()}/base/Social.js`);
 const snekfetch = require("snekfetch");
 const { version } = require(`${process.cwd()}/package.json`);
+
 class Cat extends Social {
   constructor(client) {
     super(client, {
@@ -23,9 +24,7 @@ class Cat extends Social {
       }
 
       const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a cat...`);
-      const { body } = await snekfetch.get("https://api.weeb.sh/images/random?type=animal_cat")
-        .set("Authorization", `Wolke ${process.env.WEEBSH}`)
-        .set("User-Agent", `Misaki/${version}/${this.client.user.id === "396323622953680910" ? "Production" : "Development"}`);
+      const { body } = await snekfetch.get("https://nekos.life/api/v2/img/meow");
       await msg.edit({
         embed: {
           "title": "Click here if the image failed to load.",
