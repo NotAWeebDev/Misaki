@@ -14,6 +14,12 @@ class Database {
       dialect: "postgres",
       logging: false
     });
+
+    this.inventory = this.db.define("inventory", this.inventorySchema);
+    this.reminders = this.db.define("reminders", this.remindersSchema);
+    this.store = this.db.define("store", this.storeSchema);
+    this.settings = this.db.define("settings", this.settingsSchema);
+    this.points = this.db.define("points", this.pointsSchema);
   }
 
   _ready() {
@@ -29,8 +35,8 @@ class Database {
       });
   }
 
-  get inventory() {
-    return this.db.define("inventory", {
+  get inventorySchema() {
+    return {
       id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
@@ -53,11 +59,11 @@ class Database {
         defaultValue: 0,
         allowNull: false
       }
-    });
+    };
   }
 
-  get reminders() {
-    return this.db.define("reminders", {
+  get remindersSchema() {
+    return {
       id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
@@ -77,11 +83,11 @@ class Database {
         type: Sequelize.STRING,
         allowNull: false
       }
-    });
+    };
   }
 
-  get store() {
-    return this.db.define("store", {
+  get storeSchema() {
+    return {
       id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
@@ -102,11 +108,11 @@ class Database {
         type: Sequelize.STRING,
         allowNull: false
       }
-    });
+    };
   }
 
-  get settings() {
-    return this.db.define("settings", {
+  get settingsSchema() {
+    return {
       id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
@@ -209,11 +215,11 @@ class Database {
         defaultValue: 100,
         allowNull: false
       }
-    });
+    };
   }
 
-  get points() {
-    return this.db.define("economy", {
+  get pointsSchema() {
+    return {
       id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
@@ -241,7 +247,7 @@ class Database {
         primaryKey: true,
         allowNull: false,
       }
-    });
+    };
   }
 
 }
