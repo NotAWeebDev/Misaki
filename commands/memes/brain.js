@@ -35,7 +35,7 @@ class Brain extends Meme {
         }
       });
     } catch (error) {
-      console.log(error);
+      this.client.logger.error(error);
     }
   }
 }

@@ -30,7 +30,6 @@ class Tinder extends Social {
       await msg.delete();
     } catch (error) {
       msg.edit("Something went wrong, please try again later");
-      console.log(error);
       this.client.logger.error(error);
     }
   }

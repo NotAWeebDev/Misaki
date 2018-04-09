@@ -50,7 +50,7 @@ class Leaderboard extends Social {
       leaderboard.push(`${posTxt} ❯ ${message.author.tag}${" ".repeat(30 - message.author.tag.length)}::  ${this.client.points.get(`${message.guild.id}-${message.author.id}`).points.toLocaleString()}`);
       await message.channel.send(`**__${message.guild.name}__**'s Leaderboard (Page **${page+1}** out of **${totalPages || 1}**)\n\`\`\`${leaderboard.join("\n")}\`\`\``);
     } catch (error) {
-      console.log(error);
+      this.client.logger.error(error);
     }
   }
 }

@@ -38,7 +38,6 @@ class Reddit extends Social {
       msg.delete();
     } catch (error) {
       msg.edit(`Something went wrong, incorrect usage prehaps? \`${this.help.usage}\``);
-      console.log(error);
       this.client.logger.error(error);
     }
   }

@@ -25,7 +25,7 @@ class Upvote extends Social {
       message.member.roles.add(upvoterRole)
         .then(() => message.reply("You have been awarded the `Updooter` role, thank you for your support.\nDon't forget to revote next month!"))
         .catch((error) => {
-          console.log(error);
+          this.client.logger.error(error);
           message.channel.send("Something went wrong, please try again later.");
         });
     } else {

@@ -19,7 +19,7 @@ class Daily extends Social {
     try {
       await this.usrDay(message);
     } catch (error) {
-      throw error;
+      this.client.logger.error(error);
     }
   }
 }

@@ -37,7 +37,7 @@ class Manga extends Command {
       if (message.channel.permissionsFor(this.client.user).has("MANAGE_MESSAGES")) await returnMessage.delete();
       await msg.edit(`**Title JP:** ${data[index].titles.en_jp}\n**Title English:** ${data[index].titles.en}\n**Type:** ${data[index].subtype}\n**Start Date:** ${data[index].startDate}\n**End Date:** ${data[index].endDate || "in Progress"}\n**PopularityRank:** ${data[index].popularityRank}\n**Link:** <https://kitsu.io/manga/${data[index].id}>\n**Synopsis:** ${data[index].synopsis}`);
     } catch (error) {
-      console.log(error);
+      this.client.logger.error(error);
       if (error instanceof Collection) return message.reply("command canceled due timer");
       await msg.edit("I had a error while trying to fetch the data from Kitsu Sorry! did you spell the Manga name right?");
       await message.react("❓");
