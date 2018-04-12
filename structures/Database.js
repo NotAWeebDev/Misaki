@@ -15,11 +15,11 @@ class Database {
       logging: false
     });
 
-    this.inventory = this.db.define("inventory", this.inventorySchema);
-    this.reminders = this.db.define("reminders", this.remindersSchema);
-    this.store = this.db.define("store", this.storeSchema);
     this.settings = this.db.define("settings", this.settingsSchema);
     this.points = this.db.define("points", this.pointsSchema);
+    this.store = this.db.define("store", this.storeSchema);
+    this.inventory = this.db.define("inventory", this.inventorySchema);
+    this.reminders = this.db.define("reminders", this.remindersSchema);
   }
 
   _ready() {
@@ -33,82 +33,6 @@ class Database {
         this.client.console.log("[DATABASE]: Try reconnecting in 10 seconds...");
         setTimeout(() => this._ready(), 10000);
       });
-  }
-
-  get inventorySchema() {
-    return {
-      id: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
-        primaryKey: true,
-        allowNull: false,
-        unique: true
-      },
-      keys: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-        allowNull: false
-      },
-      crates: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-        allowNull: false
-      },
-      tokens: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-        allowNull: false
-      }
-    };
-  }
-
-  get remindersSchema() {
-    return {
-      id: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
-        primaryKey: true,
-        allowNull: false,
-        unique: true
-      },
-      guildid: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      reminder: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      reminderTimestamp: {
-        type: Sequelize.STRING,
-        allowNull: false
-      }
-    };
-  }
-
-  get storeSchema() {
-    return {
-      id: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
-        primaryKey: true,
-        allowNull: false,
-        unique: true
-      },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      price: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-        allowNull: false
-      },
-      guildId: {
-        type: Sequelize.STRING,
-        allowNull: false
-      }
-    };
   }
 
   get settingsSchema() {
@@ -249,6 +173,83 @@ class Database {
       }
     };
   }
+
+  get storeSchema() {
+    return {
+      id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
+        allowNull: false,
+        unique: true
+      },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      price: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false
+      },
+      guildId: {
+        type: Sequelize.STRING,
+        allowNull: false
+      }
+    };
+  }
+
+  get inventorySchema() {
+    return {
+      id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
+        allowNull: false,
+        unique: true
+      },
+      keys: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false
+      },
+      crates: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false
+      },
+      tokens: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false
+      }
+    };
+  }
+
+  get remindersSchema() {
+    return {
+      id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
+        allowNull: false,
+        unique: true
+      },
+      guildid: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      reminder: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      reminderTimestamp: {
+        type: Sequelize.STRING,
+        allowNull: false
+      }
+    };
+  }
+
 
 }
 
