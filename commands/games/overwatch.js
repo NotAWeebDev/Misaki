@@ -1,4 +1,5 @@
 const Command = require("../../structures/Command.js");
+const { MessageEmbed } = require("discord.js");
 const owjs = require("overwatch-js");
 const locationArray = ["us", "eu", "kr", "cn", "global"];
 const platformArray = ["pc", "xbl", "psn", "xbox"];
@@ -25,7 +26,7 @@ class Overwatch extends Command {
       return null;
     });
     if (!data) message.response("❗", "Sorry, but something wen't wrong.. try again :<");
-    const embed = new this.client.methods.Embed()
+    const embed = new MessageEmbed()
       .setTitle(`${data.profile.nick} Lvl ${data.profile.level} on ${platform}`)
       .setURL(data.profile.url)
       .setThumbnail(data.profile.avatar)

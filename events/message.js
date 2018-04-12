@@ -1,7 +1,7 @@
 const Event = require("../structures/Event.js");
 const monitor = require("../monitors/monitor.js");
 const Social = require("../structures/Social.js");
-const { Permissions } = require("discord.js");
+const { Permissions, Collection } = require("discord.js");
 const moment = require("moment");
 require("moment-duration-format");
 
@@ -26,7 +26,7 @@ module.exports = class extends Event {
       return obj;
     }, {});
 
-    this.ratelimits = new this.client.methods.Collection();
+    this.ratelimits = new Collection();
   }
 
   async run(message) {

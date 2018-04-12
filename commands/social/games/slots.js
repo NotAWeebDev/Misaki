@@ -1,4 +1,5 @@
 const Social = require("../../../structures/Social.js");
+const { MessageEmbed } = require("discord.js");
 
 const { SlotMachine, SlotSymbol } = require("slot-machine");
 
@@ -36,7 +37,7 @@ class Slots extends Social {
     await message.member.takeItem("tokens", 1);
     const results = machine.play();
     const winnings = this.help.cost * results.totalPoints;
-    const embed = new this.client.methods.Embed()
+    const embed = new MessageEmbed()
       .setColor(message.guild.me.roles.highest.color || 5198940)
       .setAuthor("Misaki Slots")
       .setDescription(`${results.visualize(false)}\n\n${results.winCount === 0 ? `${message.member.displayName} has lost!\nBetter luck next time!` : `Whoa... ${message.member.displayName} won!`}\n\n${results.winCount === 0 ? "" : `You have won ₲${winnings.toLocaleString()}`}`)

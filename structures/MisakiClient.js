@@ -1,4 +1,4 @@
-const { Client, Collection, MessageEmbed, MessageAttachment } = require("discord.js");
+const { Client } = require("discord.js");
 const CommandStore = require("./CommandStore.js");
 const EventStore = require("./EventStore.js");
 const MisakiConsole = require("./MisakiConsole");
@@ -21,9 +21,6 @@ class MisakiClient extends Client {
     this.levelCache = {};
     this.database = new Database(this);
     this.methods = {
-      Embed: MessageEmbed,
-      Attachment: MessageAttachment,
-      Collection,
       util: require("../util/util.js"),
       errors: require("../util/CustomError")
     };

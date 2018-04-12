@@ -1,5 +1,6 @@
 const Command = require("../../structures/Command.js");
 const FortniteAPI = require("fortnite");
+const { MessageEmbed } = require("discord.js");
 
 class Fortnite extends Command {
   constructor(...args) {
@@ -23,7 +24,7 @@ class Fortnite extends Command {
     try {
       const data = await this.fortnite.getInfo(args.splice(1).join(" "), args[0]);
 
-      const embed = new this.client.methods.Embed()
+      const embed = new MessageEmbed()
         .setTitle(`${data.username}, on ${data.platformNameLong}`)
         .setURL(`https://partybus.gg/player/${data.username}`)
         .addField("Squads", `**Top 6 :** ${data.lifetimeStats[3].value}\n**Top 3 :** ${data.lifetimeStats[2].value}\n**Wins:** ${data.stats.p9.top1.value}\n**KD:** ${data.stats.p9.kd.value}\n**Matches Played:** ${data.stats.p9.matches.value}\n**Kills:** ${data.stats.p9.kills.value}\n**Kills Per Game:** ${data.stats.p9.kpg.value}`, true)

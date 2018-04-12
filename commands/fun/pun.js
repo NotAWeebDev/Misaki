@@ -1,5 +1,6 @@
 const Social = require("../../structures/Social.js");
 const { get } = require("snekfetch");
+const { MessageEmbed } = require("discord.js");
 
 class PunJoke extends Social {
   constructor(...args) {
@@ -16,7 +17,7 @@ class PunJoke extends Social {
 
   async run(message, args, level, loadingMessage) {
     const { text } = await get("https://getpuns.herokuapp.com/api/random");
-    const embed = new this.client.methods.Embed()
+    const embed = new MessageEmbed()
       .setThumbnail("https://cdn.discordapp.com/emojis/257279894885498890.png")
       .setDescription(`_${JSON.parse(text).Pun}_`)
       .setColor(message.guild.me.roles.highest.color || 5198940);
