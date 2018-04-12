@@ -15,11 +15,11 @@ class Database {
       logging: false
     });
 
-    this.settings = this.db.define("settings", this.settingsSchema);
-    this.points = this.db.define("points", this.pointsSchema);
-    this.store = this.db.define("store", this.storeSchema);
     this.inventory = this.db.define("inventory", this.inventorySchema);
     this.reminders = this.db.define("reminders", this.remindersSchema);
+    this.store = this.db.define("store", this.storeSchema);
+    this.settings = this.db.define("settings", this.settingsSchema);
+    this.points = this.db.define("points", this.pointsSchema);
   }
 
   _ready() {
@@ -35,11 +35,86 @@ class Database {
       });
   }
 
-  get settingsSchema() {
+  get inventorySchema() {
     return {
       id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
+        allowNull: false,
+        unique: true
+      },
+      keys: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false
+      },
+      crates: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false
+      },
+      tokens: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false
+      }
+    };
+  }
+
+  get remindersSchema() {
+    return {
+      id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
+        allowNull: false,
+        unique: true
+      },
+      guildid: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      reminder: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      reminderTimestamp: {
+        type: Sequelize.STRING,
+        allowNull: false
+      }
+    };
+  }
+
+  get storeSchema() {
+    return {
+      id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
+        allowNull: false,
+        unique: true
+      },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      price: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false
+      },
+      guildId: {
+        type: Sequelize.STRING,
+        allowNull: false
+      }
+    };
+  }
+
+  get settingsSchema() {
+    return {
+      id: {
+        type: Sequelize.STRING,
         primaryKey: true,
         allowNull: false,
         unique: true
@@ -152,7 +227,7 @@ class Database {
         unique: true
       },
       points: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,
       },
@@ -173,83 +248,6 @@ class Database {
       }
     };
   }
-
-  get storeSchema() {
-    return {
-      id: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
-        primaryKey: true,
-        allowNull: false,
-        unique: true
-      },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      price: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-        allowNull: false
-      },
-      guildId: {
-        type: Sequelize.STRING,
-        allowNull: false
-      }
-    };
-  }
-
-  get inventorySchema() {
-    return {
-      id: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
-        primaryKey: true,
-        allowNull: false,
-        unique: true
-      },
-      keys: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-        allowNull: false
-      },
-      crates: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-        allowNull: false
-      },
-      tokens: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-        allowNull: false
-      }
-    };
-  }
-
-  get remindersSchema() {
-    return {
-      id: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
-        primaryKey: true,
-        allowNull: false,
-        unique: true
-      },
-      guildid: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      reminder: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      reminderTimestamp: {
-        type: Sequelize.STRING,
-        allowNull: false
-      }
-    };
-  }
-
 
 }
 

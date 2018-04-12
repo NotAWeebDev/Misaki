@@ -5,8 +5,6 @@ module.exports = Structures.extend("Message", Message => class extends Message {
   constructor(...args) {
     super(...args);
 
-    this.settings = this.guild ? this.client.getSettings(this.guild.id) : this.client.settings.get("default");
-
     this.flags = [];
   }
 

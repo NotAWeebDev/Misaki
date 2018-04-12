@@ -72,8 +72,9 @@ class MisakiClient extends Client {
     return permlvl;
   }
 
-  getSettings(id) {
-    return this.settings.findOrCreate({ where: { id } });
+  async getSettings(id) {
+    const [config] = await this.settings.findOrCreate({ where: { id } });
+    return config.dataValues;
   }
 
   writeSettings(id, newSettings) {

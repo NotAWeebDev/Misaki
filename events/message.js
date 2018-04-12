@@ -33,6 +33,7 @@ module.exports = class extends Event {
     if (message.author.bot) return;
     if (message.guild && !message.guild.me) await message.guild.members.fetch(this.client.user);
     if (message.guild && !message.channel.postable) return;
+    message.settings = await this.client.getSettings(message.guild.id);
     if (message.content === this.client.user.toString() || (message.guild && message.content === message.guild.me.toString())) {
       return message.channel.send(`The prefix is \`${message.settings.prefix}\`.`);
     }
