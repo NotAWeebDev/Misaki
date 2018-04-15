@@ -8,7 +8,7 @@ module.exports = class {
   async run(member) {
     const guild = member.guild;
     if (!member || !member.id || !guild) return;
-    const settings = this.client.getSettings(guild.id);
+    const settings = this.client.getGuildSettings(guild);
     
     if (!member.user.bot) this.client.points.set(`${guild.id}-${member.id}`, { points: 0, level:0, user: member.id, guild: guild.id, daily: 1504120109 });
 

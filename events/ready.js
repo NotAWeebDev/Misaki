@@ -7,11 +7,6 @@ module.exports = class {
 
     await this.client.wait(1000);
 
-    if (!this.client.settings.has("default")) {
-      if (!this.client.config.defaultSettings) throw new Error("defaultSettings not preset in config.js or settings database. Bot cannot load.");
-      this.client.settings.set("default", this.client.config.defaultSettings);
-    }
-    
     setInterval(() => {
       const toRemind = this.client.reminders.filter(r => r.reminderTimestamp <= Date.now());
       toRemind.forEach(reminder => {

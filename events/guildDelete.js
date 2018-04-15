@@ -7,8 +7,10 @@ module.exports = class {
 
     this.client.user.setActivity(`@${this.client.user.username} help | ${this.client.guilds.size} Server${this.client.guilds.size > 1 ? "s" : ""}`);
     
-    this.client.settings.delete(guild.id);
-    
+    if (this.client.settings.has(guild.id)) {
+      this.client.settings.delete(guild.id);
+    }
+
     this.client.reminders.findAll("guildid", guild.id).forEach((i) => {
       if (guild.id === i.guildid) this.client.reminders.delete(`${i.id}-${i.reminderTimestamp}`);
     });
