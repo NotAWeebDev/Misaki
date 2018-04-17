@@ -356,7 +356,7 @@ class PaginationEmbed extends MessageEmbed {
   async _awaitResponseEx(user) {
     const cancel = ["0", "cancel"];
     const filter = m => {
-      const supposedPage = parseInt(m.content);
+      const supposedPage = Number(m.content);
 
       return (
         m.author.id === user.id && (
@@ -378,7 +378,7 @@ class PaginationEmbed extends MessageEmbed {
 
       if (cancel.includes(content)) return this._awaitResponse();
 
-      this._loadPage(parseInt(content));
+      this._loadPage(Number(content));
     } catch (c) {
       await prompt.delete();
 

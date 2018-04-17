@@ -60,7 +60,7 @@ class Help extends Command {
         });
       const isPage = type && !isNaN(type);
       const isDefault = !type || isPage;
-      page = isPage ? parseInt(type) : page ? parseInt(page) : 1;
+      page = isPage ? Number(type) : page ? Number(page) : 1;
       embed = new PaginationEmbed(embedPreset)
         .setAuthorisedUser(message.author)
         .setChannel(message.channel)

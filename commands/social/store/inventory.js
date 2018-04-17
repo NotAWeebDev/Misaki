@@ -23,16 +23,16 @@ class Item extends Social {
         case "give":
           if (level < 2) return message.response(undefined, "B...Baka! You are too low level to add items to inventories");
           if (_member.inventory[name] === undefined) return message.response(undefined, `Invalid item ${name}`);
-          if (isNaN(parseInt(amount))) return message.response(undefined, `B...Baka! ${amount} isn't even a number!`);
-          if (parseInt(amount) < 1) return message.response(undefined, "B...Baka! You can't give them nothing!");
+          if (isNaN(Number(amount))) return message.response(undefined, `B...Baka! ${amount} isn't even a number!`);
+          if (Number(amount) < 1) return message.response(undefined, "B...Baka! You can't give them nothing!");
           _member.giveItem(name, amount);
           message.channel.send(`Successfully gave ${_member.displayName} ${amount} ${name}, enjoy!`);
           break;
         case ("take"):
           if (level < 2) return message.response(undefined, "B...Baka! You are too low level to take items from inventories");
           if (_member.inventory[name] === undefined) return message.response(undefined, `Invalid item ${name}`);
-          if (isNaN(parseInt(amount))) return message.response(undefined, `B...Baka! ${amount} isn't even a number!`);
-          if (parseInt(amount) < 1) return message.response(undefined, "B...Baka! You can't take nothing from them!");
+          if (isNaN(Number(amount))) return message.response(undefined, `B...Baka! ${amount} isn't even a number!`);
+          if (Number(amount) < 1) return message.response(undefined, "B...Baka! You can't take nothing from them!");
           _member.takeItem(name, amount);
           message.channel.send(`Successfully took ${amount} ${name} from ${_member.displayName}, enjoy!`);
           break;

@@ -18,8 +18,8 @@ class Social extends Command {
 
   async usrDay(message) {
     const settings = this.client.getSettings(message.guild.id);
-    const dailyTime = parseInt(settings.dailyTime);
-    let pointsReward = parseInt(settings.pointsReward);
+    const dailyTime = Number(settings.dailyTime);
+    let pointsReward = Number(settings.pointsReward);
     const upvoter = this.client.upvoters;
     if (upvoter.includes(message.author.id)) pointsReward += 750;
     if (Date.now() > message.member.score.daily) {
@@ -34,7 +34,7 @@ class Social extends Command {
   }
 
   async usrPay(message, payer, payee, amount) {
-    amount = parseInt(amount);
+    amount = Number(amount);
     const getPayee = await message.guild.members.fetch(payee);
     const getPayer = await message.guild.members.fetch(payer);
     const payerScore = getPayer.score;

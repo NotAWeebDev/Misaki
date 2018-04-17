@@ -21,7 +21,7 @@ class Leaderboard extends Social {
     const list = this.client.points.filter(p => p.guild === message.guild.id && message.guild.members.get(p.user) && p.points > 0);
 
     // page doing    
-    let page = parseInt(args[0]) ? parseInt(args[0]) : 1;
+    let page = Number(args[0]) ? Number(args[0]) : 1;
     const totalPages = Math.round(list.size / 10);
     if (totalPages === 0) return message.channel.send("There is no leaderboard in the server, maybe its a dead place???");
     page -= 1;

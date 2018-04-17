@@ -21,13 +21,13 @@ class Pay extends Social {
     if (bot) return message.response("❗", "Bot's cannot accumulate points or levels.");
     if (isNaN(args[1])) return message.response(undefined, "Not a valid amount");
 
-    if (parseInt(args[1]) > Number.MAX_SAFE_INTEGER) return message.response(undefined, "That number is to high");
+    if (Number(args[1]) > Number.MAX_SAFE_INTEGER) return message.response(undefined, "That number is to high");
       
     if (args[1] < 0) return message.response(undefined, "You cannot pay less than zero, whatcha trying to do? rob em?");
     else if (args[1] < 1) return message.response(undefined, "You paying 'em with air? boi don't make me slap you 👋");
     if (message.author.id === user.id) return message.response(undefined, "You cannot pay yourself, why did you even try it?");
 
-    await this.usrPay(message, message.author.id, user, parseInt(args[1]));
+    await this.usrPay(message, message.author.id, user, Number(args[1]));
   }
 }
 

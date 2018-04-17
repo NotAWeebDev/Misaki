@@ -10,7 +10,7 @@ module.exports = class extends Event {
 
     const settings = this.client.getSettings(member.guild.id);
     
-    if (settings.welcomeEnabled !== "true") return;
+    if (settings.welcomeEnabled) return;
     if (settings.welcomeType === "text") {
       const channel = member.guild.channels.find("name", settings.welcomeChannel);
       if (!channel) return;
