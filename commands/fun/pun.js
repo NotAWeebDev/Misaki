@@ -20,7 +20,7 @@ class PunJoke extends Social {
     const embed = new MessageEmbed()
       .setThumbnail("https://cdn.discordapp.com/emojis/257279894885498890.png")
       .setDescription(`_${JSON.parse(text).Pun}_`)
-      .setColor(message.guild.me.roles.highest.color || 5198940);
+      .setColor(message.guild ? message.guild.me.roles.highest.color : 5198940);
 
     await loadingMessage.edit({ embed });
   }

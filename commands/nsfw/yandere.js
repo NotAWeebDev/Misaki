@@ -40,7 +40,7 @@ class Yandere extends Social {
         "title": "Click here if the image failed to load.",
         "url": `http://yande.re/post/show/${result.id}`,
         "description": `Created by ${result.author}`,
-        "color": message.guild.me.roles.highest.color || 5198940,
+        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
         "image": {
           "url": result.file_url
         },

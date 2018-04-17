@@ -1,7 +1,7 @@
-const Social = require("../../structures/Social.js");
+const NSFW = require("../../structures/NSFW.js");
 const { get } = require("snekfetch");
 
-class Danbooru extends Social {
+class Danbooru extends NSFW {
   constructor(...args) {
     super(...args, {
       name: "danbooru",
@@ -23,7 +23,6 @@ class Danbooru extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const blacklist = ["loli", "shota", "cub", "young", "child", "baby", "guro", "gore", "vore"];
     const tags = args.join("_");
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is checking out ${tags.length === 0 ? "something" : tags}...`);
     if (!message.channel.nsfw) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
@@ -33,14 +32,14 @@ class Danbooru extends Social {
     if (!result) return msg.edit(`Cannot find results for \`${tags}\`.`);
     const tagString = result.tag_string.split(" ");
     if (tagString.length !== 0) {
-      if (tagString.some(t => blacklist.includes(t.toLowerCase()))) return msg.edit(`${message.author} \`|📛|\` Blacklisted word found, aborting...`);
+      if (tagString.some(t => this.checkBlackList(t))) return msg.edit(`${message.author} \`|📛|\` Blacklisted word found, aborting...`);
     }
 
     await msg.edit({
       embed: {
         "title": "Click here if the image failed to load.",
         "url": `http://danbooru.donmai.us/post/show/${result.id}`,
-        "color": message.guild.me.roles.highest.color || 5198940,
+        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
         "image": {
           "url": `http://danbooru.donmai.us${result.file_url}`
         },

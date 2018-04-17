@@ -61,7 +61,7 @@ class Go extends Command {
       }
 
       const embed = new MessageEmbed()
-        .setColor(message.guild.me.roles.highest.color || 5198940)
+        .setColor(message.guild ? message.guild.me.roles.highest.color : 5198940)
         .setAuthor(`${message.author.username}`, `${message.author.displayAvatarURL()}`)
         .setThumbnail(`${message.author.displayAvatarURL()}`)
         .addField("Steam Profile", `${steamid !== undefined ? `[${message.author.username}](https://steamcommunity.com/id/${steamid})` : "Not provided"}`)

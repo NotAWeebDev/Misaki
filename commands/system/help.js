@@ -20,7 +20,7 @@ class Help extends Command {
     let embed;
     const embedPreset = {
       timestamp: new Date().getTime(),
-      color: message.guild.me.roles.highest.color || 5198940,
+      color: message.guild ? message.guild.me.roles.highest.color : 5198940,
       footer: {
         text: `Requested by ${message.author.tag}`,
         iconURL: message.author.avatarURL()

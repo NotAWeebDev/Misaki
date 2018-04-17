@@ -27,7 +27,7 @@ class Pat extends Social {
         "title": "Click here if the image failed to load.",
         "url": pat,
         "description": `**${target.first().displayName}**, you got pats from **${message.member.displayName}**`,
-        "color": message.guild.me.roles.highest.color || 5198940,
+        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
         "image": {
           "url": pat
         }

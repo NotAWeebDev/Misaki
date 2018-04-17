@@ -18,7 +18,7 @@ class Smug extends Social {
       embed: {
         "title": "Click here if the image failed to load.",
         "url": smug,
-        "color": message.guild.me.roles.highest.color || 5198940,
+        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
         "image": {
           "url": smug
         }
