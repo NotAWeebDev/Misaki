@@ -18,6 +18,7 @@ class Trivia extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
+    if (!message.settings.socialSystem) return message.response(undefined, "The social system has been disabled.");
     const { body } = await get("https://opentdb.com/api.php?amount=50&difficulty=medium&type=multiple"); // Grab the questions.
     const quiz = body.results.random(); // Get a random trivia question from a larger selection.
     const choices = quiz.incorrect_answers.map(answ => h.decode(answ)); // Insert all the incorrect answers to the choices array.

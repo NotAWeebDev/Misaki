@@ -1,9 +1,11 @@
 const Command = require("../../structures/Command.js");
-const timeRegex = /(?:^| )(?:in ?)?(((?:\d{1,2}(?:\.\d|\d)?)|a) ?((?:m(?:in(?:ute)?)?|h(?:our)?|d(?:ay)?|w(?:eek)?|m(?:onth)?|y(?:ear)?)s?))\b/gi;
-const inputRegex = /(?:me ?)?(?:to ?)?(.*)/gi;
-const aSomethingRegex = /\ba ?((?:m(?:in(?:ute)?)?|h(?:our)?|d(?:ay)?|w(?:eek)?|m(?:onth)?|y(?:ear)?)s?)\b/g;
-const ms = require("ms");
-const moment = require("moment");
+/**
+ const timeRegex = /(?:^| )(?:in ?)?(((?:\d{1,2}(?:\.\d|\d)?)|a) ?((?:m(?:in(?:ute)?)?|h(?:our)?|d(?:ay)?|w(?:eek)?|m(?:onth)?|y(?:ear)?)s?))\b/gi;
+ const inputRegex = /(?:me ?)?(?:to ?)?(.*)/gi;
+ const aSomethingRegex = /\ba ?((?:m(?:in(?:ute)?)?|h(?:our)?|d(?:ay)?|w(?:eek)?|m(?:onth)?|y(?:ear)?)s?)\b/g;
+ const ms = require("ms");
+ const moment = require("moment");
+*/
 
 class Reminder extends Command {
   constructor(...args) {
@@ -17,7 +19,9 @@ class Reminder extends Command {
     });
   }
 
-  async run(message, [...text]) {
+  async run(message, [...text]) { // eslint-disable-line no-unused-vars
+    return message.reply("Command Disabled.");
+    /*
     if (!text.length) {
       const reminders = message.member.reminders;
       if (!reminders.length) return message.response(undefined, "You do not have any reminders set.");
@@ -36,17 +40,19 @@ class Reminder extends Command {
     });
 
     return message.channel.send(`I will remind you to \`${input}\`, ${time} from now.`);
+    */
   }
-
-  regCheck(reminder) {
-    const remind = timeRegex.exec(reminder);
-    if (!remind) return null;
-    const time = remind[1].replace(/ ms?\b/, " min") //m => min
-      .replace(aSomethingRegex, "1 $1").trim(); // a "something" => 1 "something"
-    const input = inputRegex.exec(reminder)[1].replace(remind[0], "").trim();
-    if (!input.length) return null;
-    return [input, time];
-  }
+  /*
+    regCheck(reminder) {
+      const remind = timeRegex.exec(reminder);
+      if (!remind) return null;
+      const time = remind[1].replace(/ ms?\b/, " min") //m => min
+        .replace(aSomethingRegex, "1 $1").trim(); // a "something" => 1 "something"
+      const input = inputRegex.exec(reminder)[1].replace(remind[0], "").trim();
+      if (!input.length) return null;
+      return [input, time];
+    }
+  */
 }
 
 module.exports = Reminder;

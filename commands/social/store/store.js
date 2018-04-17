@@ -11,7 +11,7 @@ class Store extends Social {
   }
 
   async run(message, args, level) {
-    if (message.settings.socialSystem !== "true") return message.response(undefined, "The social system is disabled.");
+    if (!message.settings.socialSystem) return message.response(undefined, "The social system is disabled.");
 
     if (!args[0] && !message.flags.length) message.flags.push("view");
     if (!message.flags.length) return message.reply(`|\`❌\`| ${this.usage}`);

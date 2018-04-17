@@ -17,9 +17,8 @@ class Social extends Command {
   }
 
   async usrDay(message) {
-    const settings = this.client.getSettings(message.guild.id);
-    const dailyTime = Number(settings.dailyTime);
-    let pointsReward = Number(settings.pointsReward);
+    const dailyTime = Number(message.settings.dailyTime);
+    let pointsReward = Number(message.settings.pointsReward);
     const upvoter = this.client.upvoters;
     if (upvoter.includes(message.author.id)) pointsReward += 750;
     if (Date.now() > message.member.score.daily) {

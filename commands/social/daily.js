@@ -14,7 +14,7 @@ class Daily extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    if (message.settings.socialSystem !== "true") return message.response(undefined, "The social system is disabled.");
+    if (!message.settings.socialSystem) return message.response(undefined, "The social system is disabled.");
     return await this.usrDay(message);
   }
 }

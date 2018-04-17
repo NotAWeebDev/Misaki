@@ -13,7 +13,7 @@ class Pay extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    if (message.settings.socialSystem !== "true") return message.response(undefined, "The social system is disabled.");
+    if (!message.settings.socialSystem) return message.response(undefined, "The social system is disabled.");
 
     if (!args.length) return message.response(undefined, "B-baka, you need to mention someone to b-be able to pay them.");
     const [bot, user] = await this.verifySocialUser(message, args[0]);

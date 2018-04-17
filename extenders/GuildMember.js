@@ -12,9 +12,9 @@ module.exports = Structures.extend("GuildMember", GuildMember => class extends G
 
   async givePoints(points) {
     const { dataValues } = this.client.points.findById(this.fullId);
-    console.log(dataValues.points)
+    console.log(dataValues.points);
     dataValues.points += points;
-    console.log(dataValues.points)
+    console.log(dataValues.points);
     return await this.client.writePoints(this.fullId, dataValues);
   }
 
