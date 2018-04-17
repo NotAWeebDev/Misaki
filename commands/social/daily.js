@@ -19,6 +19,7 @@ class Daily extends Social {
     try {
       await this.usrDay(message);
     } catch (error) {
+      if (error.status === 502) message.channel.send(`My deepest apologes ${message.author}-san, but DBL is currently offline, please try again later.`);
       this.client.logger.error(error);
     }
   }
