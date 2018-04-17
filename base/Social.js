@@ -25,9 +25,8 @@ class Social extends Command {
 
 
   async usrDay(message) {
-    const settings = this.client.getSettings(message.guild.id);
-    const dailyTime = parseInt(settings.dailyTime);
-    let pointsReward = parseInt(settings.pointsReward);
+    const dailyTime = parseInt(message.settings.dailyTime);
+    let pointsReward = parseInt(message.settings.pointsReward);
     const score = message.member.score;
     const { body } = await get(`https://discordbots.org/api/bots/${this.client.user.id}/check?userId=${message.author.id}`).set("Authorization", process.env.DBLTOKEN);
         
