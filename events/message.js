@@ -44,7 +44,7 @@ module.exports = class extends Event {
     const userPermLevel = this.client.config.permLevels.find(perm => perm.level === level);
     message.author.permLevel = level;
 
-    if (message.settings.socialSystem === true && message.settings.chatEarningEnabled === true) monitor.run(this.client, message, level);
+    if (message.settings.socialSystem && message.settings.chatEarningEnabled) monitor.run(this.client, message, level);
 
     const prefix = new RegExp(`^<@!?${this.client.user.id}> |^${this.client.methods.util.regExpEsc(message.settings.prefix)}`).exec(message.content);
     if (!prefix) return;
@@ -61,7 +61,7 @@ module.exports = class extends Event {
     if (cmd.guildOnly && !message.guild) return message.channel.send("This command is unavailable via private message. Please run this command in a guild.");
 
     if (level < this.client.levelCache[cmd.permLevel]) {
-      if (message.settings.systemNotice !== "true") return;
+      if (!message.settings.systemNotice) return;
       return message.channel.send(`B-Baka! You're only level ${level}, a ${userPermLevel.name.toLowerCase()}, why should I listen to you instead of a ${cmd.permLevel} (level ${this.client.levelCache[cmd.permLevel]}).`);
     }
 
@@ -86,7 +86,7 @@ module.exports = class extends Event {
       if (cmd instanceof Social) {
         if (cmd.loadingString) msg = await message.channel.send(cmd.loadingString.replaceAll("{{displayName}}", message.member.displayName).replaceAll("{{me}}", message.guild.me.displayName).replaceAll("{{filterName}}", message.flags[0]));
         await cmd.cmdVerify(message, args, msg);
-        if (message.settings.socialSystem === "true") await cmd.cmdPay(message, message.author.id, cmd.cost, { msg });
+        if (message.settings.socialSystem) await cmd.cmdPay(message, message.author.id, cmd.cost, { msg });
       }
       const userPermLevel = this.client.config.permLevels.find(perm => perm.level === message.author.permLevel);
       this.client.console.log(`\u001b[43;30m[${userPermLevel.name}]\u001b[49;39m \u001b[44m${message.author.username} (${message.author.id})\u001b[49m ran command ${cmd.name}`);

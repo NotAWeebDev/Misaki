@@ -71,12 +71,13 @@ class MisakiClient extends Client {
     return result.dataValues;
   }
 
-  async getPoints(id) {
-    const [profile] = await this.points.findOrCreate({ where: { id } });
+  async getPoints(id, uid, gid) {
+    const [profile] = await this.points.findOrCreate({ where: { id }, defaults: { user: uid, guild: gid } });
     return profile.dataValues;
   }
 
   async writePoints(id, data) {
+    console.log(data);
     const profile = await this.points.findById(id);
     const result = await profile.update(data);
     return result.dataValues;

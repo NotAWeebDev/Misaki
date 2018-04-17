@@ -6,31 +6,16 @@ module.exports = Structures.extend("GuildMember", GuildMember => class extends G
     return `${this.guild.id}-${this.id}`;
   }
 
-  get reminders() {
-    return this.client.reminders.findAll("id", this.id) || null;
-  }
-
-  async score() {
-    return await this.client.getPoints(this.fullId) || { points: 0, level: 0, user: this.id, guild: this.guild.id, daily: Date.now() - 86400000 };
-  }
-
-  get inventory() {
-    return this.client.inventory.get(this.fullId) || { keys: 0, crates: 0, tokens: 0 };
-  }
-
-  giveItem(item, amount) {
-    this.inventory[item] += amount;
-    return this.client.inventory.set(this.fullId, this.inventory);
-  }
-
-  takeItem(item, amount) {
-    this.inventory[item] -= amount;
-    return this.client.inventory.set(this.fullId, this.inventory);
+  get score() {
+    return this.client.getPoints(this.fullId, this.id, this.guild.id);
   }
 
   async givePoints(points) {
-    this.score.points += points;
-    return await this.client.writePoints(this.fullId, this.score);
+    const { dataValues } = this.client.points.findById(this.fullId);
+    console.log(dataValues.points)
+    dataValues.points += points;
+    console.log(dataValues.points)
+    return await this.client.writePoints(this.fullId, dataValues);
   }
 
   takePoints(points) {

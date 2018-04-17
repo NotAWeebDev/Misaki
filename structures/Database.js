@@ -221,7 +221,6 @@ class Database {
     return {
       id: {
         type: Sequelize.STRING,
-        defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
         allowNull: false,
         unique: true
