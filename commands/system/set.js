@@ -19,10 +19,11 @@ class Set extends Command {
 
     if (action === "edit") {
       if (!key) return message.reply("Please specify a key to edit");
-      if (!message.settings[key]) return message.reply("This key does not exist in the settings");
+      if (!message.settings[key].toString()) return message.reply("This key does not exist in the settings");
       if (value.length < 1) return message.reply("Please specify a new value");
     
       const data = { [key]: value.join(" ") };
+      console.log(data);
       await this.client.writeSettings(message.guild.id, data);
       await message.reply(`${key} successfully edited to ${value.join(" ")}`);
     } else

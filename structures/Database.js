@@ -220,7 +220,7 @@ class Database {
   get pointsSchema() {
     return {
       id: {
-        type: Sequelize.UUID,
+        type: Sequelize.STRING,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
         allowNull: false,
@@ -229,6 +229,13 @@ class Database {
       points: {
         type: Sequelize.INTEGER,
         primaryKey: true,
+        defaultValue: 0,
+        allowNull: false,
+      },
+      level: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        defaultValue: 0,
         allowNull: false,
       },
       user: {
@@ -244,6 +251,7 @@ class Database {
       daily: {
         type: Sequelize.STRING,
         primaryKey: true,
+        defaultValue: 0,
         allowNull: false,
       }
     };

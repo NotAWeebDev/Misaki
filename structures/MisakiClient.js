@@ -71,6 +71,17 @@ class MisakiClient extends Client {
     return result.dataValues;
   }
 
+  async getPoints(id) {
+    const [profile] = await this.points.findOrCreate({ where: { id } });
+    return profile.dataValues;
+  }
+
+  async writePoints(id, data) {
+    const profile = await this.points.findById(id);
+    const result = await profile.update(data);
+    return result.dataValues;
+  }
+
   async init() {
     const [commands, events] = await Promise.all([this.commands.loadFiles(), this.events.loadFiles()]);
     this.console.log(`Loaded a total of ${commands} commands`);

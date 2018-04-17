@@ -44,7 +44,7 @@ module.exports = class extends Event {
     const userPermLevel = this.client.config.permLevels.find(perm => perm.level === level);
     message.author.permLevel = level;
 
-    if (message.settings.socialSystem === "true") monitor.run(this.client, message, level);
+    if (message.settings.socialSystem === true && message.settings.chatEarningEnabled === true) monitor.run(this.client, message, level);
 
     const prefix = new RegExp(`^<@!?${this.client.user.id}> |^${this.client.methods.util.regExpEsc(message.settings.prefix)}`).exec(message.content);
     if (!prefix) return;

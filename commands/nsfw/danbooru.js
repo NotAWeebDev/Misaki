@@ -24,15 +24,15 @@ class Danbooru extends NSFW {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     const tags = args.join("_");
+    if (!this.verifyNSFW(message.channel)) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is checking out ${tags.length === 0 ? "something" : tags}...`);
-    if (!message.channel.nsfw) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
 
     const { body } = await get(`http://danbooru.donmai.us/posts.json?limit=100&tags=${encodeURI(`${tags}+rating:e`)}`);
     const result = body.random();
     if (!result) return msg.edit(`Cannot find results for \`${tags}\`.`);
     const tagString = result.tag_string.split(" ");
     if (tagString.length !== 0) {
-      if (tagString.some(t => this.checkBlackList(t))) return msg.edit(`${message.author} \`|📛|\` Blacklisted word found, aborting...`);
+      if (tagString.some(t => this.checkBlacklist(t))) return msg.edit(`${message.author} \`|📛|\` Blacklisted word found, aborting...`);
     }
 
     await msg.edit({
