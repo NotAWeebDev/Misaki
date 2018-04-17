@@ -2,8 +2,6 @@ const { Client } = require("discord.js");
 const CommandStore = require("./CommandStore.js");
 const EventStore = require("./EventStore.js");
 const MisakiConsole = require("./MisakiConsole");
-/* const Enmap = require("enmap");
-const EnmapLevel = require("enmap-level"); */
 const idioticApi = require("idiotic-api");
 const Database = require("./Database");
 
@@ -24,13 +22,6 @@ class MisakiClient extends Client {
       util: require("../util/util.js"),
       errors: require("../util/CustomError")
     };
-
-    /*     // Enmap
-    this.settings = new Enmap({ provider: new EnmapLevel({ name: "settings" }) });
-    this.reminders = new Enmap({ provider: new EnmapLevel({ name: "reminders" }) });
-    this.points = new Enmap({ provider: new EnmapLevel({ name: "points" }) });
-    this.store = new Enmap({ provider: new EnmapLevel({ name: "shop" }) });
-    this.inventory = new Enmap({ provider: new EnmapLevel({ name: "inventory" }) }); */
 
     this.settings = this.database.settings;
     this.reminders = this.database.reminders;
@@ -74,18 +65,10 @@ class MisakiClient extends Client {
     return config.dataValues;
   }
 
-  writeSettings(id, newSettings) {
-    const defaults = this.settings.get("default") || this.config.defaultSettings;
-    let settings = this.settings.get(id);
-    if (typeof settings !== "object") settings = {};
-    for (const key in newSettings) {
-      if (defaults[key] !== newSettings[key]) {
-        settings[key] = newSettings[key];
-      } else {
-        delete settings[key];
-      }
-    }
-    this.settings.set(id, settings);
+  async writeSettings(id, data) {
+    const config = await this.settings.findById(id);
+    const result = await config.update(data);
+    return result.dataValues;
   }
 
   async init() {
