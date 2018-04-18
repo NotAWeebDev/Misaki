@@ -35,181 +35,105 @@ class Database {
       });
   }
 
-  get inventorySchema() {
-    return {
-      id: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
-        primaryKey: true,
-        allowNull: false,
-        unique: true
-      },
-      keys: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-        allowNull: false
-      },
-      crates: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-        allowNull: false
-      },
-      tokens: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-        allowNull: false
-      }
-    };
-  }
-
-  get remindersSchema() {
-    return {
-      id: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
-        primaryKey: true,
-        allowNull: false,
-        unique: true
-      },
-      guildid: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      reminder: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      reminderTimestamp: {
-        type: Sequelize.STRING,
-        allowNull: false
-      }
-    };
-  }
-
-  get storeSchema() {
-    return {
-      id: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
-        primaryKey: true,
-        allowNull: false,
-        unique: true
-      },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      price: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-        allowNull: false
-      },
-      guildId: {
-        type: Sequelize.STRING,
-        allowNull: false
-      }
-    };
-  }
-
   get settingsSchema() {
     return {
-      id: {
+      id: { // This is the guild ID, it's unique.
         type: Sequelize.STRING,
         primaryKey: true,
         allowNull: false,
         unique: true
       },
-      prefix: {
+      prefix: { // This is the prefix... duh.
         type: Sequelize.STRING,
         defaultValue: "m.",
         allowNull: false
       },
-      modRole: {
+      modRole: { // The name of the Moderator role.
         type: Sequelize.STRING,
         defaultValue: "Moderator",
         allowNull: false
       },
-      adminRole: {
+      adminRole: { // The name of the Administrator role.
         type: Sequelize.STRING,
         defaultValue: "Administrator",
         allowNull: false
       },
-      systemNotice: {
+      systemNotice: { // This is like if a user attempts to use a command they're not allowed, for example a regular member tries to use eval.
         type: Sequelize.BOOLEAN,
         defaultValue: true,
         allowNull: false
       },
-      welcomeEnabled: {
+      welcomeEnabled: { // Welcome messages
         type: Sequelize.BOOLEAN,
         defaultValue: false,
         allowNull: false
       },
-      welcomeChannel: {
+      welcomeChannel: { // Where to post the welcome messages.
         type: Sequelize.STRING,
         defaultValue: "welcome",
         allowNull: false
       },
-      welcomeType: {
+      welcomeType: { // What kind of welcome message is it? is it an image? is it text?
         type: Sequelize.STRING,
         defaultValue: "text",
         allowNull: false
       },
-      socialSystem: {
+      socialSystem: { // The entire economy system
         type: Sequelize.BOOLEAN,
         defaultValue: false,
         allowNull: false
       },
-      levelNotice: {
+      levelNotice: { // Level up messages
         type: Sequelize.BOOLEAN,
         defaultValue: false,
         allowNull: false
       },
-      socialInventory: {
+      socialInventory: { // Guild Member inventories
         type: Sequelize.BOOLEAN,
         defaultValue: false,
         allowNull: false
       },
-      socialStore: {
+      socialStore: { // Guild stores, where you can buy tokens and roles.
         type: Sequelize.BOOLEAN,
         defaultValue: false,
         allowNull: false
       },
-      dailyEnabled: {
+      dailyEnabled: { // Is the daily command enabled?
         type: Sequelize.BOOLEAN,
         defaultValue: true,
         allowNull: false
       },
-      dailyTime: {
+      dailyTime: { // How many hours between claiming dailies?
         type: Sequelize.INTEGER,
         defaultValue: 24,
         allowNull: false
       },
-      dailyPoints: {
+      dailyPoints: { // How many points you can get for your daily.
         type: Sequelize.INTEGER,
         defaultValue: 250,
         allowNull: false
       },
-      chatEarningEnabled: {
+      chatEarningEnabled: { // This allows users to earn just by chatting.
         type: Sequelize.BOOLEAN,
         defaultValue: false,
         allowNull: false
       },
-      minPoints: {
+      minPoints: { // The lowest amount of points you can earn.
         type: Sequelize.INTEGER,
         defaultValue: 1,
         allowNull: false
       },
-      maxPoints: {
+      maxPoints: { // The highest amount of points you can earn.
         type: Sequelize.INTEGER,
         defaultValue: 20,
         allowNull: false
       },
-      commandPaying: {
+      commandPaying: { // Do you pay for commands?
         type: Sequelize.BOOLEAN,
         defaultValue: false,
         allowNull: false
       },
-      tokenPrice: {
+      tokenPrice: { // How much are casino tokens?
         type: Sequelize.INTEGER,
         defaultValue: 100,
         allowNull: false
@@ -219,42 +143,111 @@ class Database {
 
   get pointsSchema() {
     return {
-      id: {
+      id: { // Unique ID created by combining the guild id and user id `${guild.id}-${user.id}`
         type: Sequelize.STRING,
         primaryKey: true,
         allowNull: false,
         unique: true
       },
-      points: {
+      points: { // How many points the member has earned.
         type: Sequelize.INTEGER,
-        primaryKey: true,
         defaultValue: 0,
         allowNull: false,
       },
-      level: {
+      level: { // What level the member is.
         type: Sequelize.INTEGER,
-        primaryKey: true,
         defaultValue: 0,
         allowNull: false,
       },
-      user: {
+      user: { // User ID
         type: Sequelize.STRING,
-        primaryKey: true,
         allowNull: false,
       },
-      guild: {
+      guild: { // Guild ID
         type: Sequelize.STRING,
-        primaryKey: true,
         allowNull: false,
       },
-      daily: {
+      daily: { // This is a timestamp of when they claimed their daily.
         type: Sequelize.STRING,
-        primaryKey: true,
         defaultValue: 0,
         allowNull: false,
       }
     };
   }
+
+  get storeSchema() {
+    return {
+      id: { // ID of the role.
+        type: Sequelize.STRING,
+        primaryKey: true,
+        allowNull: false,
+        unique: true
+      },
+      name: { // Name of the role.
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      price: { // Price of the role.
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false
+      },
+      guildId: { // Home of the role.
+        type: Sequelize.STRING,
+        allowNull: false
+      }
+    };
+  }
+
+  get inventorySchema() {
+    return {
+      id: { // Unique ID created by combining the guild id and user id `${guild.id}-${user.id}`
+        type: Sequelize.STRING,
+        primaryKey: true,
+        allowNull: false,
+        unique: true
+      },
+      keys: { // How many keys they own.
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false
+      },
+      crates: { // How many crates they own.
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false
+      },
+      tokens: { // How many tokens they own.
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false
+      }
+    };
+  }
+
+  get remindersSchema() {
+    return {
+      id: { // Unique ID created by combining the user id and timestamp of when the reminder was created `${user.id}-${message.createdAt}`.
+        type: Sequelize.STRING,
+        primaryKey: true,
+        allowNull: false,
+        unique: true
+      },
+      guildid: { // The guild ID for the reminder.
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      reminder: { // The reminder text.
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      reminderTimestamp: { // The timestamp the reminder should trigger at.
+        type: Sequelize.STRING,
+        allowNull: false
+      }
+    };
+  }
+
 
 }
 
