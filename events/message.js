@@ -88,6 +88,7 @@ module.exports = class extends Event {
       this.client.console.log(`\u001b[43;30m[${userPermLevel.name}]\u001b[49;39m \u001b[44m${message.author.username} (${message.author.id})\u001b[49m ran command ${cmd.name}`);
       await cmd.run(message, args, message.author.permLevel, msg);
     } catch (error) {
+      if (error.status === 502) message.channel.send(`My deepest apologes ${message.author}-san, but DBL is currently offline, please try again later.`);
       this.client.emit("commandError", error, message);
     }
   }

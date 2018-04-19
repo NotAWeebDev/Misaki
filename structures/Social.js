@@ -1,4 +1,5 @@
 const Command = require("./Command.js");
+const { MessageEmbed } = require("discord.js");
 const { version } = require("../package.json");
 const moment = require("moment");
 const { get } = require("snekfetch");
@@ -17,18 +18,60 @@ class Social extends Command {
   }
 
   async usrDay(message) {
-    const dailyTime = parseInt(message.settings.dailyTime);
-    let pointsReward = parseInt(message.settings.pointsReward);
-    const upvoter = this.client.upvoters;
-    if (upvoter.includes(message.author.id)) pointsReward += 750;
-    if (Date.now() > message.member.score.daily) {
-      const msg = await message.channel.send(`${this.client.responses.dailySuccessMessages.random().replaceAll("{{user}}", message.member.displayName).replaceAll("{{amount}}", `₲${pointsReward.toLocaleString()}`)}`);
-      message.member.score.daily = msg.createdTimestamp + (dailyTime * 60 * 60 * 1000);
-      message.member.givePoints(pointsReward);
-      return msg;
-    } else {
-      const fromNow = moment(message.member.score.daily).fromNow(true);
-      message.channel.send(`${this.client.responses.dailyFailureMessages.random().replaceAll("{{user}}", message.member.displayName).replaceAll("{{time}}", fromNow)}.`);
+    const settings = this.client.getSettings(message.guild.id);
+    const dailyTime = parseInt(settings.dailyTime);
+    let pointsReward = parseInt(settings.pointsReward);
+    const score = message.member.score;
+    const { body } = await get(`https://discordbots.org/api/bots/${this.client.user.id}/check?userId=${message.author.id}`).set("Authorization", process.env.DBLTOKEN);
+        
+    try {
+      if (Boolean(body.voted)) pointsReward += 750; // eslint-disable-line no-extra-boolean-cast
+      if (!body.voted) {
+  
+        const embed = new MessageEmbed()
+          .setAuthor(message.author.username, message.author.displayAvatarURL)
+          .setDescription(`Have you upvoted today?\n\nAn upvote will net you an additional ₲750 to your daily claim **on every guild** you share with Misaki.\n\nClick [Here](https://discordbots.org/bot/${this.client.user.id}/vote) to upvote for the bonus.\n\nDo you wish to claim your daily anyway? (**y**es | **n**o)\n\nReply with \`cancel\` to cancel the message. The message will timeout after 60 seconds.`)
+          .setTimestamp();
+  
+        const filter = m => m.author.id === message.author.id;
+        const response = await message.client.awaitReply(message, "", filter, 6000, embed);
+    
+        if (["yes", "y", "confirm"].includes(response)) {
+          if (Date.now() > score.daily) {
+            const msg = await message.channel.send(`${this.client.responses.dailySuccessMessages.random().replaceAll("{{user}}", message.member.displayName).replaceAll("{{amount}}", `₲${pointsReward.toLocaleString()}`)}`);
+            score.daily = msg.createdTimestamp + (dailyTime * 60 * 60 * 1000);
+            message.member.givePoints(pointsReward);
+            return msg;
+
+          } else {
+            const fromNow = moment(score.daily).fromNow(true);
+            message.channel.send(`${this.client.responses.dailyFailureMessages.random().replaceAll("{{user}}", message.member.displayName).replaceAll("{{time}}", fromNow)}.`);
+          
+          }
+        } else
+      
+        if (["no", "n", "cancel"].includes(response)) {
+          message.channel.send("Claim cancelled.");
+        } else {
+          message.channel.send("Invalid response, please try again.");
+        }
+      } else {
+        if (Date.now() > score.daily) {
+          const msg = await message.channel.send(`${this.client.responses.dailySuccessMessages.random().replaceAll("{{user}}", message.member.displayName).replaceAll("{{amount}}", `₲${pointsReward.toLocaleString()}`)}`);
+          score.daily = msg.createdTimestamp + (dailyTime * 60 * 60 * 1000);
+          message.member.givePoints(pointsReward);
+          return msg;
+
+        } else {
+          const fromNow = moment(score.daily).fromNow(true);
+          message.channel.send(`${this.client.responses.dailyFailureMessages.random().replaceAll("{{user}}", message.member.displayName).replaceAll("{{time}}", fromNow)}.`);
+        
+        }
+      }
+
+    } catch (error) {
+      this.client.logger.error(error);
+      // this.client.logger.error(error);
     }
   }
 
