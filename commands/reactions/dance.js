@@ -22,7 +22,7 @@ class Dance extends Social {
         "title": "Click here if the image failed to load.",
         "url": dance,
         "description": `**${message.member.displayName}** boogies${response}`,
-        "color": message.guild.me.roles.highest.color || 5198940,
+        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
         "image": {
           "url": dance
         }

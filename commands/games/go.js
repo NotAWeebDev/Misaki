@@ -1,4 +1,5 @@
 const Command = require("../../structures/Command.js");
+const { MessageEmbed } = require("discord.js");
 
 class Go extends Command {
   constructor(...args) {
@@ -59,8 +60,8 @@ class Go extends Command {
           break;
       }
 
-      const embed = new this.client.methods.Embed()
-        .setColor(message.guild.me.roles.highest.color || 5198940)
+      const embed = new MessageEmbed()
+        .setColor(message.guild ? message.guild.me.roles.highest.color : 5198940)
         .setAuthor(`${message.author.username}`, `${message.author.displayAvatarURL()}`)
         .setThumbnail(`${message.author.displayAvatarURL()}`)
         .addField("Steam Profile", `${steamid !== undefined ? `[${message.author.username}](https://steamcommunity.com/id/${steamid})` : "Not provided"}`)

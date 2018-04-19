@@ -25,7 +25,7 @@ class CommandStore extends Store {
   delete(command) {
     const exists = this.get(command);
     if (!exists) return false;
-    if (command.aliases.length) for (let i = 0; i < command.aliases.length; i++) this.aliases.delete(command.aliases[i]);
+    if (exists.aliases.length) for (let i = 0; i < exists.aliases.length; i++) this.aliases.delete(exists.aliases[i]);
     return super.delete(command);
   }
 

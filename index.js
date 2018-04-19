@@ -13,7 +13,8 @@ const client = new MisakiClient({
   disableEveryone: true,
   messageCacheMaxSize: 100,
   messageCacheLifetime: 240,
-  messageSweepInterval: 300
+  messageSweepInterval: 300,
+  shardCount: "auto"
 });
 
 client.login(process.env.DISCORD);

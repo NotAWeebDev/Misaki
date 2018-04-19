@@ -1,5 +1,6 @@
 const Command = require("../../structures/Command.js");
 const pokemon = require("../../assets/json/pokemon.json");
+const { MessageEmbed } = require("discord.js");
 
 class Pokemon extends Command {
   constructor(...args) {
@@ -17,11 +18,11 @@ class Pokemon extends Command {
     const poke = rand > 0 ? rand : Math.floor(Math.random() * 802);
     const pokem = pokemon[poke];
 
-    const embed = new this.client.methods.Embed()
+    const embed = new MessageEmbed()
       .setTitle("You have 15 seconds to guess ! Who's that Pokémon !")
       .setAuthor(message.member.displayName, message.author.displayAvatarURL())
       .setImage(pokem.imageURL)
-      .setColor(message.guild.me.roles.highest.color || 5198940);
+      .setColor(message.guild ? message.guild.me.roles.highest.color : 5198940);
     
     const msg = await message.channel.send({ embed });
     const filter = m => m.author.id === message.author.id;

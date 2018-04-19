@@ -23,7 +23,7 @@ class Boobs extends Social {
       embed: {
         "title": "Click here if the image failed to load.",
         "url": `http://media.oboobs.ru/${body[0].preview}`,
-        "color": message.guild.me.roles.highest.color || 5198940,
+        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
         "image": {
           "url": `http://media.oboobs.ru/${body[0].preview}`
         }

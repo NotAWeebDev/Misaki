@@ -1,4 +1,5 @@
 const Command = require("../../structures/Command.js");
+const { MessageEmbed } = require("discord.js");
 
 class Announcements extends Command {
   constructor(...args) {
@@ -18,7 +19,7 @@ class Announcements extends Command {
       const messages = await channel.messages.fetch({limit:5});
       const announcement = messages.first();
 
-      const embed = new this.client.methods.Embed()
+      const embed = new MessageEmbed()
         .setTitle("Bot announcement!")
         .setAuthor(announcement.author.username, announcement.author.displayAvatarURL({ format:"png", size:32 }))
         .setDescription(announcement.cleanContent)

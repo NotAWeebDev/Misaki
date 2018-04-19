@@ -40,7 +40,7 @@ class Rule34 extends Social {
         "title": "Click here if the image failed to load.",
         "url": `https://rule34.xxx/index.php?page=post&s=view&id=${result.id}`,
         "description": `Owned by ${result.owner}`,
-        "color": message.guild.me.roles.highest.color || 5198940,
+        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
         "image": {
           "url": `https://rule34.xxx/images/${result.directory}/${result.image}`
         },

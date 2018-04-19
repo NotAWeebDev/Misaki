@@ -27,7 +27,7 @@ class Nom extends Social {
         "title": "Click here if the image failed to load.",
         "url": nom,
         "description": `**${target.first().displayName}**, you just got nom'ed by **${message.member.displayName}**`,
-        "color": message.guild.me.roles.highest.color || 5198940,
+        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
         "image": {
           "url": nom
         }

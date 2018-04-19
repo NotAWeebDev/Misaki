@@ -22,7 +22,7 @@ class Lewd extends Social {
         "title": "Click here if the image failed to load.",
         "url": lewd,
         "description": `**${message.member.displayName}** thinks ${response} is a bit lewd.`,
-        "color": message.guild.me.roles.highest.color || 5198940,
+        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
         "image": {
           "url": lewd
         }

@@ -5,7 +5,7 @@ class Oneliner extends Social {
   constructor(...args) {
     super(...args, {
       name: "joke",
-      description: "Thie command will give you a one liner joke.",
+      description: "This command will give you a one liner joke.",
       usage: "joke",
       category: "Fun",
       cost: 5,

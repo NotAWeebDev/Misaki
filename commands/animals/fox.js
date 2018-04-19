@@ -1,34 +1,35 @@
 const Social = require("../../structures/Social.js");
 const { get } = require("snekfetch");
 
-class Owl extends Social {
+class Fox extends Social {
   constructor(...args) {
     super(...args, {
-      name: "owl",
-      description: "Post a randomly selected image of a owl.",
+      name: "fox",
+      description: "Post a randomly selected image of a fox.",
       category: "Animals",
-      usage: "owl",
-      extended: "This command will return a beautiful owl.",
+      usage: "fox",
+      extended: "This command will return a beautiful fox.",
       cost: 5,
       cooldown: 10,
-      aliases: ["hoot"],
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting an owl..."
+      aliases: [],
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting a fox..."
     });
   }
 
   async run(message, args, level, loadingMessage) {
-    const owl = await get("http://pics.floofybot.moe/owl").then(r => r.body.image); // API Provided by Lewdcario
+    const { body } = await get("https://randomfox.ca/floof/");
     await loadingMessage.edit({
       embed: {
         "title": "Click here if the image failed to load.",
-        "url": owl,
+        "url": body.link,
         "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
         "image": {
-          "url": owl
+          "url": body.image
         }
       }
     });
+
   }
 }
 
-module.exports = Owl;
+module.exports = Fox;

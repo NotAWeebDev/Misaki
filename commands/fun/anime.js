@@ -5,6 +5,7 @@
 const Command = require("../../structures/Command.js");
 const Kitsu = require("kitsu");
 const kitsu = new Kitsu();
+const { Collection } = require("discord.js");
 
 class Anime extends Command {
   constructor(...args) {
@@ -34,7 +35,7 @@ class Anime extends Command {
       if (message.channel.permissionsFor(this.client.user).has("MANAGE_MESSAGES")) await returnMessage.delete(); 
       await msg.edit(`**Title JP:** ${data[index].titles.en_jp}\n**Title English:** ${data[index].titles.en}\n**Type:** ${data[index].subtype}\n**Start Date:** ${data[index].startDate}\n**End Date:** ${data[index].endDate || "in Progress"}\n**PopularityRank:** ${data[index].popularityRank}\n**Link:** <https://kitsu.io/anime/${data[index].id}>\n**Synopsis:** ${data[index].synopsis}`);
     } catch (error) {
-      if (error instanceof this.client.methods.Collection) return message.reply("command canceled due timer");
+      if (error instanceof Collection) return message.reply("command canceled due timer");
       throw error;
     }
   }

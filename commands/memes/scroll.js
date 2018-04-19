@@ -20,7 +20,7 @@ class Scroll extends Meme {
       embed: {
         "title": "Click here if the image failed to load.",
         "url": meme,
-        "color": message.guild.me.roles.highest.color || 5198940,
+        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
         "image": {
           "url": meme
         },

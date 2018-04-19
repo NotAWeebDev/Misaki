@@ -27,7 +27,7 @@ class Slap extends Social {
         "title": "Click here if the image failed to load.",
         "url": slap,
         "description": `OMG **${target.first().displayName}**, you just got slapped by **${message.member.displayName}**`,
-        "color": message.guild.me.roles.highest.color || 5198940,
+        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
         "image": {
           "url": slap
         }

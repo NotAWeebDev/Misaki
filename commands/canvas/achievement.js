@@ -1,4 +1,5 @@
 const Social = require("../../structures/Social.js");
+const { MessageAttachment } = require("discord.js");
 
 class Achievement extends Social {
   constructor(...args) {
@@ -26,7 +27,7 @@ class Achievement extends Social {
     text = text.join(" ");
     if (message.mentions.users.size) text = text.replace(/<@!?\d+>/, "").replace(/\n/g, " ").trim();
     await loadingMessage.delete();
-    return message.channel.send(new this.client.methods.Attachment(await this.client.idiotAPI.achievement((message.mentions.users.first() || message.author).displayAvatarURL({ format:"png", size:32 }), text), "achievement.png"));
+    return message.channel.send(new MessageAttachment(await this.client.idiotAPI.achievement((message.mentions.users.first() || message.author).displayAvatarURL({ format:"png", size:32 }), text), "achievement.png"));
   }
 
   

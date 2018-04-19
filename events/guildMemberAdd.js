@@ -7,7 +7,7 @@ module.exports = class extends Event {
     
     if (!member.user.bot) this.client.points.set(`${member.guild.id}-${member.id}`, { points: 0, level:0, user: member.id, guild: member.guild.id, daily: 1504120109 });
 
-    const settings = this.client.getSettings(member.guild.id);
+    const settings = this.client.getGuildSettings(member.guild);
     
     if (settings.welcomeEnabled !== "true") return;
     if (settings.welcomeType === "text") {

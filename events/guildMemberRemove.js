@@ -4,7 +4,7 @@ module.exports = class extends Event {
 
   async run(member) {
     if (!member || !member.id || !member.guild) return;
-    const settings = this.client.getSettings(member.guild.id);
+    const settings = this.client.getGuildSettings(member.guild);
 
     if (!member.user.bot) this.client.points.delete(`${member.guild.id}-${member.id}`);
 

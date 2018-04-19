@@ -63,6 +63,17 @@ class MisakiClient extends Client {
     return permlvl;
   }
 
+  getGuildSettings(guild) {
+    const def = this.config.defaultSettings;
+    if (!guild) return def;
+    const returns = {};
+    const overrides = this.settings.get(guild.id) || {};
+    for (const key in def) {
+      returns[key] = overrides[key] || def[key];
+    }
+    return returns;
+  }
+
   getSettings(id) {
     const defaults = this.settings.get("default") || this.config.defaultSettings;
     let guild = this.settings.get(id);

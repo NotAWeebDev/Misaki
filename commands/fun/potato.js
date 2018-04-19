@@ -20,7 +20,7 @@ class Potato extends Social {
       embed: {
         "title": "Click here if the image failed to load.",
         "url": `https://cdn.ram.moe/${body.path.replace("/i/", "")}`,
-        "color": message.guild.me.roles.highest.color || 5198940,
+        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
         "image": {
           "url": `https://cdn.ram.moe/${body.path.replace("/i/", "")}`
         }
