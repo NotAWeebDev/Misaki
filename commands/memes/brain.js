@@ -8,7 +8,7 @@ class Brain extends Meme {
       usage: "brain <first text ; second text ; third text ; forth text>",
       category: "meme",
       cost: 5,
-      loadignString: "<a:typing:397490442469376001> **{{displayName}}** reveals their inner knowledge..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** reveals their inner knowledge..."
     });
   }
 
