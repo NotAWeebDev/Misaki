@@ -70,8 +70,7 @@ class Social extends Command {
       }
 
     } catch (error) {
-      this.client.logger.error(error);
-      // this.client.logger.error(error);
+      this.console.log(error);
     }
   }
 
