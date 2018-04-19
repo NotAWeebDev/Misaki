@@ -14,7 +14,7 @@ class Brain extends Meme {
 
   cmdVerify(message, args, loadingMessage) {
     const text = args.join(" ");
-    if (!text.length) return Promise.reject(new this.client.methods.errors.UsageError("You must supply test to think about!", loadingMessage));
+    if (!text.length) return Promise.reject(new this.client.methods.errors.UsageError("You must supply text to think about!", loadingMessage));
     return Promise.resolve(text);
   }
 
