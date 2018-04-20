@@ -12,7 +12,8 @@ class Owl extends Social {
       cost: 5,
       cooldown: 10,
       aliases: ["hoot"],
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting an owl..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting an owl...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

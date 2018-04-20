@@ -12,7 +12,8 @@ class Respect extends Social {
       cost: 10,
       cooldown: 30,
       aliases: ["pressf", "f", "rip", "ripme"],
-      loadingString: "Paying respects..."
+      loadingString: "Paying respects...",
+      botPerms: ["ATTACH_FILES", "ADD_REACTIONS"]
     });
   }
 

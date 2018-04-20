@@ -12,7 +12,8 @@ class Shibe extends Social {
       cost: 5,
       cooldown: 10,
       aliases: ["doge", "shib", "shibe"],
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting a shiba inu..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting a shiba inu...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

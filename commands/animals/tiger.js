@@ -13,7 +13,8 @@ class Tiger extends Social {
       cost: 5,
       cooldown: 10,
       aliases: ["tigger"],
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting a tiger..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting a tiger...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

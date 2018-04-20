@@ -33,7 +33,7 @@ class Social extends Command {
             .setTimestamp();
       
           const filter = m => m.author.id === message.author.id;
-          const response = await message.awaitReply("", filter, 6000, embed);
+          const response = await message.awaitReply("", filter, 60000, embed);
           if (["yes", "y", "confirm"].includes(response)) {
             const msg = await message.channel.send(`${this.client.responses.dailySuccessMessages.random().replaceAll("{{user}}", message.member.displayName).replaceAll("{{amount}}", `₲${pointsReward.toLocaleString()}`)}`);
             score.daily = msg.createdTimestamp + (dailyTime * 60 * 60 * 1000);
@@ -79,7 +79,7 @@ class Social extends Command {
       "(**y**es | **n**o)",
       "",
       "Reply with `cancel` to cancel the message. The message will timeout after 60 seconds."
-    ].join("\n"), filter, 6000, null);
+    ].join("\n"), filter, 60000, null);
 
     if (["yes", "y", "confirm"].includes(response.toLowerCase())) {
       getPayer.takePoints(amount);

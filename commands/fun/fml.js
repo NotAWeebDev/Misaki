@@ -14,7 +14,8 @@ class FML extends Social {
       cost: 10,
       cooldown: 10,
       aliases: ["fuckmylife", "fuckme"],
-      loadingString: "<a:typing:397490442469376001> **Searching** please wait a few moments."
+      loadingString: "<a:typing:397490442469376001> **Searching** please wait a few moments.",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

@@ -12,7 +12,8 @@ class Tattoo extends Social {
       cost: 10,
       cooldown: 10,
       aliases: ["ink"],
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is getting some ink done..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is getting some ink done...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

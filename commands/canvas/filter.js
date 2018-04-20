@@ -11,7 +11,8 @@ class Filter extends Social {
       cost: 10,
       cooldown: 10,
       aliases: ["flt"],
-      loadingString: "<a:typing:397490442469376001> Applying **{{filterName}}**..."
+      loadingString: "<a:typing:397490442469376001> Applying **{{filterName}}**...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

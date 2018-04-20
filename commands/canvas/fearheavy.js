@@ -10,7 +10,8 @@ class HeavyFear extends Social {
       usage: "fear @mention",
       cost: 10,
       cooldown: 10,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** fears no man..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** fears no man...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

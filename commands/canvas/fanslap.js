@@ -11,7 +11,8 @@ class FanSlap extends Social {
       extended: "Mention another user to slap them with a paper fan.",
       cost: 10,
       cooldown: 10,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** thinks someone needs a smacking..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** thinks someone needs a smacking...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

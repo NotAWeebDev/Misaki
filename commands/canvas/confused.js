@@ -10,7 +10,8 @@ class Confused extends Social {
       usage: "confused",
       cost: 10,
       cooldown: 10,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** feels rather confused..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** feels rather confused...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

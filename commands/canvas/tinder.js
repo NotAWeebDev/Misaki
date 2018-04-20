@@ -11,7 +11,8 @@ class Tinder extends Social {
       extended: "Swipe right on another member.",
       cost: 10,
       cooldown: 10,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is taking a swing..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is swiping right...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

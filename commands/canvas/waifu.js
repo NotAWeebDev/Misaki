@@ -11,7 +11,8 @@ class Waifu extends Social {
       extended: "Mention another user to post rate them.",
       cost: 10,
       cooldown: 10,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is judging..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is judging...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

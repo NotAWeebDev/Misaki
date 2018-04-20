@@ -12,7 +12,8 @@ class Dog extends Social {
       cost: 5,
       cooldown: 10,
       aliases: ["doggo", "pupper"],
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting a dog..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting a dog...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

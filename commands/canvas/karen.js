@@ -10,7 +10,8 @@ class Karen extends Social {
       usage: "karen [@mention]",
       cost: 10,
       cooldown: 10,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** look what karen has..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** look what karen has...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

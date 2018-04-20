@@ -10,7 +10,8 @@ class TheSearch extends Social {
       usage: "thesearch <text>",
       cost: 10,
       cooldown: 10,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is searching..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is searching...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

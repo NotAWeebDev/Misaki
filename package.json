@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/NotAWeebDev/Misaki#readme",
   "dependencies": {
-    "discord.js": "github:devsnek/discord.js#the-real-deal",
+    "discord.js": "github:discordjs/discord.js#internal-sharding",
     "dotenv": "^5.0.1",
     "enmap": "^2.1.1",
     "enmap-level": "^2.1.0",

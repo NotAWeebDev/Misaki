@@ -11,7 +11,8 @@ class Wanted extends Social {
       extended: "Mention another user to post a wanted poster of them.",
       cost: 10,
       cooldown: 10,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is putting up wanted posters..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is putting up wanted posters...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

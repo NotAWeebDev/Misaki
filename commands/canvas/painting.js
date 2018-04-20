@@ -11,7 +11,8 @@ class Painting extends Social {
       extended: "Mention another user to post a deadly painting of them.",
       cost: 10,
       cooldown: 10,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is selling a painting..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is selling a painting...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

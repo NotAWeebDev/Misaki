@@ -12,7 +12,8 @@ class Lizard extends Social {
       cost: 5,
       cooldown: 10,
       aliases: ["geko"],
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is looking for a lizard..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is looking for a lizard...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

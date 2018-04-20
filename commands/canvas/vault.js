@@ -12,7 +12,8 @@ class Valut extends Social {
       cost: 10,
       cooldown: 10,
       aliases: ["vault"],
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is wandering the wastelands..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is wandering the wastelands...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

@@ -10,7 +10,8 @@ class Wreck extends Social {
       usage: "wreck [@mention]",
       cost: 10,
       cooldown: 10,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is getting wrecked..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is getting wrecked...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

@@ -11,7 +11,8 @@ class Challenger extends Social {
       cost: 10,
       cooldown: 10,
       aliases:["smash"],
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** a new challenger has appeared..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** a new challenger has appeared...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

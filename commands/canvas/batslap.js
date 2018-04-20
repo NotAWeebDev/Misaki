@@ -11,7 +11,8 @@ class Batslap extends Social {
       extended: "Mention another user to slap them as batman.",
       cost: 10,
       cooldown: 10,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is stalking his prey..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is stalking his prey...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

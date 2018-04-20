@@ -11,7 +11,8 @@ class Steam extends Social {
       cost: 10,
       cooldown: 10,
       aliases:["card"],
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** unlocked a trading card..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** unlocked a trading card...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

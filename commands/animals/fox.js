@@ -12,7 +12,8 @@ class Fox extends Social {
       cost: 5,
       cooldown: 10,
       aliases: [],
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting a fox..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting a fox...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

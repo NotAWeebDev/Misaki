@@ -12,7 +12,8 @@ class Bunny extends Social {
       cost: 5,
       cooldown: 10,
       aliases: ["bunbun"],
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting a bunny..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting a bunny...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

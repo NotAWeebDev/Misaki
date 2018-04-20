@@ -12,7 +12,8 @@ class SnapChat extends Social {
       cost: 10,
       cooldown: 10,
       aliases: ["sc"],
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is applying filters..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is applying filters...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

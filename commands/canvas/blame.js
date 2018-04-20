@@ -11,7 +11,8 @@ class Blame extends Social {
       extended: "Blame someone else via this command.",
       cost: 5,
       cooldown: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is getting the blame..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is getting the blame...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

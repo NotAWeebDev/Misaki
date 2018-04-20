@@ -11,7 +11,8 @@ class DadJoke extends Social {
       category: "Fun",
       cost: 5,
       aliases: ["dadjoke", "ugh"],
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is trying to think of something funny..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is trying to think of something funny...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

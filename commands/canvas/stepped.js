@@ -11,7 +11,8 @@ class Stepped extends Social {
       extended: "Mention another user to step on them.",
       cost: 10,
       cooldown: 10,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is out for a walk when suddenly..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is out for a walk when suddenly...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

@@ -47,10 +47,6 @@ class MisakiClient extends Client {
     this.emit("misakiReady");
   }
 
-  get uptime() {
-    return this.readyAt ? Date.now() - this.readyAt : null;
-  }
-
   get ping() {    
     return this.pings.reduce((prev, p) => prev + p, 0) / this.pings.length;    
   }

@@ -10,7 +10,8 @@ class BobRoss extends Social {
       usage: "bobross @mention",
       cost: 10,
       cooldown: 10,
-      loadingString: "<a:typing:397490442469376001> **Painting** a happy little accident..."
+      loadingString: "<a:typing:397490442469376001> **Painting** a happy little accident...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

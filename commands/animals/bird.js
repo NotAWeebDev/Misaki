@@ -12,7 +12,8 @@ class Bird extends Social {
       cost: 5,
       cooldown: 10,
       aliases: ["birb"],
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting a bird..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting a bird...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

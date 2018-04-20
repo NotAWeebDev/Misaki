@@ -12,7 +12,8 @@ class IsNowIllegal extends Social {
       cost: 10,
       cooldown: 10,
       aliases:["trump", "sign"],
-      loadingString: "<a:typing:397490442469376001> **President Donald Trump** is making new laws..."
+      loadingString: "<a:typing:397490442469376001> **President Donald Trump** is making new laws...",
+      botPerms: ["EMBED_LINKS"]
     });
     this.inUse = null;
   }
@@ -30,11 +31,18 @@ class IsNowIllegal extends Social {
     const word = await this.cmdVerify(message, args, loadingMessage);
     this.inUse = message.author.id;
     await post("https://is-now-illegal.firebaseio.com/queue/tasks.json").send({ task: "gif", word: word.toUpperCase() });
-    await this.client.wait(5000);
-    const result = await get(`https://is-now-illegal.firebaseio.com/gifs/${word.toUpperCase()}.json`);
-    await message.channel.send({ "files": [result.body.url] });
-    await loadingMessage.delete();
+    const { body } = await get(`https://is-now-illegal.firebaseio.com/gifs/${word.toUpperCase()}.json`);
     this.inUse = null;
+    return loadingMessage.edit({
+      embed: {
+        "title": "Click here if the image failed to load.",
+        "url": body.url,
+        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "image": {
+          "url": body.url
+        }
+      }
+    });
   }
 }
 

@@ -12,7 +12,8 @@ class Duck extends Social {
       cost: 5,
       cooldown: 10,
       aliases: [],
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting a duck..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting a duck...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

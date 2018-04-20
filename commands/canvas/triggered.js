@@ -12,7 +12,8 @@ class Triggered extends Social {
       cost: 10,
       cooldown: 20,
       aliases: ["trigger"],
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is getting triggered..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is getting triggered...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

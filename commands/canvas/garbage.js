@@ -10,7 +10,8 @@ class Garbage extends Social {
       usage: "garbage [@mention]",
       cost: 10,
       cooldown: 10,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is thrown out with the garbage..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is thrown out with the garbage...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

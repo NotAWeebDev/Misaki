@@ -10,7 +10,8 @@ class SuggestionBox extends Social {
       usage: "suggest [@mention]",
       cost: 10,
       cooldown: 10,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** look what suggest has..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** look what suggest has...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

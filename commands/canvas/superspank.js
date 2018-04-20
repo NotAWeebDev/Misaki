@@ -11,7 +11,8 @@ class Superspank extends Social {
       extended: "Mention another user to spank them as Superman.",
       cost: 10,
       cooldown: 10,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is taking a swing..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is putting someone over their knee...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

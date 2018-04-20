@@ -12,7 +12,8 @@ class Achievement extends Social {
       cost: 10,
       cooldown: 10,
       aliases: ["get", "achieveget", "achievementget"],
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is getting an achievement..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is getting an achievement...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 

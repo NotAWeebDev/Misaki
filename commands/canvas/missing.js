@@ -11,7 +11,8 @@ class Missing extends Social {
       extended: "Mention another user to post a missing persons poster of them.",
       cost: 10,
       cooldown: 10,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is putting up missing person posters..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is putting up missing person posters...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 
