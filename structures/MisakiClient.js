@@ -19,9 +19,6 @@ class MisakiClient extends Client {
     this.upvoters = [];
     this.levelCache = {};
     this.methods = {
-      Embed: MessageEmbed,
-      Attachment: MessageAttachment,
-      Collection,
       util: require("../util/util.js"),
       errors: require("../util/CustomError")
     };

@@ -1,6 +1,7 @@
 const Social = require("../../../structures/Social.js");
 const { get } = require("snekfetch");
 const h = new (require("html-entities").AllHtmlEntities)(); // HTML encoding decoder
+const { MessageEmbed } = require("discord.js");
 
 class Trivia extends Social {
   constructor(...args) {
@@ -28,7 +29,7 @@ class Trivia extends Social {
       choices.splice(choices.indexOf(randomChoices[i]), 1); // Remove it from the array.
     } // Repeat until complete
 
-    const emb = new this.client.methods.Embed()
+    const emb = new MessageEmbed()
       .setAuthor("Misaki Trivia", this.client.user.displayAvatarURL())
       .setColor(message.guild.me.roles.highest.color || 5198940)
       .setDescription(h.decode(quiz.question))

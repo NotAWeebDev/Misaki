@@ -1,4 +1,5 @@
 const Event = require("../structures/Event.js");
+const { MessageAttachment } = require("discord.js");
 
 module.exports = class extends Event {
 
@@ -23,7 +24,7 @@ module.exports = class extends Event {
       const channel = member.guild.channels.find("name", settings.welcomeChannel);
       if (!channel) return;
       const image = await this.client.idiotAPI.welcome("anime", member.user.bot, member.user.displayAvatarURL({ format: "png", size: 128 }), member.user.tag);
-      channel.send(new this.client.methods.Attachment(image)).catch(console.error);
+      channel.send(new MessageAttachment(image)).catch(console.error);
     }
   }
 };

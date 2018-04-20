@@ -1,3 +1,4 @@
+const { MessageEmbed } = require("discord.js");
 const Command = require("../../structures/Command.js");
 const PaginationEmbed = require("../../util/pagination/FieldsEmbed");
 const perpage = 10;
@@ -40,7 +41,7 @@ class Help extends Command {
       const usage = command.usage;
       const aliases = command.aliases;
       console.log(aliases);
-      embed = new this.client.methods.Embed(embedPreset)
+      embed = new MessageEmbed(embedPreset)
         .setTitle(`${name} - ${description.length <= 75 ? description : `${description.slice(0, 75)}...`}`)
         .addField("Command details", extended, false)
         .addField("Command usage", `\`${usage}\``, false)

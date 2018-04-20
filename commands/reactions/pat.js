@@ -14,7 +14,7 @@ class Pat extends Social {
 
   cmdVerify(message, args, loadingMessage) {
     const target = message.mentions.members;
-    if (!target) return Promise.reject(new this.client.methods.errors.UsageError("You need to mention someone to pat them.", loadingMessage));
+    if (target.size === 0) return Promise.reject(new this.client.methods.errors.UsageError("You need to mention someone to pat them.", loadingMessage));
     if (message.member === target.first()) return Promise.reject(new this.client.methods.errors.UsageError("You cannot pat yourself!", loadingMessage));
     return Promise.resolve(target);
   }
