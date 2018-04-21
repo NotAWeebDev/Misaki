@@ -12,7 +12,7 @@ class Help extends Command {
       category: "System",
       usage: "help <category/command/setting> [page-num]",
       aliases: ["h", "halp", "commands"],
-      botPerms: ["ATTACH_FILES", "ADD_REACTIONS"]
+      botPerms: ["EMBED_LINKS", "ADD_REACTIONS"]
     });
   }
 
