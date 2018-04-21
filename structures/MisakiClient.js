@@ -1,4 +1,4 @@
-const { Client, Collection, MessageEmbed, MessageAttachment } = require("discord.js");
+const { Client } = require("discord.js");
 const CommandStore = require("./CommandStore.js");
 const EventStore = require("./EventStore.js");
 const MisakiConsole = require("./MisakiConsole");
