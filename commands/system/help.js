@@ -11,7 +11,8 @@ class Help extends Command {
       extended: "This command will display all available commands for your permission level, with the additonal option of getting per command information when you run 'help <command name>'.",
       category: "System",
       usage: "help <category/command/setting> [page-num]",
-      aliases: ["h", "halp", "commands"]
+      aliases: ["h", "halp", "commands"],
+      botPerms: ["ATTACH_FILES", "ADD_REACTIONS"]
     });
   }
 
