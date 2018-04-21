@@ -3,7 +3,7 @@ const Event = require("../structures/Event.js");
 module.exports = class extends Event {
 
   async run(guild) {
-    this.client.user.setActivity(`@${this.client.user.username} help | ${this.client.guilds.size} Server${this.client.guilds.size > 1 ? "s" : ""}`);
+    this.client.user.setActivity(`@${this.client.user.username} help | ${this.client.guilds.size.toLocaleString()} Server${this.client.guilds.size > 1 ? "s" : ""}`);
 
     if (this.client.settings.has(guild.id)) {
       this.client.settings.delete(guild.id);
