@@ -30,6 +30,10 @@ class Blush extends Social {
         "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
         "image": {
           "url": blush
+        },
+        "footer": {
+          "icon_url": message.author.displayAvatarURL({ format: "png", size: 32 }),
+          "text": `Requested by ${message.author.tag} | Powered by weeb.sh`
         }
       }
     });

@@ -31,9 +31,9 @@ class Everywhere extends Meme {
           "url": meme
         },
         "footer": {
-          "icon_url": message.author.displayAvatarURL(),
-          "text": `Requested by ${message.member.displayName}`
-        },
+          "icon_url": message.author.displayAvatarURL({ format: "png", size: 32 }),
+          "text": `Requested by ${message.author.tag} | Powered by imgflip.com`
+        }
       }
     });
   }

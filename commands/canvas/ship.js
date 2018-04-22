@@ -40,7 +40,8 @@ class Ship extends Social {
           "url": body.message
         },
         "footer": {
-          "text": "Powered by NekoBot API"
+          "icon_url": message.author.displayAvatarURL({ format: "png", size: 32 }),
+          "text": `Requested by ${message.author.tag} | Powered by NekoBot API`
         }
       }
     });

@@ -22,6 +22,10 @@ class Gif extends Social {
       "embed": {
         "image": {
           "url": giflist.body.random().file
+        },
+        "footer": {
+          "icon_url": message.author.displayAvatarURL({ format: "png", size: 32 }),
+          "text": `Requested by ${message.author.tag} | Powered by ReplyGif.net`
         }
       }
     });
