@@ -21,7 +21,7 @@ class Filter extends Social {
   }
 
   async run(message, args, level, loadingMessage) {
-    if (message.flags[0].length === 0) return message.channel.send(`Incorrect usage, try any of the following; \`${this.help.usage}\``);
+    if (message.flags[0].length === 0) return message.channel.send(`Incorrect usage, try any of the following; \`${this.usage}\``);
 
     const person = await this.cmdVerify(message, args, loadingMessage);//(message.mentions.users.first() || message.author).displayAvatarURL({ format: "png", size: 2048 });
     if (message.mentions.users.size === 1) args.shift();

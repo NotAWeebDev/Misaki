@@ -46,8 +46,8 @@ class Trivia extends Social {
     if (!choice) return message.reply("That's not even on the list..."); // Check against incorrect values, correct is A, B, C and D.
 
     if (choice === h.decode(quiz.correct_answer)) { 
-      message.member.givePoints(this.help.cost * 3); 
-      return message.reply(`That is correct! You won ₲${this.help.cost * 3}`); 
+      message.member.givePoints(this.cost * 3); 
+      return message.reply(`That is correct! You won ₲${this.cost * 3}`); 
     }
     return message.reply(`The correct answer was: **${h.decode(quiz.correct_answer)}**, but you selected **${choice}**.`); // Throw if choice !== correct answer
   }

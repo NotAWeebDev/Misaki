@@ -17,7 +17,7 @@ class Fortnite extends Command {
   }
 
   cmdVerify(message, args) {
-    if (!args.length) return Promise.reject(new this.client.methods.errors.UsageError(`Invalid Usage, please do:\`${this.help.usage}\``));
+    if (!args.length) return Promise.reject(new this.client.methods.errors.UsageError(`Invalid Usage, please do:\`${this.usage}\``));
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
@@ -43,7 +43,7 @@ class Fortnite extends Command {
         .setColor(message.guild ? message.guild.me.roles.highest.color : 5198940);
       return message.channel.send({ embed });
     } catch (error) {
-      message.channel.send(`Player Not Found or invalid form type, for correct usage do: \`${this.help.usage}\`.`);
+      message.channel.send(`Player Not Found or invalid form type, for correct usage do: \`${this.usage}\`.`);
     }   
   }
 
