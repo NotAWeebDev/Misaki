@@ -45,7 +45,7 @@ class Leaderboard extends Social {
       
     const pos = lbServer.indexOf(message.author.id).toString().padStart(2, "0");
     const posTxt = pos == -1 ? "??" : (lbServer.indexOf(message.author.id) + 1).toString().padStart(2, "0");
-    leaderboard.push(`${posTxt} ❯ ${message.author.tag}${" ".repeat(30 - message.author.tag.length)}::  ${this.client.points.get(`${message.guild.id}-${message.author.id}`).points.toLocaleString()}`);
+    leaderboard.push(`${posTxt} ❯ ${message.author.tag}${" ".repeat(40 - message.author.tag.length)}::  ${this.client.points.get(`${message.guild.id}-${message.author.id}`).points.toLocaleString()}`);
     return message.channel.send(`**__${message.guild.name}__**'s Leaderboard (Page **${page+1}** out of **${totalPages || 1}**)\n\`\`\`${leaderboard.join("\n")}\`\`\``);
   }
 }

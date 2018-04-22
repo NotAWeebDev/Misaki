@@ -21,7 +21,7 @@ class Help extends Command {
     let embed;
     const embedPreset = {
       timestamp: new Date().getTime(),
-      color: message.guild.me.roles.highest.color || 5198940,
+      color: message.guild ? message.guild.me.roles.highest.color : 5198940,
       footer: {
         text: `Requested by ${message.author.tag}`,
         iconURL: message.author.avatarURL()
@@ -32,7 +32,7 @@ class Help extends Command {
     if (command) {
       const category = command.category.toLowerCase();
       const permLevel = this.client.levelCache[command.permLevel];
-      const prohibited = (category === "nsfw" && !message.channel.nsfw) || level < permLevel;
+      const prohibited = (category === "nsfw" && !message.channel.nsfw) || level < permLevel || category === "owner";
 
       if (prohibited) return;
 
