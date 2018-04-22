@@ -1,0 +1,38 @@
+const Social = require("../../structures/Social.js");
+const { get } = require("snekfetch");
+
+class Clyde extends Social {
+  constructor(...args) {
+    super(...args, {
+      name: "clyde",
+      description: "Have Clyde say something.",
+      usage: "clyde <text>",
+      category: "Canvas",
+      cost: 5,
+      cooldown: 5,
+      loadingString: "<a:typing:397490442469376001> **Clyde** is typing...",
+      botPerms: ["EMBED_LINKS"]
+    });
+  }
+
+  async run(message, args, level, loadingMessage) {
+    const text = args.join(" ");
+    const { body } = await get(`https://nekobot.xyz/api/imagegen/?type=clyde&text=${text}`);
+
+    return loadingMessage.edit({
+      embed: {
+        "title": "Click here if the image failed to load.",
+        "url": body.message,
+        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "image": {
+          "url": body.message
+        },
+        "footer": {
+          "text": "Powered by NekoBot API"
+        }
+      }
+    });
+  }
+
+}
+module.exports = Clyde;
