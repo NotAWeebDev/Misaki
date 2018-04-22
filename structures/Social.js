@@ -28,7 +28,7 @@ class Social extends Command {
       if (Date.now() > score.daily) {
         if (!body.voted) {
           const embed = new MessageEmbed()
-            .setAuthor(message.author.username, message.author.displayAvatarURL)
+            .setAuthor(message.author.username, message.author.displayAvatarURL({ format: "png", size: 32 }))
             .setDescription(`Have you upvoted today?\n\nAn upvote will net you an additional ₲750 to your daily claim **on every guild** you share with Misaki.\n\nClick [Here](https://discordbots.org/bot/${this.client.user.id}/vote) to upvote for the bonus.\n\nDo you wish to claim your daily anyway? (**y**es | **n**o)\n\nReply with \`cancel\` to cancel the message. The message will timeout after 60 seconds.`)
             .setTimestamp();
       
