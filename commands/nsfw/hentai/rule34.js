@@ -1,17 +1,17 @@
-const Social = require("../../structures/Social.js");
+const Social = require("../../../structures/Social.js");
 const { get } = require("snekfetch");
 
-class Gelbooru extends Social {
+class Rule34 extends Social {
   constructor(...args) {
     super(...args, {
-      name: "gelbooru",
-      description: "Searches gelbooru for your search term.",
+      name: "rule34",
+      description: "Searches rule34 for your search term.",
       category: "NSFW",
-      usage: "gelbooru <search term>",
-      extended: "This command will return a random result from gelbooru.",
+      usage: "rule34 <search term>",
+      extended: "This command will return a random result from rule34.",
       cost: 40,
       cooldown: 10,
-      aliases: ["gb", "gel"]
+      aliases: ["r34"]
     });
   }
 
@@ -27,8 +27,8 @@ class Gelbooru extends Social {
     const tags = args.join("_");
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is checking out ${tags.length === 0 ? "something" : tags}...`);
     if (!message.channel.nsfw) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
-    const { body } = await get(`https://gelbooru.com/index.php?page=dapi&s=post&q=index&limit=100&tags=${encodeURI(`${tags}+rating:explicit`)}&json=1`);
-    const result = body.random();
+    const { body } = await get(`https://rule34.xxx?page=dapi&s=post&q=index&limit=100&tags=${encodeURI(`${tags}+rating:explicit`)}&json=1`);
+    const result = JSON.parse(body).random();
     if (!result) return msg.edit(`Cannot find results for \`${tags}\`.`);
     const tagString = result.tags.split(" ");
     if (tagString.length !== 0) {
@@ -38,14 +38,14 @@ class Gelbooru extends Social {
     await msg.edit({
       embed: {
         "title": "Click here if the image failed to load.",
-        "url": `https://gelbooru.com/index.php?page=post&s=view&id=${result.id}`,
+        "url": `https://rule34.xxx/index.php?page=post&s=view&id=${result.id}`,
         "description": `Owned by ${result.owner}`,
         "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
         "image": {
-          "url": result.file_url
+          "url": `https://rule34.xxx/images/${result.directory}/${result.image}`
         },
         "footer": {
-          "text": `Score: ${result.score} | Rating: ${this.getRating(result.rating)}`
+          "text": `Score: ${result.score} | Rating: ${result.rating.toProperCase()}`
         },
         "timestamp": new Date(result.created_at * 1000)
       }
@@ -53,4 +53,4 @@ class Gelbooru extends Social {
   }
 }
 
-module.exports = Gelbooru;
+module.exports = Rule34;

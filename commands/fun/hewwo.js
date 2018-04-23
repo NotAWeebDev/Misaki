@@ -31,12 +31,9 @@ class Hewwo extends Social {
       } else {
         finalPhrase.push(word);
       }
-      if (Math.random() > 0.99) {
-        finalPhrase.push("_OwO, what's this?_");
-      }
     });
-    const x3 = [" x3"," :3", " owo", " OwO", " OWO", " X3"];
-    return finalPhrase.join(" ").replaceAll("l", "w").replaceAll("L", "W").replaceAll("r", "w").replaceAll("R", "W") + x3.random();
+    const x3 = [" x3"," :3", " owo", " OwO", " OWO", " X3", " ***notices bulge*** _OwO, what's this?_", " uwu", " UwU", " UWU"];
+    return finalPhrase.join(" ").replaceAll("over", "uvw").replaceAll("l", "w").replaceAll("r", "w").replaceAll("n", "ny").replaceAll("father", "daddy").replaceAll("mother", "mommy").toLowerCase() + x3.random();
   }
 }
 

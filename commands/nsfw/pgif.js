@@ -1,22 +1,23 @@
 const Social = require("../../structures/Social.js");
 const { get } = require("snekfetch");
 
-class Hentai extends Social {
+class PGif extends Social {
   constructor(...args) {
     super(...args, {
-      name: "hentai",
-      description: "This command will return hentai.",
+      name: "pgif",
+      description: "This command will return porn in gif form.",
       category: "NSFW",
-      usage: "hentai",
+      usage: "pgif",
       cost: 40,
       cooldown: 10,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is looking for hentai..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is looking for porn gifs...",
+      aliases: ["porngif"]
     });
   }
 
   async run(message, args, level, loadingMessage) { // eslint-disable-line no-unused-vars
     if (!message.channel.nsfw) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
-    const { body } = await get("https://nekobot.xyz/api/image?type=hentai");
+    const { body } = await get("https://nekobot.xyz/api/image?type=pgif");
     await loadingMessage.edit({
       embed: {
         "title": "Click here if the image failed to load.",
@@ -34,4 +35,4 @@ class Hentai extends Social {
   }
 }
 
-module.exports = Hentai;
+module.exports = PGif;

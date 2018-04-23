@@ -18,7 +18,7 @@ class Lizard extends Social {
   }
 
   async run(message, args, level, loadingMessage) {
-    const { body } = await get("https://nekos.life/api/lizard");
+    const { body } = await get("https://nekos.life/api/v2/img/lizard");
     await loadingMessage.edit({
       embed: {
         "title": "Click here if the image failed to load.",
@@ -26,6 +26,10 @@ class Lizard extends Social {
         "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
         "image": {
           "url": body.url
+        },
+        "footer": {
+          "icon_url": message.author.displayAvatarURL({ format: "png", size: 32 }),
+          "text": `Requested by ${message.author.tag} | Powered by Nekos.life API`
         }
       }
     });

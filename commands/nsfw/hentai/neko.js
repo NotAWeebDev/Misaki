@@ -1,4 +1,4 @@
-const Social = require("../../structures/Social.js");
+const Social = require("../../../structures/Social.js");
 const { get } = require("snekfetch");
 
 class Neko extends Social {
@@ -18,14 +18,18 @@ class Neko extends Social {
     if (!message.channel.nsfw) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
 
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is looking for a feline...`);
-    const { body } = await get("https://nekos.life/api/lewd/neko");
+    const { body } = await get("https://nekos.life/api/v2/img/lewd");
     await msg.edit({
       embed: {
         "title": "Click here if the image failed to load.",
-        "url": body.neko,
+        "url": body.url,
         "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
         "image": {
-          "url": body.neko
+          "url": body.url
+        },
+        "footer": {
+          "icon_url": message.author.displayAvatarURL({ format: "png", size: 32 }),
+          "text": `Requested by ${message.author.tag} | Powered by Nekos.life API`
         }
       }
     });

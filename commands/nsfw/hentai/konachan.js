@@ -1,17 +1,17 @@
-const Social = require("../../structures/Social.js");
+const Social = require("../../../structures/Social.js");
 const { get } = require("snekfetch");
 
-class Danbooru extends Social {
+class Konachan extends Social {
   constructor(...args) {
     super(...args, {
-      name: "danbooru",
-      description: "Searches danbooru for your search term.",
+      name: "konachan",
+      description: "Searches konachan.com for your search term.",
       category: "NSFW",
-      usage: "danbooru <search term>",
-      extended: "This command will return a random result from danbooru.",
+      usage: "konachan <search term>",
+      extended: "This command will return a random result from konachan.",
       cost: 40,
       cooldown: 10,
-      aliases: ["dan", "db"]
+      aliases: ["kona", "kc", "konac"]
     });
   }
 
@@ -28,21 +28,21 @@ class Danbooru extends Social {
     const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is checking out ${tags.length === 0 ? "something" : tags}...`);
     if (!message.channel.nsfw) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
 
-    const { body } = await get(`http://danbooru.donmai.us/posts.json?limit=100&tags=${encodeURI(`${tags}+rating:e`)}`);
+    const { body } = await get(`http://konachan.com/post.json?limit=100&tags=${encodeURI(`${tags}+rating:e`)}`);
     const result = body.random();
     if (!result) return msg.edit(`Cannot find results for \`${tags}\`.`);
-    const tagString = result.tag_string.split(" ");
-    if (tagString.length !== 0) {
-      if (tagString.some(t => blacklist.includes(t.toLowerCase()))) return msg.edit(`${message.author} \`|📛|\` Blacklisted word found, aborting...`);
+    if (result.tags.length !== 0) {
+      if (result.tags.split(" ").some(t => blacklist.includes(t.toLowerCase()))) return msg.edit(`${message.author} \`|📛|\` Blacklisted word found, aborting...`);
     }
 
     await msg.edit({
       embed: {
         "title": "Click here if the image failed to load.",
-        "url": `http://danbooru.donmai.us/post/show/${result.id}`,
+        "url": `http://konachan.com/post/show/${result.id}`,
+        "description": `Created by ${result.author}`,
         "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
         "image": {
-          "url": `http://danbooru.donmai.us${result.file_url}`
+          "url": result.file_url
         },
         "footer": {
           "text": `Score: ${result.score} | Rating: ${this.getRating(result.rating)}`
@@ -53,4 +53,4 @@ class Danbooru extends Social {
   }
 }
 
-module.exports = Danbooru;
+module.exports = Konachan;
