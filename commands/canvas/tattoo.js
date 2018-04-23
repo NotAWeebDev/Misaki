@@ -1,9 +1,9 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../structures/Social.js");
 const { MessageAttachment } = require("discord.js");
 
 class Tattoo extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "tattoo",
       description: "Get inked.",
       category: "Canvas",
@@ -11,25 +11,21 @@ class Tattoo extends Social {
       extended: "Mention another user to get them tattooed on your arm.",
       cost: 10,
       cooldown: 10,
-      aliases: ["ink"]
+      aliases: ["ink"],
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is getting some ink done...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 
-  async run(message, args, level) {// eslint-disable-line no-unused-vars
-    let msg;
-    try {
-      const customer = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
-      msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is getting some ink done...`);
-      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.tattoo(customer.displayAvatarURL({ format:"png", size:512 })), "tattoo.png"));
-      await msg.delete();
-    } catch (error) {
-      msg.edit("Something went wrong, please try again later");
-      this.client.logger.error(error);
-    }
+  cmdVerify(message, args, loadingMessage) {
+    return this.verifyUser(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id, { msg: loadingMessage });
+  }
+
+  async run(message, args, level, loadingMessage) {
+    const customer = await this.cmdVerify(message, args, loadingMessage);
+    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.tattoo(customer.displayAvatarURL({ format:"png", size:512 })), "tattoo.png"));
+    await loadingMessage.delete();
   }
 }
 
-module.exports = Tattoo;//
+module.exports = Tattoo;

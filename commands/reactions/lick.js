@@ -1,40 +1,42 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../structures/Social.js");
 
 class Lick extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "lick",
       description: "When someone's good enough to eat.",
       usage: "lick <@mention>",
       category: "Reactions",
       cost: 5,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to lick someone..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
+  cmdVerify(message, args, loadingMessage) {
     const target = message.mentions.members;
-    if (target.size === 0) return message.response(undefined, "You need to mention someone to lick them.");
-    if (message.member == target.first()) return message.response(undefined, "You cannot lick yourself !");
-    try {
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
-      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** wants to lick **${target.first().displayName}**...`);
-      const lick = await this.cmdWeeb("lick", "gif", message.channel.nsfw);
-      await msg.edit({
-        embed: {
-          "title": "Click here if the image failed to load.",
-          "url": lick,
-          "description": `**${target.first().displayName}**, you just got licked by **${message.member.displayName}**`,
-          "color": message.guild.me.roles.highest.color || 5198940,
-          "image": {
-            "url": lick
-          }
+    if (target.size === 0) return Promise.reject(new this.client.methods.errors.UsageError("You need to mention someone to lick them.", loadingMessage));
+    if (message.member === target.first()) return Promise.reject(new this.client.methods.errors.UsageError("You cannot lick yourself!", loadingMessage));
+    return Promise.resolve(target);
+  }
+
+  async run(message, args, level, loadingMessage) { // eslint-disable-line no-unused-vars
+    const target = await this.cmdVerify(message, args, loadingMessage);
+    const lick = await this.cmdWeeb("lick", "gif", message.channel.nsfw);
+    await loadingMessage.edit({
+      embed: {
+        "title": "Click here if the image failed to load.",
+        "url": lick,
+        "description": `**${target.first().displayName}**, you just got licked by **${message.member.displayName}**`,
+        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "image": {
+          "url": lick
+        },
+        "footer": {
+          "icon_url": message.author.displayAvatarURL({ format: "png", size: 32 }),
+          "text": `Requested by ${message.author.tag} | Powered by weeb.sh`
         }
-      });
-    } catch (e) {
-      console.log(e);
-    }
+      }
+    });
 
   }
 }

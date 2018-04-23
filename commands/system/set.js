@@ -1,11 +1,11 @@
-const Command = require(`${process.cwd()}/base/Command.js`);
+const Command = require("../../structures/Command.js");
 
 class Set extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "set",
       description: "View or change settings for your server.",
-      category: "Utilities",
+      category: "System",
       usage: "set <view/get/edit> <key> <value>",
       aliases: ["setting", "settings"],
       permLevel: "Administrator"
@@ -35,7 +35,7 @@ class Set extends Command {
       if (!overrides[key]) return message.reply("This key does not have an override and is already using defaults.");
       
       const filter = m => m.author.id === message.author.id;
-      const response = await this.client.awaitReply(message, `Are you sure you want to reset \`${key}\` to the default value?`, filter, undefined, null);
+      const response = await message.awaitReply(`Are you sure you want to reset \`${key}\` to the default value?`, filter, undefined, null);
 
       if (["y", "yes"].includes(response.toLowerCase())) {
 

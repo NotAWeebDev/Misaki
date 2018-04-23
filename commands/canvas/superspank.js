@@ -1,37 +1,32 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../structures/Social.js");
 const { MessageAttachment } = require("discord.js");
 
 class Superspank extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "superspank",
       description: "Spank someone as Superman.",
       category: "Canvas",
       usage: "superspank <@mention | userid>",
       extended: "Mention another user to spank them as Superman.",
       cost: 10,
-      cooldown: 10
+      cooldown: 10,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is putting someone over their knee...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars 
-    let msg;
-    try {
-      const spanked = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
-      const spanker = message.author;
 
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
+  cmdVerify(message, args, loadingMessage) {
+    return this.verifyUser(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id, { msg: loadingMessage });
+  }
 
-      msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is giving someone a good spanking...`);
+  async run(message, args, level, loadingMessage) {
+    const spanked = await this.cmdVerify(message, args, loadingMessage);
+    const spanker = message.author;
 
-      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.superSpank(spanker.displayAvatarURL({ format: "png", size: 128 }), spanked.displayAvatarURL({ format: "png", size: 128 })), "superspank.png"));
-      await msg.delete();
-    } catch (error) {
-      msg.edit("Something went wrong, please try again later");
-      this.client.logger.error(error);
-    }
+    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.superSpank(spanker.displayAvatarURL({ format: "png", size: 128 }), spanked.displayAvatarURL({ format: "png", size: 128 })), "superspank.png"));
+    await loadingMessage.delete();
   }
 }
 

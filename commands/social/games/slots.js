@@ -1,5 +1,5 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
-
+const Social = require("../../../structures/Social.js");
+const { MessageEmbed } = require("discord.js");
 const { SlotMachine, SlotSymbol } = require("slot-machine");
 
 const lemon = new SlotSymbol("lemon", { display: "🍋", points: 1, weight: 100 });
@@ -19,35 +19,29 @@ const jackpot = new SlotSymbol("jackpot", { display: "🔅", points: 50, weight:
 const machine = new SlotMachine(3, [cherry, lemon, watermelon, apple, grape, orange, wild, bell, clover, heart, money, diamond, jackpot]);
 
 class Slots extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "slots",
       description: "Try your luck with the slots.",
       category: "Fun",
       usage: "slots",
-      cost: 10,
       cooldown: 5,
     });
   }
   
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     if (message.settings.socialSystem !== "true") return message.response(undefined, "The social system has been disabled.");
-  
-    if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-  
-    try {
-      const results = machine.play();
-      const winnings = this.help.cost * results.totalPoints;
-      message.buildEmbed()
-        .setColor(message.guild.me.roles.highest.color || 5198940)
-        .setAuthor("Misaki Slots")
-        .setDescription(`${results.visualize(false)}\n\n${results.winCount === 0 ? `${message.member.displayName} has lost!\nBetter luck next time!` : `Whoa... ${message.member.displayName} won!`}\n\n${results.winCount === 0 ? "" : `You have won ₲${winnings.toLocaleString()}`}`)
-        .setTimestamp()
-        .send();
-      if (results.winCount > 0) return message.member.givePoints(winnings);
-    } catch (e) {
-      console.log(e);
-    }
+    if (!message.member.inventory.tokens) return message.response(undefined, "Ba...Baka You don't have any tokens to play Slots, buy some with the Store command");
+    await message.member.takeItem("tokens", 1);
+    const results = machine.play();
+    const winnings = 10 * results.totalPoints;
+    const embed = new MessageEmbed()
+      .setColor(message.guild.me.roles.highest.color || 5198940)
+      .setAuthor("Misaki Slots")
+      .setDescription(`${results.visualize(false)}\n\n${results.winCount === 0 ? `${message.member.displayName} has lost!\nBetter luck next time!` : `Whoa... ${message.member.displayName} won!`}\n\n${results.winCount === 0 ? "" : `You have won ₲${winnings.toLocaleString()}`}`)
+      .setTimestamp();
+    message.channel.send({ embed });
+    if (results.winCount > 0) return message.member.givePoints(winnings);
   }
 }
 

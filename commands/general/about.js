@@ -1,7 +1,8 @@
-const Command = require(`${process.cwd()}/base/Command.js`);
+const Command = require("../../structures/Command.js");
+
 class About extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "about",
       description: "What the bot is about.",
       usage: "about",
@@ -10,11 +11,7 @@ class About extends Command {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    try {
-      message.channel.send(this.client.responses.aboutMessages.random());
-    } catch (e) {
-      console.log(e);
-    }
+    message.channel.send(this.client.responses.aboutMessages.random());
   }
 }
 

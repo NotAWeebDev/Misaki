@@ -1,9 +1,9 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
-const snekfetch = require("snekfetch");
+const Social = require("../../structures/Social.js");
+const { get } = require("snekfetch");
 
 class Boobs extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "boobs",
       description: "Show me boobies!!!",
       category: "NSFW",
@@ -16,28 +16,23 @@ class Boobs extends Social {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    try {
-      if (!message.channel.nsfw) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
-
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
-
-      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is looking for boobies...`);
-      const { body } = await snekfetch.get("http://api.oboobs.ru/boobs/0/1/random");
-      await msg.edit({
-        embed: {
-          "title": "Click here if the image failed to load.",
-          "url": `http://media.oboobs.ru/${body[0].preview}`,
-          "color": message.guild.me.roles.highest.color || 5198940,
-          "image": {
-            "url": `http://media.oboobs.ru/${body[0].preview}`
-          }
+    if (!message.channel.nsfw) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
+    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is looking for boobies...`);
+    const { body } = await get("http://api.oboobs.ru/boobs/0/1/random");
+    await msg.edit({
+      embed: {
+        "title": "Click here if the image failed to load.",
+        "url": `http://media.oboobs.ru/${body[0].preview}`,
+        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "image": {
+          "url": `http://media.oboobs.ru/${body[0].preview}`
+        },
+        "footer": {
+          "icon_url": message.author.displayAvatarURL({ format: "png", size: 32 }),
+          "text": `Requested by ${message.author.tag} | Powered by oboobs.ru`
         }
-      });
-    } catch (e) {
-      console.log(e);
-    }
+      }
+    });
   }
 }
 

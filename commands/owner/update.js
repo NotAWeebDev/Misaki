@@ -1,11 +1,11 @@
-const Owner = require(`${process.cwd()}/base/Owner.js`);
+const Owner = require("../../structures/Owner.js");
 const { promisify } = require("util");
 const exec = promisify(require("child_process").exec);
 const path = require("path");
 
 class Update extends Owner {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "update",
       description: "This updates the bot from its git repo.",
       usage: "update",
@@ -17,7 +17,7 @@ class Update extends Owner {
   }
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
-    const { stdout, stderr, err } = await exec(`git pull ${require(`${process.cwd()}/package.json`).repository.url.split("+")[1]}`, { cwd: path.join(__dirname, "../../") }).catch(err => ({ err }));
+    const { stdout, stderr, err } = await exec(`git pull ${require("../../package.json").repository.url.split("+")[1]}`, { cwd: path.join(__dirname, "../../") }).catch(err => ({ err }));
     if (err) return console.error(err);
     const out = [];
     if (stdout) out.push(stdout);

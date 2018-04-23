@@ -10,20 +10,17 @@ module.exports = class {
     this.givePoints(client, message, level);
   }
 
-  static givePoints(client, message, level) { // eslint-disable-line no-unused-vars
+  static givePoints(client, message) {
     if (!message.guild || !message.member) return;
-    const settings = message.settings;
-    if (message.content.startsWith(settings.prefix)) return;
-    const score = message.member.score;
-    const points = giveRandomPoints(parseInt(settings.minPoints), parseInt(settings.maxPoints));
+    if (message.content.startsWith(message.settings.prefix)) return;
+    const points = giveRandomPoints(parseInt(message.settings.minPoints), parseInt(message.settings.maxPoints));
     message.member.givePoints(points);
-    const curLevel = Math.floor(0.1 * Math.sqrt(score.points));
-    if (score.level < curLevel) {
-      if (settings.levelNotice === "true") {
-        message.channel.send(`${client.responses.levelUpMessages.random().replaceAll("{{user}}", message.member.displayName).replaceAll("{{level}}", curLevel).trim()}`);
+    const curLevel = Math.floor(0.1 * Math.sqrt(message.member.score.points));
+    if (message.member.score.level < curLevel) {
+      if (message.settings.levelNotice === "true") {
+        message.channel.send(client.responses.levelUpMessages.random().replaceAll("{{user}}", message.member.displayName).replaceAll("{{level}}", curLevel).trim());
       }
       message.member.setLevel(curLevel);
     }
-
   }
 };

@@ -1,9 +1,10 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
-const snekfetch = require("snekfetch");
-const { version } = require(`${process.cwd()}/package.json`);
+const Social = require("../../structures/Social.js");
+const { get } = require("snekfetch");
+const { version } = require("../../package.json");
+
 class Cat extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "cat",
       description: "Post a randomly selected image of a cat.",
       category: "Animals",
@@ -11,34 +12,27 @@ class Cat extends Social {
       extended: "This command will return a beautiful cat.",
       cost: 5,
       cooldown: 10,
-      aliases: ["kitten"]
+      aliases: ["kitten"],
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting a cat...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    try {
+  async run(message, args, level, loadingMessage) {
+    const { body } = await get("https://api.weeb.sh/images/random?type=animal_cat")
+      .set("Authorization", `Wolke ${process.env.WEEBSH}`)
+      .set("User-Agent", `Misaki/${version}/${this.client.user.id === "396323622953680910" ? "Production" : "Development"}`);
 
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
-
-      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a cat...`);
-      const { body } = await snekfetch.get("https://api.weeb.sh/images/random?type=animal_cat")
-        .set("Authorization", `Wolke ${process.env.WEEBSH}`)
-        .set("User-Agent", `Misaki/${version}/${this.client.user.id === "396323622953680910" ? "Production" : "Development"}`);
-      await msg.edit({
-        embed: {
-          "title": "Click here if the image failed to load.",
-          "url": body.url,
-          "color": message.guild.me.roles.highest.color || 5198940,
-          "image": {
-            "url": body.url
-          }
+    await loadingMessage.edit({
+      embed: {
+        "title": "Click here if the image failed to load.",
+        "url": body.url,
+        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "image": {
+          "url": body.url
         }
-      });
-    } catch (e) {
-      console.log(e);
-    }
+      }
+    });
   }
 }
 

@@ -1,36 +1,34 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../structures/Social.js");
+const { get } = require("snekfetch");
 
 class Rem extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "rem",
       description: "Someone needs rem",
       usage: "rem",
       category: "Fun",
       cost: 5,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants rem..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    try {
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
-      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** wants rem...`);
-      const rem = await this.cmdWeeb("rem");
-      await msg.edit({
-        embed: {
-          "title": "Click here if the image failed to load.",
-          "url": `https://cdn.ram.moe/${rem}`,
-          "color": message.guild.me.roles.highest.color || 5198940,
-          "image": {
-            "url": `https://cdn.ram.moe/${rem}`
-          }
+  async run(message, args, level, loadingMessage) { // eslint-disable-line no-unused-vars
+    const { body } = await get("https://rra.ram.moe/i/r?type=rem");
+    await loadingMessage.edit({
+      embed: {
+        "title": "Click here if the image failed to load.",
+        "url": `https://cdn.ram.moe/${body.path.replace("/i/", "")}`,
+        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "image": {
+          "url": `https://cdn.ram.moe/${body.path.replace("/i/", "")}`
+        },
+        "footer": {
+          "icon_url": message.author.displayAvatarURL({ format: "png", size: 32 }),
+          "text": `Requested by ${message.author.tag} | Powered by Weeb.sh`
         }
-      });
-    } catch (e) {
-      console.log(e);
-    }
+      }
+    });
 
   }
 }

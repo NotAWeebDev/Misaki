@@ -1,27 +1,30 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
-const snekfetch = require("snekfetch");
+const Social = require("../../structures/Social.js");
+const { get } = require("snekfetch");
+const { MessageEmbed } = require("discord.js");
 
 class Oneliner extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "joke",
-      description: "Thie command will give you a one liner joke.",
+      description: "This command will give you a one liner joke.",
       usage: "joke",
       category: "Fun",
       cost: 5,
-      aliases: ["1l", "oneliner"]
+      aliases: ["1l", "oneliner"],
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is thinking of something funny...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    if (message.settings.socialSystem === "true") {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-    }
-    const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is thinking of something funny...`);
-    const { body } = await snekfetch.get("https://dashboard.typicalbot.com/api/v1/joke").set("Authorization", process.env.TYPICAL);
-    msg.edit(body.data);
+  async run(message, args, level, loadingMessage) {
+    const { body } = await get("https://dashboard.typicalbot.com/api/v1/joke").set("Authorization", process.env.TYPICAL);
+    const embed = new MessageEmbed()
+      .setThumbnail("https://cdn.discordapp.com/emojis/397910503013220354.png")
+      .setDescription(`_${body.data}_`)
+      .setColor(message.guild ? message.guild.me.roles.highest.color : 5198940)
+      .setFooter("Powered by TypicalBot API.");
+    await loadingMessage.edit({ embed });
   }
-
 }
 
 module.exports = Oneliner;

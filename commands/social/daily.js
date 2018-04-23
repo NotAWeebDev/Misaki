@@ -1,8 +1,8 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../structures/Social.js");
 
 class Daily extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "daily",
       description: "Claim your daily points.",
       usage: "daily",
@@ -15,13 +15,7 @@ class Daily extends Social {
 
   async run(message, args, level) { // eslint-disable-line no-unused-vars
     if (message.settings.socialSystem !== "true") return message.response(undefined, "The social system is disabled.");
-
-    try {
-      await this.usrDay(message);
-    } catch (error) {
-      if (error.status === 502) message.channel.send(`My deepest apologes ${message.author}-san, but DBL is currently offline, please try again later.`);
-      this.client.logger.error(error);
-    }
+    return await this.usrDay(message);
   }
 }
 

@@ -1,41 +1,37 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../structures/Social.js");
 
 class Dance extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "dance",
       description: "Someone needs to dance",
       usage: "dance [@mention]",
       category: "Reactions",
       cost: 5,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** breaks out some dance moves..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
+  async run(message, args, level, loadingMessage) { // eslint-disable-line no-unused-vars
     const target = message.mentions.members;
     let response = "...";
     if (target.size !== 0) response = ` with **${target.first().displayName}**`;
-    try {
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
-      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** breaks out some dance moves${response}`);
-      const dance = await this.cmdWeeb("dance", "gif", message.channel.nsfw);
-      await msg.edit({
-        embed: {
-          "title": "Click here if the image failed to load.",
-          "url": dance,
-          "description": `**${message.member.displayName}** boogies${response}`,
-          "color": message.guild.me.roles.highest.color || 5198940,
-          "image": {
-            "url": dance
-          }
+    const dance = await this.cmdWeeb("dance", "gif", message.channel.nsfw);
+    await loadingMessage.edit({
+      embed: {
+        "title": "Click here if the image failed to load.",
+        "url": dance,
+        "description": `**${message.member.displayName}** boogies${response}`,
+        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "image": {
+          "url": dance
+        },
+        "footer": {
+          "icon_url": message.author.displayAvatarURL({ format: "png", size: 32 }),
+          "text": `Requested by ${message.author.tag} | Powered by weeb.sh`
         }
-      });
-    } catch (e) {
-      console.log(e);
-    }
-
+      }
+    });
   }
 }
 

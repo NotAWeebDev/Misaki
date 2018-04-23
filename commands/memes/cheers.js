@@ -1,42 +1,40 @@
-const Meme = require(`${process.cwd()}/base/Meme.js`);
+const Meme = require("../../structures/Meme.js");
 
 class Cheers extends Meme {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "cheers",
       description: "Say cheers with Leonardo DiCaprio!",
       usage: "cheers <top text ; bottom text>",
       category: "meme",
       cost: 5,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** raises their glass..."
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
+  cmdVerify(message, args, loadingMessage) {
     const text = args.join(" ");
-    if (text.length < 5) return message.response(undefined, `Invalid Command usage: \`${this.help.usage}\``);
-    try {
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
-      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** raises their glass...`);
-      const meme = await this.twoMeme(5496396, text);
-      await msg.edit({
-        embed: {
-          "title": "Click here if the image failed to load.",
-          "url": meme,
-          "color": message.guild.me.roles.highest.color || 5198940,
-          "image": {
-            "url": meme
-          },
-          "footer": {
-            "icon_url": message.author.displayAvatarURL(),
-            "text": `Requested by ${message.member.displayName}`
-          },
+    if (!text.length) return Promise.reject(new this.client.methods.errors.UsageError("You must supply text for this command", loadingMessage));
+    return Promise.resolve(text);
+  }
+
+  async run(message, args, level, loadingMessage) { // eslint-disable-line no-unused-vars
+    const text = await this.cmdVerify(message, args, loadingMessage);
+    const meme = await this.twoMeme(5496396, text);
+    await loadingMessage.edit({
+      embed: {
+        "title": "Click here if the image failed to load.",
+        "url": meme,
+        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "image": {
+          "url": meme
+        },
+        "footer": {
+          "icon_url": message.author.displayAvatarURL({ format: "png", size: 32 }),
+          "text": `Requested by ${message.author.tag} | Powered by imgflip.com`
         }
-      });
-    } catch (error) {
-      this.client.logger.error(error);
-    }
+      }
+    });
   }
 }
 module.exports = Cheers;

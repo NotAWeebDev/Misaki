@@ -1,8 +1,8 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../structures/Social.js");
 
 class Hewwo extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "hewwo",
       description: "English to hewwo twanswatow.",
       usage: "hewwo is it me your looking for?",
@@ -13,21 +13,16 @@ class Hewwo extends Social {
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    if (args.length < 1) return message.response(undefined, "You need to give the bot a message to send.");
-    if (message.settings.socialSystem === "true") {
-      if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-    }
-    const phrase = args.join(" ");
-    try {
-      message.channel.send(this.translate(phrase));
-    } catch (error) {
-      this.client.logger.error(error);
-    }
+  cmdVerify(message, args, loadingMessage) {
+    if (args.length < 1) return Promise.reject(new this.client.methods.errors.UsageError("You need to give the bot a message to send.", loadingMessage));
+    return Promise.resolve();
   }
 
-  translate(phrase) {
-    const words = phrase.split(" ");
+  async run(message, args) {
+    await message.channel.send(this.translate(args));
+  }
+
+  translate(words) {
     const finalPhrase = [];
     words.forEach(word => {
       if (Math.random() > 0.7) {
@@ -35,12 +30,9 @@ class Hewwo extends Social {
       } else {
         finalPhrase.push(word);
       }
-      if (Math.random() > 0.99) {
-        finalPhrase.push("_OwO, what's this?_");
-      }
     });
-    const x3 = [" x3"," :3", " owo", " OwO", " OWO", " X3"];
-    return finalPhrase.join(" ").replaceAll("l", "w").replaceAll("L", "W").replaceAll("r", "w").replaceAll("R", "W") + x3.random();
+    const x3 = [" x3"," :3", " owo", " OwO", " OWO", " X3", " ***notices bulge*** _OwO, what's this?_", " uwu", " UwU", " UWU"];
+    return finalPhrase.join(" ").replaceAll("over", "uvw").replaceAll("l", "w").replaceAll("r", "w").replaceAll("n", "ny").replaceAll("father", "daddy").replaceAll("mother", "mommy").toLowerCase() + x3.random();
   }
 }
 

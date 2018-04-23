@@ -1,8 +1,9 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
-const snekfetch = require("snekfetch");
+const Social = require("../../structures/Social.js");
+const { get } = require("snekfetch");
+
 class Dog extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "dog",
       description: "Post a randomly selected image of a dog.",
       category: "Animals",
@@ -10,24 +11,25 @@ class Dog extends Social {
       extended: "This command will return a beautiful dog.",
       cost: 5,
       cooldown: 10,
-      aliases: ["doggo", "pupper"]
+      aliases: ["doggo", "pupper"],
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting a dog...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    try {
-      const url = args[0] ? `https://dog.ceo/api/breed/${args[0]}/images/random` : "https://dog.ceo/api/breeds/image/random";
-
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
+  async run(message, args, level, loadingMessage) {
+    const { body } = await get(args[0] ? `https://dog.ceo/api/breed/${args[0]}/images/random` : "https://dog.ceo/api/breeds/image/random");
+    await loadingMessage.edit({
+      embed: {
+        "title": "Click here if the image failed to load.",
+        "url": body.message,
+        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "image": {
+          "url": body.message
+        }
       }
+    });
 
-      const msg = await message.channel.send(`<a:typing:397490442469376001> **${message.member.displayName}** is petting a dog...`);
-      const { body } = await snekfetch.get(url);
-      await msg.edit({embed:{ "title": "Click here if the image failed to load.", "url": body.message, "color":message.guild.me.roles.highest.color || 5198940, "image": {"url": body.message}}});
-    } catch (e) {
-      console.log(e);
-    }
   }
 }
 

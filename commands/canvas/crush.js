@@ -1,34 +1,30 @@
-const Social = require(`${process.cwd()}/base/Social.js`);
+const Social = require("../../structures/Social.js");
 const { MessageAttachment } = require("discord.js");
 
 class Crush extends Social {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "crush",
       description: "Display your affection for another user.",
       category: "Canvas",
       usage: "crush [@mention|userid]",
       cost: 10,
-      cooldown: 10
+      cooldown: 10,
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** gaze around...",
+      botPerms: ["ATTACH_FILES"]
     });
   }
 
-  async run(message, args, level) { // eslint-disable-line no-unused-vars
-    let msg;
-    try {
-      const crush = await this.verifyUser(message, args[0] ? args[0] : message.author.id);
-      const crusher = message.author;
-      if (message.settings.socialSystem === "true") {
-        if (!(await this.cmdPay(message, message.author.id, this.help.cost))) return;
-      }
-      msg = await message.channel.send(`<a:typing:397490442469376001> **${crush.username}** is being gazed at...`);
+  cmdVerify(message, args, loadingMessage) {
+    return this.verifyUser(message, message.mentions.users.size === 1 ? message.mentions.users.first().id : message.author.id, { msg: loadingMessage });
+  }
 
-      await message.channel.send(new MessageAttachment(await this.client.idiotAPI.crush(crusher.displayAvatarURL({format:"png", size:128}), crush.displayAvatarURL({format:"png", size:512})), "crush.png"));
-      await msg.delete();
-    } catch (error) {
-      msg.edit("Something went wrong, please try again later");
-      this.client.logger.error(error);
-    }
+  async run(message, args, level, loadingMessage) {
+    const crush = await this.cmdVerify(message, args, loadingMessage);
+    const crusher = message.author;
+
+    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.crush(crush.displayAvatarURL({format:"png", size:512}), crusher.displayAvatarURL({format:"png", size:128})), "crush.png"));
+    await loadingMessage.delete();
   }
 }
 

@@ -1,12 +1,12 @@
-const Command = require(`${process.cwd()}/base/Command.js`);
+const Command = require("../../structures/Command.js");
+
 class MyLevel extends Command {
-  constructor(client) {
-    super(client, {
+  constructor(...args) {
+    super(...args, {
       name: "mylevel",
       description: "Displays your permission level for your location.",
       usage: "mylevel",
-      cooldown: 10,
-      guildOnly: true
+      cooldown: 10      
     });
   }
 

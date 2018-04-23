@@ -1,6 +1,6 @@
-const Command = require(`${process.cwd()}/base/Command.js`);
-const { MessageEmbed } = require("discord.js");
+const Command = require("../../structures/Command.js");
 const snek = require("snekfetch");
+const { MessageEmbed } = require("discord.js");
 
 module.exports = class UrbanCommand extends Command {
 
@@ -13,9 +13,11 @@ module.exports = class UrbanCommand extends Command {
     });
   }
 
-  async run(message, [...text]) { // eslint-disable-line no-unused-vars
-    if (!text.length) return message.send(message.getText("MUST_PROVIDE_SEARCH_TERM"));
-    const { body } = await snek.get(`http://api.urbandictionary.com/v0/define?term=${text.join(" ")}`);
+  async run(message, [...text]) {
+    text = text.join(" ");
+    if (!text.length) return message.channel.send("You must provide some term to search in urban dictionary.");
+    const { body } = await snek.get("http://api.urbandictionary.com/v0/define")
+      .query({ term: text });
     if (body.result_type === "no_result") return message.channel.send("No data found...");	
   
     return this.paginate(message, body.list, this.makeEmbed);
@@ -30,13 +32,12 @@ module.exports = class UrbanCommand extends Command {
       .setDescription(description)
       .setThumbnail("https://i.imgur.com/ressY86.png")
       .setTitle(`${list[page].word} - Page ${page+1}/${list.length}`)
-      .addField(":thumbsup:", list[0].thumbs_up, true)
-      .addField(":thumbsdown:", list[0].thumbs_down, true)
+      .addField("👍", list[page].thumbs_up, true)
+      .addField("👎", list[page].thumbs_down, true)
       .addBlankField(true)
-      .setURL(`${list[page].permalink}`)
+      .setURL(list[page].permalink)
       .setFooter(`Author: ${list[page].author}`);
   }
   
 
 };
-
