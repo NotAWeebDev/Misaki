@@ -19,11 +19,10 @@ class Hewwo extends Social {
   }
 
   async run(message, args) {
-    await message.channel.send(this.translate(args.join(" ")));
+    await message.channel.send(this.translate(args));
   }
 
-  translate(phrase) {
-    const words = phrase.split(" ");
+  translate(words) {
     const finalPhrase = [];
     words.forEach(word => {
       if (Math.random() > 0.7) {
