@@ -19,21 +19,9 @@ class Hewwo extends Social {
   }
 
   async run(message, args) {
-    await message.channel.send(this.translate(args));
+    await message.channel.send(await this.client.idiotAPI.owoify(args.join(" ")));
   }
 
-  translate(words) {
-    const finalPhrase = [];
-    words.forEach(word => {
-      if (Math.random() > 0.7) {
-        finalPhrase.push(`${word.charAt(0)}-${word}`);
-      } else {
-        finalPhrase.push(word);
-      }
-    });
-    const x3 = [" x3"," :3", " owo", " OwO", " OWO", " X3", " ***notices bulge*** _OwO, what's this?_", " uwu", " UwU", " UWU"];
-    return finalPhrase.join(" ").replaceAll("over", "uvw").replaceAll("l", "w").replaceAll("r", "w").replaceAll("n", "ny").replaceAll("father", "daddy").replaceAll("mother", "mommy").toLowerCase() + x3.random();
-  }
 }
 
 module.exports = Hewwo;
