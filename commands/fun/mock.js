@@ -25,16 +25,7 @@ class Mock extends Social {
 
   async run(message, args, level, loadingMessage) { 
     const { mock, mockBob } = await this.cmdVerify(message, args, loadingMessage);
-    const { alternateCase } = this; 
-    await message.channel.send(alternateCase(mock.cleanContent), {files: [{attachment: mockBob, name: "mock.png"}]});
-  }
-
-  alternateCase(string) {
-    const chars = string.toUpperCase().split("");
-    for (let i = 0; i < chars.length; i += 2) {
-      chars[i] = chars[i].toLowerCase();
-    }
-    return chars.join("");
+    await message.channel.send(await this.client.idiotAPI.mock(mock.cleanContent), {files: [{attachment: mockBob, name: "mock.png"}]});
   }
 }
 
