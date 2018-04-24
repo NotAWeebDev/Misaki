@@ -1,6 +1,6 @@
 const Social = require("../../../structures/Social.js");
 const { get } = require("snekfetch");
-const h = new (require("html-entities").AllHtmlEntities)(); // HTML encoding decoder
+const h = new (require("html-entities").AllHtmlEntities)(); // HTML encoding decoder/cleaner
 const { MessageEmbed } = require("discord.js");
 
 class Trivia extends Social {
@@ -32,24 +32,22 @@ class Trivia extends Social {
     const emb = new MessageEmbed()
       .setAuthor("Misaki Trivia", this.client.user.displayAvatarURL())
       .setColor(message.guild.me.roles.highest.color || 5198940)
-      .setDescription(h.decode(quiz.question))
-      .addField("A", randomChoices[0])
-      .addField("B", randomChoices[1])
-      .addField("C", randomChoices[2])
-      .addField("D", randomChoices[3])
+      .setDescription(`${h.decode(quiz.question)}\nA: **${randomChoices[0]}**\nB: **${randomChoices[1]}**\nC: **${randomChoices[2]}**\nD: **${randomChoices[3]}**`)
       .setFooter(`Requested by: ${message.author.tag}`, message.author.displayAvatarURL({format: "png", size: 64}));
 
-    const question = await message.awaitReply(null, m => m.author.id === message.author.id, 60000, { embed: emb }); // Ask the question.
+    const question = await message.awaitReply(emb, m => m.author.id === message.author.id && ["a","b","c","d"].includes(m.content.toLowerCase()), 60000); // Ask the question.
+    const msg = question[1]; // The question Embed.
 
-    if (!question) return message.reply("I'm sorry but you took too long to respond."); // Check against time it took. 1 Minute by default.
-    const choice = randomChoices[["a", "b", "c", "d"].indexOf(question.toLowerCase())]; // Assign correct value to "choice" from randomChoices.
-    if (!choice) return message.reply("That's not even on the list..."); // Check against incorrect values, correct is A, B, C and D.
-
+    if (!question[0]) return message.reply("I'm sorry but you took too long to respond."); // Check against time it took. 1 Minute by default.
+    const choice = randomChoices[["a", "b", "c", "d"].indexOf(question[0].toLowerCase())]; // Assign correct value to "choice" from randomChoices.
+    
     if (choice === h.decode(quiz.correct_answer)) { 
-      message.member.givePoints(this.cost * 3); 
-      return message.reply(`That is correct! You won ₲${this.cost * 3}`); 
+      message.member.givePoints(this.cost * 3); // Give the user their points.
+      return msg.edit(msg.embeds[0].setColor(383744).setAuthor("Misaki Trivia; Correct! You won ₲15")); // Modify the Embed to show that they won.
+      //return message.reply(`That is correct! You won ₲${this.cost * 3}`); 
     }
-    return message.reply(`The correct answer was: **${h.decode(quiz.correct_answer)}**, but you selected **${choice}**.`); // Throw if choice !== correct answer
+    return msg.edit(msg.embeds[0].setColor(11862273).setAuthor(`Misaki Trivia; Incorrect, the correct answer was: ${h.decode(quiz.correct_answer)}`)); // Modify the Embed to show they lost.
+    // message.reply(`The correct answer was: **${h.decode(quiz.correct_answer)}**, but you selected **${choice}**.`); // Throw if choice !== correct answer
   }
 }
 

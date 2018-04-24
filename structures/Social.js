@@ -34,7 +34,7 @@ class Social extends Command {
       
           const filter = m => m.author.id === message.author.id;
           const response = await message.awaitReply("", filter, 60000, embed);
-          if (["yes", "y", "confirm"].includes(response)) {
+          if (["yes", "y", "confirm"].includes(response[0])) {
             const msg = await message.channel.send(`${this.client.responses.dailySuccessMessages.random().replaceAll("{{user}}", message.member.displayName).replaceAll("{{amount}}", `₲${pointsReward.toLocaleString()}`)}`);
             score.daily = msg.createdTimestamp + (dailyTime * 60 * 60 * 1000);
             message.member.givePoints(pointsReward);
@@ -42,7 +42,7 @@ class Social extends Command {
             return msg;
           } else
       
-          if (["no", "n", "cancel"].includes(response)) {
+          if (["no", "n", "cancel"].includes(response[0].toLowerCase())) {
             message.channel.send("Claim cancelled.");
           } else {
             message.channel.send("Invalid response, please try again.");
@@ -81,11 +81,11 @@ class Social extends Command {
       "Reply with `cancel` to cancel the message. The message will timeout after 60 seconds."
     ].join("\n"), filter, 60000, null);
 
-    if (["yes", "y", "confirm"].includes(response.toLowerCase())) {
+    if (["yes", "y", "confirm"].includes(response[0].toLowerCase())) {
       getPayer.takePoints(amount);
       getPayee.givePoints(amount);
       await message.channel.send(`The payment of ₲${amount} has been sent to ${getPayee.displayName}.`);
-    } else if (["no", "n", "cancel"].includes(response.toLowerCase())) {
+    } else if (["no", "n", "cancel"].includes(response[0].toLowerCase())) {
       message.channel.send("Payment cancelled");
     } else {
       message.channel.send("Invalid response, please try again.");
