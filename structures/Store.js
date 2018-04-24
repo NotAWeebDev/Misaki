@@ -28,7 +28,7 @@ class Store extends Collection {
     const filepath = path.join(this.dir, file);
     try {
       const parsedFile = {
-        path: filepath,
+        path: file,
         name: path.parse(filepath).name
       };
       const piece = this.set(new (require(filepath))(this.client, parsedFile));
