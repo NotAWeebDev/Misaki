@@ -13,24 +13,30 @@ class Say extends Social {
     });
   }
 
-  async run(message, [channel, ...msg], level, loadingMessage) {
 
-    if (!channel || msg.length < 1) throw new this.client.methods.errors.UsageError("You need to give the bot a message to send.", loadingMessage);
-    msg = msg.join(" ");
+  async cmdVerify(message, args, loadingMessage) {
+    let channelid;
+    if (args.length < 1) throw new this.client.methods.errors.UsageError("You need to give the bot a message to send.", loadingMessage);
+    message.mentions.channels.first() ? channelid = await this.verifyChannel(message, message.mentions.channels.first().id, { msg: loadingMessage }) : channelid = message.channel.id;
 
-    const channelid = await this.verifyChannel(message, channel, { msg: loadingMessage });
-    if (channelid === message.channel.id) msg = channel + " " + msg;    
-    const chn = message.guild.channels.get(channelid);
-    if (chn.permissionsFor(message.guild.me).missing(["SEND_MESSAGES", "READ_MESSAGES"]).length > 0) throw new this.client.methods.errors.UsageError("I do not have permission to `say` in that channel.", loadingMessage);
-    if (chn.permissionsFor(message.member).missing(["SEND_MESSAGES", "READ_MESSAGES"]).length > 0) throw new this.client.methods.errors.UsageError("You do not have permission to `say` in that channel.", loadingMessage);
-    
-    message.delete();
+    const channel = message.guild.channels.get(channelid);
+    if (!channel.permissionsFor(message.member).has(["SEND_MESSAGES", "VIEW_CHANNEL"])) throw new this.client.methods.errors.UsageError("You do not have permission to `say` in that channel.", loadingMessage);
+    if (!channel.permissionsFor(message.guild.me).has(["SEND_MESSAGES", "VIEW_CHANNEL"])) throw new this.client.methods.errors.UsageError("I do not have permission to `say` in that channel.", loadingMessage);
 
-    chn.startTyping();
+    return channel;
+  }
+
+  async run(message, args, level, loadingMessage) {
+    const channel = await this.cmdVerify(message, args, loadingMessage);
+
+    await message.delete();
+    message.mentions.channels.first() ? args.shift() : args;
+    channel.startTyping();
+
     setTimeout(() => {
-      chn.send(msg);
-      chn.stopTyping(true);
-    }, 100 * msg.length / 2);
+      channel.send(args.join(" "));
+      channel.stopTyping(true);
+    }, 100 * args.join(" ").length / 2);
   }
 }
 
