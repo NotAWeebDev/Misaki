@@ -13,24 +13,29 @@ class Say extends Social {
     });
   }
 
-  async run(message, [channel, ...msg], level, loadingMessage) {
 
-    if (!channel || msg.length < 1) throw new this.client.methods.errors.UsageError("You need to give the bot a message to send.", loadingMessage);
-    msg = msg.join(" ");
+  async cmdVerify(message, args, loadingMessage) {
+    if (args.length < 1) throw new this.client.methods.errors.UsageError("You need to give the bot a message to send.", loadingMessage);
+    const channelid = await this.verifyChannel(message, args[0], { msg: loadingMessage });
+    if (channelid !== message.channel.id) {
+      args.shift();
+    }
+    const channel = message.guild.channels.get(channelid);
+    if (channel.permissionsFor(message.member).missing(["SEND_MESSAGES", "VIEW_CHANNEL"]).length > 0) throw new this.client.methods.errors.UsageError("You do not have permission to `say` in that channel.", loadingMessage);
+    if (channel.permissionsFor(message.guild.me).missing(["SEND_MESSAGES", "VIEW_CHANNEL"]).length > 0) throw new this.client.methods.errors.UsageError("I do not have permission to `say` in that channel.", loadingMessage);
+    return channel;
+  }
 
-    const channelid = await this.verifyChannel(message, channel, { msg: loadingMessage });
-    if (channelid === message.channel.id) msg = channel + " " + msg;    
-    const chn = message.guild.channels.get(channelid);
-    if (chn.permissionsFor(message.guild.me).missing(["SEND_MESSAGES", "READ_MESSAGES"]).length > 0) throw new this.client.methods.errors.UsageError("I do not have permission to `say` in that channel.", loadingMessage);
-    if (chn.permissionsFor(message.member).missing(["SEND_MESSAGES", "READ_MESSAGES"]).length > 0) throw new this.client.methods.errors.UsageError("You do not have permission to `say` in that channel.", loadingMessage);
-    
+  async run(message, args, level, loadingMessage) {
+    const channel = await this.cmdVerify(message, args, loadingMessage);
+
     message.delete();
 
-    chn.startTyping();
+    channel.startTyping();
     setTimeout(() => {
-      chn.send(msg);
-      chn.stopTyping(true);
-    }, 100 * msg.length / 2);
+      channel.send(args.join(" "));
+      channel.stopTyping(true);
+    }, 100 * args.join(" ").length / 2);
   }
 }
 
