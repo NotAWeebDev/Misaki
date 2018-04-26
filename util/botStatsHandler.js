@@ -14,7 +14,8 @@ module.exports = class BotListHandler {
       await post(`https://bots.discord.pw/api/bots/${this.client.user.id}/stats`)
         .set("Authorization", process.env.DPWTOKEN)
         .send({server_count: this.client.guilds.size });
-      console.log("Submitted stats to DBL and DPW");
+      
+      this.client.console.log("\u001b[43;30m[Submitted Stats to DBL and DPW]");
     } catch (error) {
       this.client.logger.error(error);
     }
