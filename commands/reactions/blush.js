@@ -27,7 +27,7 @@ class Blush extends Social {
         "title": "Click here if the image failed to load.",
         "url": blush,
         "description": `**${message.member.displayName}** goes red at the sight of **${target.first().displayName}**.`,
-        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "color": 6192321,
         "image": {
           "url": blush
         },

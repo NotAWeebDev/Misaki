@@ -27,7 +27,7 @@ class Cry extends Social {
         "title": "Click here if the image failed to load.",
         "url": cry,
         "description": `**${target.first().displayName}**, **${message.member.displayName}** just cried on your shoulder.`,
-        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "color": 6192321,
         "image": {
           "url": cry
         },

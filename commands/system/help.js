@@ -22,7 +22,7 @@ class Help extends Command {
 
     const embed = new MessageEmbed()
       .setTimestamp()
-      .setColor(message.guild.me.roles.highest.color || 5198940)
+      .setColor(6192321)
       .setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL()); 
 
     let currentCategory = "";

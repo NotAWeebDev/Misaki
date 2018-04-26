@@ -18,7 +18,7 @@ class Banghead extends Social {
       embed: {
         "title": "Click here if the image failed to load.",
         "url": banghead,
-        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "color": 6192321,
         "image": {
           "url": banghead
         },

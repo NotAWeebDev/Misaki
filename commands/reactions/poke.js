@@ -27,7 +27,7 @@ class Poke extends Social {
         "title": "Click here if the image failed to load.",
         "url": poke,
         "description": `**${target.first().displayName}**, you just got poked by **${message.member.displayName}**`,
-        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "color": 6192321,
         "image": {
           "url": poke
         },
