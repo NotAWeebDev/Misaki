@@ -17,7 +17,7 @@ class AAvatar extends Social {
   }
 
   async run(message, args, level, loadingMessage) {
-    const { body } = await get(`https://nekos.life/api/v2/img/${message.channel.nsfw ? "nsfw_" : ""}avatar`);
+    const { body } = await get(`https://nekos.life/api/v2/img/${message.channel.nsfw || message.channel.name.startsWith("nsfw-") || message.channel.name.startsWith("nsfw_") ? "nsfw_" : ""}avatar`);
     await loadingMessage.edit({
       embed: {
         "title": "Click here if the image failed to load.",
