@@ -4,6 +4,7 @@ const { MessageAttachment } = require("discord.js");
 module.exports = class extends Event {
 
   async run(member) {
+    if (!member.guild.available) return;
     if (!member || !member.id || !member.guild) return;
     const settings = this.client.getGuildSettings(member.guild);
 

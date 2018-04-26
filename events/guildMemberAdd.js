@@ -4,6 +4,7 @@ const { MessageAttachment } = require("discord.js");
 module.exports = class extends Event {
 
   async run(member) {
+    if (!member.guild.available) return;
     if (!member || !member.id || !member.guild) return;
     
     if (!member.user.bot) this.client.points.set(`${member.guild.id}-${member.id}`, { points: 0, level:0, user: member.id, guild: member.guild.id, daily: 1504120109 });
