@@ -11,6 +11,7 @@ class Neko extends Social {
       extended: "This command will return a Neko, a lewd Neko if used in a NSFW channel",
       cost: 40,
       cooldown: 10,
+      aliases: ["catgirl"]
     });
   }
 
