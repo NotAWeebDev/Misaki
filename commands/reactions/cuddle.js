@@ -8,6 +8,7 @@ class Cuddle extends Social {
       usage: "cuddle <@mention>",
       category: "Reactions",
       cost: 5,
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

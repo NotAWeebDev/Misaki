@@ -8,7 +8,8 @@ class Nom extends Social {
       usage: "nom <@mention>",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to nom on someone..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to nom on someone...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

@@ -8,7 +8,8 @@ class Pout extends Social {
       usage: "pout",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is pouting..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is pouting...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

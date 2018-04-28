@@ -8,7 +8,8 @@ class Smug extends Social {
       usage: "smug",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is feeling smug..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is feeling smug...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

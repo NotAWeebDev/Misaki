@@ -8,7 +8,8 @@ class Lick extends Social {
       usage: "lick <@mention>",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to lick someone..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to lick someone...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

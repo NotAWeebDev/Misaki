@@ -8,7 +8,8 @@ class Nyan extends Social {
       usage: "nyan",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants a nyan..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants a nyan...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

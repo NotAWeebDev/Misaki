@@ -8,7 +8,8 @@ class Blush extends Social {
       usage: "blush <@mention>",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** feels their face going red..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** feels their face going red...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

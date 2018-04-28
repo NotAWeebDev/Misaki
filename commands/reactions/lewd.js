@@ -8,7 +8,8 @@ class Lewd extends Social {
       usage: "lewd [@mention]",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** think about something lewd..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** think about something lewd...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

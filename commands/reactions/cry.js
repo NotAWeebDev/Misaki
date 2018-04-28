@@ -8,7 +8,8 @@ class Cry extends Social {
       usage: "cry <@mention>",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to cry it all away..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to cry it all away...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

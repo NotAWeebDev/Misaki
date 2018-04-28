@@ -1,14 +1,15 @@
 const Social = require("../../structures/Social.js");
 
-class HoldHand extends Social {
+class HighFive extends Social {
   constructor(...args) {
     super(...args, {
-      name: "holdhand",
-      description: "Someone needs their hand held.",
-      usage: "holdhand <@mention>",
+      name: "highfive",
+      description: "Highfive someone 🖐.",
+      usage: "highfive <@mention>",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** reaches out for you...",
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** yells out \"Up high!\"...",
+      aliases: ["🖐", "hi5"],
       botPerms: ["EMBED_LINKS"]
     });
   }
@@ -22,15 +23,15 @@ class HoldHand extends Social {
 
   async run(message, args, level, loadingMessage) {
     const target = await this.cmdVerify(message, args, loadingMessage);    
-    const holdhand = await this.cmdWeeb("handholding", "gif", message.channel.nsfw);
+    const highfive = await this.cmdWeeb("highfive", "gif", message.channel.nsfw);
     await loadingMessage.edit({
       embed: {
         "title": "Click here if the image failed to load.",
-        "url": holdhand,
-        "description": `**${target.first().displayName}** and **${message.member.displayName}** are holding hands... LEWD!`,
+        "url": highfive,
+        "description": `**${message.member.displayName}** just gave **${target.first().displayName}** a high five!`,
         "color": 6192321,
         "image": {
-          "url": holdhand
+          "url": highfive
         },
         "footer": {
           "icon_url": message.author.displayAvatarURL({ format: "png", size: 32 }),
@@ -42,4 +43,4 @@ class HoldHand extends Social {
   }
 }
 
-module.exports = HoldHand;
+module.exports = HighFive;

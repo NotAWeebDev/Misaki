@@ -8,7 +8,8 @@ class Slap extends Social {
       usage: "slap <@mention>",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** thinks someone needs a smack..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** thinks someone needs a smack...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

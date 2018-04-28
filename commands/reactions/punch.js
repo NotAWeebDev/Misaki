@@ -8,7 +8,8 @@ class Punch extends Social {
       usage: "punch <@mention>",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to punch someone..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to punch someone...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

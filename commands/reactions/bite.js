@@ -8,7 +8,8 @@ class Bite extends Social {
       usage: "bite <@mention>",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to sink their teeth into people..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to sink their teeth into people...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

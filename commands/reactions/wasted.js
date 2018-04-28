@@ -1,27 +1,29 @@
 const Social = require("../../structures/Social.js");
 
-class Banghead extends Social {
+class Wasted extends Social {
   constructor(...args) {
     super(...args, {
-      name: "banghead",
-      description: "AAARGHHH!",
-      usage: "banghead",
+      name: "wasted",
+      description: "They ded.",
+      usage: "wasted <@mention>",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** thinks a palm isn't enough.",
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** got wasted...",
       botPerms: ["EMBED_LINKS"]
     });
   }
 
   async run(message, args, level, loadingMessage) {
-    const banghead = await this.cmdWeeb("banghead", "gif", message.channel.nsfw);
+    const target = message.mentions.members;
+    const wasted = await this.cmdWeeb("wasted", "gif", message.channel.nsfw);
     await loadingMessage.edit({
       embed: {
         "title": "Click here if the image failed to load.",
-        "url": banghead,
+        "url": wasted,
+        "description": `**${message.member.displayName}** just ${message.mentions.members.size === 0 ? "got wasted..." : `wasted **${target.first().displayName}**...`}`,
         "color": 6192321,
         "image": {
-          "url": banghead
+          "url": wasted
         },
         "footer": {
           "icon_url": message.author.displayAvatarURL({ format: "png", size: 32 }),
@@ -33,4 +35,4 @@ class Banghead extends Social {
   }
 }
 
-module.exports = Banghead;
+module.exports = Wasted;

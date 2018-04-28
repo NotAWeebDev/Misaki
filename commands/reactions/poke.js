@@ -8,7 +8,8 @@ class Poke extends Social {
       usage: "poke <@mention>",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to poke someone."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to poke someone.",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

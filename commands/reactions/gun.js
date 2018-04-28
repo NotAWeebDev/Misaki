@@ -8,7 +8,8 @@ class Gun extends Social {
       usage: "gun",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** needs a bigger gun."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** needs a bigger gun.",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

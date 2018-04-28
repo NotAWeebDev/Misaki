@@ -8,7 +8,8 @@ class Stare extends Social {
       usage: "stare <@mention>",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** starts staring at someone..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** starts staring at someone...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

@@ -8,7 +8,8 @@ class Dance extends Social {
       usage: "dance [@mention]",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** breaks out some dance moves..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** breaks out some dance moves...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 

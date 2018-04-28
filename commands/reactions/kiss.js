@@ -8,7 +8,8 @@ class Kiss extends Social {
       usage: "kiss <@mention>",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to give a kiss..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to give a kiss...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 
