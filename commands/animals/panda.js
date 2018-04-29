@@ -1,24 +1,24 @@
 const Social = require("../../structures/Social.js");
 const { get } = require("snekfetch");
 
-class Tiger extends Social {
+class Panda extends Social {
   constructor(...args) {
     super(...args, {
-      name: "tiger",
-      description: "Post a randomly selected image of a tiger.",
+      name: "panda",
+      description: "Post a randomly selected image of a panda.",
       category: "Animals",
-      usage: "tiger",
-      extended: "This command will return a beautiful tiger.",
+      usage: "panda",
+      extended: "This command will return a beautiful panda.",
       cost: 5,
       cooldown: 10,
-      aliases: ["tigger"],
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting a tiger...",
+      aliases: ["poe"],
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is petting a panda...",
       botPerms: ["EMBED_LINKS"]
     });
   }
 
   async run(message, args, level, loadingMessage) {
-    const { body } = await get("https://animals.anidiots.guide/tiger");
+    const { body } = await get("https://animals.anidiots.guide/panda");
     await loadingMessage.edit({
       embed: {
         "title": "Click here if the image failed to load.",
@@ -36,4 +36,4 @@ class Tiger extends Social {
   }
 }
 
-module.exports = Tiger;
+module.exports = Panda;
