@@ -1,4 +1,4 @@
-const Social = require("../../structures/Social.js");
+const Social = require("../../../structures/Social.js");
 const { readFile } = require("fs-nextra");
 
 class Mock extends Social {
