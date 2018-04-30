@@ -10,7 +10,7 @@ module.exports = class extends Event {
     this.client.console.log(`${this.client.user.tag}, ready to serve ${this.client.users.size} users in ${this.client.guilds.size} servers.`);
     
     setInterval(() => {
-      if (this.client.status !== 0) return;
+      if (this.client.ws.status !== 0) return;
       const toRemind = this.client.reminders.filter(reminder => reminder.reminderTimestamp <= Date.now());
       toRemind.forEach(reminder => {
         this.client.users.get(reminder.id).send(`You asked me to remind you about: \`${reminder.reminder}\` in \`${this.client.guilds.get(reminder.guildid).name}\``);
