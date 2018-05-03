@@ -1,19 +1,13 @@
 const Owner = require("../../structures/Owner.js");
 
-const statusObject = {
-  0: "Dispatch",
-  1: "Heartbeat",
-  2: "Identify",
-  3: "Status Update",
-  4: "Voice State Update",
-  5: "Voice Server Ping",
-  6: "Resume",
-  7: "Reconnect",
-  8: "Request Guild Members",
-  9: "Invalid Session",
-  10: "Hello",
-  11: "Heartbeat ACK",
-};
+const statuses = [
+  "Ready",
+  "Connecting",
+  "Reconnecting",
+  "Idle",
+  "Nearly",
+  "Disconnected"
+];
 
 class Health extends Owner {
   constructor(...args) {
@@ -36,10 +30,11 @@ class Health extends Owner {
     
     const { shards } = this.client.ws;
     for (let i = 0; i < shards.length; i++) {
-      output.push(`Shard ${i}: STATUS: ${statusObject[shards[i].status]}, with ${counts[i]} guilds`);
+      output.push(`Shard ${i}: STATUS: ${statuses[shards[i].status]}, with ${counts[i]} guilds`);
     }
     
-    message.channel.send(output, { codeblock: "http" });  }
+    message.channel.send(output, { codeblock: "http" });
+  }
 }
 
 module.exports = Health;
