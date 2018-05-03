@@ -33,7 +33,7 @@ class Health extends Owner {
       output.push(`Shard ${i}: STATUS: ${statuses[shards[i].status]}, with ${counts[i]} guilds`);
     }
     
-    message.channel.send(output, { codeblock: "http" });
+    message.channel.send(output, { code: "http" });
   }
 }
 
