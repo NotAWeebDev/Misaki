@@ -30,7 +30,7 @@ class Health extends Owner {
     
     const { shards } = this.client.ws;
     for (let i = 0; i < shards.length; i++) {
-      output.push(`Shard ${i}: STATUS: ${statuses[shards[i].status]}, with ${counts[i]} guilds`);
+      output.push(`Shard ${i}: ${statuses[shards[i].status]}, serving ${counts[i]} guilds`);
     }
     
     message.channel.send(output, { code: "http" });
