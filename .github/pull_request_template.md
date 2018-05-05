@@ -1,15 +1,15 @@
-**Basic Description of Changes made:**
+# Basic Description of Changes made
 
-Fill this section with a description of changes and screenshot proof of working functionality.
+Fill this section with a description of changes, proof of working functionality and explain why you think it should be merged.
 
-**Semantic review classification:**
+## Semantic review classification
 
 - [ ] This PR includes new or modified commands, methods or extentions.
   - [ ] This PR changes the framework's interface¹
     - [ ] This PR requires immediate review²
   - [ ] This PR includes breaking changes¹
     - [ ] This PR requires immediate review²
-  
+
 - [ ] This PR includes **only** non-breaking code changes³
 
 - Key
