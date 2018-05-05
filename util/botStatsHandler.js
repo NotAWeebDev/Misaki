@@ -10,10 +10,13 @@ module.exports = class BotListHandler {
     try {
       await post(`https://discordbots.org/api/bots/${this.client.user.id}/stats`)
         .set("Authorization", process.env.DBLTOKEN)
-        .send({server_count: this.client.guilds.size});
+        // No idea how to get the actual `shard_id`
+        .send({ server_count: this.client.guilds.size, shard_count: this.client.ws.shards.length });
+
       await post(`https://bots.discord.pw/api/bots/${this.client.user.id}/stats`)
         .set("Authorization", process.env.DPWTOKEN)
-        .send({server_count: this.client.guilds.size });
+        // No idea how to get the actual `shard_id`
+        .send({ server_count: this.client.guilds.size, shard_count: this.client.ws.shards.length });
       
       this.client.console.log("\u001b[43;30m[Submitted Stats to DBL and DPW]");
     } catch (error) {
