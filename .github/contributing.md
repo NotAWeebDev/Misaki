@@ -1,6 +1,6 @@
 # Contributing
 
-**The issue tracker is only for bug reports and enhancement suggestions. If you have a question, please ask it in the [Okami](https://discord.gg/RasxyYT) instead of opening an issue – you will get redirected there anyway.**
+**The issue tracker is only for bug reports and enhancement suggestions. If you have a question, please ask it in the [Okami Academy](https://discord.gg/RasxyYT) instead of opening an issue – you will get redirected there anyway.**
 
 **Pull Request** will be shortened to **PR** for simplicity sake.
 
