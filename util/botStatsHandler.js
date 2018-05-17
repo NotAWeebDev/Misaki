@@ -18,7 +18,7 @@ module.exports = class BotListHandler {
       
       this.client.console.log("\u001b[43;30m[Submitted Stats to DBL and DPW]");
     } catch (error) {
-      this.client.logger.error(error);
+      this.client.console.log(error);
     }
   }
 };
