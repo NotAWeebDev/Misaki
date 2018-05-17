@@ -23,7 +23,7 @@ class Update extends Owner {
     if (stdout) out.push(stdout);
     if (stderr) out.push(stderr);
     await message.channel.send(out.join("---\n"), { code: true });
-    if (!stdout.toString().includes("Already up-to-date.")) {
+    if (!stdout.toString().includes("Already up-to-date.") && message.flags[0] === "restart") {
       this.client.commands.get("reboot").run(message, args, level);
     }
   }

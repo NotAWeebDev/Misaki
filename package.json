@@ -22,7 +22,9 @@
   },
   "homepage": "https://github.com/NotAWeebDev/Misaki#readme",
   "dependencies": {
-    "discord.js": "github:discordjs/discord.js#internal-sharding",
+    "canvas": "github:Automattic/node-canvas#92b192447e9b9ae98da0f801e4e34afdd1dc1ef8",
+    "canvas-constructor": "^1.0.1",
+    "discord.js": "github:discordjs/discord.js#7e378652d230d4cb83022b029c1cbbfab0751c8e",
     "dotenv": "^5.0.1",
     "enmap": "^2.2.1",
     "enmap-level": "^2.1.0",
