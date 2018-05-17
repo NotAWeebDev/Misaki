@@ -6,7 +6,8 @@ class Loader extends Command {
     super(...args, {
       name: "load",
       description: "Loads a all commands or events.",
-      usage: "load <store>"
+      usage: "load <store>",
+      aliases:["loader"]
     });
   }
 
