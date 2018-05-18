@@ -7,11 +7,10 @@ class PVid extends Social {
       name: "pvid",
       description: "This command will return porn in gif form.",
       category: "NSFW",
-      usage: "pvid",
+      usage: "pvid [search term]",
       cost: 40,
       cooldown: 10,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is looking for porn videos...",
-      aliases: ["porngif"]
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is looking for porn videos..."
     });
   }
 
