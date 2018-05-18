@@ -38,6 +38,7 @@
     "moment-duration-format": "^2.2.2",
     "ms": "^2.1.1",
     "overwatch-js": "^1.6.5",
+    "pornsearch": "^2.4.2",
     "slot-machine": "^2.1.0",
     "snekfetch": "^3.6.4"
   },
