@@ -79,7 +79,7 @@ class Store extends Social {
       return message.channel.send(`You currently have ₲${userPoints.toLocaleString()}, but the token costs ${tokenPrice.toLocaleString()}!`);
     }
     const filter = m => m.author.id === message.author.id;
-    const number = await message.awaitReply(`How many tokens do you want to buy ?`, filter, undefined, null);
+    const number = await message.awaitReply("How many tokens do you want to buy ?", filter, undefined, null);
     const response = await message.awaitReply(`Are you sure you want to purchase ${number == 1 ? "a" : number} Slot Token${number == 1 ? "" : "s"} for ₲${message.settings.tokenPrice * number}?`, filter, undefined, null);
     if (["y", "yes"].includes(response.toLowerCase())) {
       message.member.takePoints(tokenPrice * number);
