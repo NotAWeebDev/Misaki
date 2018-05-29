@@ -37,8 +37,8 @@ class Social extends Command {
           if (["yes", "y", "confirm"].includes(response)) {
             const msg = await message.channel.send(`${this.client.responses.dailySuccessMessages.random().replaceAll("{{user}}", message.member.displayName).replaceAll("{{amount}}", `₲${pointsReward.toLocaleString()}`)}`);
             score.daily = msg.createdTimestamp + (dailyTime * 60 * 60 * 1000);
-            message.member.givePoints(pointsReward);
             this.client.points.set(message.member.fullId, score);
+            message.member.givePoints(pointsReward);
             return msg;
           } else
       
@@ -51,8 +51,8 @@ class Social extends Command {
         } else {
           const msg = await message.channel.send(`${this.client.responses.dailySuccessMessages.random().replaceAll("{{user}}", message.member.displayName).replaceAll("{{amount}}", `₲${pointsReward.toLocaleString()}`)}`);
           score.daily = msg.createdTimestamp + (dailyTime * 60 * 60 * 1000);
-          message.member.givePoints(pointsReward);
           this.client.points.set(message.member.fullId, score);
+          message.member.givePoints(pointsReward);
           return msg;
       
         }
