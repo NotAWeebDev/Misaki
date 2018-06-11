@@ -83,7 +83,7 @@ class Store extends Social {
     const response = await message.awaitReply(`Are you sure you want to purchase ${number == 1 ? "a" : number} Slot Token${number == 1 ? "" : "s"} for ₲${message.settings.tokenPrice * number}?`, filter, undefined, null);
     if (["y", "yes"].includes(response.toLowerCase())) {
       message.member.takePoints(tokenPrice * number);
-      await message.member.giveItem("tokens", number);
+      await message.member.giveItem("tokens", Number(number));
       message.channel.send("You have bought a token");
     } else if (["n", "no", "cancel"].includes(response.toLowerCase())) {
       message.response(undefined, "Transaction cancelled.");
