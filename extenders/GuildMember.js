@@ -19,27 +19,27 @@ module.exports = Structures.extend("GuildMember", GuildMember => class extends G
   }
 
   giveItem(item, amount) {
-    this.inventory[item] += Number(amount);
+    Number(this.inventory[item]) += Number(amount);
     return this.client.inventory.set(this.fullId, this.inventory);
   }
 
   takeItem(item, amount) {
-    this.inventory[item] -= Number(amount);
+     Number(this.inventory[item]) -= Number(amount);
     return this.client.inventory.set(this.fullId, this.inventory);
   }
 
   givePoints(points) {
-    this.score.points += Number(points);
+     Number(this.score.points) += Number(points);
     return this.client.points.set(this.fullId, this.score);
   }
 
   takePoints(points) {
-    this.score.points -= Number(points);
+     Number(this.score.points) -= Number(points);
     return this.client.points.set(this.fullId, this.score);
   }
 
   setLevel(level) {
-    this.score.level = Number(level);
+     Number(this.score.level) = Number(level);
     return this.client.points.set(this.fullId, this.score);
   }
 
