@@ -19,12 +19,12 @@ module.exports = Structures.extend("GuildMember", GuildMember => class extends G
   }
 
   giveItem(item, amount) {
-    this.inventory[item] += amount;
+    this.inventory[item] += Number(amount);
     return this.client.inventory.set(this.fullId, this.inventory);
   }
 
   takeItem(item, amount) {
-    this.inventory[item] -= amount;
+    this.inventory[item] -= Number(amount);
     return this.client.inventory.set(this.fullId, this.inventory);
   }
 
