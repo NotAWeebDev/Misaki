@@ -35,7 +35,7 @@ class Ship extends Social {
         "title": `${shipper.displayName} ❤ ${shipped.displayName}`,
         "description": `**Love %**\n${counter}\n\n${final_name}`,
         "url": body.message,
-        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "color": 6192321,
         "image": {
           "url": body.message
         },

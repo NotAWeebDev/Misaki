@@ -8,7 +8,8 @@ class Gun extends Social {
       usage: "gun",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** needs a bigger gun."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** needs a bigger gun.",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 
@@ -18,7 +19,7 @@ class Gun extends Social {
       embed: {
         "title": "Click here if the image failed to load.",
         "url": bang,
-        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "color": 6192321,
         "image": {
           "url": bang
         },

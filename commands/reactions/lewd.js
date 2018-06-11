@@ -8,7 +8,8 @@ class Lewd extends Social {
       usage: "lewd [@mention]",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** think about something lewd..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** think about something lewd...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 
@@ -22,7 +23,7 @@ class Lewd extends Social {
         "title": "Click here if the image failed to load.",
         "url": lewd,
         "description": `**${message.member.displayName}** thinks ${response} is a bit lewd.`,
-        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "color": 6192321,
         "image": {
           "url": lewd
         },

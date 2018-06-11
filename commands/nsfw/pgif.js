@@ -22,7 +22,7 @@ class PGif extends Social {
       embed: {
         "title": "Click here if the image failed to load.",
         "url": body.message,
-        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "color": 6192321,
         "image": {
           "url": body.message
         },

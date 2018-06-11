@@ -1,13 +1,13 @@
 const Social = require("../../structures/Social.js");
 const { MessageAttachment } = require("discord.js");
-//-ithres [@mention] <number> | -threshold [@mention] <number> | 
+
 class Filter extends Social {
   constructor(...args) {
     super(...args, {
       name: "filter",
       description: "Change the style of your avatar with these basic filters.",
       category: "Canvas",
-      usage: "filter < -sepia [@mention] | -invert [@mention] | -greyscale [@mention] | -igrey [@mention] | -silhouette [@mention] | -darkness [@mention] <number> | -brightness [@mention] <number>>",
+      usage: "filter < -sepia [@mention] | -invert [@mention] | -greyscale [@mention] | -igrey [@mention] | -ithres [@mention] <number> | -threshold [@mention] <number> | -silhouette [@mention] | -darkness [@mention] <number> | -brightness [@mention] <number>>",
       cost: 10,
       cooldown: 10,
       aliases: ["flt"],
@@ -48,17 +48,15 @@ class Filter extends Social {
         await message.channel.send(new MessageAttachment(await this.client.idiotAPI.silhouette(person.displayAvatarURL({ format: "png", size: 2048 })), `${message.author.id}-silhouette.png`));
         await loadingMessage.delete();
         break;
-      // case "ithres":
-      //   msg = await message.channel.send("<a:typing:397490442469376001> Applying inverted threshold filter...");
-      //   await message.channel.send(new MessageAttachment(await this.client.idiotAPI.iThreshold(person.displayAvatarURL({ format: "png", size: 2048 }), args[0]), `${message.author.id}-inverted-threshold.png`));
-      //   await msg.delete();
-      //   break;
-      // case "thres":
-      // case "threshold":
-      //   msg = await message.channel.send("<a:typing:397490442469376001> Applying threshold filter...");
-      //   await message.channel.send(new MessageAttachment(await this.client.idiotAPI.threshold(person.displayAvatarURL({ format: "png", size: 2048 }), args[0]), `${message.author.id}-threshold.png`));
-      //   await msg.delete();
-      //   break;
+      case "ithres":
+        await message.channel.send(new MessageAttachment(await this.client.idiotAPI.iThreshold(person.displayAvatarURL({ format: "png", size: 2048 }), args[0]), `${message.author.id}-inverted-threshold.png`));
+        await loadingMessage.delete();
+        break;
+      case "thres":
+      case "threshold":
+        await message.channel.send(new MessageAttachment(await this.client.idiotAPI.threshold(person.displayAvatarURL({ format: "png", size: 2048 }), args[0]), `${message.author.id}-threshold.png`));
+        await loadingMessage.delete();
+        break;
       case "brightness":
         await message.channel.send(new MessageAttachment(await this.client.idiotAPI.brightness(person.displayAvatarURL({ format: "png", size: 2048 }), args[0]), `${message.author.id}-brightness.png`));
         await loadingMessage.delete();

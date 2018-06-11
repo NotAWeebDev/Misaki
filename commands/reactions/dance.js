@@ -8,7 +8,8 @@ class Dance extends Social {
       usage: "dance [@mention]",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** breaks out some dance moves..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** breaks out some dance moves...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 
@@ -22,7 +23,7 @@ class Dance extends Social {
         "title": "Click here if the image failed to load.",
         "url": dance,
         "description": `**${message.member.displayName}** boogies${response}`,
-        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "color": 6192321,
         "image": {
           "url": dance
         },

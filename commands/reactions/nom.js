@@ -8,7 +8,8 @@ class Nom extends Social {
       usage: "nom <@mention>",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to nom on someone..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to nom on someone...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 
@@ -27,7 +28,7 @@ class Nom extends Social {
         "title": "Click here if the image failed to load.",
         "url": nom,
         "description": `**${target.first().displayName}**, you just got nom'ed by **${message.member.displayName}**`,
-        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "color": 6192321,
         "image": {
           "url": nom
         },

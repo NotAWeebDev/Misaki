@@ -8,7 +8,8 @@ class Cry extends Social {
       usage: "cry <@mention>",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to cry it all away..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to cry it all away...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 
@@ -27,7 +28,7 @@ class Cry extends Social {
         "title": "Click here if the image failed to load.",
         "url": cry,
         "description": `**${target.first().displayName}**, **${message.member.displayName}** just cried on your shoulder.`,
-        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "color": 6192321,
         "image": {
           "url": cry
         },

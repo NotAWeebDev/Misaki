@@ -1,4 +1,4 @@
-const Social = require("../../structures/Social.js");
+const Social = require("../../../structures/Social.js");
 const CHANNEL_REGEX = /<#(\d{17,19})>/g;
 
 class Say extends Social {
@@ -6,10 +6,11 @@ class Say extends Social {
     super(...args, {
       name: "say",
       description: "Make the bot say something.",
-      usage: "say [-owo | -mock] [#channel] <message>",
+      usage: "say [-owo | -mock | -cursive | -vapor | -tiny] [#channel] <message>",
       category: "Fun",
       extended: "You can send a message to another channel via this command.",
       cost: 5,
+      cooldown: 60,
       aliases: ["speak"]
     });
   }
@@ -40,8 +41,22 @@ class Say extends Social {
         case "owo":
           channel.send(await this.client.idiotAPI.owoify(response));
           break;
+
         case "mock":
           channel.send(await this.client.idiotAPI.mock(response));
+          break;
+
+        case "cursive":
+        case "fancy":
+          channel.send(await this.client.idiotAPI.cursive(response, "normal"));
+          break;
+          
+        case "vapor":
+          channel.send(await this.client.idiotAPI.vapor(response));
+          break;
+          
+        case "tiny":
+          channel.send(await this.client.idiotAPI.vapor(response, "subscript"));
           break;
           
         case "cancer":

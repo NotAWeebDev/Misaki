@@ -19,7 +19,7 @@ class FML extends Social {
     });
   }
 
-  async run(message, args, level, loadingMassage) {
+  async run(message, args, level, loadingMessage) {
     const { text } = await request.get("http://www.fmylife.com/random");
     const root = HTMLParser.parse(text);
     const article = root.querySelector(".block a");
@@ -33,8 +33,8 @@ class FML extends Social {
       .setDescription(`_${article.childNodes[0].text}\n\n_`)
       .addField("I agree, your life sucks", updoot.childNodes[0].text, true)
       .addField("You deserved it:", downdoot.childNodes[0].text, true);
-    if (article.childNodes[0].text.length < 5) throw new this.client.methods.errors.APIError("Today, something went wrong, so you'll have to try again in a few moments. FML", loadingMassage);
-    loadingMassage.edit({ embed });
+    if (article.childNodes[0].text.length < 5) throw new this.client.methods.errors.APIError("Today, something went wrong, so you'll have to try again in a few moments. FML", loadingMessage);
+    loadingMessage.edit({ embed });
   }
 }
 

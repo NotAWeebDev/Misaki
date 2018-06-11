@@ -8,7 +8,8 @@ class Tickle extends Social {
       usage: "tickle <@mention>",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** goes to tickle someone..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** goes to tickle someone...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 
@@ -27,7 +28,7 @@ class Tickle extends Social {
         "title": "Click here if the image failed to load.",
         "url": tickle,
         "description": `**${target.first().displayName}**, you just got tickled by **${message.member.displayName}**`,
-        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "color": 6192321,
         "image": {
           "url": tickle
         },

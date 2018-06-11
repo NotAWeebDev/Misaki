@@ -8,6 +8,7 @@ class Cuddle extends Social {
       usage: "cuddle <@mention>",
       category: "Reactions",
       cost: 5,
+      botPerms: ["EMBED_LINKS"]
     });
   }
 
@@ -27,7 +28,7 @@ class Cuddle extends Social {
         "title": "Click here if the image failed to load.",
         "url": cuddle,
         "description": `**${target.first().displayName}**, you just got cuddled by **${message.member.displayName}**`,
-        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "color": 6192321,
         "image": {
           "url": cuddle
         },

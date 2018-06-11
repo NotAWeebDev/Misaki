@@ -11,6 +11,7 @@ class Neko extends Social {
       extended: "This command will return a Neko, a lewd Neko if used in a NSFW channel",
       cost: 40,
       cooldown: 10,
+      aliases: ["catgirl"]
     });
   }
 
@@ -23,7 +24,7 @@ class Neko extends Social {
       embed: {
         "title": "Click here if the image failed to load.",
         "url": body.url,
-        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "color": 6192321,
         "image": {
           "url": body.url
         },

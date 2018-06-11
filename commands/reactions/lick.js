@@ -8,7 +8,8 @@ class Lick extends Social {
       usage: "lick <@mention>",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to lick someone..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to lick someone...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 
@@ -27,7 +28,7 @@ class Lick extends Social {
         "title": "Click here if the image failed to load.",
         "url": lick,
         "description": `**${target.first().displayName}**, you just got licked by **${message.member.displayName}**`,
-        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "color": 6192321,
         "image": {
           "url": lick
         },

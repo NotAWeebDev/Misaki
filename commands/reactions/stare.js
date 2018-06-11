@@ -8,7 +8,8 @@ class Stare extends Social {
       usage: "stare <@mention>",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** starts staring at someone..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** starts staring at someone...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 
@@ -27,7 +28,7 @@ class Stare extends Social {
         "title": "Click here if the image failed to load.",
         "url": stare,
         "description": `**${message.member.displayName}** is staring at **${target.first().displayName}**.`,
-        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "color": 6192321,
         "image": {
           "url": stare
         },

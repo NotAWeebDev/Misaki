@@ -8,7 +8,8 @@ class Bite extends Social {
       usage: "bite <@mention>",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to sink their teeth into people..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to sink their teeth into people...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 
@@ -27,7 +28,7 @@ class Bite extends Social {
         "title": "Click here if the image failed to load.",
         "url": bite,
         "description": `**${target.first().displayName}**, you just got bitten by **${message.member.displayName}**`,
-        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "color": 6192321,
         "image": {
           "url": bite
         },

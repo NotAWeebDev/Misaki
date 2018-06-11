@@ -8,7 +8,8 @@ class Hug extends Social {
       usage: "hug <@mention>",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to give a big hug..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** wants to give a big hug...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 
@@ -27,7 +28,7 @@ class Hug extends Social {
         "title": "Click here if the image failed to load.",
         "url": hug,
         "description": `**${target.first().displayName}**, you just got hugged by **${message.member.displayName}**`,
-        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "color": 6192321,
         "image": {
           "url": hug
         },

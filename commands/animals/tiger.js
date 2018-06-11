@@ -1,6 +1,5 @@
 const Social = require("../../structures/Social.js");
 const { get } = require("snekfetch");
-const { MessageAttachment, MessageEmbed } = require("discord.js");
 
 class Tiger extends Social {
   constructor(...args) {
@@ -19,13 +18,21 @@ class Tiger extends Social {
   }
 
   async run(message, args, level, loadingMessage) {
-    const { body } = await get("https://dashboard.typicalbot.com/api/v1/tiger").set("Authorization", process.env.TYPICAL);
-    const embed = new MessageEmbed()
-      .setColor(message.guild ? message.guild.me.roles.highest.color : 5198940)
-      .attachFiles([new MessageAttachment(Buffer.from(body.data), "image.png")])
-      .setImage("attachment://image.png");
-    message.channel.send({ embed });
-    await loadingMessage.delete();
+    const { body } = await get("https://animals.anidiots.guide/tiger");
+    await loadingMessage.edit({
+      embed: {
+        "title": "Click here if the image failed to load.",
+        "url": body.link,
+        "color": 6192321,
+        "image": {
+          "url": body.link
+        },
+        "footer": {
+          "icon_url": message.author.displayAvatarURL({ format: "png", size: 32 }),
+          "text": `Requested by ${message.author.tag} | Powered by An Idiot's API`
+        }
+      }
+    });
   }
 }
 

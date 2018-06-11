@@ -3,6 +3,8 @@ const Event = require("../structures/Event.js");
 module.exports = class extends Event {
 
   async run(guild) {
+    if (!guild.available) return;
+
     this.client.user.setActivity(`@${this.client.user.username} help | ${this.client.guilds.size.toLocaleString()} Server${this.client.guilds.size > 1 ? "s" : ""}`);
 
     if (this.client.settings.has(guild.id)) {

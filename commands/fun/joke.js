@@ -21,7 +21,7 @@ class Oneliner extends Social {
     const embed = new MessageEmbed()
       .setThumbnail("https://cdn.discordapp.com/emojis/397910503013220354.png")
       .setDescription(`_${body.data}_`)
-      .setColor(message.guild ? message.guild.me.roles.highest.color : 5198940)
+      .setColor(6192321)
       .setFooter("Powered by TypicalBot API.");
     await loadingMessage.edit({ embed });
   }

@@ -8,7 +8,8 @@ class Pout extends Social {
       usage: "pout",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is pouting..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is pouting...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 
@@ -18,7 +19,7 @@ class Pout extends Social {
       embed: {
         "title": "Click here if the image failed to load.",
         "url": pout,
-        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "color": 6192321,
         "image": {
           "url": pout
         },

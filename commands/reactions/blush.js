@@ -8,7 +8,8 @@ class Blush extends Social {
       usage: "blush <@mention>",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** feels their face going red..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** feels their face going red...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 
@@ -27,7 +28,7 @@ class Blush extends Social {
         "title": "Click here if the image failed to load.",
         "url": blush,
         "description": `**${message.member.displayName}** goes red at the sight of **${target.first().displayName}**.`,
-        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "color": 6192321,
         "image": {
           "url": blush
         },

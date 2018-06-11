@@ -8,7 +8,8 @@ class Smug extends Social {
       usage: "smug",
       category: "Reactions",
       cost: 5,
-      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is feeling smug..."
+      loadingString: "<a:typing:397490442469376001> **{{displayName}}** is feeling smug...",
+      botPerms: ["EMBED_LINKS"]
     });
   }
 
@@ -18,7 +19,7 @@ class Smug extends Social {
       embed: {
         "title": "Click here if the image failed to load.",
         "url": smug,
-        "color": message.guild ? message.guild.me.roles.highest.color : 5198940,
+        "color": 6192321,
         "image": {
           "url": smug
         },
