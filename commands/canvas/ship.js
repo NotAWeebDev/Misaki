@@ -28,7 +28,7 @@ class Ship extends Social {
     const prog_bar = Math.ceil(Math.round(score) / 100 * 10);
     const counter = "▰".repeat(prog_bar) + "▱".repeat(10 - prog_bar);
 
-    const { body } = await get(`https://nekobot.xyz/api/imagegen/?type=ship&user1=${shipper.user.displayAvatarURL({ format: "png", size: 256 })}&user2=${shipped.user.displayAvatarURL({ format: "png", size: 256 })}`);
+    const { body } = await get(`https://nekobot.xyz/api/imagegen?type=ship&user1=${shipper.user.displayAvatarURL({ format: "png", size: 256 })}&user2=${shipped.user.displayAvatarURL({ format: "png", size: 256 })}`);
 
     return loadingMessage.edit({
       embed: {
