@@ -22,8 +22,6 @@
   },
   "homepage": "https://github.com/NotAWeebDev/Misaki#readme",
   "dependencies": {
-    "canvas": "github:Automattic/node-canvas#92b192447e9b9ae98da0f801e4e34afdd1dc1ef8",
-    "canvas-constructor": "^1.0.1",
     "discord.js": "github:discordjs/discord.js#85738b68849b6092b8f43a044937dc8a508b7536",
     "dotenv": "^5.0.1",
     "enmap": "^2.2.1",

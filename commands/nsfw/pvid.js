@@ -15,7 +15,12 @@ class PVid extends Social {
   }
 
   async run(message, args, level, loadingMessage) { // eslint-disable-line no-unused-vars
+    const blacklist = ["loli", "shota", "cub", "young", "child", "baby", "guro", "gore", "vore"];
     if (!message.channel.nsfw) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
+    if (args.length !== 0) {
+      if (args.some(t => blacklist.includes(t.toLowerCase()))) return loadingMessage.edit(`${message.author} \`|📛|\` Blacklisted word found, aborting...`);
+    }
+
     const search = new pSearch(args.join(" "));
     const videos = await search.videos();
     const video = videos.random();
