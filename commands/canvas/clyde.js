@@ -17,7 +17,7 @@ class Clyde extends Social {
 
   async run(message, args, level, loadingMessage) {
     const text = args.join(" ");
-    const { body } = await get(`https://nekobot.xyz/api/imagegen/?type=clyde&text=${text}`);
+    const { body } = await get(`https://nekobot.xyz/api/imagegen?type=clyde&text=${text}`);
 
     return loadingMessage.edit({
       embed: {
