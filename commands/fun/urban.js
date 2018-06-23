@@ -14,6 +14,7 @@ module.exports = class UrbanCommand extends Command {
   }
 
   async run(message, [...text]) {
+    if (!message.channel.nsfw) return message.response("🔞", "Cannot display NSFW content in a SFW channel.");
     text = text.join(" ");
     if (!text.length) return message.channel.send("You must provide some term to search in urban dictionary.");
     const { body } = await snek.get("http://api.urbandictionary.com/v0/define")
