@@ -1,12 +1,13 @@
 const Store = require("../../structures/Store");
-const Command = require("../../structures/Command.js");
+const Owner = require("../../structures/Owner.js");
 
-class Loader extends Command {
+class Loader extends Owner {
   constructor(...args) {
     super(...args, {
       name: "load",
-      description: "Loads a all commands or events.",
+      description: "Loads all commands or events.",
       usage: "load <store>",
+      category: "Bot Owner",
       aliases:["loader"]
     });
   }

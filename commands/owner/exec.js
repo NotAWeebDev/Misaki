@@ -8,7 +8,7 @@ class Exec extends Owner {
       description: "Executes a new process, very dangerous.",
       usage: "exec <expression>",
       aliases: ["shell"],
-      category: "Owner",
+      category: "Bot Owner",
       extended: "This will spawn a child process and execute the given command.",
       permLevel: "Bot Owner"
     });

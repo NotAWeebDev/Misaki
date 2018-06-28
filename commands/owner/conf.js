@@ -5,7 +5,7 @@ class Conf extends Owner {
     super(...args, {
       name: "conf",
       description: "Modify the default configuration for all guilds.",
-      category: "Owner",
+      category: "Bot Owner",
       usage: "conf <view/get/edit> <key> <value>",
       aliases: ["defaults"]
     });

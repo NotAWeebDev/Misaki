@@ -1,7 +1,5 @@
 const Social = require("../../structures/Social.js");
-
 const { MessageAttachment } = require("discord.js");
-const { get } = require("snekfetch");
 
 class OSU extends Social {
   constructor(...args) {
@@ -21,8 +19,7 @@ class OSU extends Social {
     
   async run(message, args, level, loadingMessage) { // eslint-disable-line no-unused-vars
     const member = await this.cmdVerify(message, args, loadingMessage);
-    const { body } = await get(`https://dev.anidiots.guide/generators/osu?user=${args.join(" ")}&theme=dark`).set("Authorization", process.env.IDIOTAPI);
-    await message.channel.send(new MessageAttachment(Buffer.from(body), `osu-${member.id}.jpg`));
+    await message.channel.send(new MessageAttachment(await this.client.idiotAPI.osu(args.join(" "), "dark"), `osu-${member.id}.jpg`));
     await loadingMessage.delete();
   }
 }

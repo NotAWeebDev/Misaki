@@ -7,7 +7,7 @@ class Eval extends Owner {
     super(...args, {
       name: "eval",
       description: "Evaluates arbitrary Javascript.",
-      category: "Owner",
+      category: "Bot Owner",
       usage: "eval <expression>",
       aliases: ["ev"],
       permLevel: "Bot Owner"

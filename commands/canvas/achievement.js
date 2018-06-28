@@ -17,16 +17,12 @@ class Achievement extends Social {
     });
   }
 
-  async cmdVerify(message, [...text], options) {
-    text = text.join(" ");
-    if (!text) throw new this.client.methods.errors.UsageError("You must give an achievement description.", options.msg);
-    if (text.length > 22) throw new this.client.methods.errors.UsageError("I can only handle a maximum of 22 characters", options.msg);
-    return;
-  }
-
+ 
   async run(message, [...text], level, loadingMessage) {
     text = text.join(" ");
-    if (message.mentions.users.size) text = text.replace(/<@!?\d+>/, "").replace(/\n/g, " ").trim();
+    if (message.mentions.users.size !== 0) text = text.replace(/<@!?\d+>/, "").replace(/\n/g, " ").trim();
+    if (!text) return loadingMessage.edit("You must give an achievement description.");
+    if (text.length > 22) return loadingMessage.edit("I can only handle a maximum of 22 characters");
     await loadingMessage.delete();
     return message.channel.send(new MessageAttachment(await this.client.idiotAPI.achievement((message.mentions.users.first() || message.author).displayAvatarURL({ format:"png", size:32 }), text), "achievement.png"));
   }
