@@ -10,4 +10,5 @@ A new entertainment bot by the Idiot Himself!
 
 To add Misaki to your guild, just click [here](https://discordapp.com/api/oauth2/authorize?client_id=396323622953680910&permissions=268755008&scope=bot)
 
-[![Discord Bots](https://discordbots.org/api/widget/396323622953680910.svg)](https://discordbots.org/bot/396323622953680910)
+[![Discord Bots](https://discordbots.org/api/widget/396323622953680910.svg)](https://discordbots.org/bot/396323622953680910)  
+[![Bots for Discord](https://botsfordiscord.com/api/v1/bots/396323622953680910/embed?theme=dark)](https://botsfordiscord.com/bot/396323622953680910)
