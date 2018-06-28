@@ -12,6 +12,10 @@ module.exports = class BotListHandler {
         .set("Authorization", process.env.DBLTOKEN)
         .send({ server_count: this.client.guilds.size, shard_count: this.client.ws.shards.length });
 
+      await post(`https://botsfordiscord.com/api/v1/bots/${this.client.user.id}`)
+        .set("Authorization", process.env.BFDTOKEN)
+        .send({ server_count: this.client.guilds.size, shard_count: this.client.ws.shards.length });
+
       await post(`https://bots.discord.pw/api/bots/${this.client.user.id}/stats`)
         .set("Authorization", process.env.DPWTOKEN)
         .send({ server_count: this.client.guilds.size, shard_count: this.client.ws.shards.length });
