@@ -64,29 +64,10 @@ class Store extends Social {
       }
       case "view": {
         const items = message.guild.store;
-        if (!items.length) return  message.channel.send(`= ${message.guild.name} Store =\n\n` + "\n" + "= Tokens = \n" + `Slots${" ".repeat(20 - "Slots".length)}:: ₲${message.settings.tokenPrice} :: ${message.member.inventory.tokens} \n`, { code: "asciidoc" });
-        message.channel.send(`= ${message.guild.name} Store =\n` + "\n" + "= Tokens = \n" + `Slots${" ".repeat(20 - "Slots".length)}:: ₲${message.settings.tokenPrice} :: ${message.member.inventory.tokens} \n \n`+ "= Roles For Sale = \n"+ items.map(item => 
+        message.channel.send(`= ${message.guild.name} Store =\n` + "= Roles For Sale = \n"+ items.map(item => 
           `${message.guild.roles.get(item.id).name}${" ".repeat(20 - message.guild.roles.get(item.id).name.length)}::  ${Number(item.price) === 0 ? "FREE" : `₲${Number(item.price).toLocaleString()}`} ${message.member.roles.has(item.id) ? ":: ✓" : ""}`).join("\n"), { code: "asciidoc" }
         );
       }
-    }
-  }
-
-  async buyToken(name, message) {
-    const tokenPrice = Number(message.settings.tokenPrice);
-    const userPoints = Number(message.member.score.points);
-    if (tokenPrice > userPoints) {
-      return message.channel.send(`You currently have ₲${userPoints.toLocaleString()}, but the token costs ${tokenPrice.toLocaleString()}!`);
-    }
-    const filter = m => m.author.id === message.author.id;
-    const number = await message.awaitReply("How many tokens do you want to buy ?", filter, undefined, null);
-    const response = await message.awaitReply(`Are you sure you want to purchase ${number == 1 ? "a" : number} Slot Token${number == 1 ? "" : "s"} for ₲${message.settings.tokenPrice * number}?`, filter, undefined, null);
-    if (["y", "yes"].includes(response.toLowerCase())) {
-      message.member.takePoints(tokenPrice * number);
-      await message.member.giveItem("tokens", Number(number));
-      message.channel.send("You have bought a token");
-    } else if (["n", "no", "cancel"].includes(response.toLowerCase())) {
-      message.response(undefined, "Transaction cancelled.");
     }
   }
 
@@ -119,24 +100,6 @@ class Store extends Social {
     }
   }
 
-  async sellToken(name, message) {
-    const tokenPrice = Number(message.settings.tokenPrice);
-    const returnPrice = tokenPrice / 2;
-    const filter = m => m.author.id === message.author.id;
-    const response = await message.awaitReply(`Are you sure you want to sell a Token for ₲${returnPrice}?`, filter, undefined, null);
-    if (["y", "yes"].includes(response.toLowerCase())) {
-
-      message.member.takePoints(returnPrice);
-      message.member.takeItem("tokens", 1);
-      message.channel.send("You have sold a token");
-
-    } else
-    
-    if (["n", "no", "cancel"].includes(response.toLowerCase())) {
-      message.response(undefined, "Transaction cancelled.");
-    }
-  }
-  
   async sellRole(name, message) {
     const item = this.client.store.filter(i => i.name.toLowerCase().includes(name.toLowerCase()));
           
