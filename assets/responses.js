@@ -72,7 +72,7 @@ exports.myLevelMessages = [
   "**{{user}}-san** here you go, it's **{{friendly}}**, level **{{level}}**.",
   "You're a **{{level}}**, maybe if you were a wee bit higher than a **{{friendly}}** you'd stop forgetting.",
   "Only a level **{{level}}**? Even I'm better than a **{{friendly}}**.",
-  "Level **{{level}}**? What, where you hoping to be higher than **{{friendly}?",
+  "Level **{{level}}**? What, where you hoping to be higher than **{{friendly}}**?",
   "smh, a level **{{level}}**? I thought you weren't gonna be a **{{friendly}}**!",
   "Only level **{{level}}**? Pfft! I've seen much better than a **{{friendly}}**."
 ];
