@@ -11,7 +11,7 @@ class E621 extends Social {
       extended: "This command will return a random result from e621.",
       cost: 40,
       cooldown: 10,
-      aliases: ["e6"]
+      aliases: ["e6", "fetchyiff", "yifffetch"]
     });
   }
 
