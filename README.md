@@ -12,3 +12,4 @@ To add Misaki to your guild, just click [here](https://discordapp.com/api/oauth2
 
 [![Discord Bots](https://discordbots.org/api/widget/396323622953680910.svg)](https://discordbots.org/bot/396323622953680910)  
 [![Bots for Discord](https://botsfordiscord.com/api/v1/bots/396323622953680910/embed?theme=dark)](https://botsfordiscord.com/bot/396323622953680910)
+[![Discord Bot List](https://discordbotlist.com/bots/396323622953680910/widget)](https://discordbotlist.com/bots/396323622953680910)
