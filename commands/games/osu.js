@@ -9,6 +9,7 @@ class OSU extends Social {
       usage: "osu <osu! username>",
       guildOnly: true,
       cooldown: 10,
+      category: "Games",
       loadingString: "<a:typing:397490442469376001> **{{displayName}}** is looking at osu! profiles.",
     });
   }

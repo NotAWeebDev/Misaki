@@ -14,9 +14,9 @@ module.exports = class extends Event {
     const settings = this.client.getGuildSettings(member.guild);
     
     if (settings.welcomeEnabled !== "true") return;
+    const channel = member.guild.channels.find("name", settings.welcomeChannel);
+    if (!channel) return;
     if (settings.welcomeType === "text") {
-      const channel = member.guild.channels.find("name", settings.welcomeChannel);
-      if (!channel) return;
       const message = this.client.responses.welcomeMessages.random()
         .replaceAll("{{user}}", member.user.username)
         .replaceAll("{{amount}}", member.guild.memberCount)
@@ -24,9 +24,7 @@ module.exports = class extends Event {
       channel.send(`${this.client.emojis.get("396391329367588878")} ${message}`).catch(console.error);
     }
     if (settings.welcomeType === "image") {
-      const channel = member.guild.channels.find("name", settings.welcomeChannel);
-      if (!channel) return;
-      const image = await this.client.idiotAPI.welcome("anime", member.user.bot, member.user.displayAvatarURL({ format: "png", size: 128 }), member.user.tag);
+      const image = await this.client.idiotAPI.greeting("welcome", "anime", member.user.bot, member.user.displayAvatarURL({ format: "png", size: 256 }), member.user.username, member.user.discriminator, member.guild.name, member.guild.memberCount, null);
       channel.send(new MessageAttachment(image)).catch(console.error);
     }
   }

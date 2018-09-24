@@ -1,12 +1,12 @@
 const Social = require("../../structures/Social.js");
 const { get } = require("snekfetch");
 
-class Ship extends Social {
+class ShipIt extends Social {
   constructor(...args) {
     super(...args, {
-      name: "ship",
+      name: "shipit",
       description: "Who do you ship?.",
-      usage: "ship <mention>",
+      usage: "shipit <mention>",
       category: "Canvas",
       cost: 5,
       cooldown: 5,
@@ -48,4 +48,4 @@ class Ship extends Social {
   }
 
 }
-module.exports = Ship;
+module.exports = ShipIt;

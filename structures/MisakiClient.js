@@ -5,7 +5,7 @@ const MisakiConsole = require("./MisakiConsole");
 const StatsHandler = require("../util/botStatsHandler.js");
 const Enmap = require("enmap");
 const EnmapLevel = require("enmap-level");
-const idioticApi = require("idiotic-api");
+const idioticApi = require("./IdioticApi.js");
 
 class MisakiClient extends Client {
   constructor(options) {
@@ -16,7 +16,7 @@ class MisakiClient extends Client {
     this.responses = require("../assets/responses.js");
     this.botStats = new StatsHandler(this);
 
-    this.idiotAPI = new idioticApi.Client(process.env.IDIOTAPI, { dev: true });
+    this.idiotAPI = new idioticApi(process.env.IDIOTAPI, { dev: true });
     this.commands = new CommandStore(this);
     this.events = new EventStore(this);
     this.upvoters = [];

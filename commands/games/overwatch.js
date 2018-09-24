@@ -8,6 +8,7 @@ class Overwatch extends Command {
   constructor(...args) {
     super(...args, {
       name: "overwatch",
+      category: "Games",
       description: "Find Your Ow Player Stats",
       usage: "overwatch <pc|xbl|psn> [us|eu|kr|cn|global] <full-battle-tag|gamertag>",
       aliases: ["ow"],

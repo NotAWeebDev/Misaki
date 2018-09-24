@@ -30,8 +30,8 @@ class Eval extends Owner {
         message.channel.send(`\`\`\`js\n${output}\n\`\`\``);
       } else {
         try {
-          const { body } = await post("https://www.hastebin.com/documents").send(output);
-          return message.channel.send(`Output was to long so it was uploaded to hastebin https://www.hastebin.com/${body.key}.js `);
+          const { body } = await post("https://text.evie.codes/documents").send(output);
+          return message.channel.send(`Output was to long so it was uploaded to hastebin https://text.evie.codes/${body.key}.js `);
         } catch (error) {
           return message.channel.send(`I tried to upload the output to hastebin but encountered this error ${error.name}:${error.message}`);
         }
