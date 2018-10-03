@@ -257,10 +257,10 @@
 ###### Cost : 10
 ###### Cooldown : 10
  ---
-# ship - Canvas 
+# shipit - Canvas 
 #### Who do you ship?.
 ##### No information provided.
-###### Usage : ship <mention>
+###### Usage : shipit <mention>
 ###### Cost : 5
 ###### Cooldown : 5
  ---
@@ -550,15 +550,22 @@
 ###### Usage : go <csgo/dota/pubg/gmod/rocketleague> [steamuser]
 ###### Cost : 0
 ###### Cooldown : 10
+
+# azurlane - Games 
+#### Get your ship manifests
+##### No information provided.
+###### Usage : azurlane <ship name>
+###### Cost : 0
+###### Cooldown : 10
  ---
-# osu - General 
+# osu - Games 
 #### Get your osu profile.
 ##### No information provided.
 ###### Usage : osu <osu! username>
 ###### Cost : 0
 ###### Cooldown : 10
  ---
-# overwatch - General 
+# overwatch - Games 
 #### Find Your Ow Player Stats
 ##### No information provided.
 ###### Usage : overwatch <pc|xbl|psn> [us|eu|kr|cn|global] <full-battle-tag|gamertag>
