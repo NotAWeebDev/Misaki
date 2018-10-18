@@ -16,8 +16,8 @@ class Health extends Owner {
       description: "This will check on the health of the shards.",
       usage: "health",
       aliases: ["shards"],
-      category: "Bot Owner",
-      permLevel: "Bot Owner"
+      category: "Creator",
+      permLevel: "Creator"
     });
   }
 

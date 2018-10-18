@@ -7,7 +7,7 @@ class Loader extends Owner {
       name: "load",
       description: "Loads all commands or events.",
       usage: "load <store>",
-      category: "Bot Owner",
+      category: "Creator",
       aliases:["loader"]
     });
   }

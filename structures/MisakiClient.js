@@ -28,6 +28,7 @@ class MisakiClient extends Client {
 
     // Enmap
     this.settings = new Enmap({ provider: new EnmapLevel({ name: "settings" }) });
+    this.blacklist = new Enmap({ provider: new EnmapLevel({ name: "blacklist" }) });
     this.reminders = new Enmap({ provider: new EnmapLevel({ name: "reminders" }) });
     this.points = new Enmap({ provider: new EnmapLevel({ name: "points" }) });
     this.store = new Enmap({ provider: new EnmapLevel({ name: "shop" }) });

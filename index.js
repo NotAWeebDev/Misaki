@@ -20,7 +20,7 @@ const client = new MisakiClient({
 client.login(process.env.DISCORD);
 
 client.on("disconnect", () => client.console.warn("Bot is disconnecting..."))
-  .on("reconnect", () => client.console.log("Bot reconnecting..."))
+  .on("reconnecting", () => client.console.log("Bot reconnecting..."))
   .on("error", err => client.console.error(err))
   .on("warn", info => client.console.warn(info));
 

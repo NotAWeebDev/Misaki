@@ -4,6 +4,7 @@ module.exports = class extends Event {
 
   async run(guild) {
     if (!guild.available) return;
+    this.client.dogstats.increment("misaki.guilddelete");
 
     this.client.user.setActivity(`@${this.client.user.username} help | ${this.client.guilds.size.toLocaleString()} Server${this.client.guilds.size > 1 ? "s" : ""}`);
 

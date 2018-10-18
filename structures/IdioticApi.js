@@ -44,7 +44,7 @@ class IdioticClient {
      * Base URL for Idiot's Guide API
      * @type {String}
      */
-    this.baseUrl = options.url || this.dev ? "http://localhome.net:3030/" : "https://api.anidiots.guide/api/";
+    this.baseUrl = options.url || this.dev ? "https://dev.anidiots.guide/" : "https://api.anidiots.guide/api/";
   }
 
   /* Text based endpoints */

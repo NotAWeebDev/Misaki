@@ -31,6 +31,7 @@ module.exports = class extends Event {
 
   async run(message) {
     if (message.author.bot) return;
+    if (this.client.blacklist.get("list").includes(message.author.id)) return;
     if (message.guild && !message.guild.me) await message.guild.members.fetch(this.client.user);
     if (message.guild && !message.channel.postable) return;
     if (message.content === this.client.user.toString() || (message.guild && message.content === message.guild.me.toString())) {
