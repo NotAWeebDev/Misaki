@@ -9,17 +9,16 @@ module.exports = class BotListHandler {
   async updateStats() {
     if (this.client.user.id === "396323622953680910") {
       try {
-        let [users, shards, guilds] = [0, 0, 0];
-        users = this.client.users.size;
-        shards = this.client.ws.shards.length;
-        guilds = this.client.guilds.size;
+        const users = this.client.users.size;
+        const shards = this.client.ws.shards.length;
+        const guilds = this.client.guilds.size;
         await post(`https://discordbotlist.com/api/bots/${this.client.user.id}/stats`)
           .set("Authorization", `Bot ${process.env.DBLCOM}`)
           .send({ guilds: this.client.guilds.size, users: this.client.users.size });
   
-        // await post(`https://botsfordiscord.com/api/v1/bots/${this.client.user.id}`)
-        //   .set("Authorization", process.env.BFDCOM)
-        //   .send({ server_count: this.client.guilds.size });
+        await post(`https://botsfordiscord.com/api/bot/${this.client.user.id}`)
+          .set("Authorization", process.env.BFDCOM)
+          .send({ server_count: this.client.guilds.size });
   
         await post(`https://discordbots.org/api/bots/${this.client.user.id}/stats`)
           .set("Authorization", process.env.DBLORG)
