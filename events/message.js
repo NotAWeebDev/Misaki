@@ -30,6 +30,7 @@ module.exports = class extends Event {
   }
 
   async run(message) {
+    this.client.dogstats.increment("misaki.messages");
     if (message.author.bot) return;
     if (this.client.blacklist.get("list").includes(message.author.id)) return;
     if (message.guild && !message.guild.me) await message.guild.members.fetch(this.client.user);
@@ -63,6 +64,7 @@ module.exports = class extends Event {
     }
 
     while (args[0] && args[0][0] === "-") message.flags.push(args.shift().slice(1));
+    this.client.dogstats.increment("misaki.commands");
     await this.runCommand(message, cmd, args);
   }
 

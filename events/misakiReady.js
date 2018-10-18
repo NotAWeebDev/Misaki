@@ -1,11 +1,8 @@
-const { StatsD } = require("hot-shots");
 const Event = require("../structures/Event.js");
 // const { get } = require("snekfetch");
 module.exports = class extends Event {
 
   async run() {
-    this.client.dogstats = new StatsD("localhost", 8125);
-
     if (this.client.users.has("1")) this.client.users.delete("1");
 
     if (!this.client.blacklist.get("list")) this.client.blacklist.set("list", []);
@@ -22,6 +19,5 @@ module.exports = class extends Event {
         this.client.reminders.delete(`${reminder.id}-${reminder.reminderTimestamp}`);
       });
     }, 60000);
-
   }
 };
